@@ -29,6 +29,7 @@ function Admins() {
   // };
 
   const addAdmin = async (admin) => {
+    console.log(admin);
     const res = await fetch(`${process.env.REACT_APP_API}/api/admins`, {
       method: 'POST',
       headers: {
@@ -38,13 +39,25 @@ function Admins() {
     });
 
     const data = await res.json();
+    console.log(data);
 
-    setAdmins([...admins, data]);
+    // setAdmins([...admins, data]);
+  };
+
+  const deleteAdmin = async (id) => {
+    const response = confirm('Are you sure you want to delete this admin?');
+    if (response) {
+      await fetch(`${process.env.REACT_APP_API}/api/admins/${id}`, {
+        method: 'DELETE'
+      });
+
+      setAdmins(admins.filter((admin) => admin._id !== id));
+    }
   };
 
   return (
     <section className={styles.container}>
-      <List admins={admins} addAdmin={addAdmin} />
+      <List admins={admins} addAdmin={addAdmin} deleteAdmin={deleteAdmin} />
     </section>
   );
 }

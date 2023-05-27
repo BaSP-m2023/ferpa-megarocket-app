@@ -1,7 +1,7 @@
 import styles from './admins.module.css';
 import Item from './Item';
 
-const Table = ({ admins }) => {
+const Table = ({ admins, deleteAdmin }) => {
   return (
     <table className={styles.table}>
       <tbody className={styles.tbody}>
@@ -13,7 +13,7 @@ const Table = ({ admins }) => {
           <th></th>
         </tr>
         {admins.map((admin) => (
-          <Item key={admin._id} admin={admin} />
+          <Item key={admin._id} admin={admin} deleteAdmin={deleteAdmin} />
         ))}
       </tbody>
     </table>
