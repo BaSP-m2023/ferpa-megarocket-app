@@ -3,4 +3,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url('./assets/background.png');
+  background-size: cover;
+}
+
+.box {
+  color: white;
+  width: 75vw;
+  background-color: rgba(55, 56, 103, 0.5);
+}
+
+table, tr, thead, tbody {
+  width:100%;
+}
+
+td, th {
+  text-align: left;
+  width: 0 25%;
+}
+
+.pass {
+  -webkit-text-security: disc; /* Para navegadores basados en WebKit */
+  -moz-text-security: disc; /* Para navegadores basados en Gecko (Firefox) */
 }
