@@ -13,8 +13,13 @@
   background-color: rgba(55, 56, 103, 0.5);
 }
 
-table{
-  width:100%;
+.table{
+  display: flex;
+  width: 95%;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(55, 56, 103, 0.7);
 }
 
 th {
@@ -26,7 +31,56 @@ th {
 }
 
 .tdBtn {
-  width: 5vw;
+  width: 7vw;
+}
+
+#formPost {
+  display:flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 10vw;
+}
+
+.submitBtn {
+  width: 10vw;
+  height: 4vw;
+  color: white;
+  font-weight: bold;
+  background-color: green;
+  border:none; 
+  border-radius: 0.5vw;
+  cursor:pointer;
+}
+
+#deleteBtn {
+  width: 2vw;
+  height: 2vw;
+  border: none;
+  background-color: transparent;
+  background-image: url(./assets/delete-icon.png);
+  background-size: cover;
+  cursor:pointer;
+}
+
+#editBtn {
+  width: 2vw;
+  height: 2vw;
+  border: none;
+  background-color: transparent;
+  background-image: url(./assets/edit-icon.png);
+  background-size: cover;
+  cursor:pointer;
+}
+
+#passBtn {
+  width: 2.5vw;
+  height: 2.5vw;
+  border: none;
+  background-color: transparent;
+  color:white;
+  background-image: url(./assets/pass-icon.png);
+  background-size: cover;
+  cursor:pointer;
 }
 
 .pass {

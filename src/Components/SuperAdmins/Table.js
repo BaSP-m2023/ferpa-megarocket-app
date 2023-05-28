@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './super-admins.module.css';
 import { useEffect, useState } from 'react';
 
-const Table = ({ list }) => {
+const Table = ({ list, deleteItem }) => {
   const ids = list.map((supAd) => supAd._id);
   const [togglePass, setTogglePass] = useState([]);
 
@@ -25,7 +25,7 @@ const Table = ({ list }) => {
   };
 
   return (
-    <table>
+    <table id={styles.table}>
       <thead>
         <tr>
           <th>Email</th>
@@ -41,20 +41,20 @@ const Table = ({ list }) => {
             <tr key={superAdmin._id}>
               <td className={styles.tdText}>{superAdmin.email}</td>
               <td
-                className={`${togglePass.includes(superAdmin._id) ? styles.pass : ''} ${
+                className={`${togglePass.includes(superAdmin._id) ? '' : styles.pass} ${
                   styles.tdText
                 }`}
               >
                 {superAdmin.password}
               </td>
               <td className={styles.tdBtn}>
-                <button onClick={() => toggler(superAdmin._id)}>Ver</button>
+                <button id={styles.passBtn} onClick={() => toggler(superAdmin._id)}></button>
               </td>
               <td className={styles.tdBtn}>
-                <button> Edit</button>
+                <button id={styles.editBtn}></button>
               </td>
               <td className={styles.tdBtn}>
-                <button>Delete</button>
+                <button id={styles.deleteBtn} onClick={() => deleteItem(superAdmin._id)}></button>
               </td>
             </tr>
           );
