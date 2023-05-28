@@ -4,7 +4,7 @@ import Table from './Table';
 import Button from './Button';
 import Form from './Form';
 
-const List = ({ admins, addAdmin, deleteAdmin }) => {
+const List = ({ admins, addAdmin, deleteAdmin, onEdit }) => {
   const [showForm, setForm] = useState(false);
 
   return (
@@ -18,7 +18,11 @@ const List = ({ admins, addAdmin, deleteAdmin }) => {
         />
       </header>
       {showForm && <Form addAdmin={addAdmin} />}
-      <Table admins={admins} deleteAdmin={deleteAdmin} />
+      {admins.length > 0 ? (
+        <Table admins={admins} deleteAdmin={deleteAdmin} onEdit={onEdit} />
+      ) : (
+        <span className={styles.emptySpan}>No admins created yet</span>
+      )}
     </section>
   );
 };

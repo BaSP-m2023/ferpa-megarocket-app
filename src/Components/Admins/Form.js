@@ -26,7 +26,7 @@ const Form = ({ addAdmin }) => {
           type="text"
           placeholder="First Name"
           name="firstName"
-          value={inputs.firstName}
+          value={inputs.firstName || ''}
           onChange={handleChange}
         />
       </div>
@@ -36,7 +36,7 @@ const Form = ({ addAdmin }) => {
           type="text"
           placeholder="Last Name"
           name="lastName"
-          value={inputs.lasttName}
+          value={inputs.lastName || ''}
           onChange={handleChange}
         />
       </div>
@@ -46,7 +46,7 @@ const Form = ({ addAdmin }) => {
           type="number"
           placeholder="DNI number"
           name="dni"
-          value={inputs.dni}
+          value={inputs.dni || ''}
           onChange={handleChange}
         />
       </div>
@@ -55,7 +55,7 @@ const Form = ({ addAdmin }) => {
         <input
           type="number"
           placeholder="Phone number"
-          value={inputs.phone}
+          value={inputs.phone || ''}
           name="phone"
           onChange={handleChange}
         />
@@ -66,7 +66,7 @@ const Form = ({ addAdmin }) => {
           type="text"
           placeholder="Email"
           name="email"
-          value={inputs.email}
+          value={inputs.email || ''}
           onChange={handleChange}
         />
       </div>
@@ -76,7 +76,7 @@ const Form = ({ addAdmin }) => {
           type="text"
           placeholder="City"
           name="city"
-          value={inputs.city}
+          value={inputs.city || ''}
           onChange={handleChange}
         />
       </div>
@@ -86,7 +86,7 @@ const Form = ({ addAdmin }) => {
           type="password"
           placeholder="Password"
           name="password"
-          value={inputs.password}
+          value={inputs.password || ''}
           onChange={handleChange}
         />
       </div>

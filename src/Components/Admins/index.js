@@ -1,9 +1,15 @@
 import { useState, useEffect } from 'react';
 import styles from './admins.module.css';
 import List from './List';
+import UpdateForm from './UpdateForm';
 
 function Admins() {
   const [admins, setAdmins] = useState([]);
+  const [showEditForm, setEditForm] = useState(false);
+
+  const setupEditForm = () => {
+    setEditForm(!showEditForm);
+  };
 
   useEffect(() => {
     const getAdmins = async () => {
@@ -15,10 +21,14 @@ function Admins() {
   }, []);
 
   const getAllAdmins = async () => {
-    const res = await fetch(`${process.env.REACT_APP_API}/api/admins`);
-    const { data } = await res.json();
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API}/api/admins`);
+      const { data } = await res.json();
 
-    return data;
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // const getAdminID = async (id) => {
@@ -38,11 +48,28 @@ function Admins() {
       body: JSON.stringify(admin)
     });
 
-    const data = await res.json();
+    const { data } = await res.json();
     console.log(data);
 
-    // setAdmins([...admins, data]);
+    setAdmins([...admins, data]);
   };
+
+  // const updateAdmin = async (id) => {
+  //   const adminToUpdate = getAdminID(id);
+  //   const updatedAdmin = { ...adminToUpdate };
+
+  //   const res = await fetch(`${process.env.REACT_APP_API}/api/admins/${id}`, {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Content-type': 'application/json'
+  //     },
+  //     body: JSON.stringify(updatedAdmin)
+  //   });
+
+  //   const { data } = await res.json();
+
+  //   setAdmins(admins.map((admin) => (admin.id === id ? { data } : admin)));
+  // };
 
   const deleteAdmin = async (id) => {
     const response = confirm('Are you sure you want to delete this admin?');
@@ -57,7 +84,14 @@ function Admins() {
 
   return (
     <section className={styles.container}>
-      <List admins={admins} addAdmin={addAdmin} deleteAdmin={deleteAdmin} />
+      <List
+        admins={admins}
+        addAdmin={addAdmin}
+        deleteAdmin={deleteAdmin}
+        onEdit={setupEditForm}
+        // updateAdmin={updateAdmin}
+      />
+      {showEditForm && <UpdateForm onEdit={setupEditForm} />}
     </section>
   );
 }
