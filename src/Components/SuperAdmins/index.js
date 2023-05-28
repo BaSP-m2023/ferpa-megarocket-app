@@ -1,40 +1,28 @@
+import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
-
-const data = [
-  { email: 'asdfasdf@gmail.com', password: '1234' },
-  { email: 'ghlkhgfnh@hotmail.com', password: '324235' }
-];
+import Table from './Table';
 
 function SuperAdmins() {
+  const [superAdmins, setSuperAdmins] = useState([]);
+
+  const getSuperAdmins = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API}/api/super-admins/`);
+      const data = await response.json();
+      setSuperAdmins(data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getSuperAdmins();
+  }, []);
+
   return (
     <section className={styles.container}>
       <div className={styles.box}>
-        <table>
-          <thead>
-            <tr>
-              <th>Email</th>
-              <th>Password</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item) => {
-              return (
-                <tr key={item.id}>
-                  <td>{item.email}</td>
-                  <td className={styles.pass}>{item.password}</td>
-                  <td>
-                    <button>Edit</button>
-                  </td>
-                  <td>
-                    <button>Delete</button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <Table list={superAdmins} />
       </div>
     </section>
   );

@@ -13,13 +13,20 @@
   background-color: rgba(55, 56, 103, 0.5);
 }
 
-table, tr, thead, tbody {
+table{
   width:100%;
 }
 
-td, th {
+th {
   text-align: left;
-  width: 0 25%;
+}
+
+.tdText{
+  width: 30vw;
+}
+
+.tdBtn {
+  width: 5vw;
 }
 
 .pass {
