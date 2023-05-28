@@ -7,9 +7,13 @@
   background-size: cover;
 }
 
+p {
+  margin:0;
+}
+
 .box {
   color: white;
-  width: 75vw;
+  width: 85vw;
   background-color: rgba(55, 56, 103, 0.5);
 }
 
@@ -26,19 +30,24 @@ th {
   text-align: left;
 }
 
-.tdText{
-  width: 30vw;
+.tdText {
+  width: 40vw;
 }
 
 .tdBtn {
-  width: 7vw;
+  text-align: center;
+  width: 12vw;
+}
+ 
+#titleForm, #titleTable{
+  text-align: center;
 }
 
 #formPost {
   display:flex;
   justify-content: space-around;
   align-items: center;
-  height: 10vw;
+  height: 5vw;
 }
 
 .submitBtn {
@@ -47,6 +56,28 @@ th {
   color: white;
   font-weight: bold;
   background-color: green;
+  border:none; 
+  border-radius: 0.5vw;
+  cursor:pointer;
+}
+
+.acceptBtn {
+  width: 7vw;
+  height: 2vw;
+  color: white;
+  font-weight: bold;
+  background-color: green;
+  border:none; 
+  border-radius: 0.5vw;
+  cursor:pointer;
+}
+
+.cancelBtn {
+  width: 7vw;
+  height: 2vw;
+  color: white;
+  font-weight: bold;
+  background-color: red;
   border:none; 
   border-radius: 0.5vw;
   cursor:pointer;

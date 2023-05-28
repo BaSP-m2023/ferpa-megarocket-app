@@ -12,29 +12,32 @@ function Form({ create }) {
   };
 
   return (
-    <form id={styles.formPost}>
-      <div>
-        <label>Email: </label>
-        <input
-          id={styles.emailImput}
-          type={'text'}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        ></input>
-      </div>
-      <div>
-        <label>Password: </label>
-        <input
-          id={styles.passImput}
-          type={'password'}
-          value={pass}
-          onChange={(e) => setPass(e.target.value)}
-        ></input>
-      </div>
-      <button className={styles.submitBtn} onClick={submit} type={'submit'}>
-        Submit
-      </button>
-    </form>
+    <div>
+      <h2 id={styles.titleForm}>Create a Super Admin</h2>
+      <form id={styles.formPost}>
+        <div>
+          <label>Email: </label>
+          <input
+            id={styles.emailImput}
+            type={'text'}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          ></input>
+        </div>
+        <div>
+          <label>Password: </label>
+          <input
+            id={styles.passImput}
+            type={'password'}
+            value={pass}
+            onChange={(e) => setPass(e.target.value)}
+          ></input>
+        </div>
+        <button className={styles.submitBtn} onClick={submit} type={'submit'}>
+          Submit
+        </button>
+      </form>
+    </div>
   );
 }
 
