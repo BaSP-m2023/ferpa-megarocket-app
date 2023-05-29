@@ -1,6 +1,16 @@
+import { useState } from 'react';
+import UpdateForm from './UpdateForm';
 import styles from './admins.module.css';
 
-const Table = ({ admins, deleteAdmin, onEdit }) => {
+const Table = ({ admins, deleteAdmin, updateAdmin }) => {
+  const [showEditForm, setEditForm] = useState(false);
+  const [adminToUpdate, setId] = useState('');
+
+  const setupEditForm = (admin = '') => {
+    setId(admin);
+    setEditForm(!showEditForm);
+  };
+
   return (
     <table className={styles.table}>
       <tbody className={styles.tbody}>
@@ -19,13 +29,16 @@ const Table = ({ admins, deleteAdmin, onEdit }) => {
               <td>{admin.email}</td>
               <td></td>
               <td className={styles.icons}>
-                <img src="/assets/images/edit-icon.svg" onClick={onEdit} />
+                <img src="/assets/images/edit-icon.svg" onClick={() => setupEditForm(admin)} />
                 <img src="/assets/images/delete-icon.svg" onClick={() => deleteAdmin(admin._id)} />
               </td>
             </tr>
           );
         })}
       </tbody>
+      {showEditForm && (
+        <UpdateForm close={setupEditForm} updateAdmin={updateAdmin} admin={adminToUpdate} />
+      )}
     </table>
   );
 };

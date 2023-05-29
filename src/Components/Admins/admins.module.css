@@ -168,7 +168,7 @@ td {
   align-items: center;
   margin: 15% auto;
   width: 700px;
-  height: 500px;
+  height: 550px;
   background-color: #2F3058;
   border-radius: 5px;
 }
@@ -181,4 +181,45 @@ td {
   color: white;
   font-size: 25px;
   font-weight: bold;
+}
+
+.modalForm {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modalBtns {
+  display: flex;
+  width: 50%;
+  justify-content: space-around;
+}
+
+.saveBtn {
+  width: 40%;
+  height: 40px;
+  background-color: #46A37C;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 19px;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.closeBtn {
+  width: 40%;
+  height: 40px;
+  background-color: #FF3E1D;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 19px;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
 }
