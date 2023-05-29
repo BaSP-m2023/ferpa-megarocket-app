@@ -29,9 +29,30 @@ function Subscriptions() {
     }
   };
 
+  const createSubscription = async (subscriptionData) => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API}/api/subscriptions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(subscriptionData)
+      });
+      const { data } = await res.json();
+      setSubscriptions([...subscriptions, data]);
+      console.log('Suscripción creada:', data);
+    } catch (error) {
+      console.error('Error al crear la suscripción:', error);
+    }
+  };
+
   return (
     <section className={styles.container}>
-      <List subscriptions={subscriptions} onDelete={deleteSubscription} />
+      <List
+        subscriptions={subscriptions}
+        onDelete={deleteSubscription}
+        onCreate={createSubscription}
+      />
     </section>
   );
 }
