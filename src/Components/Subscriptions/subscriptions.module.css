@@ -14,7 +14,7 @@
   height: 650px;
   margin: 50px;
   background-color: rgba(55, 56, 103, 0.5);
-  ;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   font-family: 'Roboto', sans-serif;
 }
 
@@ -45,6 +45,25 @@
 }
 
 .table {
+  text-align:left;
   align-self: center;
   width: 80%;
+  border-collapse: collapse;
+}
+
+.thead {
+  padding: 8px;
+}
+
+.tr {
+  color: white;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.td {
+    border-bottom: 1px solid #FFFFFF;
+  padding: 10px;
 }
