@@ -43,7 +43,7 @@ const Form = ({ addAdmin }) => {
       <div className={styles.inputGroup}>
         <label>DNI</label>
         <input
-          type="number"
+          type="text"
           placeholder="DNI number"
           name="dni"
           value={inputs.dni || ''}
@@ -53,7 +53,7 @@ const Form = ({ addAdmin }) => {
       <div className={styles.inputGroup}>
         <label>Phone</label>
         <input
-          type="number"
+          type="text"
           placeholder="Phone number"
           value={inputs.phone || ''}
           name="phone"

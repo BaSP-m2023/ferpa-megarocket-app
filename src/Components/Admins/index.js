@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './admins.module.css';
 import List from './List';
-// import UpdateForm from './UpdateForm';
 
 function Admins() {
   const [admins, setAdmins] = useState([]);
@@ -71,7 +70,7 @@ function Admins() {
 
       const { message, data, error } = await res.json();
       alert(message);
-
+      console.log(data);
       if (!error) {
         const actualAdmins = [...admins];
         actualAdmins[adminIndex] = data;

@@ -1,8 +1,6 @@
-import styles from './admins.module.css';
-
-const Button = ({ onclick, color, text }) => {
+const Button = ({ onclick, setStyle, text }) => {
   return (
-    <button style={{ backgroundColor: `${color}` }} onClick={onclick} className={styles.btn}>
+    <button onClick={onclick} className={setStyle}>
       {text}
     </button>
   );
