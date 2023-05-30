@@ -21,19 +21,19 @@ function Activities() {
   };
   const onDelete = async (id) => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API}/api/activities/${id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
         method: 'DELETE'
       });
       const data = await res.json();
       setActivities([...activities.filter((activity) => activity._id !== id)]);
       return data;
     } catch (error) {
-      console.log(error);
+      console.error;
     }
   };
   const onClick = async ({ name, description }) => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API}/api/activities/`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`, {
         method: 'POST',
         body: JSON.stringify({
           name: name,
@@ -47,13 +47,13 @@ function Activities() {
       const data = await res.json();
       setActivities([...activities, data.data]);
     } catch (error) {
-      console.log(error);
+      console.error;
     }
   };
   const onEdit = async (id) => {
     const index = activities.findIndex((activity) => activity._id === id);
     try {
-      const res = await fetch(`${process.env.REACT_APP_API}/api/activities/${id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
         method: 'PUT',
         body: JSON.stringify({
           name: currentName,
@@ -67,20 +67,19 @@ function Activities() {
       const data = await res.json();
       const update = [...activities];
       update[index] = data.data;
-      console.log(update);
       console.log(update[index]);
       setActivities(update);
     } catch (error) {
-      console.log(error);
+      console.error;
     }
   };
   const getActivities = async () => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API}/api/activities/`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`);
       const data = await res.json();
       setActivities(data.data);
     } catch (error) {
-      console.log(error);
+      console.error;
     }
   };
   useEffect(() => {
@@ -121,7 +120,8 @@ function Activities() {
                       <img
                         src={deleteIcon}
                         onClick={() => {
-                          if (confirm('Are you sure you want to delete?')) {
+                          const uShureM8 = confirm('Are you sure you want to delete?');
+                          if (uShureM8) {
                             alert('Activity deleted');
                             onDelete(activity._id);
                           }
