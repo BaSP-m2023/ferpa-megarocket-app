@@ -7,7 +7,7 @@ const Table = ({ subscriptions, onDelete }) => {
     <table className={styles.table}>
       <tbody className={styles.tbody}>
         <tr className={styles.tr}>
-          <th className={styles.thead}>Class ID</th>
+          <th className={styles.thead}>Activity</th>
           <th className={styles.thead}>Member ID</th>
           <th className={styles.thead}>Date</th>
         </tr>

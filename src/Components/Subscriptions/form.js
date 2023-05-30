@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import styles from './subscriptions.module.css';
 
-const Form = ({ onCreate }) => {
+const Form = ({ onCreate, getClassID, getMemberID }) => {
   const [formData, setFormData] = useState({
     classId: '',
     memberId: '',
     date: ''
   });
+
+  console.log('getclassid', getClassID);
+  console.log('getmemberid', getMemberID);
 
   const handleChange = (e) => {
     setFormData({
@@ -29,29 +32,45 @@ const Form = ({ onCreate }) => {
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.inputBox}>
         <label>Class ID:</label>
-        <input
+        <select
           type="text"
           name="classId"
           value={formData.classId}
           onChange={handleChange}
           required
-        />
+        >
+          {getClassID.map((item) => {
+            return (
+              <option key={item._id} value={item._id}>
+                {`${item._id}`}
+              </option>
+            );
+          })}
+        </select>
       </div>
       <div className={styles.inputBox}>
         <label>Member ID:</label>
-        <input
+        <select
           type="text"
           name="memberId"
           value={formData.memberId}
           onChange={handleChange}
           required
-        />
+        >
+          {getMemberID.map((item) => {
+            return (
+              <option key={item._id} value={item._id}>
+                {`${item._id} ${item.lastName}`}
+              </option>
+            );
+          })}
+        </select>
       </div>
       <div className={styles.inputBox}>
         <label>Date:</label>
         <input
           className={styles.submitBtn}
-          type="text"
+          type="date"
           name="date"
           value={formData.date}
           onChange={handleChange}

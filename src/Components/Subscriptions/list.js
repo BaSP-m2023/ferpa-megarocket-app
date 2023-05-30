@@ -4,7 +4,7 @@ import Table from './table';
 import Button from './button';
 import Form from './form';
 
-const List = ({ subscriptions, onDelete, onCreate }) => {
+const List = ({ subscriptions, onDelete, onCreate, getClassID, getMemberID, refreshTable }) => {
   const [showForm, setShowForm] = useState(false);
 
   const handleButtonClick = () => {
@@ -17,8 +17,8 @@ const List = ({ subscriptions, onDelete, onCreate }) => {
         <h1 className={styles.title}>Subscriptions</h1>
         <Button onClick={handleButtonClick} />
       </header>
-      <Table subscriptions={subscriptions} onDelete={onDelete} />
-      {showForm && <Form onCreate={onCreate} />}
+      <Table subscriptions={subscriptions} onDelete={onDelete} refreshTable={refreshTable} />
+      {showForm && <Form onCreate={onCreate} getClassID={getClassID} getMemberID={getMemberID} />}
     </section>
   );
 };
