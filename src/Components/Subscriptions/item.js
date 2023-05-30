@@ -6,7 +6,7 @@ const Item = ({ subscription, onDelete }) => {
   return (
     <tr className={styles.tr}>
       <td className={styles.td}>{subscription.classId?.activityId?.name}</td>
-      <td className={styles.td}>{subscription.memberId.lastName}</td>
+      <td className={styles.td}>{subscription.memberId?.lastName}</td>
       <td className={styles.td}>{subscription.date}</td>
       <td className={styles.td}>
         <FaPen style={{ color: 'white', cursor: 'pointer' }} />
