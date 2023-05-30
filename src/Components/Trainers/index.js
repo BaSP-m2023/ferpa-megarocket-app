@@ -38,7 +38,7 @@ const Trainers = () => {
           throw data.message;
         }
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     }
   };
@@ -62,12 +62,11 @@ const Trainers = () => {
     setTrainers([...trainers, newTrainer]);
   };
 
-  const sendTrainer = async (iten) => {
-    console.log(iten);
+  const sendTrainer = async (item) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API}/api/trainers/`, {
         method: 'POST',
-        body: JSON.stringify(iten),
+        body: JSON.stringify(item),
         headers: {
           'Content-Type': 'application/json'
         }
@@ -129,16 +128,12 @@ const Trainers = () => {
     });
     setToggleEdit(true);
     setCurrentId(item._id);
-    console.log(item);
-    console.log(trainer);
-    console.log(currentId);
   };
 
   const editTrainer = (e) => {
     e.preventDefault();
     putTrainer(currentId);
     setErrorMessage('');
-    console.log(trainer);
   };
 
   return (
