@@ -19,7 +19,7 @@ function Form({ create }) {
           <label>Email: </label>
           <input
             id={styles.emailImput}
-            type={'text'}
+            type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></input>
@@ -28,12 +28,12 @@ function Form({ create }) {
           <label>Password: </label>
           <input
             id={styles.passImput}
-            type={'password'}
+            type="password"
             value={pass}
             onChange={(e) => setPass(e.target.value)}
           ></input>
         </div>
-        <button className={styles.submitBtn} onClick={submit} type={'submit'}>
+        <button className={styles.submitBtn} onClick={submit} type="submit">
           Submit
         </button>
       </form>

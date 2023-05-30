@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 const List = ({ list, deleteItem, updateItem }) => {
   const [togglePass, setTogglePass] = useState([]);
-  const [editUser, setEditUser] = useState(null);
+  const [editUser, setEditUser] = useState();
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
 
@@ -54,7 +54,7 @@ const List = ({ list, deleteItem, updateItem }) => {
                 <>
                   <label>New Pass: </label>
                   <input
-                    type={'password'}
+                    type="password"
                     value={pass}
                     onChange={(e) => setPass(e.target.value)}
                   ></input>
@@ -66,7 +66,7 @@ const List = ({ list, deleteItem, updateItem }) => {
               )}
             </td>
             <td className={styles.tdBtn}>
-              <button id={styles.passBtn} onClick={() => toggler(superAdmin._id)}></button>
+              <button className={styles.passBtn} onClick={() => toggler(superAdmin._id)}></button>
             </td>
             <td className={styles.tdBtn}>
               {editUser === superAdmin._id ? (
@@ -79,7 +79,7 @@ const List = ({ list, deleteItem, updateItem }) => {
               ) : (
                 <button
                   onClick={() => handleEditClick(superAdmin._id)}
-                  id={styles.editBtn}
+                  className={styles.editBtn}
                 ></button>
               )}
             </td>
@@ -89,7 +89,10 @@ const List = ({ list, deleteItem, updateItem }) => {
                   Cancel
                 </button>
               ) : (
-                <button id={styles.deleteBtn} onClick={() => deleteItem(superAdmin._id)}></button>
+                <button
+                  className={styles.deleteBtn}
+                  onClick={() => deleteItem(superAdmin._id)}
+                ></button>
               )}
             </td>
           </tr>

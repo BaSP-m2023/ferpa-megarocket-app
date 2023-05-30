@@ -8,7 +8,7 @@ function SuperAdmins() {
 
   const getSuperAdmins = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API}/api/super-admins/`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/`);
       const data = await response.json();
       setSuperAdmins(data.data);
     } catch (error) {
@@ -24,7 +24,7 @@ function SuperAdmins() {
     try {
       const result = window.confirm('Are you sure that you want to delete?');
       if (result) {
-        const response = await fetch(`${process.env.REACT_APP_API}/api/super-admins/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
           method: 'DELETE'
         });
         const data = await response.json();
@@ -38,7 +38,7 @@ function SuperAdmins() {
 
   const createItem = async (email, password) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API}/api/super-admins`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
         method: 'POST',
         body: JSON.stringify({ email, password }),
         headers: {
@@ -58,7 +58,7 @@ function SuperAdmins() {
   const updateItem = async (id, email, password) => {
     const index = superAdmins.findIndex((admin) => admin._id === id);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API}/api/super-admins/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
         method: 'PUT',
         body: JSON.stringify({ email, password }),
         headers: {
