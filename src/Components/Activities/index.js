@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './activities.module.css';
-import deleteIcon from './assets/delete.png';
-import editIcon from './assets/edit.png';
-
-// import deleteIcon from '../../../public/assets/images/delete.png';
-// import editIcon from '.../../../public/assets/images/edit.png';
+import deleteIcon from './assets/delete-icon.png';
+import editIcon from './assets/edit-icon.png';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -22,35 +19,36 @@ function Activities() {
     setName('');
     setDescription('');
   };
-  const onDelete = (id) => {
-    fetch(`${process.env.REACT_APP_API}/api/activities/${id}`, {
-      method: 'DELETE'
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then(() => {
-        setActivities([...activities.filter((activity) => activity._id !== id)]);
+  const onDelete = async (id) => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API}/api/activities/${id}`, {
+        method: 'DELETE'
       });
+      const data = await res.json();
+      setActivities([...activities.filter((activity) => activity._id !== id)]);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   };
-  const onClick = ({ name, description }) => {
-    fetch(`${process.env.REACT_APP_API}/api/activities/`, {
-      method: 'POST',
-      body: JSON.stringify({
-        name: name,
-        description: description,
-        isActive: true
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
-        setActivities([...activities, response.data]);
+  const onClick = async ({ name, description }) => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API}/api/activities/`, {
+        method: 'POST',
+        body: JSON.stringify({
+          name: name,
+          description: description,
+          isActive: true
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
+      const data = await res.json();
+      setActivities([...activities, data.data]);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const onEdit = async (id) => {
     const index = activities.findIndex((activity) => activity._id === id);
@@ -76,13 +74,14 @@ function Activities() {
       console.log(error);
     }
   };
-
-  const getActivities = () => {
-    fetch(`${process.env.REACT_APP_API}/api/activities/`)
-      .then((response) => response.json())
-      .then((response) => {
-        setActivities(response.data);
-      });
+  const getActivities = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API}/api/activities/`);
+      const data = await res.json();
+      setActivities(data.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     getActivities();
@@ -111,6 +110,7 @@ function Activities() {
                         src={editIcon}
                         onClick={() => {
                           setShowEdit(!showEdit);
+                          setShowAdd(false);
                           setCurrentName(activity.name);
                           setCurrentDes(activity.description);
                           setCurrentId(activity._id);
@@ -137,6 +137,7 @@ function Activities() {
             className={styles.add}
             onClick={() => {
               setShowAdd(!showAdd);
+              setShowEdit(false);
             }}
           >
             Add
@@ -176,7 +177,14 @@ function Activities() {
                 value={currentDes}
                 onChange={(e) => setCurrentDes(e.target.value)}
               />
-              <button type="submit" onClick={() => onEdit(currentId)}>
+              <button
+                className={styles.confirmEdit}
+                type="submit"
+                onClick={() => {
+                  onEdit(currentId);
+                  setShowEdit(!showEdit);
+                }}
+              >
                 Edit
               </button>
             </form>
