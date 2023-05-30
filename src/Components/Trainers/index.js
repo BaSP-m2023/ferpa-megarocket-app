@@ -19,7 +19,7 @@ const Trainers = () => {
   });
 
   const getTrainers = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API}/api/trainers`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
     const data = await response.json();
     setTrainers(data.data);
   };
@@ -28,7 +28,7 @@ const Trainers = () => {
     const option = confirm('Are you sure??');
     if (option) {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API}/api/trainers/${_id}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${_id}`, {
           method: 'DELETE'
         });
         const data = await response.json();
@@ -64,7 +64,7 @@ const Trainers = () => {
 
   const sendTrainer = async (item) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API}/api/trainers/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`, {
         method: 'POST',
         body: JSON.stringify(item),
         headers: {
@@ -85,7 +85,7 @@ const Trainers = () => {
 
   const putTrainer = async (id) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API}/api/trainers/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
         method: 'PUT',
         body: JSON.stringify(trainer),
         headers: {
