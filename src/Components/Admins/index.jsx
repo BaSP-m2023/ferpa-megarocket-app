@@ -16,29 +16,29 @@ function Admins() {
 
   const getAllAdmins = async () => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API}/api/admins`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
       const { data } = await res.json();
 
       return data;
     } catch (error) {
-      console.log(error);
+      console.error;
     }
   };
 
   const getAdminID = async (id) => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API}/api/admins/${id}`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`);
       const data = await res.json();
 
       return data;
     } catch (error) {
-      console.log(error);
+      console.error;
     }
   };
 
   const addAdmin = async (admin) => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API}/api/admins`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json'
@@ -53,14 +53,14 @@ function Admins() {
         setAdmins([...admins, data]);
       }
     } catch (error) {
-      console.log(error);
+      console.error;
     }
   };
 
   const updateAdmin = async (id, updatedAdmin) => {
     const adminIndex = admins.findIndex((admin) => admin._id === id);
     try {
-      const res = await fetch(`${process.env.REACT_APP_API}/api/admins/${id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json'
@@ -70,14 +70,14 @@ function Admins() {
 
       const { message, data, error } = await res.json();
       alert(message);
-      console.log(data);
+
       if (!error) {
         const actualAdmins = [...admins];
         actualAdmins[adminIndex] = data;
         setAdmins(actualAdmins);
       }
     } catch (error) {
-      console.log(error);
+      console.error;
     }
   };
 
@@ -85,7 +85,7 @@ function Admins() {
     try {
       const response = confirm('Are you sure you want to delete this admin?');
       if (response) {
-        const res = await fetch(`${process.env.REACT_APP_API}/api/admins/${id}`, {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
           method: 'DELETE'
         });
 
@@ -95,7 +95,7 @@ function Admins() {
         setAdmins(admins.filter((admin) => admin._id !== id));
       }
     } catch (error) {
-      console.log(error);
+      console.error;
     }
   };
 
