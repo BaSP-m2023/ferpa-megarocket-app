@@ -3,6 +3,10 @@ import styles from './trainers.module.css';
 
 const Trainers = () => {
   const [trainers, setTrainers] = useState([]);
+  const [toggleAdd, setToggleAdd] = useState(false);
+  const [toggleEdit, setToggleEdit] = useState(false);
+  const [currentId, setCurrentId] = useState('');
+  const [errorMesagge, setErrorMessage] = useState('');
   const [trainer, setTrainer] = useState({
     firstName: '',
     lastName: '',
@@ -13,7 +17,6 @@ const Trainers = () => {
     password: '',
     salary: ''
   });
-  const [toggleAdd, setToggleAdd] = useState(false);
 
   const getTrainers = async () => {
     const response = await fetch(`${process.env.REACT_APP_API}/api/trainers`);
@@ -77,7 +80,28 @@ const Trainers = () => {
         throw data.message;
       }
     } catch (error) {
-      console.log(error);
+      setErrorMessage(error);
+    }
+  };
+
+  const putTrainer = async (id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API}/api/trainers/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(trainer),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await response.json();
+      if (!data.error) {
+        getTrainers();
+        setToggleEdit(false);
+      } else {
+        throw data.message;
+      }
+    } catch (error) {
+      setErrorMessage(error);
     }
   };
 
@@ -90,6 +114,31 @@ const Trainers = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     sendTrainer(trainer);
+    setErrorMessage('');
+  };
+  const showTrainer = (item) => {
+    setTrainer({
+      firstName: item.firstName,
+      lastName: item.lastName,
+      dni: item.dni.toString(),
+      phone: item.phone.toString(),
+      email: item.email,
+      city: item.city,
+      password: item.password,
+      salary: item.salary.toString()
+    });
+    setToggleEdit(true);
+    setCurrentId(item._id);
+    console.log(item);
+    console.log(trainer);
+    console.log(currentId);
+  };
+
+  const editTrainer = (e) => {
+    e.preventDefault();
+    putTrainer(currentId);
+    setErrorMessage('');
+    console.log(trainer);
   };
 
   return (
@@ -150,11 +199,12 @@ const Trainers = () => {
               <input name="salary" type="text" onChange={onChangeInput} />
             </fieldset>
           </div>
-          <p></p>
+          <p>{errorMesagge ? errorMesagge : ''}</p>
           <button
             onClick={(e) => {
               e.preventDefault();
               setToggleAdd(false);
+              setErrorMessage('');
             }}
           >
             Cancel
@@ -189,7 +239,7 @@ const Trainers = () => {
                 <td>{item.password}</td>
                 <td>{item.salary}</td>
                 <td>
-                  <button>Edit</button>
+                  <button onClick={() => showTrainer(item)}>Edit</button>
                   <button className={styles.deleteBtn} onClick={() => deleteTrainer(item._id)}>
                     X
                   </button>
@@ -199,40 +249,70 @@ const Trainers = () => {
           })}
         </tbody>
       </table>
-      <form>
-        <fieldset>
-          <label htmlFor="">Name</label>
-          <input name="firstName" type="text" />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="">Last Name</label>
-          <input name="lastName" type="text" />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="">Dni</label>
-          <input name="dni" type="text" />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="">Phone</label>
-          <input name="phone" type="text" />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="">Email</label>
-          <input name="email" type="text" />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="">City</label>
-          <input name="city" type="text" />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="">Password</label>
-          <input name="password" type="text" />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="">Salary</label>
-          <input name="salary" type="text" />
-        </fieldset>
-      </form>
+      {toggleEdit && (
+        <form onSubmit={editTrainer}>
+          <div>
+            <fieldset>
+              <label htmlFor="">Name</label>
+              <input
+                value={trainer.firstName}
+                onChange={onChangeInput}
+                name="firstName"
+                type="text"
+              />
+            </fieldset>
+            <fieldset>
+              <label htmlFor="">Last Name</label>
+              <input
+                value={trainer.lastName}
+                onChange={onChangeInput}
+                name="lastName"
+                type="text"
+              />
+            </fieldset>
+            <fieldset>
+              <label htmlFor="">Dni</label>
+              <input value={trainer.dni} onChange={onChangeInput} name="dni" type="text" />
+            </fieldset>
+            <fieldset>
+              <label htmlFor="">Phone</label>
+              <input value={trainer.phone} onChange={onChangeInput} name="phone" type="text" />
+            </fieldset>
+            <fieldset>
+              <label htmlFor="">Email</label>
+              <input value={trainer.email} onChange={onChangeInput} name="email" type="text" />
+            </fieldset>
+            <fieldset>
+              <label htmlFor="">City</label>
+              <input value={trainer.city} onChange={onChangeInput} name="city" type="text" />
+            </fieldset>
+            <fieldset>
+              <label htmlFor="">Password</label>
+              <input
+                value={trainer.password}
+                onChange={onChangeInput}
+                name="password"
+                type="text"
+              />
+            </fieldset>
+            <fieldset>
+              <label htmlFor="">Salary</label>
+              <input value={trainer.salary} onChange={onChangeInput} name="salary" type="text" />
+            </fieldset>
+          </div>
+          <p>{errorMesagge ? errorMesagge : ''}</p>
+          <button type="submit">Edit</button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setToggleEdit(false);
+              setErrorMessage('');
+            }}
+          >
+            Cancel
+          </button>
+        </form>
+      )}
     </section>
   );
 };
