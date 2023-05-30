@@ -15,7 +15,7 @@ function Activities() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    onClick({ name, description });
+    onAdd({ name, description });
     setName('');
     setDescription('');
   };
@@ -31,7 +31,7 @@ function Activities() {
       console.error;
     }
   };
-  const onClick = async ({ name, description }) => {
+  const onAdd = async ({ name, description }) => {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`, {
         method: 'POST',
