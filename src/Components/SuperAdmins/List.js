@@ -26,12 +26,12 @@ const List = ({ list, deleteItem, updateItem }) => {
   };
 
   const handleCancelClick = () => {
-    setEditUser(null);
+    setEditUser();
   };
 
   const handleSaveClick = (userId, email, pass) => {
     updateItem(userId, email, pass);
-    setEditUser(null);
+    setEditUser();
   };
 
   return (
