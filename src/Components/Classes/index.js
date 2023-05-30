@@ -9,7 +9,7 @@ const Classes = () => {
   const [trainers, setTrainers] = useState([]);
 
   const getClasses = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API}/api/classes/`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`);
     const data = await response.json();
     setClasses(data.data);
   };
@@ -21,13 +21,13 @@ const Classes = () => {
   // };
 
   const getActivities = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API}/api/activities/`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`);
     const data = await response.json();
     setActivities(data.data);
   };
 
   const getTrainers = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API}/api/trainers/`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`);
     const data = await response.json();
     setTrainers(data.data);
   };
@@ -40,7 +40,7 @@ const Classes = () => {
 
   const addItem = async (klass) => {
     try {
-      const newClass = await fetch(`${process.env.REACT_APP_API}/api/classes/`, {
+      const newClass = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`, {
         method: 'POST',
         body: JSON.stringify(klass),
         headers: {
@@ -77,7 +77,7 @@ const Classes = () => {
   // };
 
   const deleteItem = async (_id) => {
-    await fetch(`${process.env.REACT_APP_API}/api/classes/${_id}`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${_id}`, {
       method: 'DELETE'
     });
     setClasses([...classes.filter((klass) => klass._id !== _id)]);
