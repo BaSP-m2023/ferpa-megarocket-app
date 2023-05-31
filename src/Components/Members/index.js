@@ -3,9 +3,9 @@ import styles from './members.module.css';
 
 function Members() {
   const [members, setMembers] = useState([]);
-  const [firstName, setName] = useState('');
-  const [lastName, setSurname] = useState('');
-  const [dni, setDni] = useState();
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [dni, setDni] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [city, setCity] = useState('');
@@ -13,78 +13,75 @@ function Members() {
   const [postalCode, setPostalCode] = useState('');
   const [isActive, setIsActive] = useState(true);
   const [membership, setMembership] = useState('Classic');
-  const [updateMember, setMemberUpdated] = useState({
-    firstName,
-    lastName,
-    dni,
-    phone,
-    email,
-    city,
-    birthDay,
-    postalCode,
-    isActive,
-    membership
-  });
-  // const [memberFormValue, setMemberFormValue] = useState({
-  //   firstName: '',
-  //   lastName: '',
-  //   dni: '',
-  //   phone: '',
-  //   email: '',
-  //   city: '',
-  //   birthDay: '',
-  //   postalCode: '',
-  //   isActive: true,
-  //   membership: ''
-  // });
+  const [memberId, setMemberId] = useState('');
 
-  const handleSurnameChange = (e) => {
-    setSurname(e.target.value);
+  const [firstNameAdd, setFirstNameAdd] = useState('');
+  const [lastNameAdd, setLastNameAdd] = useState('');
+  const [dniAdd, setDniAdd] = useState('');
+  const [phoneAdd, setPhoneAdd] = useState('');
+  const [emailAdd, setEmailAdd] = useState('');
+  const [cityAdd, setCityAdd] = useState('');
+  const [birthDayAdd, setBirthdayAdd] = useState('');
+  const [postalCodeAdd, setPostalCodeAdd] = useState('');
+  const [isActiveAdd, setIsActiveAdd] = useState(true);
+  const [membershipAdd, setMembershipAdd] = useState('Classic');
+
+  const handleLastName = (e) => {
+    setLastNameAdd(e.target.value);
   };
 
   const handleDniChange = (e) => {
     const value = e.target.value;
-    setDni(value);
+    setDniAdd(value);
   };
 
   const handlePhoneChange = (e) => {
     const value = e.target.value;
-    setPhone(value);
+    setPhoneAdd(value);
   };
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+    setEmailAdd(e.target.value);
   };
 
   const handleCityChange = (e) => {
-    setCity(e.target.value);
+    setCityAdd(e.target.value);
   };
 
   const handleBirthdayChange = (e) => {
-    setBirthday(e.target.value);
+    setBirthdayAdd(e.target.value);
   };
 
   const handlePostalCodeChange = (e) => {
-    setPostalCode(e.target.value);
+    setPostalCodeAdd(e.target.value);
   };
 
   const handleMembershipChange = (e) => {
-    console.log(e.target.value);
-    setMembership(e.target.value);
+    setMembershipAdd(e.target.value);
   };
 
   const handleIsActiveChange = (e) => {
-    setIsActive(e.target.value);
+    setIsActiveAdd(e.target.value);
   };
 
-  const changeHandler = (e) => {
-    setMemberUpdated((prevValues) => ({ ...prevValues, [e.target.name]: e.target.value }));
+  const changeHandler = (id) => {
+    const member = members.find((member) => member._id === id);
+    setFirstName(member?.firstName);
+    setLastName(member?.lastName);
+    setDni(member?.dni);
+    setPhone(member?.phone);
+    setEmail(member?.email);
+    setCity(member?.city);
+    setBirthday(member?.birthDay);
+    setPostalCode(member?.postalCode);
+    setIsActive(member?.isActive);
+    setMembership(member?.membership);
+    setMemberId(id);
   };
 
   const saveUpdate = (e) => {
     e.preventDefault();
-
-    updatedMember(members._id, updateMember);
+    updatedMember(memberId);
 
     close();
   };
@@ -92,28 +89,39 @@ function Members() {
   const handleSubmit = (e) => {
     e.preventDefault();
     addMember({
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      birthDay,
-      postalCode,
-      isActive,
-      membership
+      firstNameAdd,
+      lastNameAdd,
+      dniAdd,
+      phoneAdd,
+      emailAdd,
+      cityAdd,
+      birthDayAdd,
+      postalCodeAdd,
+      isActiveAdd,
+      membershipAdd
     });
   };
 
   const addMember = async (member) => {
+    console.log(member);
     try {
-      console.log(member);
       const newMembers = await fetch(`${process.env.REACT_APP_API_URL}/api/members/`, {
         method: 'POST',
-        body: JSON.stringify(member),
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          firstName: member.firstNameAdd,
+          lastName: member.lastNameAdd,
+          dni: member.dniAdd,
+          phone: member.phoneAdd,
+          email: member.emailAdd,
+          city: member.cityAdd,
+          birthDay: member.birthDayAdd,
+          postalCode: member.postalCodeAdd,
+          isActive: member.isActiveAdd,
+          membership: member.membershipAdd
+        })
       });
 
       const { message, data, error } = await newMembers.json();
@@ -123,7 +131,7 @@ function Members() {
         setMembers([...members, data]);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -143,15 +151,26 @@ function Members() {
     }
   };
 
-  const updatedMember = async (id, updatedMember) => {
+  const updatedMember = async (id) => {
     const adminIndex = members.findIndex((member) => member._id === id);
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}api/member/${id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
         method: 'PUT',
-        body: JSON.stringify(updatedMember),
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          dni: dni,
+          phone: phone,
+          email: email,
+          city: city,
+          birthDay: birthDay,
+          postalCode: postalCode,
+          isActive: isActive,
+          membership: membership
+        })
       });
 
       const { message, data, error } = await res.json();
@@ -163,18 +182,7 @@ function Members() {
         setMembers(actualMembers);
       }
     } catch (error) {
-      console.error;
-    }
-  };
-
-  const getByIdMember = async (id) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members${id}`);
-      const { data } = await res.json();
-
-      return data;
-    } catch (error) {
-      console.error;
+      console.error(error);
     }
   };
 
@@ -207,25 +215,25 @@ function Members() {
             </tr>
             {members.map((member) => {
               return (
-                <tr key={member._id}>
-                  <td>{member.firstName}</td>
-                  <td>{member.lastName}</td>
-                  <td>{member.dni}</td>
-                  <td>{member.email}</td>
-                  <td>{member.phone}</td>
+                <tr key={member?._id}>
+                  <td>{member?.firstName}</td>
+                  <td>{member?.lastName}</td>
+                  <td>{member?.dni}</td>
+                  <td>{member?.email}</td>
+                  <td>{member?.phone}</td>
                   <td></td>
                   <td>
                     <img
                       className={styles.update}
                       src="assets/images/Edit.svg"
-                      onClick={() => getByIdMember(members._id)}
+                      onClick={() => changeHandler(member?._id)}
                     />
                   </td>
                   <td>
                     <img
                       className={styles.delete}
                       src="assets/images/Delete.svg"
-                      onClick={() => deleteMember(member._id)}
+                      onClick={() => deleteMember(member?._id)}
                     />
                   </td>
                 </tr>
@@ -242,73 +250,45 @@ function Members() {
               type="text"
               placeholder="Name"
               name="firstName"
-              value={firstName}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setFirstNameAdd(e.target.value)}
             />
           </label>
           <label>
             Surname:
-            <input
-              type="text"
-              placeholder="Surname"
-              value={lastName}
-              onChange={handleSurnameChange}
-            />
+            <input type="text" placeholder="Surname" onChange={handleLastName} />
           </label>
           <label>
             DNI:
-            <input
-              type="text"
-              placeholder="DNI"
-              pattern="\d*"
-              value={dni}
-              onChange={handleDniChange}
-            />
+            <input type="text" placeholder="DNI" pattern="\d*" onChange={handleDniChange} />
           </label>
           <label>
             Phone:
-            <input
-              type="tel"
-              placeholder="Phone"
-              pattern="\d*"
-              value={phone}
-              onChange={handlePhoneChange}
-            />
+            <input type="text" placeholder="Phone" pattern="\d*" onChange={handlePhoneChange} />
           </label>
           <label>
             email:
-            <input type="email" placeholder="Email" value={email} onChange={handleEmailChange} />
+            <input type="text" placeholder="Email" onChange={handleEmailChange} />
           </label>
           <label>
             City:
-            <input type="text" placeholder="City" value={city} onChange={handleCityChange} />
+            <input type="text" placeholder="City" onChange={handleCityChange} />
           </label>
           <label>
             Birthday:
-            <input
-              type="date"
-              placeholder="Birthday"
-              value={birthDay}
-              onChange={handleBirthdayChange}
-            />
+            <input type="text" placeholder="Birthday" onChange={handleBirthdayChange} />
           </label>
           <label>
             Postal Code:
-            <input
-              type="text"
-              placeholder="Postal Code"
-              value={postalCode}
-              onChange={handlePostalCodeChange}
-            />
+            <input type="text" placeholder="Postal Code" onChange={handlePostalCodeChange} />
           </label>
           <label>Its Active?</label>
-          <select value={isActive} onChange={handleIsActiveChange}>
+          <select onChange={handleIsActiveChange}>
             <option value={true}>Yes</option>
             <option value={false}>No</option>
           </select>
           <label>
             Membership:
-            <select value={membership} onChange={handleMembershipChange}>
+            <select onChange={handleMembershipChange}>
               <option value="Classic">Classic</option>
               <option value="Only Classes">Only Classes</option>
               <option value="Black">Black Membership</option>
@@ -320,7 +300,7 @@ function Members() {
         </form>
       </div>
       <div>
-        <form>
+        <form onSubmit={saveUpdate}>
           <label>
             Name:
             <input
@@ -328,7 +308,7 @@ function Members() {
               placeholder="Name"
               name="firstName"
               value={firstName}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setFirstName(e.target.value)}
             />
           </label>
           <label>
@@ -348,7 +328,7 @@ function Members() {
           <label>
             Phone:
             <input
-              type="tel"
+              type="text"
               placeholder="Phone"
               pattern="\d*"
               value={phone}
@@ -357,7 +337,7 @@ function Members() {
           </label>
           <label>
             email:
-            <input type="email" placeholder="Email" value={email} onChange={changeHandler} />
+            <input type="text" placeholder="Email" value={email} onChange={changeHandler} />
           </label>
           <label>
             City:
@@ -365,7 +345,7 @@ function Members() {
           </label>
           <label>
             Birthday:
-            <input type="date" placeholder="Birthday" value={birthDay} onChange={changeHandler} />
+            <input type="text" placeholder="Birthday" value={birthDay} onChange={changeHandler} />
           </label>
           <label>
             Postal Code:
@@ -389,8 +369,25 @@ function Members() {
               <option value="Black">Black Membership</option>
             </select>
           </label>
-          <button type="submit" onSubmit={saveUpdate}>
-            Enviar
+          <button
+            type="submit"
+            onSubmit={() =>
+              saveUpdate(
+                firstName,
+                lastName,
+                dni,
+                phone,
+                email,
+                city,
+                birthDay,
+                postalCode,
+                isActive,
+                membership,
+                memberId
+              )
+            }
+          >
+            Editar
           </button>
         </form>
       </div>
