@@ -5,6 +5,11 @@
   align-items: center;
   background-image: url('../../../public/assets/images/super-admin-background.png');
   background-size: cover;
+  font-size: 1.5vw;
+}
+
+input, button {
+  font-size: 1.3vw;
 }
 
 p {
