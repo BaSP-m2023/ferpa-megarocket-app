@@ -6,7 +6,6 @@ const Trainers = () => {
   const [toggleAdd, setToggleAdd] = useState(false);
   const [toggleEdit, setToggleEdit] = useState(false);
   const [currentId, setCurrentId] = useState('');
-  const [errorMesagge, setErrorMessage] = useState('');
   const [trainer, setTrainer] = useState({
     firstName: '',
     lastName: '',
@@ -64,7 +63,7 @@ const Trainers = () => {
         throw message;
       }
     } catch (error) {
-      setErrorMessage(error);
+      console.error(error);
     }
   };
 
@@ -85,7 +84,7 @@ const Trainers = () => {
         throw message;
       }
     } catch (error) {
-      setErrorMessage(error);
+      console.error(error);
     }
   };
 
@@ -117,7 +116,6 @@ const Trainers = () => {
   const onSubmitAdd = (e) => {
     e.preventDefault();
     sendTrainer(trainer);
-    setErrorMessage('');
   };
   const showEditTrainer = (item) => {
     setTrainer({
@@ -138,7 +136,6 @@ const Trainers = () => {
   const editTrainer = (e) => {
     e.preventDefault();
     putTrainer(currentId);
-    setErrorMessage('');
   };
 
   return (
@@ -168,19 +165,19 @@ const Trainers = () => {
         <form onSubmit={onSubmitAdd}>
           <div>
             <fieldset>
-              <label htmlFor="firstName">Name</label>
+              <label>Name</label>
               <input name="firstName" type="text" onChange={onChangeInput} />
             </fieldset>
             <fieldset>
-              <label htmlFor="lastName">Last Name</label>
+              <label>Last Name</label>
               <input name="lastName" type="text" onChange={onChangeInput} />
             </fieldset>
             <fieldset>
-              <label htmlFor="dni">Dni</label>
+              <label>Dni</label>
               <input name="dni" type="text" onChange={onChangeInput} />
             </fieldset>
             <fieldset>
-              <label htmlFor="phone">Phone</label>
+              <label>Phone</label>
               <input name="phone" type="text" onChange={onChangeInput} />
             </fieldset>
             <fieldset>
@@ -188,24 +185,22 @@ const Trainers = () => {
               <input name="email" type="text" onChange={onChangeInput} />
             </fieldset>
             <fieldset>
-              <label htmlFor="city">City</label>
+              <label>City</label>
               <input name="city" type="text" onChange={onChangeInput} />
             </fieldset>
             <fieldset>
-              <label htmlFor="password">Password</label>
+              <label>Password</label>
               <input name="password" type="text" onChange={onChangeInput} />
             </fieldset>
             <fieldset>
-              <label htmlFor="salary">Salary</label>
+              <label>Salary</label>
               <input name="salary" type="text" onChange={onChangeInput} />
             </fieldset>
           </div>
-          <p>{errorMesagge ? errorMesagge : ''}</p>
           <button
             onClick={(e) => {
               e.preventDefault();
               setToggleAdd(false);
-              setErrorMessage('');
             }}
           >
             Cancel
@@ -254,7 +249,7 @@ const Trainers = () => {
         <form onSubmit={editTrainer}>
           <div>
             <fieldset>
-              <label htmlFor="">Name</label>
+              <label>Name</label>
               <input
                 value={trainer.firstName}
                 onChange={onChangeInput}
@@ -263,7 +258,7 @@ const Trainers = () => {
               />
             </fieldset>
             <fieldset>
-              <label htmlFor="">Last Name</label>
+              <label>Last Name</label>
               <input
                 value={trainer.lastName}
                 onChange={onChangeInput}
@@ -272,23 +267,23 @@ const Trainers = () => {
               />
             </fieldset>
             <fieldset>
-              <label htmlFor="">Dni</label>
+              <label>Dni</label>
               <input value={trainer.dni} onChange={onChangeInput} name="dni" type="text" />
             </fieldset>
             <fieldset>
-              <label htmlFor="">Phone</label>
+              <label>Phone</label>
               <input value={trainer.phone} onChange={onChangeInput} name="phone" type="text" />
             </fieldset>
             <fieldset>
-              <label htmlFor="">Email</label>
+              <label>Email</label>
               <input value={trainer.email} onChange={onChangeInput} name="email" type="text" />
             </fieldset>
             <fieldset>
-              <label htmlFor="">City</label>
+              <label>City</label>
               <input value={trainer.city} onChange={onChangeInput} name="city" type="text" />
             </fieldset>
             <fieldset>
-              <label htmlFor="">Password</label>
+              <label>Password</label>
               <input
                 value={trainer.password}
                 onChange={onChangeInput}
@@ -297,17 +292,15 @@ const Trainers = () => {
               />
             </fieldset>
             <fieldset>
-              <label htmlFor="">Salary</label>
+              <label>Salary</label>
               <input value={trainer.salary} onChange={onChangeInput} name="salary" type="text" />
             </fieldset>
           </div>
-          <p>{errorMesagge ? errorMesagge : ''}</p>
           <button type="submit">Edit</button>
           <button
             onClick={(e) => {
               e.preventDefault();
               setToggleEdit(false);
-              setErrorMessage('');
             }}
           >
             Cancel
