@@ -35,11 +35,11 @@ const Trainers = () => {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${_id}`, {
           method: 'DELETE'
         });
-        const data = await response.json();
-        if (!data.error) {
+        const { message, error } = await response.json();
+        if (!error) {
           setTrainers([...trainers.filter((trainer) => trainer._id !== _id)]);
         } else {
-          throw data.message;
+          throw message;
         }
       } catch (error) {
         alert(error);
@@ -56,12 +56,12 @@ const Trainers = () => {
           'Content-Type': 'application/json'
         }
       });
-      const data = await response.json();
-      if (!data.error) {
-        addTrainer(data.data);
+      const { data, message, error } = await response.json();
+      if (!error) {
+        addTrainer(data);
         setToggleAdd(false);
       } else {
-        throw data.message;
+        throw message;
       }
     } catch (error) {
       setErrorMessage(error);
@@ -77,12 +77,12 @@ const Trainers = () => {
           'Content-Type': 'application/json'
         }
       });
-      const data = await response.json();
-      if (!data.error) {
+      const { message, error } = await response.json();
+      if (!error) {
         getTrainers();
         setToggleEdit(false);
       } else {
-        throw data.message;
+        throw message;
       }
     } catch (error) {
       setErrorMessage(error);
