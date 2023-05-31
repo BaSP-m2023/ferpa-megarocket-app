@@ -28,7 +28,7 @@ function Activities() {
       setActivities([...activities.filter((activity) => activity._id !== id)]);
       return data;
     } catch (error) {
-      console.error;
+      console.error(error);
     }
   };
   const onAdd = async ({ name, description }) => {
@@ -47,7 +47,7 @@ function Activities() {
       const data = await res.json();
       setActivities([...activities, data.data]);
     } catch (error) {
-      console.error;
+      console.error(error);
     }
   };
   const onEdit = async (id) => {
@@ -70,7 +70,7 @@ function Activities() {
       console.log(update[index]);
       setActivities(update);
     } catch (error) {
-      console.error;
+      console.error(error);
     }
   };
   const getActivities = async () => {
@@ -79,7 +79,7 @@ function Activities() {
       const data = await res.json();
       setActivities(data.data);
     } catch (error) {
-      console.error;
+      console.error(error);
     }
   };
   useEffect(() => {
@@ -107,6 +107,7 @@ function Activities() {
                     <td className={styles.icon}>
                       <img
                         src={editIcon}
+                        alt={'Edit'}
                         onClick={() => {
                           setShowEdit(!showEdit);
                           setShowAdd(false);
@@ -119,8 +120,10 @@ function Activities() {
                     <td className={styles.icon}>
                       <img
                         src={deleteIcon}
+                        alt={'Delete'}
                         onClick={() => {
-                          const uShureM8 = confirm('Are you sure you want to delete?');
+                          // eslint-disable-next-line no-restricted-globals
+                          const uShureM8 = confirm({ message: 'Are you sure you want to delete?' });
                           if (uShureM8) {
                             alert('Activity deleted');
                             onDelete(activity._id);
