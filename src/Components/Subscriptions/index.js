@@ -96,6 +96,33 @@ function Subscriptions() {
     setMemberId('');
   };
 
+  const onEdit = async (id) => {
+    const index = subscriptions.findIndex((subscription) => subscription._id === id);
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API}/api/subscriptions/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          classId: classId,
+          memberId: memberId,
+          date: date
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await res.json();
+      console.log('prueba data update', data);
+
+      const updateSubscription = [...subscriptions];
+      updateSubscription[index] = data.data;
+      console.log(updateSubscription[index]);
+
+      setSubscriptions(updateSubscription);
+    } catch (error) {
+      console.error;
+    }
+  };
+
   useEffect(() => {
     getSubscriptions();
     getMembers();
@@ -119,6 +146,14 @@ function Subscriptions() {
           >
             ADD Subs
           </button>
+          <button
+            className={styles.btn}
+            onClick={() => {
+              setShowAdd(!showAdd);
+            }}
+          >
+            EDIT Subs
+          </button>
         </header>
         <table className={styles.table}>
           <tbody className={styles.tbody}>
@@ -133,7 +168,16 @@ function Subscriptions() {
                 <td className={styles.td}>{subscription.memberId?.lastName}</td>
                 <td className={styles.td}>{subscription.date}</td>
                 <td className={styles.td}>
-                  <FaPen style={{ color: 'white', cursor: 'pointer' }} />
+                  <FaPen
+                    style={{ color: 'white', cursor: 'pointer' }}
+                    onClick={() => {
+                      setShowEdit(!showEdit);
+                      setShowAdd(false);
+                      setCurrentName(activity.name);
+                      setCurrentDes(activity.description);
+                      setCurrentId(activity._id);
+                    }}
+                  />
                 </td>
                 <td className={styles.td}>
                   <FaTrash
