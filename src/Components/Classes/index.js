@@ -9,21 +9,45 @@ const Classes = () => {
   const [trainers, setTrainers] = useState([]);
 
   const getClasses = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`);
-    const data = await response.json();
-    setClasses(data.data);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`);
+      const { message, data, error } = await response.json();
+      alert(message);
+
+      if (!error) {
+        setClasses([...classes, data]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getActivities = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`);
-    const data = await response.json();
-    setActivities(data.data);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`);
+      const { message, data, error } = await response.json();
+      alert(message);
+
+      if (!error) {
+        setActivities([...activities, data]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getTrainers = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`);
-    const data = await response.json();
-    setTrainers(data.data);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`);
+      const { message, data, error } = await response.json();
+      alert(message);
+
+      if (!error) {
+        setTrainers([...trainers, data]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -49,7 +73,7 @@ const Classes = () => {
         setClasses([...classes, data]);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -57,6 +81,8 @@ const Classes = () => {
     await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${_id}`, {
       method: 'DELETE'
     });
+    const klass = classes.filter((klass) => klass._id === _id);
+    alert(`Class ${klass[0].name} was deleted`);
     setClasses([...classes.filter((klass) => klass._id !== _id)]);
   };
 
@@ -80,7 +106,7 @@ const Classes = () => {
         setClasses(actualClasses);
       }
     } catch (error) {
-      console.error;
+      console.error(error);
     }
   };
 

@@ -27,13 +27,11 @@ const Table = ({ data, deleteItem, onEditItem, activities, trainers }) => {
       trainerId: item.trainerId,
       slots: item.slots
     });
-    console.log(item);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     onEditItem(klass._id, klass);
-    console.log(klass);
     setKlass({
       day: '',
       hour: '',
@@ -59,7 +57,7 @@ const Table = ({ data, deleteItem, onEditItem, activities, trainers }) => {
           {data.map((item) => {
             return (
               <tr key={item._id}>
-                {item.activityId.name ? <td>{item.activityId.name}</td> : <td>Undefined</td>}
+                <td>{item.activityId.name}</td>
                 <td>{item.day}</td>
                 <td>{item.hour}</td>
                 <td>{item.slots}</td>
@@ -70,7 +68,14 @@ const Table = ({ data, deleteItem, onEditItem, activities, trainers }) => {
                   </button>
                 </td>
                 <td>
-                  <button className="deleteButton" onClick={() => deleteItem(item._id)}>
+                  <button
+                    className="deleteButton"
+                    onClick={() => {
+                      if (confirm('Are you sure that you want to delete this class?')) {
+                        deleteItem(item._id);
+                      }
+                    }}
+                  >
                     X
                   </button>
                 </td>

@@ -19,7 +19,6 @@ const Form = ({ onAddItem, activities, trainers }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     onAddItem(klass);
-    console.log(klass);
     setKlass({
       day: '',
       hour: '',
