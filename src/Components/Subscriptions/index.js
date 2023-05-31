@@ -97,9 +97,12 @@ import { FaPen, FaTrash } from 'react-icons/fa';
 
 function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);
-  // const [name, setName] = useState('');
-  // const [description, setDescription] = useState('');
-  // const [date, setDate] = useState('');
+  const [members, setMembers] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const [showAdd, setShowAdd] = useState(false);
+  const [classId, setClassId] = useState('');
+  const [memberId, setMemberId] = useState('');
+  const [date, setDate] = useState('');
 
   const onDelete = async (id) => {
     try {
@@ -124,16 +127,91 @@ function Subscriptions() {
     }
   };
 
+  const getMembers = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API}/api/members/`);
+      const { data } = await res.json();
+      setMembers(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getClasses = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API}/api/classes/`);
+      const { data } = await res.json();
+      setClasses(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onClick = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API}/api/subscriptions/`, {
+        method: 'POST',
+        body: JSON.stringify({
+          classId: classId,
+          memberId: memberId,
+          date: date
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await res.json();
+      console.log('prueba data', data);
+
+      const newSubscription = {
+        _id: data.data._id,
+        classId: {
+          activityId: {
+            name: classes.find((item) => item._id === data.data.classId).activityId?.name
+          }
+        },
+        memberId: {
+          lastName: members.find((item) => item._id === data.data.memberId).lastName
+        },
+        date: data.data.date
+      };
+
+      setSubscriptions([...subscriptions, newSubscription]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    onClick();
+    setClassId('');
+    setMemberId('');
+  };
+
   useEffect(() => {
     getSubscriptions();
+    getMembers();
+    getClasses();
   }, []);
+
+  console.log('subs', subscriptions);
+  console.log('classId', classId);
+  console.log('memberId', memberId);
 
   return (
     <section className={styles.container}>
       <section className={styles.list}>
         <header className={styles.header}>
           <h1 className={styles.title}>Subscriptions</h1>
-          <button className={styles.btn}> ADD Subs</button>
+          <button
+            className={styles.btn}
+            onClick={() => {
+              setShowAdd(!showAdd);
+            }}
+          >
+            ADD Subs
+          </button>
         </header>
         <table className={styles.table}>
           <tbody className={styles.tbody}>
@@ -166,58 +244,58 @@ function Subscriptions() {
             ))}
           </tbody>
         </table>
-        {/* {showAdd && (
-        <form className={styles.form} onSubmit={onSubmit}>
-          <div className={styles.inputBox}>
-            <label>Class ID:</label>
-            <select
-              type="text"
-              placeholder="class Id"
-              value={classId}
-              onChange={(e) => setName(e.target.value)}
-              required
-            >
-              {getClassID.map((item) => {
-                return (
-                  <option key={item?._id} value={item?._id}>
-                    {`${item?._id}`}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div className={styles.inputBox}>
-            <label>Member ID:</label>
-            <select
-              type="text"
-              placeholder="Member Id"
-              value={MemberId}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            >
-              {getMemberID.map((item) => {
-                return (
-                  <option key={item?._id} value={item?._id}>
-                    {`${item?._id} ${item?.lastName}`}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div className={styles.inputBox}>
-            <label>Date:</label>
-            <input
-              className={styles.submitBtn}
-              type="date"
-              name="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit">Add Subs</button>
-        </form>
-      )}*/}
+        {showAdd && (
+          <form className={styles.form} onSubmit={onSubmit}>
+            <div className={styles.inputBox}>
+              <label>Class ID:</label>
+              <select
+                type="text"
+                placeholder="class Id"
+                value={classId}
+                onChange={(e) => setClassId(e.target.value)}
+                required
+              >
+                {classes.map((item) => {
+                  return (
+                    <option key={item?._id} value={item?._id}>
+                      {`${item?._id}`}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div className={styles.inputBox}>
+              <label>Member ID:</label>
+              <select
+                type="text"
+                placeholder="Member Id"
+                value={memberId}
+                onChange={(e) => setMemberId(e.target.value)}
+                required
+              >
+                {members.map((item) => {
+                  return (
+                    <option key={item?._id} value={item?._id}>
+                      {`${item?.lastName}`}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div className={styles.inputBox}>
+              <label>Date:</label>
+              <input
+                className={styles.submitBtn}
+                type="date"
+                name="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit">Add Subs</button>
+          </form>
+        )}
       </section>
     </section>
   );
