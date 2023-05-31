@@ -42,8 +42,9 @@
     "npm": "7.21.0"
   },
   "devDependencies": {
-    "eslint": "^8.0.1",
+    "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
+    "eslint-config-react-app": "^7.0.1",
     "eslint-config-standard": "latest",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.7.0",
