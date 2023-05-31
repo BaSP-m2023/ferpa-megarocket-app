@@ -5,7 +5,7 @@ import List from './List';
 const Table = ({ list, deleteItem, updateItem }) => {
   return (
     <div>
-      <h2 id={styles.titleTable}>Super Admin List</h2>
+      <h2 className={styles.titleTable}>Super Admin List</h2>
       <table id={styles.table}>
         <thead>
           <tr>

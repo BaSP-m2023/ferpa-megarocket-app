@@ -41,11 +41,11 @@ th {
   width: 12vw;
 }
  
-#titleForm, #titleTable{
+.titleForm, .titleTable{
   text-align: center;
 }
 
-#formPost {
+.formPost {
   display:flex;
   justify-content: space-around;
   align-items: center;

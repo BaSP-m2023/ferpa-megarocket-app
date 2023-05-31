@@ -13,8 +13,8 @@ function Form({ create }) {
 
   return (
     <div>
-      <h2 id={styles.titleForm}>Create a Super Admin</h2>
-      <form id={styles.formPost}>
+      <h2 className={styles.titleForm}>Create a Super Admin</h2>
+      <form className={styles.formPost}>
         <div>
           <label>Email: </label>
           <input
