@@ -19,9 +19,13 @@ const Trainers = () => {
   });
 
   const getTrainers = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
-    const data = await response.json();
-    setTrainers(data.data);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
+      const data = await response.json();
+      setTrainers(data.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const deleteTrainer = async (_id) => {
@@ -41,25 +45,6 @@ const Trainers = () => {
         alert(error);
       }
     }
-  };
-
-  useEffect(() => {
-    getTrainers();
-  }, []);
-
-  const addTrainer = ({ _id, firstName, lastName, dni, phone, email, city, password, salary }) => {
-    const newTrainer = {
-      _id,
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      password,
-      salary
-    };
-    setTrainers([...trainers, newTrainer]);
   };
 
   const sendTrainer = async (item) => {
@@ -104,18 +89,37 @@ const Trainers = () => {
     }
   };
 
+  useEffect(() => {
+    getTrainers();
+  }, []);
+
+  const addTrainer = ({ _id, firstName, lastName, dni, phone, email, city, password, salary }) => {
+    const newTrainer = {
+      _id,
+      firstName,
+      lastName,
+      dni,
+      phone,
+      email,
+      city,
+      password,
+      salary
+    };
+    setTrainers([...trainers, newTrainer]);
+  };
+
   const onChangeInput = (e) => {
     setTrainer({
       ...trainer,
       [e.target.name]: e.target.value
     });
   };
-  const onSubmit = (e) => {
+  const onSubmitAdd = (e) => {
     e.preventDefault();
     sendTrainer(trainer);
     setErrorMessage('');
   };
-  const showTrainer = (item) => {
+  const showEditTrainer = (item) => {
     setTrainer({
       firstName: item.firstName,
       lastName: item.lastName,
@@ -127,6 +131,7 @@ const Trainers = () => {
       salary: item.salary.toString()
     });
     setToggleEdit(true);
+    setToggleAdd(false);
     setCurrentId(item._id);
   };
 
@@ -144,6 +149,7 @@ const Trainers = () => {
         id="adding"
         onClick={() => {
           setToggleAdd(true);
+          setToggleEdit(false);
           setTrainer({
             firstName: '',
             lastName: '',
@@ -159,7 +165,7 @@ const Trainers = () => {
         Add
       </button>
       {toggleAdd && (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmitAdd}>
           <div>
             <fieldset>
               <label htmlFor="firstName">Name</label>
@@ -234,7 +240,7 @@ const Trainers = () => {
                 <td>{item.password}</td>
                 <td>{item.salary}</td>
                 <td>
-                  <button onClick={() => showTrainer(item)}>Edit</button>
+                  <button onClick={() => showEditTrainer(item)}>Edit</button>
                   <button className={styles.deleteBtn} onClick={() => deleteTrainer(item._id)}>
                     X
                   </button>
