@@ -7,13 +7,18 @@ function Subscriptions() {
   const [members, setMembers] = useState([]);
   const [classes, setClasses] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
   const [classId, setClassId] = useState('');
   const [memberId, setMemberId] = useState('');
   const [date, setDate] = useState('');
+  const [currentClassId, setCurrentClassId] = useState('');
+  const [currentMemberId, setCurrentMemberId] = useState('');
+  const [currentDate, setCurrentDate] = useState('');
+  const [currentId, setCurrentId] = useState('');
 
   const onDelete = async (id) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API}/api/subscriptions/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
         method: 'DELETE'
       });
       const data = await response.json();
@@ -26,7 +31,7 @@ function Subscriptions() {
 
   const getSubscriptions = async () => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API}/api/subscriptions/all`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/all`);
       const { data } = await res.json();
       setSubscriptions(data);
     } catch (error) {
@@ -36,7 +41,7 @@ function Subscriptions() {
 
   const getMembers = async () => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API}/api/members/`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members/`);
       const { data } = await res.json();
       setMembers(data);
     } catch (error) {
@@ -46,7 +51,7 @@ function Subscriptions() {
 
   const getClasses = async () => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API}/api/classes/`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`);
       const { data } = await res.json();
       setClasses(data);
     } catch (error) {
@@ -56,7 +61,7 @@ function Subscriptions() {
 
   const onClick = async () => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API}/api/subscriptions/`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
         method: 'POST',
         body: JSON.stringify({
           classId: classId,
@@ -68,7 +73,6 @@ function Subscriptions() {
         }
       });
       const data = await res.json();
-      console.log('prueba data', data);
 
       const newSubscription = {
         _id: data.data._id,
@@ -99,27 +103,35 @@ function Subscriptions() {
   const onEdit = async (id) => {
     const index = subscriptions.findIndex((subscription) => subscription._id === id);
     try {
-      const res = await fetch(`${process.env.REACT_APP_API}/api/subscriptions/${id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
         method: 'PUT',
         body: JSON.stringify({
-          classId: classId,
-          memberId: memberId,
-          date: date
+          classId: currentClassId,
+          memberId: currentMemberId,
+          date: currentDate
         }),
         headers: {
           'Content-Type': 'application/json'
         }
       });
       const data = await res.json();
-      console.log('prueba data update', data);
-
-      const updateSubscription = [...subscriptions];
-      updateSubscription[index] = data.data;
-      console.log(updateSubscription[index]);
-
-      setSubscriptions(updateSubscription);
+      const updatedSubscription = {
+        _id: data.data._id,
+        classId: {
+          activityId: {
+            name: classes.find((item) => item._id === data.data.classId).activityId?.name
+          }
+        },
+        memberId: {
+          lastName: members.find((item) => item._id === data.data.memberId).lastName
+        },
+        date: data.data.date
+      };
+      const update = [...subscriptions];
+      update[index] = updatedSubscription;
+      setSubscriptions(update);
     } catch (error) {
-      console.error;
+      console.error(error);
     }
   };
 
@@ -128,10 +140,6 @@ function Subscriptions() {
     getMembers();
     getClasses();
   }, []);
-
-  console.log('subs', subscriptions);
-  console.log('classId', classId);
-  console.log('memberId', memberId);
 
   return (
     <section className={styles.container}>
@@ -142,40 +150,37 @@ function Subscriptions() {
             className={styles.btn}
             onClick={() => {
               setShowAdd(!showAdd);
+              setShowEdit(false);
             }}
           >
             ADD Subs
-          </button>
-          <button
-            className={styles.btn}
-            onClick={() => {
-              setShowAdd(!showAdd);
-            }}
-          >
-            EDIT Subs
           </button>
         </header>
         <table className={styles.table}>
           <tbody className={styles.tbody}>
             <tr className={styles.tr}>
+              <th className={styles.thead}>Subscription</th>
               <th className={styles.thead}>Activity</th>
-              <th className={styles.thead}>Member ID</th>
+              <th className={styles.thead}>Member Last name</th>
               <th className={styles.thead}>Date</th>
             </tr>
             {subscriptions.map((subscription) => (
               <tr key={subscription._id} className={styles.tr}>
+                <td className={styles.td}>{subscription._id}</td>
                 <td className={styles.td}>{subscription.classId?.activityId?.name}</td>
                 <td className={styles.td}>{subscription.memberId?.lastName}</td>
-                <td className={styles.td}>{subscription.date}</td>
+                <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
                 <td className={styles.td}>
                   <FaPen
                     style={{ color: 'white', cursor: 'pointer' }}
                     onClick={() => {
                       setShowEdit(!showEdit);
                       setShowAdd(false);
-                      setCurrentName(activity.name);
-                      setCurrentDes(activity.description);
-                      setCurrentId(activity._id);
+                      setCurrentClassId(subscription.classId?._id);
+                      setCurrentMemberId(subscription.memberId?._id);
+                      console.log(currentMemberId);
+                      setCurrentDate(subscription.date.slice(0, 10));
+                      setCurrentId(subscription._id);
                     }}
                   />
                 </td>
@@ -185,7 +190,7 @@ function Subscriptions() {
                     onClick={() => {
                       const shureDelete = confirm('Are you sure you want to delete?');
                       if (shureDelete) {
-                        alert('Activity deleted');
+                        alert('Subscription deleted');
                         onDelete(subscription._id);
                       }
                     }}
@@ -206,10 +211,11 @@ function Subscriptions() {
                 onChange={(e) => setClassId(e.target.value)}
                 required
               >
+                <option value="">Seleccione una opción</option>
                 {classes.map((item) => {
                   return (
                     <option key={item?._id} value={item?._id}>
-                      {`${item?._id}`}
+                      {`${item?._id}, ${item?.activityId?.name}`}
                     </option>
                   );
                 })}
@@ -224,6 +230,7 @@ function Subscriptions() {
                 onChange={(e) => setMemberId(e.target.value)}
                 required
               >
+                <option value="">Seleccione una opción</option>
                 {members.map((item) => {
                   return (
                     <option key={item?._id} value={item?._id}>
@@ -245,6 +252,66 @@ function Subscriptions() {
               />
             </div>
             <button type="submit">Add Subs</button>
+          </form>
+        )}
+        {showEdit && (
+          <form className={styles.form} onSubmit={onSubmit}>
+            <div className={styles.inputBox}>
+              <label>Class ID:</label>
+              <select
+                type="text"
+                placeholder={currentClassId}
+                value={currentClassId}
+                onChange={(e) => setCurrentClassId(e.target.value)}
+                required
+              >
+                {classes.map((item) => {
+                  return (
+                    <option key={item?._id} value={item?._id}>
+                      {`${item?._id}, ${item?.activityId?.name}`}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div className={styles.inputBox}>
+              <label>Member ID:</label>
+              <select
+                type="text"
+                placeholder={currentMemberId}
+                value={currentMemberId}
+                onChange={(e) => setCurrentMemberId(e.target.value)}
+                required
+              >
+                {members.map((item) => {
+                  return (
+                    <option key={item?._id} value={item?._id}>
+                      {`${item?.lastName}, ${item?.firstName}`}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div className={styles.inputBox}>
+              <label>Date:</label>
+              <input
+                className={styles.submitBtn}
+                type="date"
+                name="date"
+                value={currentDate}
+                onChange={(e) => setCurrentDate(e.target.value)}
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              onClick={() => {
+                onEdit(currentId);
+                setShowEdit(!showEdit);
+              }}
+            >
+              Edit Subs
+            </button>
           </form>
         )}
       </section>
