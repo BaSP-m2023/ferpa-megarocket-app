@@ -174,15 +174,12 @@ function Subscriptions() {
                     src="/assets/images/edit-icon.svg"
                     style={{ cursor: 'pointer' }}
                     onClick={() => {
-                      const shureUpdate = confirm('Are you sure you want to update?');
-                      if (shureUpdate) {
-                        setShowEdit(!showEdit);
-                        setShowAdd(false);
-                        setCurrentClassId(subscription.classId?._id);
-                        setCurrentMemberId(subscription.memberId?._id);
-                        setCurrentDate(subscription.date.slice(0, 10));
-                        setCurrentId(subscription._id);
-                      }
+                      setShowEdit(!showEdit);
+                      setShowAdd(false);
+                      setCurrentClassId(subscription.classId?._id);
+                      setCurrentMemberId(subscription.memberId?._id);
+                      setCurrentDate(subscription.date.slice(0, 10));
+                      setCurrentId(subscription._id);
                     }}
                   />
                 </td>
