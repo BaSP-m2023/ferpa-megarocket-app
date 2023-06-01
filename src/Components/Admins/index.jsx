@@ -21,7 +21,7 @@ function Admins() {
 
       return data;
     } catch (error) {
-      console.error;
+      console.error(error);
     }
   };
 
@@ -32,7 +32,7 @@ function Admins() {
 
       return data;
     } catch (error) {
-      console.error;
+      console.error(error);
     }
   };
 
@@ -53,7 +53,7 @@ function Admins() {
         setAdmins([...admins, data]);
       }
     } catch (error) {
-      console.error;
+      console.error(error);
     }
   };
 
@@ -77,13 +77,13 @@ function Admins() {
         setAdmins(actualAdmins);
       }
     } catch (error) {
-      console.error;
+      console.error(error);
     }
   };
 
   const deleteAdmin = async (id) => {
     try {
-      const response = confirm('Are you sure you want to delete this admin?');
+      const response = window.confirm('Are you sure you want to delete this admin?');
       if (response) {
         const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
           method: 'DELETE'
@@ -95,7 +95,7 @@ function Admins() {
         setAdmins(admins.filter((admin) => admin._id !== id));
       }
     } catch (error) {
-      console.error;
+      console.error(error);
     }
   };
 

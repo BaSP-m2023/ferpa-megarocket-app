@@ -5,22 +5,30 @@ const Table = ({ admins, deleteAdmin, onEdit }) => {
     <table className={styles.table}>
       <tbody className={styles.tbody}>
         <tr className={styles.thead}>
-          <th>Name</th>
-          <th>City</th>
-          <th>Email</th>
-          <th></th>
-          <th></th>
+          <th className={styles.th}>Name</th>
+          <th className={styles.th}>City</th>
+          <th className={styles.th}>Email</th>
+          <th className={styles.th}></th>
+          <th className={styles.th}></th>
         </tr>
         {admins.map((admin) => {
           return (
             <tr className={styles.tr} key={admin._id}>
-              <td>{admin.firstName}</td>
-              <td>{admin.city}</td>
-              <td>{admin.email}</td>
-              <td></td>
+              <td className={styles.td}>{admin.firstName}</td>
+              <td className={styles.td}>{admin.city}</td>
+              <td className={styles.td}>{admin.email}</td>
+              <td className={styles.td}></td>
               <td className={styles.icons}>
-                <img src="/assets/images/edit-icon.svg" onClick={() => onEdit(admin)} />
-                <img src="/assets/images/delete-icon.svg" onClick={() => deleteAdmin(admin._id)} />
+                <img
+                  alt="edit-icon"
+                  src="/assets/images/edit-icon.svg"
+                  onClick={() => onEdit(admin)}
+                />
+                <img
+                  alt="delete-icon"
+                  src="/assets/images/delete-icon.svg"
+                  onClick={() => deleteAdmin(admin._id)}
+                />
               </td>
             </tr>
           );
