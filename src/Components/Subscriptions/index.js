@@ -24,7 +24,7 @@ function Subscriptions() {
       setSubscriptions(subscriptions.filter((subscription) => subscription._id !== id));
       return data;
     } catch (error) {
-      console.error;
+      console.error(error);
     }
   };
 
