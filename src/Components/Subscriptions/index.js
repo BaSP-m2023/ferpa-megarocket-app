@@ -203,7 +203,7 @@ function Subscriptions() {
         {showAdd && (
           <form className={styles.form} onSubmit={onSubmit}>
             <div className={styles.inputBox}>
-              <label>Class ID:</label>
+              <label className={styles.label}>Class ID:</label>
               <select
                 type="text"
                 placeholder="class Id"
@@ -222,7 +222,7 @@ function Subscriptions() {
               </select>
             </div>
             <div className={styles.inputBox}>
-              <label>Member ID:</label>
+              <label className={styles.label}>Member ID:</label>
               <select
                 type="text"
                 placeholder="Member Id"
@@ -241,7 +241,7 @@ function Subscriptions() {
               </select>
             </div>
             <div className={styles.inputBox}>
-              <label>Date:</label>
+              <label className={styles.label}>Date:</label>
               <input
                 className={styles.submitBtn}
                 type="date"
@@ -251,13 +251,15 @@ function Subscriptions() {
                 required
               />
             </div>
-            <button type="submit">Add Subs</button>
+            <button className={styles.btnAdd} type="submit">
+              Add Subs
+            </button>
           </form>
         )}
         {showEdit && (
           <form className={styles.form} onSubmit={onSubmit}>
             <div className={styles.inputBox}>
-              <label>Class ID:</label>
+              <label className={styles.label}>Class ID:</label>
               <select
                 type="text"
                 placeholder={currentClassId}
@@ -275,7 +277,7 @@ function Subscriptions() {
               </select>
             </div>
             <div className={styles.inputBox}>
-              <label>Member ID:</label>
+              <label className={styles.label}>Member ID:</label>
               <select
                 type="text"
                 placeholder={currentMemberId}
@@ -293,7 +295,7 @@ function Subscriptions() {
               </select>
             </div>
             <div className={styles.inputBox}>
-              <label>Date:</label>
+              <label className={styles.label}>Date:</label>
               <input
                 className={styles.submitBtn}
                 type="date"
@@ -304,6 +306,7 @@ function Subscriptions() {
               />
             </div>
             <button
+              className={styles.btnEdit}
               type="submit"
               onClick={() => {
                 onEdit(currentId);
