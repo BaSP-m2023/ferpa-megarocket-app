@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import styles from './subscriptions.module.css';
-import { FaPen, FaTrash } from 'react-icons/fa';
 
 function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -171,22 +170,26 @@ function Subscriptions() {
                 <td className={styles.td}>{subscription.memberId?.lastName}</td>
                 <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
                 <td className={styles.td}>
-                  <FaPen
-                    style={{ color: 'white', cursor: 'pointer' }}
+                  <img
+                    src="/assets/images/edit-icon.svg"
+                    style={{ cursor: 'pointer' }}
                     onClick={() => {
-                      setShowEdit(!showEdit);
-                      setShowAdd(false);
-                      setCurrentClassId(subscription.classId?._id);
-                      setCurrentMemberId(subscription.memberId?._id);
-                      console.log(currentMemberId);
-                      setCurrentDate(subscription.date.slice(0, 10));
-                      setCurrentId(subscription._id);
+                      const shureUpdate = confirm('Are you sure you want to update?');
+                      if (shureUpdate) {
+                        setShowEdit(!showEdit);
+                        setShowAdd(false);
+                        setCurrentClassId(subscription.classId?._id);
+                        setCurrentMemberId(subscription.memberId?._id);
+                        setCurrentDate(subscription.date.slice(0, 10));
+                        setCurrentId(subscription._id);
+                      }
                     }}
                   />
                 </td>
                 <td className={styles.td}>
-                  <FaTrash
-                    style={{ color: 'white', cursor: 'pointer' }}
+                  <img
+                    src="/assets/images/delete-icon.svg"
+                    style={{ cursor: 'pointer' }}
                     onClick={() => {
                       const shureDelete = confirm('Are you sure you want to delete?');
                       if (shureDelete) {
