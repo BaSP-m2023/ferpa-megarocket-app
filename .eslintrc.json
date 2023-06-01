@@ -1,7 +1,7 @@
 {
     "settings": {
         "react": {
-          "version": "detect"
+            "version": "detect"
         }
     },
     "env": {
@@ -9,7 +9,12 @@
         "node": true,
         "es2021": true
     },
-    "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:prettier/recommended"],
+    "extends": [
+        "react-app",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:prettier/recommended"
+    ],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -21,14 +26,17 @@
         "react"
     ],
     "rules": {
-        "semi": [2, "always"],
+        "semi": [
+            2,
+            "always"
+        ],
         "react/react-in-jsx-scope": "off",
         "prettier/prettier": [
             "error",
             {
-              "endOfLine": "auto"
+                "endOfLine": "auto"
             }
-          ],
+        ],
         "react/prop-types": 0
     }
 }
