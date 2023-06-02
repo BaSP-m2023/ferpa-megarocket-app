@@ -172,6 +172,7 @@ function Subscriptions() {
                 <td className={styles.td}>
                   <img
                     src="/assets/images/edit-icon.svg"
+                    alt="edit"
                     style={{ cursor: 'pointer' }}
                     onClick={() => {
                       setShowEdit(!showEdit);
@@ -186,9 +187,10 @@ function Subscriptions() {
                 <td className={styles.td}>
                   <img
                     src="/assets/images/delete-icon.svg"
+                    alt="delete"
                     style={{ cursor: 'pointer' }}
                     onClick={() => {
-                      const shureDelete = confirm('Are you sure you want to delete?');
+                      const shureDelete = window.confirm('Are you sure you want to delete?');
                       if (shureDelete) {
                         alert('Subscription deleted');
                         onDelete(subscription._id);
