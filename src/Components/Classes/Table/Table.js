@@ -71,7 +71,7 @@ const Table = ({ data, deleteItem, onEditItem, activities, trainers }) => {
                   <button
                     className="deleteButton"
                     onClick={() => {
-                      const confirmation = confirm({
+                      const confirmation = window.confirm({
                         message: 'Are you sure that you want to delete this class?'
                       });
                       if (confirmation) {

@@ -82,8 +82,6 @@ function Members() {
   const saveUpdate = (e) => {
     e.preventDefault();
     updatedMember(memberId);
-
-    close();
   };
 
   const handleSubmit = (e) => {
@@ -224,6 +222,7 @@ function Members() {
                   <td>
                     <img
                       className={styles.update}
+                      alt="Edit"
                       src="assets/images/Edit.svg"
                       onClick={() => changeHandler(member?._id)}
                     />
@@ -231,6 +230,7 @@ function Members() {
                   <td>
                     <img
                       className={styles.delete}
+                      alt="Delete"
                       src="assets/images/Delete.svg"
                       onClick={() => deleteMember(member?._id)}
                     />

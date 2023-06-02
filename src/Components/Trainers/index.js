@@ -28,7 +28,7 @@ const Trainers = () => {
   };
 
   const deleteTrainer = async (_id) => {
-    const option = confirm('Are you sure??');
+    const option = window.confirm('Are you sure??');
     if (option) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${_id}`, {

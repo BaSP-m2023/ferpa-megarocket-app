@@ -54,6 +54,7 @@ const Classes = () => {
     getClasses();
     getActivities();
     getTrainers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addItem = async (klass) => {
