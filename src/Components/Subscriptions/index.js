@@ -203,7 +203,7 @@ function Subscriptions() {
         {showAdd && (
           <form className={styles.form} onSubmit={onSubmit}>
             <div className={styles.inputBox}>
-              <label className={styles.label}>Class ID:</label>
+              <label className={styles.label}>Activity:</label>
               <select
                 type="text"
                 placeholder="class Id"
@@ -215,14 +215,14 @@ function Subscriptions() {
                 {classes.map((item) => {
                   return (
                     <option key={item?._id} value={item?._id}>
-                      {`${item?._id}, ${item?.activityId?.name}`}
+                      {`${item?.activityId?.name}`}
                     </option>
                   );
                 })}
               </select>
             </div>
             <div className={styles.inputBox}>
-              <label className={styles.label}>Member ID:</label>
+              <label className={styles.label}>Member:</label>
               <select
                 type="text"
                 placeholder="Member Id"
@@ -234,7 +234,7 @@ function Subscriptions() {
                 {members.map((item) => {
                   return (
                     <option key={item?._id} value={item?._id}>
-                      {`${item?.lastName}`}
+                      {`${item?.lastName}, ${item?.firstName}`}
                     </option>
                   );
                 })}
@@ -259,7 +259,7 @@ function Subscriptions() {
         {showEdit && (
           <form className={styles.form} onSubmit={onSubmit}>
             <div className={styles.inputBox}>
-              <label className={styles.label}>Class ID:</label>
+              <label className={styles.label}>Activity:</label>
               <select
                 type="text"
                 placeholder={currentClassId}
@@ -270,14 +270,14 @@ function Subscriptions() {
                 {classes.map((item) => {
                   return (
                     <option key={item?._id} value={item?._id}>
-                      {`${item?._id}, ${item?.activityId?.name}`}
+                      {`${item?.activityId?.name}`}
                     </option>
                   );
                 })}
               </select>
             </div>
             <div className={styles.inputBox}>
-              <label className={styles.label}>Member ID:</label>
+              <label className={styles.label}>Member:</label>
               <select
                 type="text"
                 placeholder={currentMemberId}
