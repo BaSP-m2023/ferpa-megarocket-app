@@ -103,7 +103,6 @@ function Members() {
   };
 
   const addMember = async (member) => {
-    console.log(member);
     try {
       const newMembers = await fetch(`${process.env.REACT_APP_API_URL}/api/members/`, {
         method: 'POST',
