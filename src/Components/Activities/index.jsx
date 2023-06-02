@@ -89,18 +89,16 @@ function Activities() {
   return (
     <section className={styles.container}>
       <div>
-        <h2>Activities</h2>
+        <h2 className={styles.h2}>Activities</h2>
         <div className={styles.tableCloth}>
           {activities.map((activity) => {
             return (
-              <table key={activity?._id}>
-                <tbody>
-                  <tr>
-                    <th className={styles.activity}>Activity</th>
-                    <th className={styles.description}>Description</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                  </tr>
+              <table className={styles.table} key={activity?._id}>
+                <tbody className={styles.tbody}>
+                  <th className={`${styles.activity} ${styles.th}`}>Activity</th>
+                  <th className={`${styles.description} ${styles.th}`}>Description</th>
+                  <th className={styles.th}>Edit</th>
+                  <th className={styles.th}>Delete</th>
                   <tr>
                     <td className={styles.activity}>{activity?.name}</td>
                     <td className={styles.description}>{activity?.description}</td>
