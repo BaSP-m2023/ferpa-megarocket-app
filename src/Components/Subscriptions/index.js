@@ -211,7 +211,7 @@ function Subscriptions() {
                 onChange={(e) => setClassId(e.target.value)}
                 required
               >
-                <option value="">Seleccione una opción</option>
+                <option>Select an option</option>
                 {classes.map((item) => {
                   return (
                     <option key={item?._id} value={item?._id}>
@@ -230,7 +230,7 @@ function Subscriptions() {
                 onChange={(e) => setMemberId(e.target.value)}
                 required
               >
-                <option value="">Seleccione una opción</option>
+                <option>Select an option</option>
                 {members.map((item) => {
                   return (
                     <option key={item?._id} value={item?._id}>
