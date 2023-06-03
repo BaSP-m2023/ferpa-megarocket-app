@@ -38,12 +38,16 @@ const List = ({ list, deleteItem, updateItem }) => {
     <tbody>
       {list.map((superAdmin) => {
         return (
-          <tr key={superAdmin._id}>
+          <tr className={styles.supAdmTr} key={superAdmin._id}>
             <td className={styles.tdText}>
               {editUser === superAdmin._id ? (
                 <>
                   <label>New Email: </label>
-                  <input value={email} onChange={(e) => setEmail(e.target.value)}></input>
+                  <input
+                    className={styles.supAdmInput}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  ></input>
                 </>
               ) : (
                 superAdmin.email
@@ -54,6 +58,7 @@ const List = ({ list, deleteItem, updateItem }) => {
                 <>
                   <label>New Pass: </label>
                   <input
+                    className={styles.supAdmInput}
                     type="password"
                     value={pass}
                     onChange={(e) => setPass(e.target.value)}
@@ -71,7 +76,7 @@ const List = ({ list, deleteItem, updateItem }) => {
             <td className={styles.tdBtn}>
               {editUser === superAdmin._id ? (
                 <button
-                  className={styles.acceptBtn}
+                  className={`${styles.supAdmBtn} ${styles.acceptBtn}`}
                   onClick={() => handleSaveClick(superAdmin._id, email, pass)}
                 >
                   Accept
@@ -85,7 +90,10 @@ const List = ({ list, deleteItem, updateItem }) => {
             </td>
             <td className={styles.tdBtn}>
               {editUser === superAdmin._id ? (
-                <button className={styles.cancelBtn} onClick={() => handleCancelClick()}>
+                <button
+                  className={`${styles.supAdmBtn} ${styles.cancelBtn}`}
+                  onClick={() => handleCancelClick()}
+                >
                   Cancel
                 </button>
               ) : (

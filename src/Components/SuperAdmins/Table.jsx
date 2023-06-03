@@ -9,11 +9,11 @@ const Table = ({ list, deleteItem, updateItem }) => {
       <table id={styles.table}>
         <thead>
           <tr>
-            <th>Email</th>
-            <th>Password</th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th className={styles.supAdmTh}>Email</th>
+            <th className={styles.supAdmTh}>Password</th>
+            <th className={styles.supAdmTh}></th>
+            <th className={styles.supAdmTh}></th>
+            <th className={styles.supAdmTh}></th>
           </tr>
         </thead>
         <List list={list} deleteItem={deleteItem} updateItem={updateItem} />
