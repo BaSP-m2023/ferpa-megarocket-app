@@ -146,7 +146,6 @@ function Activities() {
           {showAdd && (
             <form className={styles.form} onSubmit={onSubmit}>
               <input
-                className={styles.input}
                 type="text"
                 placeholder="Activity name"
                 value={name}
