@@ -57,7 +57,7 @@ const Table = ({ data, deleteItem, onEditItem, activities, trainers }) => {
           {data.map((item) => {
             return (
               <tr key={item._id}>
-                <td>{item.activityId.name}</td>
+                <td>{item.activityId?.name}</td>
                 <td>{item.day}</td>
                 <td>{item.hour}</td>
                 <td>{item.slots}</td>
