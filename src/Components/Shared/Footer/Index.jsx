@@ -10,21 +10,21 @@ function Footer() {
             <img
               alt={'twitter'}
               className={styles.socialIcon}
-              src={'./assets/images/Twitter-Icon.svg'}
+              src={'./assets/images/twitter-icon.svg'}
             />
           </a>
           <a href={'https://www.instagram.com/radium.rocket/'} target={'_blank'} rel="noreferrer">
             <img
               alt={'instagram'}
               className={styles.socialIcon}
-              src={'./assets/images/Instagram-Icon.svg'}
+              src={'./assets/images/instagram-icon.svg'}
             />
           </a>
           <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
             <img
               alt={'facebook'}
               className={styles.socialIcon}
-              src={'./assets/images/Facebook-Logo.svg'}
+              src={'./assets/images/facebook-logo.svg'}
             />
           </a>
         </div>
