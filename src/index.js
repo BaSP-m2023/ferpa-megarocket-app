@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import Layout from './Components/Layout';
 import './index.css';
 import Header from './Components/Shared/Header/Index';
-import Footer from './Components/Footer/index';
+import Footer from './Components/Shared/Footer/Index';
 
 ReactDOM.render(
   <React.StrictMode>
