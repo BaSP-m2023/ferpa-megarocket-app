@@ -1,4 +1,5 @@
 import styles from './header.module.css';
+import Nav from '../Shared/Header/Nav';
 
 function Header() {
   return (
@@ -9,6 +10,10 @@ function Header() {
           <img className={styles.isologo} src="../assets/images/MegaRocket.svg" alt="isologo"></img>
         </div>
       </div>
+<<<<<<< HEAD
+=======
+      <Nav />
+>>>>>>> origin
     </header>
   );
 }
