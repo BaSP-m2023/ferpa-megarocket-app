@@ -15,14 +15,40 @@
   color: #373867;
 }
 
+.modalOverlaySuccess {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto';
+  font-weight: bold;
+  color: #373867;
+}
+
+.modalChildren {
+  display:flex;
+  justify-content: space-around;
+}
+
 .modalContent {
+  display:flex;
+  flex-direction: column;
   position: relative;
   background-color: #fff;
   border-radius: 0.5vw;
   padding: 1vw;
-  max-width: 30vw;
+  max-width: 35vw;
   width: 100%;
 }
+
+.modalSuccess {
+  background-color: #49A37B;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
 
 .modalHeader {
   display:flex;
@@ -32,12 +58,11 @@
 .modalTitle {
   display: inline-block;
   width: 34vw;
-  margin:0;
-  font-size: 26px;
+  font-size: 2vw;
 }
 
 .modalCloseBtn {
-  font-size: 24px;
+  font-size: 2vw;
   width: 2vw;
   height: 2vw;
   text-align: center;
