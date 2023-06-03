@@ -1,4 +1,5 @@
 import styles from './header.module.css';
+import Nav from '../Shared/Header/Nav';
 
 function Header() {
   return (
@@ -29,35 +30,7 @@ function Header() {
           </a>
         </div>
       </div>
-      <nav className={styles.navbar}>
-        <h1 className={styles.appName}>MegaRocket</h1>
-        <ul className={styles.rutes}>
-          <li>
-            <a href={'/'}>Home</a>
-          </li>
-          <li>
-            <a href={'/activities'}>Activities</a>
-          </li>
-          <li>
-            <a href={'/admins'}>Admins</a>
-          </li>
-          <li>
-            <a href={'/classes'}>Classes</a>
-          </li>
-          <li>
-            <a href={'/members'}>Members</a>
-          </li>
-          <li>
-            <a href={'/subscriptions'}>Subscriptions</a>
-          </li>
-          <li>
-            <a href={'/super-admins'}>Super Admins</a>
-          </li>
-          <li>
-            <a href={'/trainers'}>Trainers</a>
-          </li>
-        </ul>
-      </nav>
+      <Nav />
     </header>
   );
 }
