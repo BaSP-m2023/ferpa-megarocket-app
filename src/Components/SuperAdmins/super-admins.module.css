@@ -8,12 +8,8 @@
   font-size: 1.5vw;
 }
 
-input, button {
+.supAdmInput, .supAdmBtn {
   font-size: 1.3vw;
-}
-
-p {
-  margin:0;
 }
 
 .box {
@@ -29,11 +25,11 @@ p {
   width: 95%;
 }
 
-tr:nth-child(even) {
+.supAdmTr:nth-child(even) {
   background-color: rgba(55, 56, 103, 0.7);
 }
 
-th {
+.supAdmTh {
   text-align: left;
 }
 
