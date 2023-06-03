@@ -1,25 +1,20 @@
 import React from 'react';
 import styles from './modal.module.css';
 
-const Modal = ({ isOpen, onClose, variant, children }) => {
-  /* const warning = variant === 'warning';
-  const error = variant === 'error';
-  const success = variant === 'success';
- */
+const Modal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) {
     return null;
   }
 
   return (
-    <div
-      className={
-        styles.modalContainer
-      } /* {`${styles.modalContainer} ${warning ? 'styles.modalWarning' : ''} ${
-        error ? 'styles.modalError' : ''
-      } ${success ? 'styles.modalSuccess' : ''}`} */
-    >
+    <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
-        <span onClick={() => onClose}>&times;</span>
+        <div className={styles.modalHeader}>
+          <h2 className={styles.modalTitle}>{title}</h2>
+          <span className={styles.modalCloseBtn} onClick={() => onClose()}>
+            &times;
+          </span>
+        </div>
         {children}
       </div>
     </div>
