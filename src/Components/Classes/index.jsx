@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './classes.module.css';
-import Form from './Form/Form';
-import Table from './Table/Table';
+import Form from './Form/Form.jsx';
+import Table from './Table/Table.jsx';
 
 const Classes = () => {
   const [classes, setClasses] = useState([]);
@@ -15,7 +15,7 @@ const Classes = () => {
       alert(message);
 
       if (!error) {
-        setClasses([...classes, data]);
+        setClasses(data);
       }
     } catch (error) {
       console.error(error);
@@ -29,7 +29,7 @@ const Classes = () => {
       alert(message);
 
       if (!error) {
-        setActivities([...activities, data]);
+        setActivities(data);
       }
     } catch (error) {
       console.error(error);
@@ -43,7 +43,7 @@ const Classes = () => {
       alert(message);
 
       if (!error) {
-        setTrainers([...trainers, data]);
+        setTrainers(data);
       }
     } catch (error) {
       console.error(error);
