@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import Layout from './Components/Layout';
 import './index.css';
-import Header from './Components/Shared/Header/index';
+import Header from './Components/Shared/Header/Index';
 import Footer from './Components/Footer/index';
 
 ReactDOM.render(
