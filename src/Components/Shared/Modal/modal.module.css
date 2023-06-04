@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(44, 44, 44, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto';
+  font-weight: bold;
+  color: #373867;
+}
+
+.modalOverlaySuccess {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto';
+  font-weight: bold;
+  color: #373867;
+}
+
+.modalChildren {
+  display:flex;
+  justify-content: space-around;
+}
+
+.modalContent {
+  display:flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #fff;
+  border-radius: 0.5vw;
+  padding: 1vw;
+  max-width: 35vw;
+  width: 100%;
+}
+
+.modalSuccess {
+  background-color: #49A37B;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
+
+.modalHeader {
+  display:flex;
+  justify-content: space-between;
+}
+
+.modalTitle {
+  display: inline-block;
+  width: 34vw;
+  font-size: 2vw;
+}
+
+.modalCloseBtn {
+  font-size: 2vw;
+  width: 2vw;
+  height: 2vw;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.modalCloseBtn:hover {
+  color: red; 
+}
