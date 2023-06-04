@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './activities.module.css';
+import Table from './Table';
+import AddForm from './AddForm';
+import EditForm from './EditForm';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -19,12 +22,15 @@ function Activities() {
   };
   const onDelete = async (id) => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
-        method: 'DELETE'
-      });
-      const data = await res.json();
-      setActivities([...activities.filter((activity) => activity._id !== id)]);
-      return data;
+      const response = window.confirm('Are you sure you want to delete this activity?');
+      if (response) {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
+          method: 'DELETE'
+        });
+        const data = await res.json();
+        setActivities([...activities.filter((activity) => activity._id !== id)]);
+        return data;
+      }
     } catch (error) {
       console.error(error);
     }
@@ -34,8 +40,8 @@ function Activities() {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`, {
         method: 'POST',
         body: JSON.stringify({
-          name: name,
-          description: description,
+          name,
+          description,
           isActive: true
         }),
         headers: {
@@ -86,112 +92,49 @@ function Activities() {
 
   return (
     <section className={styles.container}>
-      <div>
-        <h2 className={styles.h2}>Activities</h2>
-        <div className={styles.tableCloth}>
-          {activities.map((activity) => {
-            return (
-              <table className={styles.table} key={activity?._id}>
-                <tbody className={styles.tbody}>
-                  <tr>
-                    <th className={`${styles.activity} ${styles.th}`}>Activity</th>
-                    <th className={`${styles.description} ${styles.th}`}>Description</th>
-                    <th className={styles.th}>Edit</th>
-                    <th className={styles.th}>Delete</th>
-                  </tr>
-                  <tr>
-                    <td className={styles.activity}>{activity?.name}</td>
-                    <td className={styles.description}>{activity?.description}</td>
-                    <td className={styles.icon}>
-                      <img
-                        src="/assets/images/edit-icon.svg"
-                        alt={'Edit'}
-                        onClick={() => {
-                          setShowEdit(!showEdit);
-                          setShowAdd(false);
-                          setCurrentName(activity.name);
-                          setCurrentDes(activity.description);
-                          setCurrentId(activity._id);
-                        }}
-                      />
-                    </td>
-                    <td className={styles.icon}>
-                      <img
-                        src="/assets/images/delete-icon.svg"
-                        alt={'Delete'}
-                        onClick={() => {
-                          // eslint-disable-next-line no-restricted-globals
-                          const uShureM8 = confirm({ message: 'Are you sure you want to delete?' });
-                          if (uShureM8) {
-                            alert('Activity deleted');
-                            onDelete(activity._id);
-                          }
-                        }}
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            );
-          })}
-          <button
-            className={styles.add}
-            onClick={() => {
-              setShowAdd(!showAdd);
-              setShowEdit(false);
-            }}
-          >
-            Add
-          </button>
-          {showAdd && (
-            <form className={styles.form} onSubmit={onSubmit}>
-              <input
-                type="text"
-                placeholder="Activity name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-              <textarea
-                type="text"
-                placeholder="Activity description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                required
-              />
-              <button className={styles.confirmAdd} type="submit">
-                Add
-              </button>
-            </form>
-          )}
-          {showEdit && (
-            <form className={styles.form} onSubmit={onSubmit}>
-              <input
-                type="text"
-                placeholder={currentName}
-                value={currentName}
-                onChange={(e) => setCurrentName(e.target.value)}
-              />
-              <textarea
-                type="text"
-                placeholder={currentDes}
-                value={currentDes}
-                onChange={(e) => setCurrentDes(e.target.value)}
-              />
-              <button
-                className={styles.confirmEdit}
-                type="submit"
-                onClick={() => {
-                  onEdit(currentId);
-                  setShowEdit(!showEdit);
-                }}
-              >
-                Edit
-              </button>
-            </form>
-          )}
-        </div>
+      <h2 className={styles.title}>Activities Management</h2>
+      <Table
+        activities={activities}
+        showEdit={showEdit}
+        setShowEdit={setShowEdit}
+        setShowAdd={setShowAdd}
+        setCurrentName={setCurrentName}
+        setCurrentDes={setCurrentDes}
+        setCurrentId={setCurrentId}
+        onDelete={onDelete}
+      />
+      <div className={styles.btnSection}>
+        <button
+          onClick={() => {
+            setShowAdd(!showAdd);
+            setShowEdit(false);
+          }}
+        >
+          Add
+        </button>
       </div>
+      {showAdd && (
+        <AddForm
+          onSubmit={onSubmit}
+          name={name}
+          setName={setName}
+          description={description}
+          setDescription={setDescription}
+        />
+      )}
+      {showEdit && (
+        <EditForm
+          onSubmit={onSubmit}
+          currentName={currentName}
+          currentDes={currentDes}
+          setCurrentName={setCurrentName}
+          setCurrentDes={setCurrentDes}
+          onEdit={onEdit}
+          currentId={currentId}
+          setShowEdit={setShowEdit}
+          showEdit={showEdit}
+        />
+      )}
     </section>
   );
 }

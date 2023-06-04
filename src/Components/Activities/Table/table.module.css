@@ -1,0 +1,59 @@
+
+.table {
+  min-height: 190px;
+  width: 90%;
+  border: 3px solid #3738675d;
+  border-radius: 5px;
+  text-align: justify;
+  color: #373867;
+  border-collapse: collapse;
+}
+
+.table tr:nth-child(odd) {
+  background-color: rgba(55, 56, 103, 0.1);
+}
+
+.trHead, .trBody {
+  height: 70px;
+}
+
+.trHead th, .trBody td {
+  padding: 10px 40px;
+}
+
+.trHead {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 14px;
+}
+
+.trBody {
+  font-size: 18px;
+}
+
+.thName {
+  width: 20%;
+}
+
+.thDes {
+  width: 55%;
+}
+
+.thStatus {
+  width: 15%;
+  border-right: 3px solid #CCCCCC;
+}
+
+.thIcon {
+  width: 5%;
+}
+
+.icon {
+  cursor: pointer;
+  filter: invert(.8) sepia() saturate(3.5) hue-rotate(202deg)
+}
+
+.tdIcon {
+  text-align: center;
+}
+
