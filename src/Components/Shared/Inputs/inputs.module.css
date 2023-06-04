@@ -16,6 +16,9 @@
   color: white;
   font-size: 16px;
 }
+.select {
+  padding: 0;
+}
 .input::placeholder {
   color: rgba(55, 56, 103, 0.8);
 }
