@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: auto;
+    height: 130px;
+    background: #373867;
+}
+
+.logo{
+    padding-right: 10px;
+}
+
+.isologo{
+    padding-bottom: 6px;
+}
+
+@media screen and (min-width: 750px) {
+    .container {
+        padding: 0 5%;
+    }
+}

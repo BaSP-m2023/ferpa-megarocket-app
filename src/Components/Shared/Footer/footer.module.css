@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #373867;
+}
+
+.license {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100px;
+  padding: 0 20px;
+}
+
+.copyright {
+  font-family: 'roboto', sans-serif;
+  color: #49A37B;
+  font-size: 1rem;
+}
+
+.socialIcon {
+  color: #49A37B;
+  margin-left: 5px;
+}
+
+@media screen and (min-width: 750px) {
+  .main {
+    padding: 0 20%;
+    width: unset;
+  }
+
+  .license {
+    padding: 0 20px;
+    width: calc(60% - 40px);
+  }
+
+  .socialIcon {
+    margin-left: 15px;
+  }
+}
