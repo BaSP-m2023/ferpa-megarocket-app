@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import styles from './activities.module.css';
-import deleteIcon from './assets/delete-icon.png';
-import editIcon from './assets/edit-icon.png';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -95,16 +93,18 @@ function Activities() {
             return (
               <table className={styles.table} key={activity?._id}>
                 <tbody className={styles.tbody}>
-                  <th className={`${styles.activity} ${styles.th}`}>Activity</th>
-                  <th className={`${styles.description} ${styles.th}`}>Description</th>
-                  <th className={styles.th}>Edit</th>
-                  <th className={styles.th}>Delete</th>
+                  <tr>
+                    <th className={`${styles.activity} ${styles.th}`}>Activity</th>
+                    <th className={`${styles.description} ${styles.th}`}>Description</th>
+                    <th className={styles.th}>Edit</th>
+                    <th className={styles.th}>Delete</th>
+                  </tr>
                   <tr>
                     <td className={styles.activity}>{activity?.name}</td>
                     <td className={styles.description}>{activity?.description}</td>
                     <td className={styles.icon}>
                       <img
-                        src={editIcon}
+                        src="/assets/images/edit-icon.svg"
                         alt={'Edit'}
                         onClick={() => {
                           setShowEdit(!showEdit);
@@ -117,7 +117,7 @@ function Activities() {
                     </td>
                     <td className={styles.icon}>
                       <img
-                        src={deleteIcon}
+                        src="/assets/images/delete-icon.svg"
                         alt={'Delete'}
                         onClick={() => {
                           // eslint-disable-next-line no-restricted-globals

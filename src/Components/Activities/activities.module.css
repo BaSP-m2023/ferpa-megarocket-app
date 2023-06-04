@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 .input,
 .textarea {
   margin: 10px 99% 10px 1%;
@@ -46,7 +48,7 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  background-image: url('./assets/gym-background.png');
+  background-image: url('../../../public/assets/images/admins-background.jpg');
 }
 
 .tableCloth {
@@ -67,6 +69,10 @@
   text-align: center;
   width: 2%;
 }
+
+/* .editIcon {
+  filter: invert(.8) sepia() saturate(3.5) hue-rotate(202deg)
+} */
 
 .add {
   margin: 30px 30px 0 0;
