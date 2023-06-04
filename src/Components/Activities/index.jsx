@@ -1,25 +1,16 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './activities.module.css';
 import Table from './Table';
-import AddForm from './AddForm';
-import EditForm from './EditForm';
+// import AddForm from './AddForm';
+// import EditForm from './EditForm';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [showAdd, setShowAdd] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
-  const [currentName, setCurrentName] = useState('');
-  const [currentDes, setCurrentDes] = useState('');
-  const [currentId, setCurrentId] = useState('');
+  // const [currentName, setCurrentName] = useState('');
+  // const [currentDes, setCurrentDes] = useState('');
+  // const [currentId, setCurrentId] = useState('');
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    onAdd({ name, description });
-    setName('');
-    setDescription('');
-  };
   const onDelete = async (id) => {
     try {
       const response = window.confirm('Are you sure you want to delete this activity?');
@@ -35,48 +26,7 @@ function Activities() {
       console.error(error);
     }
   };
-  const onAdd = async ({ name, description }) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`, {
-        method: 'POST',
-        body: JSON.stringify({
-          name,
-          description,
-          isActive: true
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await res.json();
-      setActivities([...activities, data.data]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const onEdit = async (id) => {
-    const index = activities.findIndex((activity) => activity._id === id);
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          name: currentName,
-          description: currentDes,
-          isActive: true
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await res.json();
-      const update = [...activities];
-      update[index] = data.data;
-      console.log(update[index]);
-      setActivities(update);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
   const getActivities = async () => {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`);
@@ -93,27 +43,13 @@ function Activities() {
   return (
     <section className={styles.container}>
       <h2 className={styles.title}>Activities Management</h2>
-      <Table
-        activities={activities}
-        showEdit={showEdit}
-        setShowEdit={setShowEdit}
-        setShowAdd={setShowAdd}
-        setCurrentName={setCurrentName}
-        setCurrentDes={setCurrentDes}
-        setCurrentId={setCurrentId}
-        onDelete={onDelete}
-      />
+      <Table activities={activities} onDelete={onDelete} />
       <div className={styles.btnSection}>
-        <button
-          onClick={() => {
-            setShowAdd(!showAdd);
-            setShowEdit(false);
-          }}
-        >
-          Add
-        </button>
+        <Link to="/activities/create">
+          <button>Add</button>
+        </Link>
       </div>
-      {showAdd && (
+      {/* {showAdd && (
         <AddForm
           onSubmit={onSubmit}
           name={name}
@@ -134,7 +70,7 @@ function Activities() {
           setShowEdit={setShowEdit}
           showEdit={showEdit}
         />
-      )}
+      )} */}
     </section>
   );
 }

@@ -12,6 +12,30 @@ const EditForm = ({
   setShowEdit,
   showEdit
 }) => {
+  // const onEdit = async (id) => {
+  //   const index = activities.findIndex((activity) => activity._id === id);
+  //   try {
+  //     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
+  //       method: 'PUT',
+  //       body: JSON.stringify({
+  //         name: currentName,
+  //         description: currentDes,
+  //         isActive: true
+  //       }),
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       }
+  //     });
+  //     const data = await res.json();
+  //     const update = [...activities];
+  //     update[index] = data.data;
+  //     console.log(update[index]);
+  //     setActivities(update);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
   return (
     <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
       <input
