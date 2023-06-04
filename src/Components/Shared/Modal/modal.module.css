@@ -16,9 +16,9 @@
 }
 
 .modalOverlaySuccess {
-  position: absolute;
-  top: 0;
-  right: 0;
+  position: fixed;
+  top: 1vw;
+  right: 1vw;
   display: flex;
   align-items: center;
   justify-content: center;
