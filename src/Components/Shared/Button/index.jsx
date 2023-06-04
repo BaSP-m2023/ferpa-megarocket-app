@@ -7,20 +7,23 @@ const Button = ({ text, clickAction, type, disabled }) => {
     case 'delete':
       classNameStyle = styles.delete;
       break;
+    case 'deleteIcon':
+      classNameStyle = styles.deleteIcon;
+      break;
+    case 'seePassword':
+      classNameStyle = styles.seePassword;
+      break;
     case 'edit':
       classNameStyle = styles.edit;
       break;
     case 'add':
       classNameStyle = styles.add;
       break;
-    case 'disabled':
-      classNameStyle = styles.disabled;
-      break;
     default:
       classNameStyle = styles.white;
   }
   return (
-    <button onClick={clickAction} className={classNameStyle} disabled={disabled}>
+    <button onClick={clickAction} className={`${styles.btn} ${classNameStyle}`} disabled={disabled}>
       {text}
     </button>
   );

@@ -1,65 +1,60 @@
-.delete {
+.btn {
   margin: 0 5px;
   padding: 2px 10px 0px 10px;
-  min-height: 30px;
+  min-width: 90px;
+  min-height: 50px;
+  font-size: 16px;
   border-radius: 5px;
   font-weight: bold;
   text-align: center;
   cursor: pointer;
+}
+
+.delete {
   background-color: #a30000;
   border: 1.5px solid #ffffff;
   color: #ffffff;
 }
 
-.edit {
-  margin: 0 5px;
-  padding: 2px 10px 0px 10px;
-  min-height: 30px;
-  border-radius: 5px;
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
-  background-color: #9464c4;
+.deleteIcon {
+  background-image: url('../../../../public/assets/images/delete-icon.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
   border: 1.5px solid #ffffff;
-  color: #000000;
+  font-size: 0;
+  min-height: 45px;
+  min-width: 45px;
+  padding: 0;
+}
+
+.edit {
+  background-image: url('../../../../public/assets/images/edit-icon.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 1.5px solid #ffffff;
+  font-size: 0;
+  min-height: 45px;
+  min-width: 45px;
+}
+
+.seePassword {
+  background-image: url('../../../../public/assets/images/super-admin-pass-icon.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 1.5px solid #ffffff;
+  font-size: 0;
+  min-height: 45px;
+  min-width: 45px;
 }
 
 .add {
-  margin: 0 5px;
-  padding: 2px 10px 0px 10px;
-  min-height: 30px;
-  border-radius: 5px;
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
   background-color: #00a34c;
   border: 1.5px solid #ffffff;
   color: #ffffff;
 }
 
-.disabled {
-  margin: 0 5px;
-  padding: 2px 10px 0px 10px;
-  min-height: 30px;
-  border-radius: 5px;
-  font-weight: bold;
-  text-align: center;
-  opacity: 0.5;
-  cursor: not-allowed;
-  background-color: #cccccc;
-  border: 1.5px solid #cccccc;
-  color: #666666;
-}
-
 .white {
-  margin: 0 5px;
-  padding: 2px 10px 0px 10px;
-  min-height: 30px;
-  border-radius: 5px;
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
   background-color: #ffffff;
-  border: 1.5px solid #ffffff;
+  border: 1.5px solid #000000;
   color: #000000;
 }
