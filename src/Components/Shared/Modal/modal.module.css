@@ -49,19 +49,25 @@
   letter-spacing: 0.5px;
 }
 
-
-.modalHeader {
-  display:flex;
-  justify-content: space-between;
-}
-
 .modalTitle {
   display: inline-block;
   width: 34vw;
   font-size: 2vw;
 }
 
+.modalWarn {
+  color: red;
+}
+
+.modalText{
+  align-self: center;
+  margin-bottom: 4vw;
+}
+
 .modalCloseBtn {
+  position:absolute;
+  top: 1vw;
+  right: 1vw;
   font-size: 2vw;
   width: 2vw;
   height: 2vw;
