@@ -2,8 +2,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import React from 'react';
 
 import Activities from '../Activities';
-import ActivitiesAddForm from '../Activities/AddForm';
-import ActivitiesEditForm from '../Activities/EditForm';
+import ActivitiesForm from '../Activities/Form';
 import Admins from '../Admins/index';
 import Classes from '../Classes';
 import Members from '../Members';
@@ -17,8 +16,8 @@ function Layout() {
   return (
     <Switch>
       <Route exact path="/activities" component={Activities} />
-      <Route path="/activities/create" component={ActivitiesAddForm} />
-      <Route path="/activities/edit/:id" component={ActivitiesEditForm} />
+      <Route path="/activities/create" component={ActivitiesForm} />
+      <Route path="/activities/edit/:id" component={ActivitiesForm} />
       <Route exact path="/admins" component={Admins} />
       <Route path="/admins/:id" component={Admins} />
       <Route exact path="/classes" component={Classes} />
