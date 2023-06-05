@@ -70,7 +70,6 @@ const Classes = () => {
           'Content-type': 'application/json'
         }
       });
-      console.log(classes);
       const data = await res.json();
       setClasses([...classes, data.data]);
     } catch (error) {
@@ -83,7 +82,6 @@ const Classes = () => {
       method: 'DELETE'
     });
     const justOne = classes.filter((justOne) => justOne._id === _id);
-    console.log(justOne);
     alert(`${justOne[0].activityId.name} Class was deleted`);
     setClasses([...classes.filter((justOne) => justOne._id !== _id)]);
   };
@@ -109,12 +107,10 @@ const Classes = () => {
 
   const onSubmitToAdd = (e) => {
     e.preventDefault();
-    console.log(readyToSendAndAdd);
     addClass(readyToSendAndAdd);
   };
   const onSubmitToEdit = (e) => {
     e.preventDefault();
-    console.log(readyToSendAndEdit);
     updateClass(currentId, readyToSendAndEdit);
   };
 
