@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
 import Table from './Table';
-import Form from './Form';
 
 function SuperAdmins() {
   const [superAdmins, setSuperAdmins] = useState([]);
@@ -36,24 +35,24 @@ function SuperAdmins() {
     }
   };
 
-  const createItem = async (email, password) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
-        method: 'POST',
-        body: JSON.stringify({ email, password }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await response.json();
-      alert(data.message);
-      if (response.ok) {
-        setSuperAdmins([...superAdmins, data.data]);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const createItem = async (email, password) => {
+  //   try {
+  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
+  //       method: 'POST',
+  //       body: JSON.stringify({ email, password }),
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       }
+  //     });
+  //     const data = await response.json();
+  //     alert(data.message);
+  //     if (response.ok) {
+  //       setSuperAdmins([...superAdmins, data.data]);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const updateItem = async (id, email, password) => {
     const index = superAdmins.findIndex((admin) => admin._id === id);
@@ -79,10 +78,14 @@ function SuperAdmins() {
 
   return (
     <section className={styles.container}>
-      <div className={styles.box}>
-        <Form create={createItem} />
+      <section className={styles.list}>
+        <header className={styles.header}>
+          <h1 className={styles.title}>Super Admin</h1>
+          <button className={styles.btnAdd}>ADD Super Admin</button>
+        </header>
+        {/* <Form create={createItem} /> */}
         <Table list={superAdmins} deleteItem={deleteItem} updateItem={updateItem} />
-      </div>
+      </section>
     </section>
   );
 }

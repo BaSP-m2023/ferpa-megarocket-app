@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './super-admins.module.css';
 import { useState } from 'react';
+// import {Link} from 'react-router-dom';
 
 function Form({ create }) {
   const [email, setEmail] = useState('');
@@ -44,5 +45,10 @@ function Form({ create }) {
     </div>
   );
 }
+
+// <Link to={'super-admins/add-item'}>{<Form />}</Link>
+// <Switch>
+// <Route path="/super-admins/add.item" >
+// </Switch>
 
 export default Form;

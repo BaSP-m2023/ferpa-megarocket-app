@@ -35,11 +35,11 @@ const List = ({ list, deleteItem, updateItem }) => {
   };
 
   return (
-    <tbody>
+    <tbody className={styles.tbody}>
       {list.map((superAdmin) => {
         return (
-          <tr className={styles.supAdmTr} key={superAdmin._id}>
-            <td className={styles.tdText}>
+          <tr className={styles.tr} key={superAdmin._id}>
+            <td className={styles.td}>
               {editUser === superAdmin._id ? (
                 <>
                   <label>New Email: </label>
@@ -53,7 +53,7 @@ const List = ({ list, deleteItem, updateItem }) => {
                 superAdmin.email
               )}
             </td>
-            <td className={styles.tdText}>
+            <td className={styles.td}>
               {editUser === superAdmin._id ? (
                 <>
                   <label>New Pass: </label>
@@ -70,10 +70,10 @@ const List = ({ list, deleteItem, updateItem }) => {
                 </p>
               )}
             </td>
-            <td className={styles.tdBtn}>
+            <td className={styles.td}>
               <button className={styles.passBtn} onClick={() => toggler(superAdmin._id)}></button>
             </td>
-            <td className={styles.tdBtn}>
+            <td className={styles.td}>
               {editUser === superAdmin._id ? (
                 <button
                   className={`${styles.supAdmBtn} ${styles.acceptBtn}`}
@@ -88,7 +88,7 @@ const List = ({ list, deleteItem, updateItem }) => {
                 ></button>
               )}
             </td>
-            <td className={styles.tdBtn}>
+            <td className={styles.td}>
               {editUser === superAdmin._id ? (
                 <button
                   className={`${styles.supAdmBtn} ${styles.cancelBtn}`}
