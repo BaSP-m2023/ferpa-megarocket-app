@@ -16,10 +16,6 @@
   width: 80%;
 }
 
-.header h2 {
-  margin: 0;
-}
-
 .list {
   display: flex;
   flex-direction: column;

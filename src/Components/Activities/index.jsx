@@ -2,24 +2,25 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './activities.module.css';
 import Table from './Table';
+import Button from '../Shared/Button';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
-  // const [currentName, setCurrentName] = useState('');
-  // const [currentDes, setCurrentDes] = useState('');
-  // const [currentId, setCurrentId] = useState('');
+  const [message, setMessage] = useState('');
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [confirmModal, setConfirmModal] = useState(false);
 
   const onDelete = async (id) => {
     try {
-      const response = window.confirm('Are you sure you want to delete this activity?');
-      if (response) {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
-          method: 'DELETE'
-        });
-        const data = await res.json();
-        setActivities([...activities.filter((activity) => activity._id !== id)]);
-        return data;
-      }
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
+        method: 'DELETE'
+      });
+      const data = await res.json();
+      setMessage(data.message);
+      setConfirmModal(!confirmModal);
+      setDeleteModal(!deleteModal);
+      setActivities([...activities.filter((activity) => activity._id !== id)]);
+      return data;
     } catch (error) {
       console.error(error);
     }
@@ -44,10 +45,18 @@ function Activities() {
         <div className={styles.header}>
           <h2 className={styles.title}>Activities</h2>
           <Link to="/activities/create">
-            <button>Add</button>
+            <Button text={'Add'} type={'add'} />
           </Link>
         </div>
-        <Table activities={activities} onDelete={onDelete} />
+        <Table
+          activities={activities}
+          onDelete={onDelete}
+          message={message}
+          confirmModal={confirmModal}
+          deleteModal={deleteModal}
+          setConfirmModal={setConfirmModal}
+          setDeleteModal={setDeleteModal}
+        />
       </div>
     </section>
   );

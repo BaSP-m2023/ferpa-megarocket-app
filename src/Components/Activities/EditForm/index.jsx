@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import styles from './editform.module.css';
 import { Input, TextArea } from '../../Shared/Inputs';
 import { Link, useParams } from 'react-router-dom';
+import Button from '../../Shared/Button';
+import Modal from '../../Shared/Modal';
 
 const EditForm = () => {
   const { id } = useParams();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [isActive, setIsActive] = useState(false);
+  const [message, setMessage] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const getActivity = async (id) => {
     try {
@@ -41,7 +45,7 @@ const EditForm = () => {
         }
       });
       const data = await res.json();
-      console.log(data);
+      setMessage(data.message);
     } catch (error) {
       console.error(error);
     }
@@ -54,10 +58,17 @@ const EditForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     onEdit(id);
+    setShowModal(true);
   };
 
   return (
     <div className={styles.formContainer}>
+      <Modal
+        onClose={() => setShowModal(false)}
+        isOpen={showModal}
+        title={message}
+        success={true}
+      />
       <div className={styles.formBox}>
         <h3 className={styles.title}>Edit activity</h3>
         <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
@@ -83,14 +94,14 @@ const EditForm = () => {
               type="checkbox"
               checked={isActive}
               value={isActive}
-              onChange={(e) => setIsActive(e.target.value)}
+              onChange={(e) => setIsActive(e.currentTarget.checked)}
             />
           </div>
           <div className={styles.btns}>
             <Link to="/activities">
-              <button>Cancel</button>
+              <Button text={'Cancel'} type={'white'} />
             </Link>
-            <button type="submit">Edit</button>
+            <Button text={'Edit'} type={'add'} clickAction={onSubmit} />
           </div>
         </form>
       </div>

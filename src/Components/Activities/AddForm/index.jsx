@@ -3,11 +3,15 @@ import styles from './addform.module.css';
 import { Input, TextArea } from '../../Shared/Inputs';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Button from '../../Shared/Button';
+import Modal from '../../Shared/Modal';
 
 const AddForm = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [isActive, setIsActive] = useState(false);
+  const [message, setMessage] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const onAdd = async ({ name, description, isActive }) => {
     try {
@@ -23,7 +27,7 @@ const AddForm = () => {
         }
       });
       const data = await res.json();
-      console.log(data);
+      setMessage(data.message);
     } catch (error) {
       console.error(error);
     }
@@ -32,6 +36,10 @@ const AddForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     onAdd({ name, description, isActive });
+    setName('');
+    setDescription('');
+    setIsActive(false);
+    setShowModal(true);
   };
 
   const handleNameChange = (e) => {
@@ -40,6 +48,13 @@ const AddForm = () => {
 
   return (
     <div className={styles.formContainer}>
+      <Modal
+        onClose={() => setShowModal(false)}
+        isOpen={showModal}
+        title={message}
+        success={true}
+      />
+      ;
       <div className={styles.formBox}>
         <h3 className={styles.title}>Add new activity</h3>
         <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
@@ -65,14 +80,14 @@ const AddForm = () => {
               type="checkbox"
               value={isActive}
               checked={isActive}
-              onChange={(e) => setIsActive(e.target.value)}
+              onChange={(e) => setIsActive(e.currentTarget.checked)}
             />
           </div>
           <div className={styles.btns}>
             <Link to="/activities">
-              <button>Cancel</button>
+              <Button text={'Cancel'} type={'white'} />
             </Link>
-            <button type="submit">Add</button>
+            <Button text={'Add'} type={'add'} clickAction={onSubmit} />
           </div>
         </form>
       </div>

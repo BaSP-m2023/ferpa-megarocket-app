@@ -19,6 +19,10 @@
   height: 70px;
 }
 
+.trHead th, .trBody td {
+  padding-right: 20px;
+}
+
 .trHead {
   font-size: 22px;
   font-weight: 600;
@@ -47,10 +51,6 @@
 
 .thIcon {
   width: 10%;
-}
-
-.icon {
-  cursor: pointer;
 }
 
 .tdIcon {

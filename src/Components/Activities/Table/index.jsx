@@ -1,8 +1,17 @@
-import React from 'react';
 import styles from './table.module.css';
 import { Link } from 'react-router-dom';
+import Button from '../../Shared/Button';
+import Modal from '../../Shared/Modal';
 
-const Table = ({ activities, onDelete }) => {
+const Table = ({
+  activities,
+  onDelete,
+  message,
+  confirmModal,
+  deleteModal,
+  setConfirmModal,
+  setDeleteModal
+}) => {
   return (
     <table className={styles.table}>
       <tbody className={styles.tbody}>
@@ -15,26 +24,44 @@ const Table = ({ activities, onDelete }) => {
         </tr>
         {activities.map((activity) => {
           return (
-            <tr className={styles.trBody} key={activity?._id}>
-              <td>{activity?.name}</td>
-              <td className={styles.thDes}>{activity?.description}</td>
-              <td className={styles.thStatus}>{activity?.isActive ? 'Active' : 'Inactive'}</td>
-              <td className={styles.tdIcon}>
-                <Link to={`/activities/edit/${activity._id}`}>
-                  <img className={styles.icon} src="/assets/images/edit-icon.svg" alt={'Edit'} />
-                </Link>
-              </td>
-              <td>
-                <img
-                  className={styles.icon}
-                  src="/assets/images/delete-icon.svg"
-                  alt={'Delete'}
-                  onClick={() => {
-                    onDelete(activity._id);
-                  }}
+            <>
+              <Modal
+                isOpen={confirmModal}
+                title={'Delete Activity'}
+                text={'Are you sure you want to delete this activity?'}
+                onClose={() => setConfirmModal(!confirmModal)}
+              >
+                <Button
+                  text={'Cancel'}
+                  type={'white'}
+                  clickAction={() => setConfirmModal(!confirmModal)}
                 />
-              </td>
-            </tr>
+                <Button
+                  text={'Delete'}
+                  type={'delete'}
+                  clickAction={() => onDelete(activity._id)}
+                />
+              </Modal>
+              <Modal
+                isOpen={deleteModal}
+                title={message}
+                success={true}
+                onClose={() => setDeleteModal(!deleteModal)}
+              />
+              <tr className={styles.trBody} key={activity?._id}>
+                <td>{activity?.name}</td>
+                <td className={styles.thDes}>{activity?.description}</td>
+                <td className={styles.thStatus}>{activity?.isActive ? 'Active' : 'Inactive'}</td>
+                <td className={styles.tdIcon}>
+                  <Link to={`/activities/edit/${activity._id}`}>
+                    <Button type={'edit'} />
+                  </Link>
+                </td>
+                <td>
+                  <Button type={'deleteIcon'} clickAction={() => setConfirmModal(!confirmModal)} />
+                </td>
+              </tr>
+            </>
           );
         })}
       </tbody>
