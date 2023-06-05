@@ -63,12 +63,7 @@ const EditForm = () => {
 
   return (
     <div className={styles.formContainer}>
-      <Modal
-        onClose={() => setShowModal(false)}
-        isOpen={showModal}
-        title={message}
-        success={true}
-      />
+      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />
       <div className={styles.formBox}>
         <h3 className={styles.title}>Edit activity</h3>
         <form className={styles.form} onSubmit={(e) => onSubmit(e)}>

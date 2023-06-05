@@ -26,6 +26,7 @@ const Table = ({
           return (
             <>
               <Modal
+                warning
                 isOpen={confirmModal}
                 title={'Delete Activity'}
                 text={'Are you sure you want to delete this activity?'}
@@ -45,7 +46,7 @@ const Table = ({
               <Modal
                 isOpen={deleteModal}
                 title={message}
-                success={true}
+                success
                 onClose={() => setDeleteModal(!deleteModal)}
               />
               <tr className={styles.trBody} key={activity?._id}>
