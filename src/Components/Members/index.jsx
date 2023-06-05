@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './members.module.css';
+import { Link } from 'react-router-dom';
+import Button from '../Shared/Button/';
 // import Modal from '../Shared/Modal/';
-// import Button from '../Shared/Button/';
 // import Inputs from '../Shared/Inputs/';
 
 function Members() {
@@ -18,58 +19,58 @@ function Members() {
   const [membership, setMembership] = useState('Classic');
   const [memberId, setMemberId] = useState('');
 
-  const [firstNameAdd, setFirstNameAdd] = useState('');
-  const [lastNameAdd, setLastNameAdd] = useState('');
-  const [dniAdd, setDniAdd] = useState('');
-  const [phoneAdd, setPhoneAdd] = useState('');
-  const [emailAdd, setEmailAdd] = useState('');
-  const [cityAdd, setCityAdd] = useState('');
-  const [birthDayAdd, setBirthdayAdd] = useState('');
-  const [postalCodeAdd, setPostalCodeAdd] = useState('');
-  const [isActiveAdd, setIsActiveAdd] = useState(true);
-  const [membershipAdd, setMembershipAdd] = useState('Classic');
+  // const [firstNameAdd, setFirstNameAdd] = useState('');
+  // const [lastNameAdd, setLastNameAdd] = useState('');
+  // const [dniAdd, setDniAdd] = useState('');
+  // const [phoneAdd, setPhoneAdd] = useState('');
+  // const [emailAdd, setEmailAdd] = useState('');
+  // const [cityAdd, setCityAdd] = useState('');
+  // const [birthDayAdd, setBirthdayAdd] = useState('');
+  // const [postalCodeAdd, setPostalCodeAdd] = useState('');
+  // const [isActiveAdd, setIsActiveAdd] = useState(true);
+  // const [membershipAdd, setMembershipAdd] = useState('Classic');
 
-  const handleFirstName = (e) => {
-    setFirstNameAdd(e.target.value);
-  };
+  // const handleFirstName = (e) => {
+  //   setFirstNameAdd(e.target.value);
+  // };
 
-  const handleLastName = (e) => {
-    setLastNameAdd(e.target.value);
-  };
+  // const handleLastName = (e) => {
+  //   setLastNameAdd(e.target.value);
+  // };
 
-  const handleDniChange = (e) => {
-    const value = e.target.value;
-    setDniAdd(value);
-  };
+  // const handleDniChange = (e) => {
+  //   const value = e.target.value;
+  //   setDniAdd(value);
+  // };
 
-  const handlePhoneChange = (e) => {
-    const value = e.target.value;
-    setPhoneAdd(value);
-  };
+  // const handlePhoneChange = (e) => {
+  //   const value = e.target.value;
+  //   setPhoneAdd(value);
+  // };
 
-  const handleEmailChange = (e) => {
-    setEmailAdd(e.target.value);
-  };
+  // const handleEmailChange = (e) => {
+  //   setEmailAdd(e.target.value);
+  // };
 
-  const handleCityChange = (e) => {
-    setCityAdd(e.target.value);
-  };
+  // const handleCityChange = (e) => {
+  //   setCityAdd(e.target.value);
+  // };
 
-  const handleBirthdayChange = (e) => {
-    setBirthdayAdd(e.target.value);
-  };
+  // const handleBirthdayChange = (e) => {
+  //   setBirthdayAdd(e.target.value);
+  // };
 
-  const handlePostalCodeChange = (e) => {
-    setPostalCodeAdd(e.target.value);
-  };
+  // const handlePostalCodeChange = (e) => {
+  //   setPostalCodeAdd(e.target.value);
+  // };
 
-  const handleMembershipChange = (e) => {
-    setMembershipAdd(e.target.value);
-  };
+  // const handleMembershipChange = (e) => {
+  //   setMembershipAdd(e.target.value);
+  // };
 
-  const handleIsActiveChange = (e) => {
-    setIsActiveAdd(e.target.value);
-  };
+  // const handleIsActiveChange = (e) => {
+  //   setIsActiveAdd(e.target.value);
+  // };
 
   const changeHandler = (id) => {
     const member = members.find((member) => member._id === id);
@@ -91,53 +92,53 @@ function Members() {
     updatedMember(memberId);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addMember({
-      firstNameAdd,
-      lastNameAdd,
-      dniAdd,
-      phoneAdd,
-      emailAdd,
-      cityAdd,
-      birthDayAdd,
-      postalCodeAdd,
-      isActiveAdd,
-      membershipAdd
-    });
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   addMember({
+  //     firstNameAdd,
+  //     lastNameAdd,
+  //     dniAdd,
+  //     phoneAdd,
+  //     emailAdd,
+  //     cityAdd,
+  //     birthDayAdd,
+  //     postalCodeAdd,
+  //     isActiveAdd,
+  //     membershipAdd
+  //   });
+  // };
 
-  const addMember = async (member) => {
-    try {
-      const newMembers = await fetch(`${process.env.REACT_APP_API_URL}/api/members/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          firstName: member.firstNameAdd,
-          lastName: member.lastNameAdd,
-          dni: member.dniAdd,
-          phone: member.phoneAdd,
-          email: member.emailAdd,
-          city: member.cityAdd,
-          birthDay: member.birthDayAdd,
-          postalCode: member.postalCodeAdd,
-          isActive: member.isActiveAdd,
-          membership: member.membershipAdd
-        })
-      });
+  // const addMember = async (member) => {
+  //   try {
+  //     const newMembers = await fetch(`${process.env.REACT_APP_API_URL}/api/members/`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({
+  //         firstName: member.firstNameAdd,
+  //         lastName: member.lastNameAdd,
+  //         dni: member.dniAdd,
+  //         phone: member.phoneAdd,
+  //         email: member.emailAdd,
+  //         city: member.cityAdd,
+  //         birthDay: member.birthDayAdd,
+  //         postalCode: member.postalCodeAdd,
+  //         isActive: member.isActiveAdd,
+  //         membership: member.membershipAdd
+  //       })
+  //     });
 
-      const { message, data, error } = await newMembers.json();
-      alert(message);
+  //     const { message, data, error } = await newMembers.json();
+  //     alert(message);
 
-      if (!error) {
-        setMembers([...members, data]);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     if (!error) {
+  //       setMembers([...members, data]);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const deleteMember = async (id) => {
     try {
@@ -206,6 +207,7 @@ function Members() {
 
   return (
     <section className={styles.container}>
+      {console.log(members)}
       <h2>Members</h2>
       <div>
         <table>
@@ -249,56 +251,59 @@ function Members() {
         </table>
       </div>
       <div>
-        <form onSubmit={handleSubmit}>
-          <label>
-            Name:
-            <input type="text" placeholder="Name" name="firstName" onChange={handleFirstName} />
-          </label>
-          <label>
-            Surname:
-            <input type="text" placeholder="Surname" onChange={handleLastName} />
-          </label>
-          <label>
-            DNI:
-            <input type="text" placeholder="DNI" pattern="\d*" onChange={handleDniChange} />
-          </label>
-          <label>
-            Phone:
-            <input type="text" placeholder="Phone" pattern="\d*" onChange={handlePhoneChange} />
-          </label>
-          <label>
-            email:
-            <input type="text" placeholder="Email" onChange={handleEmailChange} />
-          </label>
-          <label>
-            City:
-            <input type="text" placeholder="City" onChange={handleCityChange} />
-          </label>
-          <label>
-            Birthday:
-            <input type="text" placeholder="Birthday" onChange={handleBirthdayChange} />
-          </label>
-          <label>
-            Postal Code:
-            <input type="text" placeholder="Postal Code" onChange={handlePostalCodeChange} />
-          </label>
-          <label>Its Active?</label>
-          <select onChange={handleIsActiveChange}>
-            <option value={true}>Yes</option>
-            <option value={false}>No</option>
-          </select>
-          <label>
-            Membership:
-            <select onChange={handleMembershipChange}>
-              <option value="Classic">Classic</option>
-              <option value="Only Classes">Only Classes</option>
-              <option value="Black">Black Membership</option>
+        <Link to={'/members/create'}>
+          <Button text={'Create new member'} type={'add'} />
+          {/* <form onSubmit={handleSubmit}>
+            <label>
+              Name:
+              <input type="text" placeholder="Name" name="firstName" onChange={handleFirstName} />
+            </label>
+            <label>
+              Surname:
+              <input type="text" placeholder="Surname" onChange={handleLastName} />
+            </label>
+            <label>
+              DNI:
+              <input type="text" placeholder="DNI" pattern="\d*" onChange={handleDniChange} />
+            </label>
+            <label>
+              Phone:
+              <input type="text" placeholder="Phone" pattern="\d*" onChange={handlePhoneChange} />
+            </label>
+            <label>
+              email:
+              <input type="text" placeholder="Email" onChange={handleEmailChange} />
+            </label>
+            <label>
+              City:
+              <input type="text" placeholder="City" onChange={handleCityChange} />
+            </label>
+            <label>
+              Birthday:
+              <input type="text" placeholder="Birthday" onChange={handleBirthdayChange} />
+            </label>
+            <label>
+              Postal Code:
+              <input type="text" placeholder="Postal Code" onChange={handlePostalCodeChange} />
+            </label>
+            <label>Its Active?</label>
+            <select onChange={handleIsActiveChange}>
+              <option value={true}>Yes</option>
+              <option value={false}>No</option>
             </select>
-          </label>
-          <button type="submit" onSubmit={handleSubmit}>
-            Enviar
-          </button>
-        </form>
+            <label>
+              Membership:
+              <select onChange={handleMembershipChange}>
+                <option value="Classic">Classic</option>
+                <option value="Only Classes">Only Classes</option>
+                <option value="Black">Black Membership</option>
+              </select>
+            </label>
+            <button type="submit" onSubmit={handleSubmit}>
+              Enviar
+            </button>
+          </form> */}
+        </Link>
       </div>
       <div>
         <form onSubmit={saveUpdate}>
