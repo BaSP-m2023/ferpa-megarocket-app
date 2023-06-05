@@ -1,13 +1,12 @@
 import React from 'react';
 import styles from './addMembers.module.css';
-import { Input, TextArea } from '../../Shared/Inputs';
+import { Input } from '../../Shared/Inputs';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal';
 
 const MembersCreate = () => {
-  const [members, setMembers] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dni, setDni] = useState('');
