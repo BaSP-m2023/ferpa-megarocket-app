@@ -3,7 +3,7 @@ import styles from './editMembers.module.css';
 import { Input } from '../../Shared/Inputs';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../../Shared/Button';
+import Button from '../../Shared/Button/index';
 import Modal from '../../Shared/Modal';
 
 const MembersEdit = () => {
