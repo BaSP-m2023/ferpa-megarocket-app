@@ -1,66 +1,95 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './editform.module.css';
+import { Input, TextArea } from '../../Shared/Inputs';
+import { Link, useParams } from 'react-router-dom';
 
-const EditForm = ({
-  onSubmit,
-  currentName,
-  currentDes,
-  setCurrentName,
-  setCurrentDes,
-  onEdit,
-  currentId,
-  setShowEdit,
-  showEdit
-}) => {
-  // const onEdit = async (id) => {
-  //   const index = activities.findIndex((activity) => activity._id === id);
-  //   try {
-  //     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
-  //       method: 'PUT',
-  //       body: JSON.stringify({
-  //         name: currentName,
-  //         description: currentDes,
-  //         isActive: true
-  //       }),
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       }
-  //     });
-  //     const data = await res.json();
-  //     const update = [...activities];
-  //     update[index] = data.data;
-  //     console.log(update[index]);
-  //     setActivities(update);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+const EditForm = () => {
+  const { id } = useParams();
+  const [activity, setActivity] = useState({});
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [isActive, setIsActive] = useState(false);
+
+  const getActivity = async (id) => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`);
+      const { data } = await res.json();
+      setActivity(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getActivity(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onEdit = async (id) => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          name,
+          description,
+          isActive
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    onEdit(id);
+  };
 
   return (
-    <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
-      <input
-        type="text"
-        placeholder={currentName}
-        value={currentName}
-        onChange={(e) => setCurrentName(e.target.value)}
-      />
-      <textarea
-        type="text"
-        placeholder={currentDes}
-        value={currentDes}
-        onChange={(e) => setCurrentDes(e.target.value)}
-      />
-      <button
-        className={styles.confirmEdit}
-        type="submit"
-        onClick={() => {
-          onEdit(currentId);
-          setShowEdit(!showEdit);
-        }}
-      >
-        Edit
-      </button>
-    </form>
+    <div className={styles.formContainer}>
+      <h3 className={styles.title}>Edit activity</h3>
+      <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
+        <Input
+          labelText={'Name'}
+          type={'text'}
+          placeholder={'Activity name'}
+          value={activity.name}
+          onChangeInput={handleNameChange}
+        />
+        <TextArea
+          label={'Description'}
+          placeholder={'Activity description'}
+          value={activity.description}
+          onChangeArea={setDescription}
+        />
+        <div className={styles.checkboxField}>
+          <label>Status</label>
+          <input
+            className={styles.checkbox}
+            type="checkbox"
+            checked={activity.isActive}
+            value={activity.isActive}
+            onChange={(e) => setIsActive(e.target.value)}
+          />
+        </div>
+        <div className={styles.btns}>
+          <Link to="/activities">
+            <button>Cancel</button>
+          </Link>
+          <button type="submit">Edit</button>
+        </div>
+      </form>
+    </div>
   );
 };
 

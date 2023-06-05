@@ -15,17 +15,23 @@
   width: 60%;
 }
 
-.checkbox {
+.checkboxField {
   display: flex;
   margin: 20px 0;
 }
 
-.checkbox label {
+.checkboxField label {
   font-family: 'Roboto', sans-serif;
   color: #373867;
   font-size: 20px;
   line-height: 29px;
   margin-right: 20px;
+}
+
+.checkbox {
+  accent-color: #373867;
+  width: 18px;
+  height: 18px;
 }
 
 .btns {

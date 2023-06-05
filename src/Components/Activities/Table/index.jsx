@@ -1,16 +1,8 @@
 import React from 'react';
 import styles from './table.module.css';
+import { Link } from 'react-router-dom';
 
-const Table = ({
-  activities,
-  showEdit,
-  setShowEdit,
-  setShowAdd,
-  setCurrentName,
-  setCurrentDes,
-  setCurrentId,
-  onDelete
-}) => {
+const Table = ({ activities, onDelete }) => {
   return (
     <table className={styles.table}>
       <tbody>
@@ -28,18 +20,9 @@ const Table = ({
               <td className={styles.thDes}>{activity?.description}</td>
               <td className={styles.thStatus}>{activity?.isActive ? 'Active' : 'Inactive'}</td>
               <td className={styles.tdIcon}>
-                <img
-                  className={styles.icon}
-                  src="/assets/images/edit-icon.svg"
-                  alt={'Edit'}
-                  onClick={() => {
-                    setShowEdit(!showEdit);
-                    setShowAdd(false);
-                    setCurrentName(activity.name);
-                    setCurrentDes(activity.description);
-                    setCurrentId(activity._id);
-                  }}
-                />
+                <Link to={`/activities/edit/${activity._id}`}>
+                  <img className={styles.icon} src="/assets/images/edit-icon.svg" alt={'Edit'} />
+                </Link>
               </td>
               <td className={styles.tdIcon}>
                 <img

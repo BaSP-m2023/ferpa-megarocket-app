@@ -1,0 +1,39 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  color: #373867;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 35px;
+}
+
+.form {
+  width: 60%;
+}
+
+.checkboxField {
+  display: flex;
+  margin: 20px 0;
+}
+
+.checkboxField label {
+  font-family: 'Roboto', sans-serif;
+  color: #373867;
+  font-size: 20px;
+  line-height: 29px;
+  margin-right: 20px;
+}
+
+.checkbox {
+  accent-color: #373867;
+  width: 18px;
+  height: 18px;
+}
+
+.btns {
+  margin: 20px 0;
+}

@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './activities.module.css';
 import Table from './Table';
-// import AddForm from './AddForm';
-// import EditForm from './EditForm';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -49,28 +47,6 @@ function Activities() {
           <button>Add</button>
         </Link>
       </div>
-      {/* {showAdd && (
-        <AddForm
-          onSubmit={onSubmit}
-          name={name}
-          setName={setName}
-          description={description}
-          setDescription={setDescription}
-        />
-      )}
-      {showEdit && (
-        <EditForm
-          onSubmit={onSubmit}
-          currentName={currentName}
-          currentDes={currentDes}
-          setCurrentName={setCurrentName}
-          setCurrentDes={setCurrentDes}
-          onEdit={onEdit}
-          currentId={currentId}
-          setShowEdit={setShowEdit}
-          showEdit={showEdit}
-        />
-      )} */}
     </section>
   );
 }

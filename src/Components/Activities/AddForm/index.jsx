@@ -55,9 +55,10 @@ const AddForm = () => {
           placeholder={'Activity description'}
           onChangeArea={setDescription}
         />
-        <div className={styles.checkbox}>
+        <div className={styles.checkboxField}>
           <label>Status</label>
           <input
+            className={styles.checkbox}
             type="checkbox"
             value={isActive}
             checked={isActive}
