@@ -22,7 +22,7 @@ function Footer() {
           </a>
           <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
             <img
-              alt={'Facebook'}
+              alt={'facebook'}
               className={styles.socialIcon}
               src={'./assets/images/Facebook-Logo.svg'}
             />
