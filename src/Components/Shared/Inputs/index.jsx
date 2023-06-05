@@ -1,13 +1,17 @@
 import React from 'react';
 import styles from './inputs.module.css';
 
-export const Select = ({ value, placeholder, onChangeSelect, label, options, nameValue }) => {
+export const Select = ({ value, placeholder, onChangeSelect, label, options, nameValue, dark }) => {
   return (
     <>
-      <label className={styles.label}>{label}</label>
+      <label className={dark ? `${styles.label} ${styles.dark}` : `${styles.label}`}>{label}</label>
       <select
         name={nameValue}
-        className={`${styles.input} ${styles.select}`}
+        className={
+          dark
+            ? `${styles.input} ${styles.dark} ${styles.select}`
+            : `${styles.input} ${styles.select}`
+        }
         value={value}
         onChange={onChangeSelect}
       >
@@ -24,12 +28,14 @@ export const Select = ({ value, placeholder, onChangeSelect, label, options, nam
   );
 };
 
-export const Input = ({ labelText, onChangeInput, placeholder, value, nameValue, type }) => {
+export const Input = ({ labelText, onChangeInput, placeholder, value, nameValue, type, dark }) => {
   return (
     <>
-      <label className={styles.label}>{labelText}</label>
+      <label className={dark ? `${styles.label} ${styles.dark}` : `${styles.label}`}>
+        {labelText}
+      </label>
       <input
-        className={styles.input}
+        className={dark ? `${styles.input} ${styles.dark}` : `${styles.input}`}
         type={type === 'password' ? 'password' : 'text'}
         onChange={onChangeInput}
         placeholder={placeholder}
@@ -40,12 +46,12 @@ export const Input = ({ labelText, onChangeInput, placeholder, value, nameValue,
   );
 };
 
-export const DatePicker = ({ value, onChangeDate, label, nameValue }) => {
+export const DatePicker = ({ value, onChangeDate, label, nameValue, dark }) => {
   return (
     <>
-      <label className={styles.label}>{label}</label>
+      <label className={dark ? `${styles.label} ${styles.dark}` : `${styles.label}`}>{label}</label>
       <input
-        className={styles.input}
+        className={dark ? `${styles.input} ${styles.dark}` : `${styles.input}`}
         type="date"
         name={nameValue}
         value={value}
@@ -55,12 +61,16 @@ export const DatePicker = ({ value, onChangeDate, label, nameValue }) => {
   );
 };
 
-export const TextArea = ({ value, onChangeArea, placeholder, label, nameValue }) => {
+export const TextArea = ({ value, onChangeArea, placeholder, label, nameValue, dark }) => {
   return (
     <>
-      <label className={styles.label}>{label}</label>
+      <label className={dark ? `${styles.label} ${styles.dark}` : `${styles.label}`}>{label}</label>
       <textarea
-        className={`${styles.input} ${styles.textarea}`}
+        className={
+          dark
+            ? `${styles.input} ${styles.dark} ${styles.textarea}`
+            : `${styles.input} ${styles.textarea}`
+        }
         type="text"
         value={value}
         name={nameValue}

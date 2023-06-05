@@ -1,0 +1,60 @@
+.btn {
+  margin: 0 5px;
+  padding: 2px 10px 0px 10px;
+  min-width: 90px;
+  min-height: 50px;
+  font-size: 16px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
+.delete {
+  background-color: #a30000;
+  border: 1.5px solid #ffffff;
+  color: #ffffff;
+}
+
+.deleteIcon {
+  background-image: url('../../../../public/assets/images/delete-icon.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 1.5px solid #ffffff;
+  font-size: 0;
+  min-height: 45px;
+  min-width: 45px;
+  padding: 0;
+}
+
+.edit {
+  background-image: url('../../../../public/assets/images/edit-icon.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 1.5px solid #ffffff;
+  font-size: 0;
+  min-height: 45px;
+  min-width: 45px;
+}
+
+.seePassword {
+  background-image: url('../../../../public/assets/images/super-admin-pass-icon.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 1.5px solid #ffffff;
+  font-size: 0;
+  min-height: 45px;
+  min-width: 45px;
+}
+
+.add {
+  background-color: #00a34c;
+  border: 1.5px solid #ffffff;
+  color: #ffffff;
+}
+
+.white {
+  background-color: #ffffff;
+  border: 1.5px solid #000000;
+  color: #000000;
+}
