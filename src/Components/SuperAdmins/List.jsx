@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './super-admins.module.css';
 import { useState } from 'react';
+import Button from '../Shared/Button';
 
 const List = ({ list, deleteItem, updateItem }) => {
   const [togglePass, setTogglePass] = useState([]);
@@ -71,7 +72,7 @@ const List = ({ list, deleteItem, updateItem }) => {
               )}
             </td>
             <td className={styles.td}>
-              <button className={styles.passBtn} onClick={() => toggler(superAdmin._id)}></button>
+              <Button type={'seePassword'} clickAction={() => toggler(superAdmin._id)} />
             </td>
             <td className={styles.td}>
               {editUser === superAdmin._id ? (
@@ -82,10 +83,7 @@ const List = ({ list, deleteItem, updateItem }) => {
                   Accept
                 </button>
               ) : (
-                <button
-                  onClick={() => handleEditClick(superAdmin._id)}
-                  className={styles.editBtn}
-                ></button>
+                <Button type={'edit'} clickAction={() => handleEditClick(superAdmin._id)} />
               )}
             </td>
             <td className={styles.td}>
@@ -97,10 +95,7 @@ const List = ({ list, deleteItem, updateItem }) => {
                   Cancel
                 </button>
               ) : (
-                <button
-                  className={styles.deleteBtn}
-                  onClick={() => deleteItem(superAdmin._id)}
-                ></button>
+                <Button type={'deleteIcon'} clickAction={() => deleteItem(superAdmin._id)} />
               )}
             </td>
           </tr>

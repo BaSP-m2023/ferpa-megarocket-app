@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './super-admins.module.css';
 import { useState } from 'react';
-// import {Link} from 'react-router-dom';
+import Button from '../Shared/Button';
+import { Input } from '../Shared/Inputs';
 
 function Form({ create }) {
   const [email, setEmail] = useState('');
@@ -10,45 +11,36 @@ function Form({ create }) {
   const submit = (e) => {
     e.preventDefault();
     create(email, pass);
+    setEmail('');
+    setPass('');
   };
 
   return (
     <div>
-      <h2 className={styles.titleForm}>Create a Super Admin</h2>
-      <form className={styles.formPost}>
+      <h2>Create a Super Admin</h2>
+      <form className={styles.form}>
         <div>
-          <label>Email: </label>
-          <input
-            className={styles.supAdmInput}
-            type="text"
+          <Input
+            labelText={'Email:'}
+            type={'text'}
+            placeholder={'Email:'}
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          ></input>
+            onChangeInput={(e) => setEmail(e.target.value)}
+          />
         </div>
         <div>
-          <label>Password: </label>
-          <input
-            className={styles.supAdmInput}
-            type="password"
+          <Input
+            labelText={'Password:'}
+            type={'text'}
+            placeholder={'Password:'}
             value={pass}
-            onChange={(e) => setPass(e.target.value)}
-          ></input>
+            onChangeInput={(e) => setPass(e.target.value)}
+          />
         </div>
-        <button
-          className={`${styles.supAdmBtn} ${styles.submitBtn}`}
-          onClick={submit}
-          type="submit"
-        >
-          Submit
-        </button>
+        <Button text={'Submit'} clickAction={submit} type="submit" />
       </form>
     </div>
   );
 }
-
-// <Link to={'super-admins/add-item'}>{<Form />}</Link>
-// <Switch>
-// <Route path="/super-admins/add.item" >
-// </Switch>
 
 export default Form;
