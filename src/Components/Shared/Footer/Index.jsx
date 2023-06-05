@@ -8,21 +8,21 @@ function Footer() {
         <div>
           <a href={'https://twitter.com/radiumrocket'} target={'_blank'} rel="noreferrer">
             <img
-              alt={'twitter'}
+              alt={'Twitter'}
               className={styles.socialIcon}
               src={'./assets/images/Twitter-Icon.svg'}
             />
           </a>
           <a href={'https://www.instagram.com/radium.rocket/'} target={'_blank'} rel="noreferrer">
             <img
-              alt={'instagram'}
+              alt={'Instagram'}
               className={styles.socialIcon}
               src={'./assets/images/Instagram-Icon.svg'}
             />
           </a>
           <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
             <img
-              alt={'facebook'}
+              alt={'Facebook'}
               className={styles.socialIcon}
               src={'./assets/images/Facebook-Logo.svg'}
             />
