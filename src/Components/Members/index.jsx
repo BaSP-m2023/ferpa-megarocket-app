@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import styles from './members.module.css';
-import Form from './Form';
-import Modal from '../Shared/Modal/';
-import Button from '../Shared/Button/';
-import Inputs from '../Shared/Inputs/';
-import Header from '../Shared/Header/';
-import Footer from '../Shared/Footer/';
+// import Form from './Form';
+// import Modal from '../Shared/Modal/';
+// import Button from '../Shared/Button/';
+// import Inputs from '../Shared/Inputs/';
 
 function Members() {
   const [members, setMembers] = useState([]);
