@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './subscriptions.module.css';
+import Modal from '../Shared/Modal';
 
 function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -15,6 +16,9 @@ function Subscriptions() {
   const [currentDate, setCurrentDate] = useState('');
   const [currentId, setCurrentId] = useState('');
 
+  const [modalDelete, setModalDelete] = useState(false);
+  const [modalConfirmDel, setModalConfirmDel] = useState(false);
+
   const onDelete = async (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
@@ -22,6 +26,8 @@ function Subscriptions() {
       });
       const data = await response.json();
       setSubscriptions(subscriptions.filter((subscription) => subscription._id !== id));
+      setModalConfirmDel(!modalConfirmDel);
+      setModalDelete(!modalDelete);
       return data;
     } catch (error) {
       console.error(error);
@@ -142,6 +148,21 @@ function Subscriptions() {
 
   return (
     <section className={styles.container}>
+      <Modal
+        isOpen={modalDelete}
+        title={'Subscription deleted'}
+        success={true}
+        onClose={() => setModalDelete(!modalDelete)}
+      ></Modal>
+      <Modal
+        isOpen={modalConfirmDel}
+        title={'Warning'}
+        onClose={() => setModalConfirmDel(!modalConfirmDel)}
+        text={'Are you sure?'}
+      >
+        <button onClick={() => onDelete(currentId)}>Confirm</button>
+        <button onClick={() => setModalConfirmDel(!modalConfirmDel)}>Cancel</button>
+      </Modal>
       <section className={styles.list}>
         <header className={styles.header}>
           <h1 className={styles.title}>Subscriptions</h1>
@@ -190,11 +211,8 @@ function Subscriptions() {
                     alt="delete"
                     style={{ cursor: 'pointer' }}
                     onClick={() => {
-                      const shureDelete = window.confirm('Are you sure you want to delete?');
-                      if (shureDelete) {
-                        alert('Subscription deleted');
-                        onDelete(subscription._id);
-                      }
+                      setCurrentId(subscription._id);
+                      setModalConfirmDel(!modalConfirmDel);
                     }}
                   />
                 </td>
@@ -208,12 +226,12 @@ function Subscriptions() {
               <label className={styles.label}>Activity:</label>
               <select
                 type="text"
-                placeholder="class Id"
+                placeholder="adsfasdf"
                 value={classId}
                 onChange={(e) => setClassId(e.target.value)}
                 required
               >
-                <option>Select an option</option>
+                <option hidden>select an option</option>
                 {classes.map((item) => {
                   return (
                     <option key={item?._id} value={item?._id}>
