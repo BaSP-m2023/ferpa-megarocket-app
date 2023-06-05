@@ -8,13 +8,16 @@
 }
 .input {
   width: 100%;
-  border: 2px solid #2f3058;
+  border: 2px solid #373867;
   border-radius: 4px;
   background-color: rgba(165, 165, 165, 0.5);
   height: 40px;
   padding: 20px;
   color: white;
   font-size: 16px;
+}
+.dark {
+  color: #373867;
 }
 .select {
   padding: 0;
@@ -24,6 +27,6 @@
 }
 .textarea {
   font-family: 'Roboto', sans-serif;
-  min-height: 25px;
+  min-height: 50px;
   resize: none;
 }
