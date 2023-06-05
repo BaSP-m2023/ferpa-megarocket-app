@@ -40,38 +40,42 @@ const AddForm = () => {
 
   return (
     <div className={styles.formContainer}>
-      <h3 className={styles.title}>Add new activity</h3>
-      <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
-        <Input
-          labelText={'Name'}
-          type={'text'}
-          placeholder={'Activity name'}
-          value={name}
-          onChangeInput={handleNameChange}
-        />
-        <TextArea
-          label={'Description'}
-          value={description}
-          placeholder={'Activity description'}
-          onChangeArea={setDescription}
-        />
-        <div className={styles.checkboxField}>
-          <label>Status</label>
-          <input
-            className={styles.checkbox}
-            type="checkbox"
-            value={isActive}
-            checked={isActive}
-            onChange={(e) => setIsActive(e.target.value)}
+      <div className={styles.formBox}>
+        <h3 className={styles.title}>Add new activity</h3>
+        <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
+          <div className={styles.field}>
+            <Input
+              labelText={'Name'}
+              type={'text'}
+              placeholder={'Activity name'}
+              value={name}
+              onChangeInput={handleNameChange}
+            />
+          </div>
+          <TextArea
+            label={'Description'}
+            value={description}
+            placeholder={'Activity description'}
+            onChangeArea={setDescription}
           />
-        </div>
-        <div className={styles.btns}>
-          <Link to="/activities">
-            <button>Cancel</button>
-          </Link>
-          <button type="submit">Add</button>
-        </div>
-      </form>
+          <div className={styles.checkboxField}>
+            <label>Status</label>
+            <input
+              className={styles.checkbox}
+              type="checkbox"
+              value={isActive}
+              checked={isActive}
+              onChange={(e) => setIsActive(e.target.value)}
+            />
+          </div>
+          <div className={styles.btns}>
+            <Link to="/activities">
+              <button>Cancel</button>
+            </Link>
+            <button type="submit">Add</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

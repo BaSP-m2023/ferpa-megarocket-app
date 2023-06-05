@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 const Table = ({ activities, onDelete }) => {
   return (
     <table className={styles.table}>
-      <tbody>
+      <tbody className={styles.tbody}>
         <tr className={styles.trHead}>
           <th className={styles.thName}>Activity</th>
           <th className={styles.thDes}>Description</th>
           <th className={styles.thStatus}>Status</th>
-          <th className={styles.thIcon}>Edit</th>
-          <th className={styles.thIcon}>Delete</th>
+          <th className={styles.thIcon}></th>
+          <th className={styles.thIcon}></th>
         </tr>
         {activities.map((activity) => {
           return (
@@ -24,7 +24,7 @@ const Table = ({ activities, onDelete }) => {
                   <img className={styles.icon} src="/assets/images/edit-icon.svg" alt={'Edit'} />
                 </Link>
               </td>
-              <td className={styles.tdIcon}>
+              <td>
                 <img
                   className={styles.icon}
                   src="/assets/images/delete-icon.svg"

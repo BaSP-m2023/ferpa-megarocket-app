@@ -40,12 +40,14 @@ function Activities() {
 
   return (
     <section className={styles.container}>
-      <h2 className={styles.title}>Activities Management</h2>
-      <Table activities={activities} onDelete={onDelete} />
-      <div className={styles.btnSection}>
-        <Link to="/activities/create">
-          <button>Add</button>
-        </Link>
+      <div className={styles.list}>
+        <div className={styles.header}>
+          <h2 className={styles.title}>Activities</h2>
+          <Link to="/activities/create">
+            <button>Add</button>
+          </Link>
+        </div>
+        <Table activities={activities} onDelete={onDelete} />
       </div>
     </section>
   );

@@ -5,7 +5,6 @@ import { Link, useParams } from 'react-router-dom';
 
 const EditForm = () => {
   const { id } = useParams();
-  const [activity, setActivity] = useState({});
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [isActive, setIsActive] = useState(false);
@@ -14,7 +13,9 @@ const EditForm = () => {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`);
       const { data } = await res.json();
-      setActivity(data);
+      setName(data.name);
+      setDescription(data.description);
+      setIsActive(data.isActive);
       return data;
     } catch (error) {
       console.error(error);
@@ -57,38 +58,42 @@ const EditForm = () => {
 
   return (
     <div className={styles.formContainer}>
-      <h3 className={styles.title}>Edit activity</h3>
-      <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
-        <Input
-          labelText={'Name'}
-          type={'text'}
-          placeholder={'Activity name'}
-          value={activity.name}
-          onChangeInput={handleNameChange}
-        />
-        <TextArea
-          label={'Description'}
-          placeholder={'Activity description'}
-          value={activity.description}
-          onChangeArea={setDescription}
-        />
-        <div className={styles.checkboxField}>
-          <label>Status</label>
-          <input
-            className={styles.checkbox}
-            type="checkbox"
-            checked={activity.isActive}
-            value={activity.isActive}
-            onChange={(e) => setIsActive(e.target.value)}
+      <div className={styles.formBox}>
+        <h3 className={styles.title}>Edit activity</h3>
+        <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
+          <div className={styles.field}>
+            <Input
+              labelText={'Name'}
+              type={'text'}
+              placeholder={'Activity name'}
+              value={name}
+              onChangeInput={handleNameChange}
+            />
+          </div>
+          <TextArea
+            label={'Description'}
+            placeholder={'Activity description'}
+            value={description}
+            onChangeArea={setDescription}
           />
-        </div>
-        <div className={styles.btns}>
-          <Link to="/activities">
-            <button>Cancel</button>
-          </Link>
-          <button type="submit">Edit</button>
-        </div>
-      </form>
+          <div className={styles.checkboxField}>
+            <label>Status</label>
+            <input
+              className={styles.checkbox}
+              type="checkbox"
+              checked={isActive}
+              value={isActive}
+              onChange={(e) => setIsActive(e.target.value)}
+            />
+          </div>
+          <div className={styles.btns}>
+            <Link to="/activities">
+              <button>Cancel</button>
+            </Link>
+            <button type="submit">Edit</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
