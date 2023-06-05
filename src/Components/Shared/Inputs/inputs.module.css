@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.label {
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  font-size: 20px;
+  line-height: 29px;
+}
+.input {
+  width: 100%;
+  border: 2px solid #373867;
+  border-radius: 4px;
+  background-color: rgba(165, 165, 165, 0.5);
+  height: 40px;
+  padding: 20px;
+  color: white;
+  font-size: 16px;
+}
+.dark {
+  color: #373867;
+}
+.select {
+  padding: 0;
+}
+.input::placeholder {
+  color: rgba(55, 56, 103, 0.8);
+}
+.textarea {
+  font-family: 'Roboto', sans-serif;
+  min-height: 50px;
+  resize: none;
+}
