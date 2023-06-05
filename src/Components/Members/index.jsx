@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import styles from './members.module.css';
-// import Form from './Form';
 // import Modal from '../Shared/Modal/';
 // import Button from '../Shared/Button/';
 // import Inputs from '../Shared/Inputs/';
@@ -29,6 +28,10 @@ function Members() {
   const [postalCodeAdd, setPostalCodeAdd] = useState('');
   const [isActiveAdd, setIsActiveAdd] = useState(true);
   const [membershipAdd, setMembershipAdd] = useState('Classic');
+
+  const handleFirstName = (e) => {
+    setFirstNameAdd(e.target.value);
+  };
 
   const handleLastName = (e) => {
     setLastNameAdd(e.target.value);
@@ -249,12 +252,7 @@ function Members() {
         <form onSubmit={handleSubmit}>
           <label>
             Name:
-            <input
-              type="text"
-              placeholder="Name"
-              name="firstName"
-              onChange={(e) => setFirstNameAdd(e.target.value)}
-            />
+            <input type="text" placeholder="Name" name="firstName" onChange={handleFirstName} />
           </label>
           <label>
             Surname:
