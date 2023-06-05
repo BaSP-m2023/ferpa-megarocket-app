@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './admins.module.css';
-
+import { Input } from '../Shared/Inputs';
 const UpdateForm = ({ close, admin, updateAdmin }) => {
   const { firstName, lastName, dni, phone, email, city, password } = admin;
   const [adminUpdated, setAdminUpdated] = useState({
@@ -37,73 +37,67 @@ const UpdateForm = ({ close, admin, updateAdmin }) => {
       </div>
       <form className={styles.modalForm}>
         <div className={styles.inputGroup}>
-          <label>First Name</label>
-          <input
-            type="text"
-            placeholder="First Name"
-            name="firstName"
+          <Input
+            labelText={'First Name'}
+            placeholder={'First Name'}
+            nameValue={'firstName'}
             value={adminUpdated.firstName}
-            onChange={changeHandler}
+            onChangeInput={changeHandler}
           />
         </div>
         <div className={styles.inputGroup}>
-          <label>Last Name</label>
-          <input
-            type="text"
-            placeholder="Last Name"
-            name="lastName"
+          <Input
+            labelText={'Last Name'}
+            placeholder={'Last Name'}
+            nameValue={'lastName'}
             value={adminUpdated.lastName}
-            onChange={changeHandler}
+            onChangeInput={changeHandler}
           />
         </div>
         <div className={styles.inputGroup}>
-          <label>DNI</label>
-          <input
-            type="text"
-            placeholder="DNI number"
-            name="dni"
+          <Input
+            labelText={'DNI'}
+            placeholder={'DNI Number'}
+            nameValue={'dni'}
             value={adminUpdated.dni}
-            onChange={changeHandler}
+            onChangeInput={changeHandler}
           />
         </div>
         <div className={styles.inputGroup}>
-          <label>Phone</label>
-          <input
-            type="text"
-            placeholder="Phone number"
-            name="phone"
+          <Input
+            labelText={'Phone'}
+            placeholder={'Phone number'}
+            nameValue={'phone'}
             value={adminUpdated.phone}
-            onChange={changeHandler}
+            onChangeInput={changeHandler}
           />
         </div>
         <div className={styles.inputGroup}>
-          <label>Email</label>
-          <input
-            type="text"
-            placeholder="Email"
-            name="email"
+          <Input
+            labelText={'Email'}
+            placeholder={'Email'}
+            nameValue={'email'}
             value={adminUpdated.email}
-            onChange={changeHandler}
+            onChangeInput={changeHandler}
           />
         </div>
         <div className={styles.inputGroup}>
-          <label>City</label>
-          <input
-            type="text"
-            placeholder="City"
-            name="city"
+          <Input
+            labelText={'City'}
+            placeholder={'City'}
+            nameValue={'city'}
             value={adminUpdated.city}
-            onChange={changeHandler}
+            onChangeInput={changeHandler}
           />
         </div>
         <div className={styles.inputGroup}>
-          <label>Password</label>
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
+          <Input
+            type={'password'}
+            labelText={'Password'}
+            placeholder={'Password'}
+            nameValue={'password'}
             value={adminUpdated.password}
-            onChange={changeHandler}
+            onChangeInput={changeHandler}
           />
         </div>
       </form>
