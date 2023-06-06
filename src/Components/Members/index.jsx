@@ -229,12 +229,15 @@ function Members() {
                   <td>{member?.phone}</td>
                   <td></td>
                   <td>
-                    <img
+                    <Link to={`members/edit/${member?._id}`}>
+                      <Button />
+                    </Link>
+                    {/* <img
                       className={styles.update}
                       alt="Edit"
                       src="assets/images/Edit.svg"
                       onClick={() => changeHandler(member?._id)}
-                    />
+                    /> */}
                   </td>
                   <td>
                     <img
@@ -253,56 +256,6 @@ function Members() {
       <div>
         <Link to={'/members/create'}>
           <Button text={'Create new member'} type={'add'} />
-          {/* <form onSubmit={handleSubmit}>
-            <label>
-              Name:
-              <input type="text" placeholder="Name" name="firstName" onChange={handleFirstName} />
-            </label>
-            <label>
-              Surname:
-              <input type="text" placeholder="Surname" onChange={handleLastName} />
-            </label>
-            <label>
-              DNI:
-              <input type="text" placeholder="DNI" pattern="\d*" onChange={handleDniChange} />
-            </label>
-            <label>
-              Phone:
-              <input type="text" placeholder="Phone" pattern="\d*" onChange={handlePhoneChange} />
-            </label>
-            <label>
-              email:
-              <input type="text" placeholder="Email" onChange={handleEmailChange} />
-            </label>
-            <label>
-              City:
-              <input type="text" placeholder="City" onChange={handleCityChange} />
-            </label>
-            <label>
-              Birthday:
-              <input type="text" placeholder="Birthday" onChange={handleBirthdayChange} />
-            </label>
-            <label>
-              Postal Code:
-              <input type="text" placeholder="Postal Code" onChange={handlePostalCodeChange} />
-            </label>
-            <label>Its Active?</label>
-            <select onChange={handleIsActiveChange}>
-              <option value={true}>Yes</option>
-              <option value={false}>No</option>
-            </select>
-            <label>
-              Membership:
-              <select onChange={handleMembershipChange}>
-                <option value="Classic">Classic</option>
-                <option value="Only Classes">Only Classes</option>
-                <option value="Black">Black Membership</option>
-              </select>
-            </label>
-            <button type="submit" onSubmit={handleSubmit}>
-              Enviar
-            </button>
-          </form> */}
         </Link>
       </div>
       <div>

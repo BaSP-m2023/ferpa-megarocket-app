@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from './editMembers.module.css';
 import { Input } from '../../Shared/Inputs';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import Button from '../../Shared/Button/index';
 import Modal from '../../Shared/Modal';
 
 const MembersEdit = () => {
-  // const [members, setMembers] = useState([]);
+  const [member, setMember] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dni, setDni] = useState('');
@@ -21,6 +21,33 @@ const MembersEdit = () => {
 
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
+
+  const { id } = useParams();
+
+  const getMember = async (id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`);
+      const data = await response.json();
+      setMember(data.data);
+      setFirstName(member.firstName);
+      setLastName(member.lastName);
+      setDni(member.dni);
+      setPhone(member.phone);
+      setEmail(member.email);
+      setCity(member.city);
+      setBirthday(member.birthDay);
+      setPostalCode(member.postalCode);
+      setIsActive(member.isActive);
+      setMembership(member.membership);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getMember(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [member]);
 
   const handleFirstName = (e) => {
     setFirstName(e.target.value);
@@ -140,7 +167,7 @@ const MembersEdit = () => {
       />
       ;
       <div>
-        <h3>Create new member</h3>
+        <h3>Edit current member</h3>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div>
             <Input
