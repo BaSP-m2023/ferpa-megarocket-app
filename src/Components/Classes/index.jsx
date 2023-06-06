@@ -29,7 +29,7 @@ const Classes = () => {
     getActivities();
     getTrainers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [classes]);
 
   const getClasses = async () => {
     try {
@@ -143,7 +143,7 @@ const Classes = () => {
                     <td className={styles.small}>
                       <button
                         onClick={() => {
-                          setCurrentId(theOne._id);
+                          setCurrentId(theOne?._id);
                           setShowEdit(!showEdit);
                           setShowAdd(false);
                         }}
