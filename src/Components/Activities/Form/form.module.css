@@ -3,6 +3,9 @@
   flex-direction: column;
   align-items: center;
   background-image: url('../../../../public/assets/images/admins-background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .formBox {

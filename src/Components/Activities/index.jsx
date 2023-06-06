@@ -1,14 +1,27 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import styles from './activities.module.css';
 import Table from './Table';
 import Button from '../Shared/Button';
+import Modal from '../Shared/Modal';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
   const [message, setMessage] = useState('');
   const [deleteModal, setDeleteModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const location = useLocation();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (location.state) {
+      setShowModal(!showModal);
+      setMessage(location.state.message);
+    }
+    history.replace({ ...history.location, state: undefined });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onDelete = async (id) => {
     try {
@@ -48,6 +61,7 @@ function Activities() {
             <Button text={'Add'} type={'add'} />
           </Link>
         </div>
+        <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />
         <Table
           activities={activities}
           onDelete={onDelete}

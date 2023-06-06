@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import styles from './form.module.css';
 import { Input, TextArea } from '../../Shared/Inputs';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams, useLocation, useHistory } from 'react-router-dom';
 import Button from '../../Shared/Button';
-import Modal from '../../Shared/Modal';
 
 const Form = () => {
   const { id } = useParams();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [isActive, setIsActive] = useState(false);
-  const [message, setMessage] = useState('');
-  const [showModal, setShowModal] = useState(false);
   const location = useLocation();
+  const history = useHistory();
+
+  const onRedirect = {
+    pathname: '/activities',
+    state: { message: '' }
+  };
 
   const getActivity = async (id) => {
     try {
@@ -51,7 +54,8 @@ const Form = () => {
         }
       });
       const data = await res.json();
-      setMessage(data.message);
+      onRedirect.state.message = data.message;
+      history.push(onRedirect);
     } catch (error) {
       console.error(error);
     }
@@ -71,7 +75,8 @@ const Form = () => {
         }
       });
       const data = await res.json();
-      setMessage(data.message);
+      onRedirect.state.message = data.message;
+      history.push(onRedirect);
     } catch (error) {
       console.error(error);
     }
@@ -83,28 +88,23 @@ const Form = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setShowModal(true);
   };
 
-  const sendActivity = () => {
-    setShowModal(true);
-
+  const sendActivity = async () => {
     if (location.pathname.includes('create')) {
-      onAdd({ name, description, isActive });
+      await onAdd({ name, description, isActive });
       setName('');
       setDescription('');
       setIsActive(false);
-      setShowModal(true);
     }
 
     if (location.pathname.includes('edit')) {
-      onEdit(id);
+      await onEdit(id);
     }
   };
 
   return (
     <div className={styles.formContainer}>
-      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />
       <div className={styles.formBox}>
         <h3 className={styles.title}>
           {location.pathname.includes('create') ? 'Add New Activity' : 'Edit Activity'}
@@ -126,7 +126,7 @@ const Form = () => {
             onChangeArea={setDescription}
           />
           <div className={styles.checkboxField}>
-            <label>Status</label>
+            <label>Is Active?</label>
             <input
               className={styles.checkbox}
               type="checkbox"

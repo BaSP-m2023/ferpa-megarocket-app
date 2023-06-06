@@ -6,6 +6,9 @@
   align-items: center;
   font-family: 'Roboto', sans-serif;
   background-image: url('../../../public/assets/images/admins-background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .header {
