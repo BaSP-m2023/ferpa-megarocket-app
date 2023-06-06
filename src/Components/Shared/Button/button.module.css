@@ -20,7 +20,8 @@
   background-image: url('../../../../public/assets/images/delete-icon.svg');
   background-size: cover;
   background-repeat: no-repeat;
-  border: 1.5px solid #ffffff;
+  background-color: transparent;
+  border: none;
   font-size: 0;
   min-height: 45px;
   min-width: 45px;
@@ -31,7 +32,8 @@
   background-image: url('../../../../public/assets/images/edit-icon.svg');
   background-size: cover;
   background-repeat: no-repeat;
-  border: 1.5px solid #ffffff;
+  background-color: transparent;
+  border: none;
   font-size: 0;
   min-height: 45px;
   min-width: 45px;
@@ -41,14 +43,15 @@
   background-image: url('../../../../public/assets/images/super-admin-pass-icon.png');
   background-size: cover;
   background-repeat: no-repeat;
-  border: 1.5px solid #ffffff;
+  background-color: transparent;
+  border: none;
   font-size: 0;
   min-height: 45px;
   min-width: 45px;
 }
 
 .add {
-  background-color: #00a34c;
+  background-color: #46a37c;
   border: 1.5px solid #ffffff;
   color: #ffffff;
 }
