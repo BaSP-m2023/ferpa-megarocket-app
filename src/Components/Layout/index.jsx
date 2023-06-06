@@ -28,7 +28,8 @@ function Layout() {
       <Route exact path="/super-admins" component={SuperAdmins} />
       <Route path="/super-admins/:id" component={SuperAdmins} />
       <Route exact path="/trainers" component={Trainers} />
-      <Route path="/trainers/addFormTrainers" component={addFormTrainers} />
+      <Route exact path="/trainers/addFormTrainers" component={addFormTrainers} />
+      <Route path="/trainers/addFormTrainers/:id" component={addFormTrainers} />
       <Route path="/home" component={Home} />
       <Route exact path="/">
         <Redirect to="/home" />

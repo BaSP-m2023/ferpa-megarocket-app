@@ -1,9 +1,10 @@
 import React from 'react';
 import Button from '../Shared/Button';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 
 const TrainerAddForm = () => {
+  const { id } = useParams();
   const [trainer, setTrainer] = useState({
     firstName: '',
     lastName: '',
@@ -14,6 +15,57 @@ const TrainerAddForm = () => {
     password: '',
     salary: ''
   });
+  useEffect(() => {
+    if (id) {
+      getTrainerID(id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const getTrainerID = async (id) => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`);
+      const { data, error, message } = await res.json();
+      if (data) {
+        setTrainer(data);
+      }
+      console.log(error);
+      console.log(message);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const putTrainer = async (id, item) => {
+    console.log(item);
+    const setEditTrainer = {
+      firstName: item.firstName,
+      lastName: item.lastName,
+      dni: item.dni.toString(),
+      phone: item.phone.toString(),
+      email: item.email,
+      city: item.city,
+      password: item.password,
+      salary: item.salary.toString()
+    };
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(setEditTrainer),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const { message, error, data } = await response.json();
+      console.log(data);
+      if (!error) {
+        console.log(message);
+      } else {
+        throw message;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const sendTrainer = async (item) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`, {
@@ -43,8 +95,12 @@ const TrainerAddForm = () => {
     e.preventDefault();
     sendTrainer(trainer);
   };
+  const onSubmitEdit = (e) => {
+    e.preventDefault();
+    putTrainer(id, trainer);
+  };
   return (
-    <form onSubmit={onSubmitAdd}>
+    <form onSubmit={id ? onSubmitEdit : onSubmitAdd}>
       <div>
         <fieldset>
           <label>Name</label>
@@ -82,7 +138,7 @@ const TrainerAddForm = () => {
       <Link to={'/trainers'}>
         <Button text={'Cancel'} type={'white'} />
       </Link>
-      <button type="submit">Add</button>
+      <button type="submit">{id ? 'Edit' : 'Add'}</button>
     </form>
   );
 };

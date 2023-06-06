@@ -75,7 +75,7 @@ const Trainers = () => {
                 <td>{item.password}</td>
                 <td>{item.salary}</td>
                 <td>
-                  <Link to={`/trainers/addFormTrainer/${item._id}`}>
+                  <Link to={`/trainers/addFormTrainers/${item._id}`}>
                     <button>Edit</button>
                   </Link>
                   <button className={styles.deleteBtn} onClick={() => deleteTrainer(item._id)}>
@@ -87,7 +87,6 @@ const Trainers = () => {
           })}
         </tbody>
       </table>
-      {/* {toggleEdit && <editFormTrainer trainers={trainers} />} */}
     </section>
   );
 };
