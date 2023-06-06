@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './form.module.css';
 import { Input } from '../../Shared/Inputs';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams, useLocation, useHistory } from 'react-router-dom';
 import Modal from '../../Shared/Modal';
 import Button from '../../Shared/Button';
 
@@ -11,6 +11,7 @@ const Form = () => {
   const [pass, setPass] = useState('');
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const history = useHistory();
   const location = useLocation();
 
   const getSuperAdmins = async (id) => {
@@ -86,10 +87,14 @@ const Form = () => {
       onEdit(id);
     }
   };
+  const reDirect = () => {
+    history.push('/super-admins');
+  };
+  console.log('history', history);
 
   return (
     <div className={styles.formContainer}>
-      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />
+      <Modal onClose={reDirect} isOpen={showModal} title={message} success />
       <div className={styles.formBox}>
         <h3 className={styles.title}>
           {location.pathname.includes('create') ? 'Add New Super Admin' : 'Edit Super Admin'}
@@ -132,10 +137,3 @@ const Form = () => {
 };
 
 export default Form;
-
-// const submit = (e) => {
-//   e.preventDefault();
-//   create(email, pass);
-//   setEmail('');
-//   setPass('');
-// };

@@ -4,16 +4,6 @@ import styles from './super-admins.module.css';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal';
 
-// const toggler = (id) => {
-//   let newToggle = [...togglePass];
-//   if (newToggle.includes(id)) {
-//     newToggle = newToggle.filter((index) => index !== id);
-//   } else {
-//     newToggle.push(id);
-//   }
-//   setTogglePass(newToggle);
-// };
-
 const Table = ({
   superadmins,
   deleteItem,
