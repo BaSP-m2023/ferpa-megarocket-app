@@ -2,7 +2,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import React from 'react';
 
 import Activities from '../Activities';
-import Admins from '../Admins/index';
+import Admins from '../Admins';
 import Classes from '../Classes';
 import Members from '../Members';
 import Subscriptions from '../Subscriptions';
@@ -10,7 +10,7 @@ import SuperAdmins from '../SuperAdmins';
 import Trainers from '../Trainers';
 import AdminsForm from '../Admins/Form';
 
-import Home from '../Home/index';
+import Home from '../Home';
 
 function Layout() {
   return (
