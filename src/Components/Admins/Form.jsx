@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './admins.module.css';
 import { Input } from '../Shared/Inputs';
 import { useParams } from 'react-router-dom';
+import Button from '../Shared/Button';
+import { Link } from 'react-router-dom';
 
-const Form = ({ addAdmin }) => {
+const Form = () => {
   const [inputs, setInputs] = useState({});
   const { id } = useParams();
-  console.log(id);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -21,6 +22,70 @@ const Form = ({ addAdmin }) => {
 
     setInputs({});
   };
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    updateAdmin(id, inputs);
+  };
+
+  const addAdmin = async (admin) => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(admin)
+      });
+
+      const { message } = await res.json();
+      alert(message);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getAdminID = async (id) => {
+    console.log(id);
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`);
+      const { data, error, message } = await res.json();
+      if (data) {
+        setInputs(data);
+      }
+      console.log(error);
+      console.log(message);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const updateAdmin = async (id, updatedAdmin) => {
+    const adminToSend = { ...updatedAdmin };
+    delete adminToSend._id;
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(adminToSend)
+      });
+
+      const { message } = await res.json();
+      alert(message);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      getAdminID(id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -89,7 +154,14 @@ const Form = ({ addAdmin }) => {
             onChangeInput={handleChange}
           />
         </div>
-        <input type="submit" value="Add Admin" className={styles.submitBtn} />
+        <Link to="/admins">
+          <Button text={'Cancel'} type={'white'} />
+        </Link>
+        {id ? (
+          <Button type={'add'} text={'Update Admin'} clickAction={handleUpdate} />
+        ) : (
+          <input type="submit" value="Add Admin" className={styles.submitBtn} />
+        )}
       </form>
     </div>
   );
