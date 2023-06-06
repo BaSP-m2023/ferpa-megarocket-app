@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './super-admins.module.css';
 import Button from '../Shared/Button';
@@ -13,7 +14,7 @@ import Modal from '../Shared/Modal';
 //   setTogglePass(newToggle);
 // };
 
-const List = ({
+const Table = ({
   superadmins,
   deleteItem,
   message,
@@ -22,14 +23,22 @@ const List = ({
   setConfirmModal,
   setDeleteModal
 }) => {
+  const [visiblePasswords, setVisiblePasswords] = useState([]);
+
+  const togglePasswordVisibility = (index) => {
+    const updatedVisiblePasswords = [...visiblePasswords];
+    updatedVisiblePasswords[index] = !updatedVisiblePasswords[index];
+    setVisiblePasswords(updatedVisiblePasswords);
+  };
+
   return (
     <table className={styles.table}>
       <tbody className={styles.tbody}>
         <tr className={styles.tr}>
-          <th className={styles.thEmail}>Email:</th>
-          <th className={styles.thPass}>Password:</th>
+          <th className={styles.th}>Email:</th>
+          <th className={styles.th}>Password:</th>
         </tr>
-        {superadmins.map((superadmin) => {
+        {superadmins.map((superadmin, index) => {
           return (
             <>
               <Modal
@@ -57,17 +66,24 @@ const List = ({
                 onClose={() => setDeleteModal(!deleteModal)}
               />
               <tr key={superadmin?._id} className={styles.trBody}>
-                <td className={styles.thEmail}>{superadmin?.email}</td>
-                <td className={styles.thPass}>{superadmin?.password}</td>
-                <td>
-                  <Button type={'seePassword'} />
+                <td className={styles.td}>{superadmin?.email}</td>
+                <td className={styles.td}>
+                  {visiblePasswords[index]
+                    ? superadmin?.password
+                    : '*'.repeat(superadmin?.password.length)}
                 </td>
-                <td className={styles.tdIcon}>
+                <td className={styles.td}>
+                  <Button
+                    type={'seePassword'}
+                    clickAction={() => togglePasswordVisibility(index)}
+                  />
+                </td>
+                <td className={styles.td}>
                   <Link to={`/super-admins/edit/${superadmin._id}`}>
                     <Button type={'edit'} />
                   </Link>
                 </td>
-                <td>
+                <td className={styles.td}>
                   <Button type={'deleteIcon'} clickAction={() => setConfirmModal(!confirmModal)} />
                 </td>
               </tr>
@@ -79,4 +95,4 @@ const List = ({
   );
 };
 
-export default List;
+export default Table;

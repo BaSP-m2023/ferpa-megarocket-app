@@ -115,14 +115,16 @@ const Form = () => {
               onChangeInput={(e) => setPass(e.target.value)}
             />
           </div>
-          <Link to="/super-admins">
-            <Button text={'Cancel'} type={'white'} />
-          </Link>
-          <Button
-            text={location.pathname.includes('edit') ? 'Edit' : 'Add'}
-            type={'add'}
-            clickAction={() => sendSuperAdmin()}
-          />
+          <div className={styles.buttons}>
+            <Link to="/super-admins">
+              <Button text={'Cancel'} type={'white'} />
+            </Link>
+            <Button
+              text={location.pathname.includes('create') ? 'Create' : 'Edit'}
+              type={'add'}
+              clickAction={() => sendSuperAdmin()}
+            />
+          </div>
         </form>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './super-admins.module.css';
-import List from './list';
+import Table from './table';
 import Button from '../Shared/Button';
 
 function SuperAdmins() {
@@ -48,7 +48,7 @@ function SuperAdmins() {
             <Button text={'Add'} type={'add'} />
           </Link>
         </div>
-        <List
+        <Table
           superadmins={superAdmins}
           deleteItem={deleteItem}
           message={message}

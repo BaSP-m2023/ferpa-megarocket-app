@@ -3,6 +3,9 @@
     flex-direction: column;
     align-items: center;
     background-image: url('../../../../public/assets/images/admins-background.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .formBox {
@@ -29,30 +32,7 @@
     width: 60%;
 }
 
-.field {
-    margin-bottom: 20px;
-}
-
-.checkboxField {
-    display: flex;
-    margin: 20px 0;
-}
-
-.checkboxField label {
-    font-family: 'Roboto', sans-serif;
-    color: white;
-    font-size: 20px;
-    line-height: 29px;
-    margin-right: 20px;
-}
-
-.checkbox {
-    accent-color: white;
-    width: 18px;
-    height: 18px;
-}
-
-.btns {
+.buttons {
     align-self: center;
     margin: 20px 0;
 }
