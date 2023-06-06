@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import styles from './admins.module.css';
+import { Input } from '../Shared/Inputs';
+import { useParams } from 'react-router-dom';
 
 const Form = ({ addAdmin }) => {
   const [inputs, setInputs] = useState({});
+  const { id } = useParams();
+  console.log(id);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -19,79 +23,75 @@ const Form = ({ addAdmin }) => {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
-      <div className={styles.inputGroup}>
-        <label>First Name</label>
-        <input
-          type="text"
-          placeholder="First Name"
-          name="firstName"
-          value={inputs.firstName || ''}
-          onChange={handleChange}
-        />
-      </div>
-      <div className={styles.inputGroup}>
-        <label>Last Name</label>
-        <input
-          type="text"
-          placeholder="Last Name"
-          name="lastName"
-          value={inputs.lastName || ''}
-          onChange={handleChange}
-        />
-      </div>
-      <div className={styles.inputGroup}>
-        <label>DNI</label>
-        <input
-          type="text"
-          placeholder="DNI number"
-          name="dni"
-          value={inputs.dni || ''}
-          onChange={handleChange}
-        />
-      </div>
-      <div className={styles.inputGroup}>
-        <label>Phone</label>
-        <input
-          type="text"
-          placeholder="Phone number"
-          value={inputs.phone || ''}
-          name="phone"
-          onChange={handleChange}
-        />
-      </div>
-      <div className={styles.inputGroup}>
-        <label>Email</label>
-        <input
-          type="text"
-          placeholder="Email"
-          name="email"
-          value={inputs.email || ''}
-          onChange={handleChange}
-        />
-      </div>
-      <div className={styles.inputGroup}>
-        <label>City</label>
-        <input
-          type="text"
-          placeholder="City"
-          name="city"
-          value={inputs.city || ''}
-          onChange={handleChange}
-        />
-      </div>
-      <div className={styles.inputGroup}>
-        <label>Password</label>
-        <input
-          type="password"
-          placeholder="Password"
-          name="password"
-          value={inputs.password || ''}
-          onChange={handleChange}
-        />
-      </div>
-      <input type="submit" value="Add Admin" className={styles.submitBtn} />
-    </form>
+    <div className={styles.container}>
+      <form className={`${styles.form} ${styles.list}`} onSubmit={handleSubmit}>
+        <div className={styles.inputGroup}>
+          <Input
+            labelText={'First Name'}
+            placeholder={'First Name'}
+            nameValue={'firstName'}
+            value={inputs.firstName || ''}
+            onChangeInput={handleChange}
+          />
+        </div>
+        <div className={styles.inputGroup}>
+          <Input
+            labelText={'Last Name'}
+            placeholder={'Last Name'}
+            nameValue={'lastName'}
+            value={inputs.lastName || ''}
+            onChangeInput={handleChange}
+          />
+        </div>
+        <div className={styles.inputGroup}>
+          <Input
+            labelText={'DNI'}
+            placeholder={'DNI Number'}
+            nameValue={'dni'}
+            value={inputs.dni || ''}
+            onChangeInput={handleChange}
+          />
+        </div>
+        <div className={styles.inputGroup}>
+          <Input
+            labelText={'Phone'}
+            placeholder={'Phone'}
+            nameValue={'phone'}
+            value={inputs.phone || ''}
+            onChangeInput={handleChange}
+          />
+        </div>
+        <div className={styles.inputGroup}>
+          <Input
+            labelText={'Email'}
+            placeholder={'Email'}
+            nameValue={'email'}
+            value={inputs.email || ''}
+            onChangeInput={handleChange}
+          />
+        </div>
+        <div className={styles.inputGroup}>
+          <Input
+            labelText={'City'}
+            placeholder={'City'}
+            nameValue={'city'}
+            value={inputs.city || ''}
+            onChangeInput={handleChange}
+          />
+        </div>
+        <div className={styles.inputGroup}>
+          <Input
+            type={'password'}
+            labelText={'Password'}
+            placeholder={'Password'}
+            nameValue={'password'}
+            value={inputs.password || ''}
+            onChangeInput={handleChange}
+          />
+        </div>
+        <input type="submit" value="Add Admin" className={styles.submitBtn} />
+      </form>
+    </div>
   );
 };
 

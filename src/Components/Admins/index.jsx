@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './admins.module.css';
-import List from './List';
+import Button from '../Shared/Button';
+import { Link } from 'react-router-dom';
 
 function Admins() {
   const [admins, setAdmins] = useState([]);
@@ -20,62 +21,6 @@ function Admins() {
       const { data } = await res.json();
 
       return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getAdminID = async (id) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`);
-      const data = await res.json();
-
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const addAdmin = async (admin) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(admin)
-      });
-
-      const { message, data, error } = await res.json();
-      alert(message);
-
-      if (!error) {
-        setAdmins([...admins, data]);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const updateAdmin = async (id, updatedAdmin) => {
-    const adminIndex = admins.findIndex((admin) => admin._id === id);
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(updatedAdmin)
-      });
-
-      const { message, data, error } = await res.json();
-      alert(message);
-
-      if (!error) {
-        const actualAdmins = [...admins];
-        actualAdmins[adminIndex] = data;
-        setAdmins(actualAdmins);
-      }
     } catch (error) {
       console.error(error);
     }
@@ -101,13 +46,49 @@ function Admins() {
 
   return (
     <section className={styles.container}>
-      <List
-        admins={admins}
-        addAdmin={addAdmin}
-        deleteAdmin={deleteAdmin}
-        adminToUpdate={getAdminID}
-        updateAdmin={updateAdmin}
-      />
+      <section className={styles.list}>
+        <header className={styles.header}>
+          <h1 className={styles.title}>Administrators</h1>
+          <Link to="/admins/form">
+            <Button text={'Add Admin'} type={'add'} />
+          </Link>
+        </header>
+        {admins.length > 0 ? (
+          <table className={styles.table}>
+            <tbody className={styles.tbody}>
+              <tr className={styles.thead}>
+                <th className={styles.th}>Name</th>
+                <th className={styles.th}>City</th>
+                <th className={styles.th}>Email</th>
+                <th className={styles.th}></th>
+                <th className={styles.th}></th>
+              </tr>
+              {admins.map((admin) => {
+                return (
+                  <tr className={styles.tr} key={admin._id}>
+                    <td className={styles.td}>{admin.firstName}</td>
+                    <td className={styles.td}>{admin.city}</td>
+                    <td className={styles.td}>{admin.email}</td>
+                    <td className={styles.td}></td>
+                    <td className={styles.icons}>
+                      <Link to={`/admins/form/${admin._id}`}>
+                        <Button type={'edit'} />
+                      </Link>
+                      <img
+                        alt="delete-icon"
+                        src="/assets/images/delete-icon.svg"
+                        onClick={() => deleteAdmin(admin._id)}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        ) : (
+          <span className={styles.emptySpan}>No admins created yet</span>
+        )}
+      </section>
     </section>
   );
 }
