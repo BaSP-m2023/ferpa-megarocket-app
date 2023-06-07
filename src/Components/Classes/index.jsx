@@ -1,127 +1,118 @@
 import { useEffect, useState } from 'react';
 import styles from './classes.module.css';
-import Form from './Form/Form.jsx';
-import Table from './Table/Table.jsx';
+import { Link, useHistory } from 'react-router-dom';
+import Button from '../Shared/Button/index';
+import Modal from '../Shared/Modal';
 
 const Classes = () => {
+  const history = useHistory();
   const [classes, setClasses] = useState([]);
-  const [activities, setActivities] = useState([]);
-  const [trainers, setTrainers] = useState([]);
-
-  const getClasses = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`);
-      const { message, data, error } = await response.json();
-      alert(message);
-
-      if (!error) {
-        setClasses(data);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getActivities = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`);
-      const { message, data, error } = await response.json();
-      alert(message);
-
-      if (!error) {
-        setActivities(data);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getTrainers = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`);
-      const { message, data, error } = await response.json();
-      alert(message);
-
-      if (!error) {
-        setTrainers(data);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
 
   useEffect(() => {
     getClasses();
-    getActivities();
-    getTrainers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const addItem = async (klass) => {
+  const getClasses = async () => {
     try {
-      const newClass = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`, {
-        method: 'POST',
-        body: JSON.stringify(klass),
-        headers: {
-          'Content-type': 'application/json'
-        }
-      });
-
-      const { message, data, error } = await newClass.json();
-      alert(message);
-
-      if (!error) {
-        setClasses([...classes, data]);
-      }
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`);
+      const data = await res.json();
+      setClasses(data.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const deleteItem = async (_id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${_id}`, {
-      method: 'DELETE'
-    });
-    const klass = classes.filter((klass) => klass._id === _id);
-    alert(`Class ${klass[0].name} was deleted`);
-    setClasses([...classes.filter((klass) => klass._id !== _id)]);
-  };
-
-  const updateClass = async (id, updatedClass) => {
-    const adminIndex = classes.findIndex((klass) => klass._id === id);
+  const deleteClass = async (_id) => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(updatedClass)
+      await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${_id}`, {
+        method: 'DELETE'
       });
-
-      const { message, data, error } = await res.json();
-      alert(message);
-
-      if (!error) {
-        const actualClasses = [...classes];
-        actualClasses[adminIndex] = data;
-        setClasses(actualClasses);
-      }
+      setClasses([...classes.filter((justOne) => justOne._id !== _id)]);
+      setShowDeleteModal(!showDeleteModal);
+      setShowDeleteSuccessModal(!showDeleteSuccessModal);
     } catch (error) {
       console.error(error);
     }
+  };
+  const reDirect = () => {
+    history.push('/classes');
+    setShowDeleteModal(!showDeleteModal);
   };
 
   return (
     <section className={styles.container}>
-      <h2>Classes</h2>
-      <Table
-        data={classes}
-        deleteItem={deleteItem}
-        onEditItem={updateClass}
-        activities={activities}
-        trainers={trainers}
-      />
-      <Form onAddItem={addItem} activities={activities} trainers={trainers} />
+      <div className={styles.transparetnBlue}>
+        <h2>Classes</h2>
+        <div>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th className={styles.large}>Activity Name</th>
+                <th className={styles.medium}>Day</th>
+                <th className={styles.small}>Hour</th>
+                <th className={styles.medium}>Trainer</th>
+                <th className={styles.small}>Slots</th>
+                <th className={styles.small}>Edit</th>
+                <th className={styles.small}>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {classes.map((theOne) => {
+                return (
+                  <tr key={theOne?._id}>
+                    <td className={styles.large}>{theOne?.activityId?.name}</td>
+                    <td className={styles.medium}>{theOne?.day}</td>
+                    <td className={styles.small}>{theOne?.hour}</td>
+                    <td className={styles.medium}>{theOne?.trainerId?.firstName}</td>
+                    <td className={styles.small}>{theOne?.slots}</td>
+                    <td className={styles.small}>
+                      <Link to={`/classes/form/${theOne?._id}`}>
+                        <Button text={'Edit Item'} variant={'edit'} />
+                      </Link>
+                    </td>
+                    <td className={styles.small}>
+                      <Modal
+                        isOpen={showDeleteSuccessModal}
+                        text={'Class deleted successfully!!!!!'}
+                        success
+                        onClose={() => setShowDeleteSuccessModal(!showDeleteSuccessModal)}
+                      />
+                      <Modal
+                        isOpen={showDeleteModal}
+                        text={'Are you sure?'}
+                        warning
+                        onClose={() => setShowDeleteModal(!showDeleteModal)}
+                      >
+                        <Button
+                          text={'Yes'}
+                          type={'button'}
+                          clickAction={() => {
+                            deleteClass(theOne?._id);
+                          }}
+                        />
+                        <Button text={'Cancel'} type={'button'} clickAction={reDirect} />
+                      </Modal>
+                      <Button
+                        variant={'deleteIcon'}
+                        type={'button'}
+                        clickAction={() => {
+                          setShowDeleteModal(true);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <Link to={'./classes/form'}>
+            <Button variant={'add'} text={'Add'} />
+          </Link>
+        </div>
+      </div>
     </section>
   );
 };

@@ -1,6 +1,60 @@
 .container {
   flex: 1;
   display: flex;
+  flex-flow: column;
   justify-content: center;
+  width: 100%;
   align-items: center;
+  font-size: 20px;
+  color: white;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url('../../../public/assets/images/admins-background.jpg');
+}
+.buttons {
+  display: flex;
+  margin-top: 20px;
+  width: 30%;
+}
+
+.transparetnBlue {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  margin: 5%;
+  padding: 7%;
+  width: 70%;
+  min-width: 600px;
+  height: 70%;
+  background-color: rgba(52, 52, 135, 0.441);
+}
+
+.form {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+}
+
+.table {
+  margin-bottom: 30px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.small {
+  width: 10%;
+  text-align: left;
+  border-bottom: solid 4px white;
+}
+
+.medium {
+  width: 20%;
+  text-align: left;
+  border-bottom: solid 4px white;
+}
+
+.large {
+  width: 30%;
+  text-align: left;
+  border-bottom: solid 4px white;
 }
