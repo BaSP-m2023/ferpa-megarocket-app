@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './subscriptions.module.css';
+import styles from './form.module.css';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Select, DatePicker } from '../Shared/Inputs';
-import Button from '../Shared/Button';
-import Modal from '../Shared/Modal';
+import { Select, DatePicker } from '../../Shared/Inputs';
+import Button from '../../Shared/Button';
+import Modal from '../../Shared/Modal';
 
 const Form = () => {
   const { id } = useParams();
@@ -138,10 +138,11 @@ const Form = () => {
       >
         <Button variant={'white'} text={'Accept'} clickAction={() => setModalError(!modalError)} />
       </Modal>
-      <form className={styles.list}>
-        <h2>{id ? 'EDIT SUBSCRIPTION' : 'ADD SUBSCRIPTION'}</h2>
+      <form className={styles.form}>
+        <h2 className={styles.formTitle}>{id ? 'EDIT SUBSCRIPTION' : 'ADD SUBSCRIPTION'}</h2>
         <div className={styles.inputBox}>
           <Select
+            dark
             placeholder={'Select'}
             label={'Member'}
             options={selectMembers}
@@ -153,6 +154,7 @@ const Form = () => {
         </div>
         <div className={styles.inputBox}>
           <Select
+            dark
             placeholder={'Select'}
             label={'Activity'}
             options={selectActivities}
@@ -163,19 +165,21 @@ const Form = () => {
           />
         </div>
         <div className={styles.inputBox}>
-          <DatePicker label={'Date'} value={currentSub.date} onChangeDate={handleDatePicker} />
+          <DatePicker dark label={'Date'} value={currentSub.date} onChangeDate={handleDatePicker} />
         </div>
-        <Button
-          variant={'add'}
-          text={id ? 'Edit' : 'Add'}
-          clickAction={(e) => {
-            e.preventDefault();
-            handleClick();
-          }}
-        />
-        <Link to={'/subscriptions'}>
-          <Button variant={'white'} text={'Cancel'} />
-        </Link>
+        <div className={styles.formBtns}>
+          <Button
+            variant={'add'}
+            text={id ? 'Edit' : 'Add'}
+            clickAction={(e) => {
+              e.preventDefault();
+              handleClick();
+            }}
+          />
+          <Link to={'/subscriptions'}>
+            <Button variant={'white'} text={'Cancel'} />
+          </Link>
+        </div>
       </form>
     </section>
   );

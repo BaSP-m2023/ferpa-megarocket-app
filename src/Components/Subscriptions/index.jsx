@@ -78,39 +78,54 @@ function Subscriptions() {
           </Link>
         </div>
         <table className={styles.table}>
-          <tbody className={styles.tbody}>
-            <tr className={styles.tr}>
+          <thead>
+            <tr className={styles.trHead}>
               <th className={styles.thead}>Activity</th>
               <th className={styles.thead}>Trainer</th>
               <th className={styles.thead}>Member</th>
               <th className={styles.thead}>Date</th>
+              <th className={styles.tdBtn}></th>
+              <th className={styles.tdBtn}></th>
             </tr>
-            {subscriptions.map((subscription) => (
-              <tr key={subscription._id} className={styles.tr}>
-                <td className={styles.td}>{subscription.classId?.activityId?.name}</td>
-                <td className={styles.td}>{subscription.classId?.trainerId?.lastName}</td>
-                <td className={styles.td}>
-                  {subscription.memberId?.lastName}, {subscription.memberId?.firstName}
-                </td>
-                <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
-                <td className={styles.td}>
-                  <Link to={`/subscriptions/form/${subscription._id}`}>
-                    <Button variant={'edit'} />
-                  </Link>
-                </td>
-                <td className={styles.td}>
-                  <Button
-                    variant={'deleteIcon'}
-                    clickAction={() => {
-                      setCurrentId(subscription._id);
-                      setModalConfirmDel(!modalConfirmDel);
-                    }}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
+          </thead>
+          {subscriptions.length === 0 ? (
+            ''
+          ) : (
+            <tbody>
+              {subscriptions.map((subscription) => (
+                <tr key={subscription._id} className={styles.tr}>
+                  <td className={styles.td}>{subscription.classId?.activityId?.name}</td>
+                  <td className={styles.td}>{subscription.classId?.trainerId?.lastName}</td>
+                  <td className={styles.td}>
+                    {subscription.memberId?.lastName}, {subscription.memberId?.firstName}
+                  </td>
+                  <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
+                  <td className={styles.tdBtn}>
+                    <Link to={`/subscriptions/form/${subscription._id}`}>
+                      <Button variant={'edit'} />
+                    </Link>
+                  </td>
+                  <td className={styles.tdBtn}>
+                    <Button
+                      variant={'deleteIcon'}
+                      clickAction={() => {
+                        setCurrentId(subscription._id);
+                        setModalConfirmDel(!modalConfirmDel);
+                      }}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          )}
         </table>
+        {subscriptions.length === 0 ? (
+          <div className={styles.loading}>
+            <h2 className={styles.loadingTitle}>ESPERANDO DATOS...</h2>
+          </div>
+        ) : (
+          ''
+        )}
       </section>
     </section>
   );

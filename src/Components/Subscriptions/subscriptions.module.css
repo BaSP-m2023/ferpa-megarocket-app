@@ -10,8 +10,10 @@
 .list {
   display: flex;
   flex-direction: column;
-  width: 80%;
-  margin: 50px;
+  width: 80vw;
+  margin: 2vw;
+  border-radius: 1vw;
+  padding: 1.5vw;
   background-color: rgba(55, 56, 103, 0.5);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   font-family: 'Roboto', sans-serif;
@@ -25,96 +27,56 @@
 
 .title {
   color: white;
-  font-size: 40px;
-  line-height: 48px;
-}
-
-.btn {
-  width: 150px;
-  height: 50px;
-  background-color: #46A37C;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 19px;
-  color: white;
-  text-transform: uppercase;
-  cursor: pointer;
+  font-size: 4vw;
 }
 
 .table {
-  text-align:left;
+  text-align: left;
   align-self: center;
-  width: 80%;
+  width: 70vw;
   border-collapse: collapse;
 }
 
 .thead {
-  padding: 8px;
+  font-size: 2.2vw;
+  padding-bottom: 1vw;
+  width: 14.8w;
+  color: white;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
+  height: 15vw;
+  color: white;
+  font-size: 3vw;
+  text-align: center;
+
+}
+
+.loadingTitle {
+  display: inline-block;
+}
+
+.trHead {
+  background-color: rgba(55, 56, 103, 0.9);
 }
 
 .tr {
   color: white;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 2vw;
+}
+
+.tr:nth-child(even) {
+  background-color: rgba(55, 56, 103, 0.7);
 }
 
 .td {
-  border-bottom: 1px solid #FFFFFF;
-  width: 50px;
+  width: 15vw;
 }
 
-.form {
-  margin-top: 50px;
-  background-color: rgba(55, 56, 103, 0.05);
-  font-weight: 800;
-  font-size: 20px;
-  line-height: 24px;
-  color: #FFFFFF;
-}
-
-.label {
-  padding-right: 20px;
-  width: 10%;
-  margin-left: 10%;
-}
-
-.inputBox{
-  display: flex;
-  align-items: center;
-}
-
-.btnAdd {
-  margin-top: 10px;
-  margin-left: 10%;
-  width: 100px;
-  height: 30px;
-  background-color: #46A37C;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 19px;
-  color: white;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.btnEdit {
-  margin-top: 10px;
-  margin-left: 10%;
-  width: 100px;
-  height: 30px;
-  background-color: #ffc904;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 19px;
-  color: white;
-  text-transform: uppercase;
-  cursor: pointer;
+.tdBtn {
+  width: 5vw;
 }
