@@ -1,22 +1,41 @@
 import { useEffect, useState } from 'react';
 import styles from './classes.module.css';
-import Form from './Form/Form.jsx';
-import Table from './Table/Table.jsx';
+import Form from './Form/index';
 
 const Classes = () => {
   const [classes, setClasses] = useState([]);
   const [activities, setActivities] = useState([]);
   const [trainers, setTrainers] = useState([]);
+  const [readyToSendAndAdd, setReadyToSendAndAdd] = useState({
+    day: '',
+    hour: '',
+    activityId: '',
+    trainerId: '',
+    slots: ''
+  });
+  const [readyToSendAndEdit, setReadyToSendAndEdit] = useState({
+    day: '',
+    hour: '',
+    activityId: '',
+    trainerId: '',
+    slots: ''
+  });
+  const [currentId, setCurrentId] = useState('');
+  const [showEdit, setShowEdit] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
+
+  useEffect(() => {
+    getClasses();
+    getActivities();
+    getTrainers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [classes]);
 
   const getClasses = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`);
-      const { message, data, error } = await response.json();
-      alert(message);
-
-      if (!error) {
-        setClasses(data);
-      }
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`);
+      const data = await res.json();
+      setClasses(data.data);
     } catch (error) {
       console.error(error);
     }
@@ -24,13 +43,9 @@ const Classes = () => {
 
   const getActivities = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`);
-      const { message, data, error } = await response.json();
-      alert(message);
-
-      if (!error) {
-        setActivities(data);
-      }
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`);
+      const data = await res.json();
+      setActivities(data.data);
     } catch (error) {
       console.error(error);
     }
@@ -38,90 +53,151 @@ const Classes = () => {
 
   const getTrainers = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`);
-      const { message, data, error } = await response.json();
-      alert(message);
-
-      if (!error) {
-        setTrainers(data);
-      }
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`);
+      const data = await res.json();
+      setTrainers(data.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  useEffect(() => {
-    getClasses();
-    getActivities();
-    getTrainers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const addItem = async (klass) => {
+  const addClass = async (readyToSendAndAdd) => {
     try {
-      const newClass = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`, {
         method: 'POST',
-        body: JSON.stringify(klass),
+        body: JSON.stringify(readyToSendAndAdd),
         headers: {
           'Content-type': 'application/json'
         }
       });
-
-      const { message, data, error } = await newClass.json();
-      alert(message);
-
-      if (!error) {
-        setClasses([...classes, data]);
-      }
+      const data = await res.json();
+      setClasses([...classes, data.data]);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const deleteItem = async (_id) => {
+  const deleteClass = async (_id) => {
     await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${_id}`, {
       method: 'DELETE'
     });
-    const klass = classes.filter((klass) => klass._id === _id);
-    alert(`Class ${klass[0].name} was deleted`);
-    setClasses([...classes.filter((klass) => klass._id !== _id)]);
+    const justOne = classes.filter((justOne) => justOne._id === _id);
+    alert(`${justOne[0].activityId.name} Class was deleted`);
+    setClasses([...classes.filter((justOne) => justOne._id !== _id)]);
   };
 
-  const updateClass = async (id, updatedClass) => {
-    const adminIndex = classes.findIndex((klass) => klass._id === id);
+  const updateClass = async (currentId, readyToSendAndEdit) => {
+    const index = classes.findIndex((singleClass) => singleClass._id === currentId);
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${currentId}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json'
         },
-        body: JSON.stringify(updatedClass)
+        body: JSON.stringify(readyToSendAndEdit)
       });
-
-      const { message, data, error } = await res.json();
-      alert(message);
-
-      if (!error) {
-        const actualClasses = [...classes];
-        actualClasses[adminIndex] = data;
-        setClasses(actualClasses);
-      }
+      const data = await res.json();
+      const updatedClasses = [...classes];
+      updatedClasses[index] = data.data;
+      setClasses(updatedClasses);
     } catch (error) {
       console.error(error);
     }
   };
 
+  const onSubmitToAdd = (e) => {
+    e.preventDefault();
+    addClass(readyToSendAndAdd);
+  };
+  const onSubmitToEdit = (e) => {
+    e.preventDefault();
+    updateClass(currentId, readyToSendAndEdit);
+  };
+
   return (
     <section className={styles.container}>
-      <h2>Classes</h2>
-      <Table
-        data={classes}
-        deleteItem={deleteItem}
-        onEditItem={updateClass}
-        activities={activities}
-        trainers={trainers}
-      />
-      <Form onAddItem={addItem} activities={activities} trainers={trainers} />
+      <div className={styles.transparetnBlue}>
+        <h2>Classes</h2>
+        <div>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th className={styles.large}>Activity Name</th>
+                <th className={styles.medium}>Day</th>
+                <th className={styles.small}>Hour</th>
+                <th className={styles.medium}>Trainer</th>
+                <th className={styles.small}>Slots</th>
+                <th className={styles.small}>Edit</th>
+                <th className={styles.small}>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {classes.map((theOne) => {
+                return (
+                  <tr key={theOne?._id}>
+                    <td className={styles.large}>{theOne?.activityId?.name}</td>
+                    <td className={styles.medium}>{theOne?.day}</td>
+                    <td className={styles.small}>{theOne?.hour}</td>
+                    <td className={styles.medium}>{theOne?.trainerId?.firstName}</td>
+                    <td className={styles.small}>{theOne?.slots}</td>
+                    <td className={styles.small}>
+                      <button
+                        onClick={() => {
+                          setCurrentId(theOne?._id);
+                          setShowEdit(!showEdit);
+                          setShowAdd(false);
+                        }}
+                      >
+                        Edit Item
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="deleteButton"
+                        onClick={() => {
+                          // eslint-disable-next-line no-restricted-globals
+                          if (confirm('Are you sure?') === true) {
+                            deleteClass(theOne?._id);
+                          }
+                        }}
+                      >
+                        X
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <button
+            className={styles.add}
+            onClick={() => {
+              setShowAdd(!showAdd);
+              setShowEdit(false);
+            }}
+          >
+            Add
+          </button>
+          {showAdd && (
+            <Form
+              onSubmit={onSubmitToAdd}
+              activities={activities}
+              trainers={trainers}
+              text={'Add'}
+              readyToSendAndAdd={setReadyToSendAndAdd}
+            />
+          )}
+          {showEdit && (
+            <Form
+              onSubmit={onSubmitToEdit}
+              activities={activities}
+              trainers={trainers}
+              text={'Edit'}
+              readyToSendAndEdit={setReadyToSendAndEdit}
+            />
+          )}
+        </div>
+      </div>
     </section>
   );
 };
