@@ -90,7 +90,6 @@ const Form = () => {
   const reDirect = () => {
     history.push('/super-admins');
   };
-  console.log('history', history);
 
   return (
     <div className={styles.formContainer}>
@@ -122,11 +121,12 @@ const Form = () => {
           </div>
           <div className={styles.buttons}>
             <Link to="/super-admins">
-              <Button text={'Cancel'} type={'white'} />
+              <Button text={'Cancel'} variant={'white'} />
             </Link>
             <Button
               text={location.pathname.includes('create') ? 'Create' : 'Edit'}
-              type={'add'}
+              variant={'add'}
+              submitting
               clickAction={() => sendSuperAdmin()}
             />
           </div>

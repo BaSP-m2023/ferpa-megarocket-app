@@ -21,6 +21,11 @@ const Table = ({
     setVisiblePasswords(updatedVisiblePasswords);
   };
 
+  const handleDeleteSuperAdmin = (superadminId) => {
+    deleteItem(superadminId);
+    setConfirmModal(!confirmModal);
+  };
+
   return (
     <table className={styles.table}>
       <tbody className={styles.tbody}>
@@ -31,7 +36,7 @@ const Table = ({
         {superadmins.map((superadmin, index) => {
           return (
             <>
-              <Modal
+              <Modal //apertura de modal para borrar
                 warning
                 isOpen={confirmModal}
                 title={'Delete SuperAdmin'}
@@ -40,20 +45,23 @@ const Table = ({
               >
                 <Button
                   text={'Cancel'}
-                  type={'white'}
+                  variant={'white'}
                   clickAction={() => setConfirmModal(!confirmModal)}
                 />
                 <Button
                   text={'Delete'}
-                  type={'delete'}
-                  clickAction={() => deleteItem(superadmin._id)}
+                  variant={'delete'}
+                  clickAction={() => handleDeleteSuperAdmin(superadmin._id)}
                 />
               </Modal>
               <Modal
                 isOpen={deleteModal}
                 title={message}
                 success
-                onClose={() => setDeleteModal(!deleteModal)}
+                onClose={() => {
+                  setDeleteModal(!deleteModal);
+                  setConfirmModal(!deleteModal);
+                }}
               />
               <tr key={superadmin?._id} className={styles.trBody}>
                 <td className={styles.td}>{superadmin?.email}</td>
@@ -64,17 +72,20 @@ const Table = ({
                 </td>
                 <td className={styles.td}>
                   <Button
-                    type={'seePassword'}
+                    variant={'seePassword'}
                     clickAction={() => togglePasswordVisibility(index)}
                   />
                 </td>
                 <td className={styles.td}>
                   <Link to={`/super-admins/edit/${superadmin._id}`}>
-                    <Button type={'edit'} />
+                    <Button variant={'edit'} />
                   </Link>
                 </td>
                 <td className={styles.td}>
-                  <Button type={'deleteIcon'} clickAction={() => setConfirmModal(!confirmModal)} />
+                  <Button
+                    variant={'deleteIcon'}
+                    clickAction={() => setConfirmModal(!confirmModal)}
+                  />
                 </td>
               </tr>
             </>

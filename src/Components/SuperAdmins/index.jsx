@@ -30,7 +30,7 @@ function SuperAdmins() {
       });
       const data = await response.json();
       setMessage(data.message);
-      setDeleteModal(!confirmModal);
+      setDeleteModal(confirmModal);
       setConfirmModal(!deleteModal);
       setSuperAdmins([...superAdmins.filter((superAdmins) => superAdmins._id !== id)]);
       return data;
@@ -45,7 +45,7 @@ function SuperAdmins() {
         <div className={styles.header}>
           <h1 className={styles.title}>Super Admin</h1>
           <Link to="/super-admins/create">
-            <Button text={'Add'} type={'add'} />
+            <Button text={'Add'} variant={'add'} />
           </Link>
         </div>
         <Table
