@@ -9,7 +9,8 @@ function Admins() {
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState('');
   const [messageReq, setMessageReq] = useState('');
-  const [successModal, setSuccesModal] = useState('');
+  const [successModal, setSuccesModal] = useState(false);
+  const [errorModal, setErrorModal] = useState(false);
 
   useEffect(() => {
     const getAdmins = async () => {
@@ -41,8 +42,10 @@ function Admins() {
       if (!error) {
         setMessageReq(message);
         setSuccesModal(!successModal);
+      } else {
+        setMessageReq(message);
+        setErrorModal(!errorModal);
       }
-
       setAdmins(admins.filter((admin) => admin._id !== id));
     } catch (error) {
       console.error(error);
@@ -82,6 +85,17 @@ function Admins() {
         }}
       >
         <Button variant={'add'} text={'OK'} clickAction={() => setSuccesModal(!successModal)} />
+      </Modal>
+      <Modal
+        isOpen={errorModal}
+        title={'ERROR'}
+        text={messageReq}
+        warning
+        onClose={() => {
+          setErrorModal(!errorModal);
+        }}
+      >
+        <Button variant={'add'} text={'OK'} clickAction={() => setErrorModal(!errorModal)} />
       </Modal>
       <section className={styles.list}>
         <header className={styles.header}>
