@@ -89,7 +89,7 @@ function Members() {
 
   const saveUpdate = (e) => {
     e.preventDefault();
-    updatedMember(memberId);
+    // updatedMember(memberId);
   };
 
   // const handleSubmit = (e) => {
@@ -156,41 +156,6 @@ function Members() {
     }
   };
 
-  const updatedMember = async (id) => {
-    const adminIndex = members.findIndex((member) => member._id === id);
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          firstName: firstName,
-          lastName: lastName,
-          dni: dni,
-          phone: phone,
-          email: email,
-          city: city,
-          birthDay: birthDay,
-          postalCode: postalCode,
-          isActive: isActive,
-          membership: membership
-        })
-      });
-
-      const { message, data, error } = await res.json();
-      alert(message);
-
-      if (!error) {
-        const actualMembers = [...members];
-        actualMembers[adminIndex] = data;
-        setMembers(actualMembers);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const getMembers = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
@@ -207,7 +172,6 @@ function Members() {
 
   return (
     <section className={styles.container}>
-      {console.log(members)}
       <h2>Members</h2>
       <div>
         <table>
@@ -240,12 +204,7 @@ function Members() {
                     /> */}
                   </td>
                   <td>
-                    <img
-                      className={styles.delete}
-                      alt="Delete"
-                      src="assets/images/Delete.svg"
-                      onClick={() => deleteMember(member?._id)}
-                    />
+                    <Button type={'deleteIcon'} clickAction={() => deleteMember(member?._id)} />
                   </td>
                 </tr>
               );

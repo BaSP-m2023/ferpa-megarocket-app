@@ -8,17 +8,6 @@ import Modal from '../../Shared/Modal';
 
 const MembersEdit = () => {
   const [member, setMember] = useState([]);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [dni, setDni] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [city, setCity] = useState('');
-  const [birthDay, setBirthday] = useState('');
-  const [postalCode, setPostalCode] = useState('');
-  const [isActive, setIsActive] = useState(true);
-  const [membership, setMembership] = useState('Classic');
-
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
 
@@ -29,16 +18,6 @@ const MembersEdit = () => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`);
       const data = await response.json();
       setMember(data.data);
-      setFirstName(member.firstName);
-      setLastName(member.lastName);
-      setDni(member.dni);
-      setPhone(member.phone);
-      setEmail(member.email);
-      setCity(member.city);
-      setBirthday(member.birthDay);
-      setPostalCode(member.postalCode);
-      setIsActive(member.isActive);
-      setMembership(member.membership);
     } catch (error) {
       console.error(error);
     }
@@ -47,84 +26,72 @@ const MembersEdit = () => {
   useEffect(() => {
     getMember(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [member]);
+  }, []);
 
   const handleFirstName = (e) => {
-    setFirstName(e.target.value);
+    setMember({ ...member, firstName: e.target.value });
   };
 
   const handleLastName = (e) => {
-    setLastName(e.target.value);
+    setMember({ ...member, lastName: e.target.value });
   };
 
   const handleDniChange = (e) => {
-    const value = e.target.value;
-    setDni(value);
+    setMember({ ...member, dni: e.target.value });
   };
 
   const handlePhoneChange = (e) => {
-    const value = e.target.value;
-    setPhone(value);
+    setMember({ ...member, phone: e.target.value });
   };
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+    setMember({ ...member, email: e.target.value });
   };
 
   const handleCityChange = (e) => {
-    setCity(e.target.value);
+    setMember({ ...member, city: e.target.value });
   };
 
   const handleBirthdayChange = (e) => {
-    setBirthday(e.target.value);
+    setMember({ ...member, birthDay: e.target.value });
   };
 
   const handlePostalCodeChange = (e) => {
-    setPostalCode(e.target.value);
+    setMember({ ...member, postalCode: e.target.value });
   };
 
   const handleMembershipChange = (e) => {
-    setMembership(e.target.value);
+    setMember({ ...member, membership: e.target.value });
   };
 
   const handleIsActiveChange = (e) => {
-    setIsActive(e.target.value);
+    setMember({ ...member, isActive: e.target.value });
   };
 
-  const addMember = async ({
-    firstName,
-    lastName,
-    dni,
-    phone,
-    email,
-    city,
-    birthDay,
-    postalCode,
-    isActive,
-    membership
-  }) => {
+  const updateMember = async (id) => {
     try {
-      const newMembers = await fetch(`${process.env.REACT_APP_API_URL}/api/members/`, {
-        method: 'POST',
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          firstName,
-          lastName,
-          dni,
-          phone,
-          email,
-          city,
-          birthDay,
-          postalCode,
-          isActive,
-          membership
+          firstName: member.firstName,
+          lastName: lastName,
+          dni: dni,
+          phone: phone,
+          email: email,
+          city: city,
+          birthDay: birthDay,
+          postalCode: postalCode,
+          isActive: isActive,
+          membership: membership
         })
       });
 
-      const data = await newMembers.json();
+      const data = await response.json();
       setMessage(data.message);
+      console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -132,28 +99,7 @@ const MembersEdit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addMember({
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      birthDay,
-      postalCode,
-      isActive,
-      membership
-    });
-    setFirstName('');
-    setLastName('');
-    setDni('');
-    setPhone('');
-    setEmail('');
-    setCity('');
-    setBirthday('');
-    setPostalCode('');
-    setIsActive(true);
-    setMembership('Classic');
+    updateMember(id);
     setShowModal(true);
   };
 
@@ -170,81 +116,128 @@ const MembersEdit = () => {
         <h3>Edit current member</h3>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div>
-            <Input
-              labelText={'Name'}
-              type={'text'}
-              value={firstName}
-              onChangeInput={handleFirstName}
-            />
+            {member ? (
+              <Input
+                labelText={'Name'}
+                type={'text'}
+                value={member.firstName}
+                onChangeInput={handleFirstName}
+              />
+            ) : (
+              <div> Loading...</div>
+            )}
           </div>
           <div>
-            <Input
-              labelText={'Surname'}
-              type={'text'}
-              value={lastName}
-              onChangeInput={handleLastName}
-            />
+            {member ? (
+              <Input
+                labelText={'Surname'}
+                type={'text'}
+                value={lastName}
+                onChangeInput={handleLastName}
+              />
+            ) : (
+              <div> Loading...</div>
+            )}
           </div>
           <div>
-            <Input labelText={'DNI'} type={'text'} value={dni} onChangeInput={handleDniChange} />
+            {member ? (
+              <Input labelText={'DNI'} type={'text'} value={dni} onChangeInput={handleDniChange} />
+            ) : (
+              <div> Loading...</div>
+            )}
           </div>
           <div>
-            <Input
-              labelText={'Phone'}
-              type={'text'}
-              value={phone}
-              onChangeInput={handlePhoneChange}
-            />
+            {member ? (
+              <Input
+                labelText={'Phone'}
+                type={'text'}
+                value={phone}
+                onChangeInput={handlePhoneChange}
+              />
+            ) : (
+              <div> Loading...</div>
+            )}
           </div>
           <div>
-            <Input
-              labelText={'Email'}
-              type={'text'}
-              value={email}
-              onChangeInput={handleEmailChange}
-            />
+            {member ? (
+              <Input
+                labelText={'Email'}
+                type={'text'}
+                value={email}
+                onChangeInput={handleEmailChange}
+              />
+            ) : (
+              <div> Loading...</div>
+            )}
           </div>
           <div>
-            <Input labelText={'City'} type={'text'} value={city} onChangeInput={handleCityChange} />
+            {member ? (
+              <Input
+                labelText={'City'}
+                type={'text'}
+                value={city}
+                onChangeInput={handleCityChange}
+              />
+            ) : (
+              <div> Loading...</div>
+            )}
           </div>
           <div>
-            <Input
-              labelText={'Birthday'}
-              type={'text'}
-              value={birthDay}
-              onChangeInput={handleBirthdayChange}
-            />
+            {member ? (
+              <Input
+                labelText={'Birthday'}
+                type={'text'}
+                value={birthDay}
+                onChangeInput={handleBirthdayChange}
+              />
+            ) : (
+              <div> Loading...</div>
+            )}
           </div>
           <div>
-            <Input
-              labelText={'Zip Code'}
-              type={'text'}
-              value={postalCode}
-              onChangeInput={handlePostalCodeChange}
-            />
+            {member ? (
+              <Input
+                labelText={'Zip Code'}
+                type={'text'}
+                value={postalCode}
+                onChangeInput={handlePostalCodeChange}
+              />
+            ) : (
+              <div> Loading...</div>
+            )}
           </div>
           <div>
-            <label>Its Active?</label>
-            <select onChange={handleIsActiveChange}>
-              <option value={true}>Yes</option>
-              <option value={false}>No</option>
-            </select>
+            {member ? (
+              <div>
+                <label>Its Active?</label>
+                <select onChange={handleIsActiveChange}>
+                  <option value={true}>Yes</option>
+                  <option value={false}>No</option>
+                </select>
+              </div>
+            ) : (
+              <div> Loading...</div>
+            )}
           </div>
           <div>
-            <label>
-              Membership:
-              <select onChange={handleMembershipChange}>
-                <option value="Classic">Classic</option>
-                <option value="Only Classes">Only Classes</option>
-                <option value="Black">Black Membership</option>
-              </select>
-            </label>
+            {member ? (
+              <label>
+                Membership:
+                <select onChange={handleMembershipChange}>
+                  <option value="Classic">Classic</option>
+                  <option value="Only Classes">Only Classes</option>
+                  <option value="Black">Black Membership</option>
+                </select>
+              </label>
+            ) : (
+              <div> Loading...</div>
+            )}
           </div>
           <div>
             <Link to="/members">
               <Button text={'return'} type={'white'} />
             </Link>
-            <Button text={'Create'} type={'add'} clickAction={handleSubmit} />
+            <Button text={'Update'} type={'add'} clickAction={handleSubmit} />
           </div>
         </form>
       </div>
