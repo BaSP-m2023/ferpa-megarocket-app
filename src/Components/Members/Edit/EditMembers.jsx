@@ -77,15 +77,15 @@ const MembersEdit = () => {
         },
         body: JSON.stringify({
           firstName: member.firstName,
-          lastName: lastName,
-          dni: dni,
-          phone: phone,
-          email: email,
-          city: city,
-          birthDay: birthDay,
-          postalCode: postalCode,
-          isActive: isActive,
-          membership: membership
+          lastName: member.lastName,
+          dni: member.dni,
+          phone: member.phone,
+          email: member.email,
+          city: member.city,
+          birthDay: member.birthDay,
+          postalCode: member.postalCode,
+          isActive: member.isActive,
+          membership: member.membership
         })
       });
 
@@ -132,7 +132,7 @@ const MembersEdit = () => {
               <Input
                 labelText={'Surname'}
                 type={'text'}
-                value={lastName}
+                value={member.lastName}
                 onChangeInput={handleLastName}
               />
             ) : (
@@ -141,7 +141,12 @@ const MembersEdit = () => {
           </div>
           <div>
             {member ? (
-              <Input labelText={'DNI'} type={'text'} value={dni} onChangeInput={handleDniChange} />
+              <Input
+                labelText={'DNI'}
+                type={'text'}
+                value={member.dni}
+                onChangeInput={handleDniChange}
+              />
             ) : (
               <div> Loading...</div>
             )}
@@ -151,7 +156,7 @@ const MembersEdit = () => {
               <Input
                 labelText={'Phone'}
                 type={'text'}
-                value={phone}
+                value={member.phone}
                 onChangeInput={handlePhoneChange}
               />
             ) : (
@@ -163,7 +168,7 @@ const MembersEdit = () => {
               <Input
                 labelText={'Email'}
                 type={'text'}
-                value={email}
+                value={member.email}
                 onChangeInput={handleEmailChange}
               />
             ) : (
@@ -175,7 +180,7 @@ const MembersEdit = () => {
               <Input
                 labelText={'City'}
                 type={'text'}
-                value={city}
+                value={member.city}
                 onChangeInput={handleCityChange}
               />
             ) : (
@@ -187,7 +192,7 @@ const MembersEdit = () => {
               <Input
                 labelText={'Birthday'}
                 type={'text'}
-                value={birthDay}
+                value={member.birthDay}
                 onChangeInput={handleBirthdayChange}
               />
             ) : (
@@ -199,7 +204,7 @@ const MembersEdit = () => {
               <Input
                 labelText={'Zip Code'}
                 type={'text'}
-                value={postalCode}
+                value={member.postalCode}
                 onChangeInput={handlePostalCodeChange}
               />
             ) : (
