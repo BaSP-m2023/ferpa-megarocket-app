@@ -173,7 +173,6 @@ const MembersEdit = () => {
             <Input
               labelText={'Name'}
               type={'text'}
-              placeholder={'Name'}
               value={firstName}
               onChangeInput={handleFirstName}
             />
@@ -182,25 +181,17 @@ const MembersEdit = () => {
             <Input
               labelText={'Surname'}
               type={'text'}
-              placeholder={'Surname'}
               value={lastName}
               onChangeInput={handleLastName}
             />
           </div>
           <div>
-            <Input
-              labelText={'DNI'}
-              type={'text'}
-              placeholder={'DNI'}
-              value={dni}
-              onChangeInput={handleDniChange}
-            />
+            <Input labelText={'DNI'} type={'text'} value={dni} onChangeInput={handleDniChange} />
           </div>
           <div>
             <Input
               labelText={'Phone'}
               type={'text'}
-              placeholder={'ex: 096513178'}
               value={phone}
               onChangeInput={handlePhoneChange}
             />
@@ -209,25 +200,17 @@ const MembersEdit = () => {
             <Input
               labelText={'Email'}
               type={'text'}
-              placeholder={'robertomariaoverdrive@soybostero.edu'}
               value={email}
               onChangeInput={handleEmailChange}
             />
           </div>
           <div>
-            <Input
-              labelText={'City'}
-              type={'text'}
-              placeholder={'Your city'}
-              value={city}
-              onChangeInput={handleCityChange}
-            />
+            <Input labelText={'City'} type={'text'} value={city} onChangeInput={handleCityChange} />
           </div>
           <div>
             <Input
               labelText={'Birthday'}
               type={'text'}
-              placeholder={'01/01/2000'}
               value={birthDay}
               onChangeInput={handleBirthdayChange}
             />
@@ -236,7 +219,6 @@ const MembersEdit = () => {
             <Input
               labelText={'Zip Code'}
               type={'text'}
-              placeholder={'Your postal code'}
               value={postalCode}
               onChangeInput={handlePostalCodeChange}
             />
