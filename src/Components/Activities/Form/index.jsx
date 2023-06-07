@@ -137,11 +137,11 @@ const Form = () => {
           </div>
           <div className={styles.btns}>
             <Link to="/activities">
-              <Button text={'Cancel'} type={'white'} />
+              <Button text={'Cancel'} variant={'white'} />
             </Link>
             <Button
               text={location.pathname.includes('edit') ? 'Edit' : 'Add'}
-              type={'add'}
+              variant={'add'}
               clickAction={sendActivity}
             />
           </div>

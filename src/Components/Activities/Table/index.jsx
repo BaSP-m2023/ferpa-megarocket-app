@@ -35,12 +35,12 @@ const Table = ({
                 >
                   <Button
                     text={'Cancel'}
-                    type={'white'}
+                    variant={'white'}
                     clickAction={() => setConfirmModal(!confirmModal)}
                   />
                   <Button
                     text={'Delete'}
-                    type={'delete'}
+                    variant={'delete'}
                     clickAction={() => onDelete(activity._id)}
                   />
                 </Modal>
@@ -56,12 +56,12 @@ const Table = ({
                   <td className={styles.thStatus}>{activity?.isActive ? 'Active' : 'Inactive'}</td>
                   <td className={styles.tdIcon}>
                     <Link to={`/activities/edit/${activity._id}`}>
-                      <Button type={'edit'} />
+                      <Button variant={'edit'} />
                     </Link>
                   </td>
                   <td>
                     <Button
-                      type={'deleteIcon'}
+                      variant={'deleteIcon'}
                       clickAction={() => setConfirmModal(!confirmModal)}
                     />
                   </td>

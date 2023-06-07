@@ -58,7 +58,7 @@ function Activities() {
         <div className={styles.header}>
           <h2 className={styles.title}>Activities</h2>
           <Link to="/activities/create">
-            <Button text={'Add'} type={'add'} />
+            <Button text={'Add'} variant={'add'} />
           </Link>
         </div>
         <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />
