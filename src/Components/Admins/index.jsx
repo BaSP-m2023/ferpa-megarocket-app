@@ -2,9 +2,12 @@ import { useState, useEffect } from 'react';
 import styles from './admins.module.css';
 import Button from '../Shared/Button';
 import { Link } from 'react-router-dom';
+import Modal from '../Shared/Modal/index';
 
 function Admins() {
   const [admins, setAdmins] = useState([]);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState('');
 
   useEffect(() => {
     const getAdmins = async () => {
@@ -28,17 +31,15 @@ function Admins() {
 
   const deleteAdmin = async (id) => {
     try {
-      const response = window.confirm('Are you sure you want to delete this admin?');
-      if (response) {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-          method: 'DELETE'
-        });
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
+        method: 'DELETE'
+      });
 
-        const data = await res.json();
-        alert(data.message);
+      const data = await res.json();
+      setDeleteModal(false);
+      alert(data.message);
 
-        setAdmins(admins.filter((admin) => admin._id !== id));
-      }
+      setAdmins(admins.filter((admin) => admin._id !== id));
     } catch (error) {
       console.error(error);
     }
@@ -46,11 +47,30 @@ function Admins() {
 
   return (
     <section className={styles.container}>
+      <Modal
+        isOpen={deleteModal}
+        title={'Do you want to delete this Admin?'}
+        onClose={() => setDeleteModal(!deleteModal)}
+      >
+        <Button
+          variant={'delete'}
+          text={'Delete'}
+          clickAction={() => {
+            deleteAdmin(deleteId);
+          }}
+        />
+        <Button
+          variant={'white'}
+          text={'Cancel'}
+          clickAction={() => setDeleteModal(!deleteModal)}
+        />
+      </Modal>
+      <Modal />
       <section className={styles.list}>
         <header className={styles.header}>
           <h1 className={styles.title}>Administrators</h1>
           <Link to="/admins/form">
-            <Button text={'Add Admin'} type={'add'} />
+            <Button text={'Add Admin'} variant={'add'} />
           </Link>
         </header>
         {admins.length > 0 ? (
@@ -72,12 +92,16 @@ function Admins() {
                     <td className={styles.td}></td>
                     <td className={styles.icons}>
                       <Link to={`/admins/form/${admin._id}`}>
-                        <Button type={'edit'} />
+                        <Button variant={'edit'} />
                       </Link>
-                      <img
-                        alt="delete-icon"
-                        src="/assets/images/delete-icon.svg"
-                        onClick={() => deleteAdmin(admin._id)}
+                    </td>
+                    <td className={styles.icons}>
+                      <Button
+                        variant={'deleteIcon'}
+                        clickAction={() => {
+                          setDeleteModal(!deleteModal);
+                          setDeleteId(admin._id);
+                        }}
                       />
                     </td>
                   </tr>

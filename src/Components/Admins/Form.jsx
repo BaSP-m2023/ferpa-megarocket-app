@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import styles from './admins.module.css';
 import { Input } from '../Shared/Inputs';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Button from '../Shared/Button';
-import { Link } from 'react-router-dom';
 
 const Form = () => {
   const [inputs, setInputs] = useState({});
@@ -89,7 +88,8 @@ const Form = () => {
 
   return (
     <div className={styles.container}>
-      <form className={`${styles.form} ${styles.list}`} onSubmit={handleSubmit}>
+      <form className={`${styles.form} ${styles.list}`} onSubmit={id ? handleUpdate : handleSubmit}>
+        <h2 className={styles.title}>{id ? 'Edit Admin' : 'Add Admin'}</h2>
         <div className={styles.inputGroup}>
           <Input
             labelText={'First Name'}
@@ -154,14 +154,17 @@ const Form = () => {
             onChangeInput={handleChange}
           />
         </div>
-        <Link to="/admins">
-          <Button text={'Cancel'} type={'white'} />
-        </Link>
-        {id ? (
-          <Button type={'add'} text={'Update Admin'} clickAction={handleUpdate} />
-        ) : (
-          <input type="submit" value="Add Admin" className={styles.submitBtn} />
-        )}
+        <div className={styles.modalBtns}>
+          <Link to="/admins">
+            <Button text={'Cancel'} variant={'white'} />
+          </Link>
+          {id ? (
+            <Button variant={'add'} text={'Update Admin'} submitting />
+          ) : (
+            <Button variant={'add'} text={'Add Admin'} submitting />
+            // <input type="submit" value="Add Admin" className={styles.submitBtn} />
+          )}
+        </div>
       </form>
     </div>
   );
