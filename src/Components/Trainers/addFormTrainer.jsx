@@ -1,10 +1,10 @@
 import React from 'react';
 import Button from '../Shared/Button';
 import { useState, useEffect } from 'react';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const TrainerAddForm = () => {
-  const location = useLocation();
+  // const location = useLocation();
   const { id } = useParams();
   const [trainer, setTrainer] = useState({
     firstName: '',
@@ -68,6 +68,7 @@ const TrainerAddForm = () => {
     }
   };
   const sendTrainer = async (item) => {
+    console.log(item);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`, {
         method: 'POST',
@@ -137,15 +138,9 @@ const TrainerAddForm = () => {
         </fieldset>
       </div>
       <Link to={'/trainers'}>
-        <Button text={'Cancel'} type={'white'} />
+        <Button text={'Cancel'} variant={'white'} />
       </Link>
-      <Link to={'/trainers'}>
-        <Button
-          text={location.pathname.includes(`${id}`) ? 'Edit' : 'Add'}
-          type={'add'}
-          clickAction={() => sendTrainer()}
-        />
-      </Link>
+      <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting />
     </form>
   );
 };

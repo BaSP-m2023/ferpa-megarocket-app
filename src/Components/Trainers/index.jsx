@@ -72,9 +72,9 @@ const Trainers = () => {
                 <td>{item.salary}</td>
                 <td>
                   <Link to={`/trainers/addFormTrainers/${item._id}`}>
-                    <Button type={'edit'} />
+                    <Button variant={'edit'} />
                   </Link>
-                  <Button type={'deleteIcon'} clickAction={() => deleteTrainer(item._id)} />
+                  <Button variant={'deleteIcon'} clickAction={() => deleteTrainer(item._id)} />
                 </td>
               </tr>
             );
