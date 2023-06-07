@@ -8,6 +8,8 @@ function Admins() {
   const [admins, setAdmins] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState('');
+  const [messageReq, setMessageReq] = useState('');
+  const [successModal, setSuccesModal] = useState('');
 
   useEffect(() => {
     const getAdmins = async () => {
@@ -35,16 +37,22 @@ function Admins() {
         method: 'DELETE'
       });
 
-      const data = await res.json();
-      setDeleteModal(false);
-      alert(data.message);
+      const { error, message } = await res.json();
+      if (!error) {
+        setMessageReq(message);
+        setSuccesModal(!successModal);
+      }
 
       setAdmins(admins.filter((admin) => admin._id !== id));
     } catch (error) {
       console.error(error);
     }
   };
-
+  const handleDelete = (id) => {
+    setTimeout(() => {
+      deleteAdmin(id);
+    }, 20);
+  };
   return (
     <section className={styles.container}>
       <Modal
@@ -56,7 +64,8 @@ function Admins() {
           variant={'delete'}
           text={'Delete'}
           clickAction={() => {
-            deleteAdmin(deleteId);
+            handleDelete(deleteId);
+            setDeleteModal(!deleteModal);
           }}
         />
         <Button
@@ -65,7 +74,15 @@ function Admins() {
           clickAction={() => setDeleteModal(!deleteModal)}
         />
       </Modal>
-      <Modal />
+      <Modal
+        isOpen={successModal}
+        text={messageReq}
+        onClose={() => {
+          setSuccesModal(!successModal);
+        }}
+      >
+        <Button variant={'add'} text={'OK'} clickAction={() => setSuccesModal(!successModal)} />
+      </Modal>
       <section className={styles.list}>
         <header className={styles.header}>
           <h1 className={styles.title}>Administrators</h1>
