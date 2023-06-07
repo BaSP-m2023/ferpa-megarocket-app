@@ -1,113 +1,44 @@
-.input,
-.textarea {
-  margin: 10px 99% 10px 1%;
-  width: 30%;
-  border-radius: 5px;
-}
-
-.input {
-  padding: 10px;
-  width: 20%;
-  height: 20px;
-}
-
-.textarea {
-  padding: 20px;
-  width: 35%;
-  height: 150px;
-}
-
-.h2 {
-  text-align: center;
-  font-size: 60px;
-}
-
-.th {
-  text-align: left;
-}
-
-.table {
-  font-size: 30px;
-  margin: 30px 0;
-  padding: 0;
-  width: 100%;
-  border-bottom: solid 3px white;
-  border-collapse: collapse;
-}
-
-.tbody {
-  width: 100%;
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 .container {
-  width: 100%;
-  height: 100%;
-  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+  background-image: url('../../../public/assets/images/admins-background.jpg');
+  background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  background-repeat: no-repeat;
-  background-image: url('./assets/gym-background.png');
 }
 
-.tableCloth {
-  margin: 1%;
-  padding: 2% 2% 8% 2%;
-  background-color: rgba(18, 18, 176, 0.306);
-}
-
-.activity {
-  width: 15%;
-}
-
-.description {
-  width: 70%;
-}
-
-.icon {
-  text-align: center;
-  width: 2%;
-}
-
-.add {
-  margin: 30px 30px 0 0;
-  float: right;
-  width: 100px;
-  height: 50px;
-  border: solid 2px white;
-  border-radius: 5px;
-  font-size: 30px;
-  color: white;
-  background-color: blue;
-}
-
-.confirmAdd {
-  width: 10%;
-  margin: 10px 99% 30px 1%;
-  border-radius: 5px;
-  color: white;
-  border: solid 2px white;
-  background-color: rgb(23, 96, 23);
-}
-
-.confirmEdit {
-  width: 10%;
-  margin: 10px 99% 30px 1%;
-  border-radius: 5px;
-  color: white;
-  border: solid 2px white;
-  background-color: rgb(9, 9, 55);
-}
-
-.titles {
+.header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  height: 15%;
+  width: 80%;
 }
 
-.icons {
-  align-self: flex-end;
-}
-
-.form {
+.list {
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: 50px;
+  padding: 50px 0;
+  background-color: rgba(55, 56, 103, 0.5);
+}
+
+.title {
+  color: white;
+  font-size: 40px;
+  line-height: 48px;
+  width: 80%;
+}
+
+.btnSection {
+  display: flex;
+  justify-content: flex-end;
+  width: 90%;
+  margin: 40px 0;
 }
