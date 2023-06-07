@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react';
 import styles from './trainers.module.css';
-// import TrainerAddForm from './addFormTrainer';
-// import editFormTrainer from './editFormTrainer';
 import { Link } from 'react-router-dom';
+import Button from '../Shared/Button';
 
 const Trainers = () => {
   const [trainers, setTrainers] = useState([]);
-  // const [toggleAdd, setToggleAdd] = useState(false);
-  // const [toggleEdit, setToggleEdit] = useState(false);
-
   const getTrainers = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
@@ -76,11 +72,9 @@ const Trainers = () => {
                 <td>{item.salary}</td>
                 <td>
                   <Link to={`/trainers/addFormTrainers/${item._id}`}>
-                    <button>Edit</button>
+                    <Button type={'edit'} />
                   </Link>
-                  <button className={styles.deleteBtn} onClick={() => deleteTrainer(item._id)}>
-                    X
-                  </button>
+                  <Button type={'deleteIcon'} clickAction={() => deleteTrainer(item._id)} />
                 </td>
               </tr>
             );

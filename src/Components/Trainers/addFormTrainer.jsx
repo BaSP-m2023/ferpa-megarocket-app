@@ -1,9 +1,10 @@
 import React from 'react';
 import Button from '../Shared/Button';
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 
 const TrainerAddForm = () => {
+  const location = useLocation();
   const { id } = useParams();
   const [trainer, setTrainer] = useState({
     firstName: '',
@@ -138,7 +139,13 @@ const TrainerAddForm = () => {
       <Link to={'/trainers'}>
         <Button text={'Cancel'} type={'white'} />
       </Link>
-      <button type="submit">{id ? 'Edit' : 'Add'}</button>
+      <Link to={'/trainers'}>
+        <Button
+          text={location.pathname.includes(`${id}`) ? 'Edit' : 'Add'}
+          type={'add'}
+          clickAction={() => sendTrainer()}
+        />
+      </Link>
     </form>
   );
 };
