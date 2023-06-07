@@ -7,12 +7,13 @@ import Modal from '../Shared/Modal';
 const Classes = () => {
   const history = useHistory();
   const [classes, setClasses] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
 
   useEffect(() => {
     getClasses();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [classes]);
+  }, []);
 
   const getClasses = async () => {
     try {
@@ -29,15 +30,16 @@ const Classes = () => {
       await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${_id}`, {
         method: 'DELETE'
       });
-      const justOne = classes.filter((justOne) => justOne._id === _id);
-      alert(`${justOne[0].activityId.name} Class was deleted`);
       setClasses([...classes.filter((justOne) => justOne._id !== _id)]);
+      setShowDeleteModal(!showDeleteModal);
+      setShowDeleteSuccessModal(!showDeleteSuccessModal);
     } catch (error) {
       console.error(error);
     }
   };
   const reDirect = () => {
     history.push('/classes');
+    setShowDeleteModal(!showDeleteModal);
   };
 
   return (
@@ -71,22 +73,33 @@ const Classes = () => {
                         <Button text={'Edit Item'} variant={'edit'} />
                       </Link>
                     </td>
-                    <td>
-                      {showModal && (
-                        <Modal text={'Are you sure?'} warning>
-                          <Button
-                            text={'Yes'}
-                            type={'button'}
-                            clickAction={() => deleteClass(theOne?._id)}
-                          />
-                          <Button text={'Cancel'} type={'button'} clickAction={reDirect} />
-                        </Modal>
-                      )}
+                    <td className={styles.small}>
+                      <Modal
+                        isOpen={showDeleteSuccessModal}
+                        text={'Class deleted successfully!!!!!'}
+                        success
+                        onClose={() => setShowDeleteSuccessModal(!showDeleteSuccessModal)}
+                      />
+                      <Modal
+                        isOpen={showDeleteModal}
+                        text={'Are you sure?'}
+                        warning
+                        onClose={() => setShowDeleteModal(!showDeleteModal)}
+                      >
+                        <Button
+                          text={'Yes'}
+                          type={'button'}
+                          clickAction={() => {
+                            deleteClass(theOne?._id);
+                          }}
+                        />
+                        <Button text={'Cancel'} type={'button'} clickAction={reDirect} />
+                      </Modal>
                       <Button
                         variant={'deleteIcon'}
                         type={'button'}
                         clickAction={() => {
-                          setShowModal(true);
+                          setShowDeleteModal(true);
                         }}
                       />
                     </td>
@@ -96,7 +109,7 @@ const Classes = () => {
             </tbody>
           </table>
           <Link to={'./classes/form'}>
-            <Button text={'Add'} />
+            <Button variant={'add'} text={'Add'} />
           </Link>
         </div>
       </div>

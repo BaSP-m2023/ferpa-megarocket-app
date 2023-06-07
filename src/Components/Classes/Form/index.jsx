@@ -222,48 +222,55 @@ const Form = () => {
     history.push('/classes');
   };
   return (
-    <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
-      <h2>{id ? 'Edit' : 'Add'}</h2>
-      {showModal && (
-        <Modal text={id ? 'Class Updated' : 'Class Added'} isOpen success onClose={reDirect} />
-      )}
-      <Select
-        value={weekDays.day}
-        placeholder={id ? singleClass.day : 'Day'}
-        onChangeSelect={(e) => onChangeInput(e)}
-        options={weekDays}
-        nameValue={'day'}
-      />
-      <Select
-        value={hours.day}
-        placeholder={id ? singleClass.hour : 'Hour'}
-        onChangeSelect={(e) => onChangeInput(e)}
-        options={hours}
-        nameValue={'hour'}
-      />
-      <Select
-        value={newClass.activityId}
-        placeholder={id ? singleClass.activityId?.name : 'Activity'}
-        onChangeSelect={(e) => onChangeInput(e)}
-        options={updatedActivity}
-        nameValue={'activityId'}
-      />
-      <Select
-        value={newClass.trainerId}
-        placeholder={id ? singleClass.trainerId?.firstName : 'Trainer'}
-        onChangeSelect={(e) => onChangeInput(e)}
-        options={updatedTrainers}
-        nameValue={'trainerId'}
-      />
-      <Input
-        nameValue={'slots'}
-        type={'text'}
-        value={newClass.slots.value}
-        onChangeInput={(e) => onChangeInput(e)}
-        placeholder={id ? singleClass.slots : 'Slots'}
-      />
-      <Button text={id ? 'Edit' : 'Add'} submitting clickAction={sendClass} />
-    </form>
+    <div className={styles.container}>
+      <div className={styles.transparetnBlue}>
+        <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
+          <h2>{id ? 'Edit' : 'Add'}</h2>
+          {showModal && (
+            <Modal text={id ? 'Class Updated' : 'Class Added'} isOpen success onClose={reDirect} />
+          )}
+          <Select
+            value={weekDays.day}
+            placeholder={id ? singleClass.day : 'Day'}
+            onChangeSelect={(e) => onChangeInput(e)}
+            options={weekDays}
+            nameValue={'day'}
+          />
+          <Select
+            value={hours.day}
+            placeholder={id ? singleClass.hour : 'Hour'}
+            onChangeSelect={(e) => onChangeInput(e)}
+            options={hours}
+            nameValue={'hour'}
+          />
+          <Select
+            value={newClass.activityId}
+            placeholder={id ? singleClass.activityId?.name : 'Activity'}
+            onChangeSelect={(e) => onChangeInput(e)}
+            options={updatedActivity}
+            nameValue={'activityId'}
+          />
+          <Select
+            value={newClass.trainerId}
+            placeholder={id ? singleClass.trainerId?.firstName : 'Trainer'}
+            onChangeSelect={(e) => onChangeInput(e)}
+            options={updatedTrainers}
+            nameValue={'trainerId'}
+          />
+          <Input
+            nameValue={'slots'}
+            type={'text'}
+            value={newClass.slots.value}
+            onChangeInput={(e) => onChangeInput(e)}
+            placeholder={id ? singleClass.slots : 'Slots'}
+          />
+          <div className={styles.buttons}>
+            <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting clickAction={sendClass} />
+            <Button variant={'white'} text={'Cancel'} submitting clickAction={reDirect} />
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 
