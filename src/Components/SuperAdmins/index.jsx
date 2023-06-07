@@ -30,8 +30,7 @@ function SuperAdmins() {
       });
       const data = await response.json();
       setMessage(data.message);
-      setDeleteModal(confirmModal);
-      setConfirmModal(!deleteModal);
+      setDeleteModal(true);
       setSuperAdmins([...superAdmins.filter((superAdmins) => superAdmins._id !== id)]);
       return data;
     } catch (error) {

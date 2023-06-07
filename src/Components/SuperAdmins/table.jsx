@@ -22,8 +22,9 @@ const Table = ({
   };
 
   const handleDeleteSuperAdmin = (superadminId) => {
-    deleteItem(superadminId);
-    setConfirmModal(!confirmModal);
+    setTimeout(() => {
+      deleteItem(superadminId);
+    }, 20);
   };
 
   return (
@@ -51,18 +52,26 @@ const Table = ({
                 <Button
                   text={'Delete'}
                   variant={'delete'}
-                  clickAction={() => handleDeleteSuperAdmin(superadmin._id)}
+                  clickAction={() => {
+                    handleDeleteSuperAdmin(superadmin._id);
+                    setConfirmModal(!confirmModal);
+                  }}
                 />
               </Modal>
               <Modal
                 isOpen={deleteModal}
-                title={message}
-                success
+                title={'Super Admin deleted'}
+                text={message}
                 onClose={() => {
                   setDeleteModal(!deleteModal);
-                  setConfirmModal(!deleteModal);
                 }}
-              />
+              >
+                <Button
+                  text={'OK'}
+                  variant={'add'}
+                  clickAction={() => setDeleteModal(!deleteModal)}
+                />
+              </Modal>
               <tr key={superadmin?._id} className={styles.trBody}>
                 <td className={styles.td}>{superadmin?.email}</td>
                 <td className={styles.td}>
