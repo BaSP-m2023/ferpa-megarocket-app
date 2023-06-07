@@ -59,10 +59,6 @@ const MembersCreate = () => {
     setMembership(e.target.value);
   };
 
-  const handleIsActiveChange = (e) => {
-    setIsActive(e.target.value);
-  };
-
   const addMember = async ({
     firstName,
     lastName,
@@ -212,13 +208,6 @@ const MembersCreate = () => {
               value={postalCode}
               onChangeInput={handlePostalCodeChange}
             />
-          </div>
-          <div>
-            <label>Its Active?</label>
-            <select onChange={handleIsActiveChange}>
-              <option value={true}>Yes</option>
-              <option value={false}>No</option>
-            </select>
           </div>
           <div>
             <label>

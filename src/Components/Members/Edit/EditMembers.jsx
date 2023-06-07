@@ -104,7 +104,7 @@ const MembersEdit = () => {
   };
 
   return (
-    <div className={styles.formContainer}>
+    <div className={styles.container}>
       <Modal
         onClose={() => setShowModal(false)}
         isOpen={showModal}
@@ -113,7 +113,7 @@ const MembersEdit = () => {
       />
       ;
       <div>
-        <h3>Edit current member</h3>
+        <h3 className={styles.whiteLetters}>Edit current member</h3>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div>
             {member ? (
@@ -214,7 +214,7 @@ const MembersEdit = () => {
           <div>
             {member ? (
               <div>
-                <label>Its Active?</label>
+                <label className={styles.whiteLetters}>Its Active?</label>
                 <select onChange={handleIsActiveChange}>
                   <option value={true}>Yes</option>
                   <option value={false}>No</option>
@@ -226,7 +226,7 @@ const MembersEdit = () => {
           </div>
           <div>
             {member ? (
-              <label>
+              <label className={styles.whiteLetters}>
                 Membership:
                 <select onChange={handleMembershipChange}>
                   <option value="Classic">Classic</option>
