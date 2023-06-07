@@ -240,9 +240,9 @@ const MembersEdit = () => {
           </div>
           <div>
             <Link to="/members">
-              <Button text={'return'} type={'white'} />
+              <Button text={'return'} variant={'white'} />
             </Link>
-            <Button text={'Update'} type={'add'} clickAction={handleSubmit} />
+            <Button text={'Update'} variant={'add'} clickAction={handleSubmit} />
           </div>
         </form>
       </div>

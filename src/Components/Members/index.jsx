@@ -2,21 +2,21 @@ import { useEffect, useState } from 'react';
 import styles from './members.module.css';
 import { Link } from 'react-router-dom';
 import Button from '../Shared/Button/';
+import Modal from '../Shared/Modal/';
 
 function Members() {
   const [members, setMembers] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [memberId, setMemberId] = useState('');
 
   const deleteMember = async (id) => {
     try {
-      const confirmDelete = window.confirm('You want to delete?');
-      if (confirmDelete) {
-        const apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
-          method: 'DELETE'
-        });
-        const data = await apiResponse.json();
-        alert(data.message);
-        setMembers([...members.filter((members) => members._id !== id)]);
-      }
+      const apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
+        method: 'DELETE'
+      });
+      const data = await apiResponse.json();
+      alert(data.message);
+      setMembers([...members.filter((members) => members._id !== id)]);
     } catch (error) {
       console.error(error);
     }
@@ -40,7 +40,7 @@ function Members() {
     <section className={styles.container + ' ' + styles.whiteLetters}>
       <h2>Members</h2>
       <div>
-        <table>
+        <table className={styles.list}>
           <tbody>
             <tr>
               <th>Name</th>
@@ -49,22 +49,48 @@ function Members() {
               <th>Email</th>
               <th>Phone</th>
             </tr>
-            {members.map((member) => {
+            {members.map((item) => {
               return (
-                <tr key={member?._id}>
-                  <td>{member?.firstName}</td>
-                  <td>{member?.lastName}</td>
-                  <td>{member?.dni}</td>
-                  <td>{member?.email}</td>
-                  <td>{member?.phone}</td>
+                <tr key={item._id}>
+                  <td>{item.firstName}</td>
+                  <td>{item.lastName}</td>
+                  <td>{item.dni}</td>
+                  <td>{item.email}</td>
+                  <td>{item.phone}</td>
                   <td></td>
                   <td>
-                    <Link to={`members/edit/${member?._id}`}>
-                      <Button type={'edit'} />
+                    <Link to={`members/edit/${item._id}`}>
+                      <Button variant={'edit'} />
                     </Link>
                   </td>
+                  <Modal
+                    onClose={() => setShowModal(false)}
+                    isOpen={showModal}
+                    title={`Are you sure you want to delete this member?`}
+                    warning={true}
+                  >
+                    <Button
+                      text={'Delete'}
+                      variant={'delete'}
+                      clickAction={() => {
+                        deleteMember(memberId);
+                        setShowModal(false);
+                      }}
+                    />
+                    <Button
+                      text={'Cancel'}
+                      variant={'white'}
+                      clickAction={() => setShowModal(false)}
+                    />
+                  </Modal>
                   <td>
-                    <Button type={'deleteIcon'} clickAction={() => deleteMember(member?._id)} />
+                    <Button
+                      variant={'deleteIcon'}
+                      clickAction={() => {
+                        setShowModal(true);
+                        setMemberId(item._id);
+                      }}
+                    />
                   </td>
                 </tr>
               );
@@ -74,7 +100,7 @@ function Members() {
       </div>
       <div>
         <Link to={'/members/create'}>
-          <Button text={'Create new member'} type={'add'} />
+          <Button text={'Create new member'} variant={'add'} />
         </Link>
       </div>
     </section>
