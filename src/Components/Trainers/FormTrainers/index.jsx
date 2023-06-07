@@ -1,21 +1,12 @@
 import React from 'react';
-import Button from '../Shared/Button';
+import Button from '../../Shared/Button';
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { Input } from '../../Shared/Inputs';
 
 const TrainerAddForm = () => {
-  // const location = useLocation();
+  const [inputs, setInputs] = useState({});
   const { id } = useParams();
-  const [trainer, setTrainer] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    password: '',
-    salary: ''
-  });
   useEffect(() => {
     if (id) {
       getTrainerID(id);
@@ -27,7 +18,7 @@ const TrainerAddForm = () => {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`);
       const { data, error, message } = await res.json();
       if (data) {
-        setTrainer(data);
+        setInputs(data);
       }
       console.log(error);
       console.log(message);
@@ -87,55 +78,81 @@ const TrainerAddForm = () => {
       console.error(error);
     }
   };
-  const onChangeInput = (e) => {
-    setTrainer({
-      ...trainer,
-      [e.target.name]: e.target.value
-    });
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
   };
+
   const onSubmitAdd = (e) => {
     e.preventDefault();
-    sendTrainer(trainer);
+    sendTrainer(inputs);
   };
   const onSubmitEdit = (e) => {
     e.preventDefault();
-    putTrainer(id, trainer);
+    putTrainer(id, inputs);
   };
   return (
     <form onSubmit={id ? onSubmitEdit : onSubmitAdd}>
       <div>
-        <fieldset>
-          <label>Name</label>
-          <input name="firstName" type="text" onChange={onChangeInput} value={trainer.firstName} />
-        </fieldset>
-        <fieldset>
-          <label>Last Name</label>
-          <input name="lastName" type="text" onChange={onChangeInput} value={trainer.lastName} />
-        </fieldset>
-        <fieldset>
-          <label>Dni</label>
-          <input name="dni" type="text" onChange={onChangeInput} value={trainer.dni} />
-        </fieldset>
-        <fieldset>
-          <label>Phone</label>
-          <input name="phone" type="text" onChange={onChangeInput} value={trainer.phone} />
-        </fieldset>
-        <fieldset>
-          <label>Email</label>
-          <input name="email" type="text" onChange={onChangeInput} value={trainer.email} />
-        </fieldset>
-        <fieldset>
-          <label>City</label>
-          <input name="city" type="text" onChange={onChangeInput} value={trainer.city} />
-        </fieldset>
-        <fieldset>
-          <label>Password</label>
-          <input name="password" type="text" onChange={onChangeInput} value={trainer.password} />
-        </fieldset>
-        <fieldset>
-          <label>Salary</label>
-          <input name="salary" type="text" onChange={onChangeInput} value={trainer.salary} />
-        </fieldset>
+        <Input
+          labelText={'Name'}
+          nameValue={'firstName'}
+          placeholder={'First Name'}
+          value={inputs.firstName}
+          onChangeInput={handleChange}
+        />
+        <Input
+          labelText={'LastName'}
+          nameValue={'lastName'}
+          placeholder={'Last Name'}
+          value={inputs.lastName}
+          onChangeInput={handleChange}
+        />
+        <Input
+          labelText={'DNI'}
+          nameValue={'dni'}
+          placeholder={'DNI'}
+          value={inputs.dni}
+          onChangeInput={handleChange}
+        />
+        <Input
+          labelText={'Phone'}
+          nameValue={'phone'}
+          placeholder={'Phone'}
+          value={inputs.phone}
+          onChangeInput={handleChange}
+        />
+        <Input
+          labelText={'Email'}
+          nameValue={'email'}
+          placeholder={'Email'}
+          value={inputs.email}
+          onChangeInput={handleChange}
+        />
+        <Input
+          labelText={'City'}
+          nameValue={'city'}
+          placeholder={'City'}
+          value={inputs.city}
+          onChangeInput={handleChange}
+        />
+        <Input
+          labelText={'Password'}
+          nameValue={'password'}
+          type={'password'}
+          placeholder={'Password'}
+          value={inputs.password}
+          onChangeInput={handleChange}
+        />
+        <Input
+          labelText={'Salary'}
+          nameValue={'salary'}
+          placeholder={'Salary'}
+          value={inputs.salary}
+          onChangeInput={handleChange}
+        />
       </div>
       <Link to={'/trainers'}>
         <Button text={'Cancel'} variant={'white'} />

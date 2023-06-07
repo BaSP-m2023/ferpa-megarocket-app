@@ -1,9 +1,14 @@
 .container {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-image: url('../../../public/assets/images/subscriptions-background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  min-height: 80vh;
 }
 .div {
   flex: 1;

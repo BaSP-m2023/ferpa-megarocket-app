@@ -16,7 +16,7 @@ const Trainers = () => {
   };
 
   const deleteTrainer = async (_id) => {
-    const option = window.confirm('Are you sure??');
+    const option = window.confirm('Are you sure you want to delete this Trainer?');
     if (option) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${_id}`, {
@@ -24,6 +24,7 @@ const Trainers = () => {
         });
         const { message, error } = await response.json();
         if (!error) {
+          alert('Trainer succesfully deleted');
           setTrainers([...trainers.filter((trainer) => trainer._id !== _id)]);
         } else {
           throw message;
@@ -41,8 +42,8 @@ const Trainers = () => {
   return (
     <section className={styles.container}>
       <h2>Trainers</h2>
-      <Link to={'/trainers/addFormTrainers'}>
-        <button>Add</button>
+      <Link to={'/trainers/Form'}>
+        <Button text={'add trainer'} variant={'add'} />
       </Link>
       <table>
         <thead>
@@ -71,7 +72,7 @@ const Trainers = () => {
                 <td>{item.password}</td>
                 <td>{item.salary}</td>
                 <td>
-                  <Link to={`/trainers/addFormTrainers/${item._id}`}>
+                  <Link to={`/trainers/Form/${item._id}`}>
                     <Button variant={'edit'} />
                   </Link>
                   <Button variant={'deleteIcon'} clickAction={() => deleteTrainer(item._id)} />
