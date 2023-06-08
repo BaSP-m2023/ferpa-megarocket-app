@@ -129,6 +129,11 @@ const Form = () => {
               onChangeInput={(e) => setPass(e.target.value)}
             />
           </div>
+          <p className={styles.comment}>
+            {
+              '* The password must have uppercase letters, lowercase letters, number and at least 8 characters'
+            }
+          </p>
           <div className={styles.buttons}>
             <Link to="/super-admins">
               <Button text={'Cancel'} variant={'white'} />

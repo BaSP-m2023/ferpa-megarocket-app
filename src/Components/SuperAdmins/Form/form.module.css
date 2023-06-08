@@ -36,3 +36,9 @@
     align-self: center;
     margin: 20px 0;
 }
+
+.comment {
+    color: white;
+    font-size: 16px;
+    line-height: 24px;
+}
