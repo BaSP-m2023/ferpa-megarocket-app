@@ -3,8 +3,10 @@ import Button from '../../Shared/Button';
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Input } from '../../Shared/Inputs';
+import Modal from '../../Shared/Modal';
 
 const TrainerAddForm = () => {
+  const [successAddModal, setSuccessAddModal] = useState(false);
   const [inputs, setInputs] = useState({});
   const { id } = useParams();
   useEffect(() => {
@@ -157,6 +159,12 @@ const TrainerAddForm = () => {
       <Link to={'/trainers'}>
         <Button text={'Cancel'} variant={'white'} />
       </Link>
+      <Modal
+        success
+        isOpen={successAddModal}
+        onClose={() => setSuccessAddModal(!successAddModal)}
+        title={'Trainer Added successfully'}
+      ></Modal>
       <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting />
     </form>
   );

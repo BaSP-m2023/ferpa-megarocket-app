@@ -10,10 +10,20 @@
   background-size: cover;
   min-height: 80vh;
 }
-.div {
-  flex: 1;
-  display: flex;
+.header {
   background-color: rgba(55, 56, 103, 0.5);
+}
+.inside {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.title {
+  font-size: 40px;
+  color: white;
+}
+.titles {
+  font-size: 30px;
 }
 .show {
   display: block;
