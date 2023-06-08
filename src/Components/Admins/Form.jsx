@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react';
 import styles from './admins.module.css';
 import { Input } from '../Shared/Inputs';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import Button from '../Shared/Button';
+import Modal from '../Shared/Modal';
 
 const Form = () => {
   const [inputs, setInputs] = useState({});
+  const [successModal, setSuccesModal] = useState(false);
+  const [errorModal, setErrorModal] = useState(false);
+  const [messageReq, setMessageReq] = useState('');
+  const history = useHistory();
   const { id } = useParams();
 
   const handleChange = (e) => {
@@ -27,6 +32,11 @@ const Form = () => {
     updateAdmin(id, inputs);
   };
 
+  const redirectPath = () => {
+    const path = { pathname: '/admins' };
+    history.push(path);
+  };
+
   const addAdmin = async (admin) => {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
@@ -36,24 +46,29 @@ const Form = () => {
         },
         body: JSON.stringify(admin)
       });
-
-      const { message } = await res.json();
-      alert(message);
+      const { error, message } = await res.json();
+      setMessageReq(message);
+      if (!error) {
+        setSuccesModal(!successModal);
+        setTimeout(() => {
+          redirectPath();
+        }, 2000);
+      } else {
+        setErrorModal(!errorModal);
+        setInputs(admin);
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
   const getAdminID = async (id) => {
-    console.log(id);
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`);
-      const { data, error, message } = await res.json();
+      const { data } = await res.json();
       if (data) {
         setInputs(data);
       }
-      console.log(error);
-      console.log(message);
       return data;
     } catch (error) {
       console.error(error);
@@ -71,9 +86,16 @@ const Form = () => {
         },
         body: JSON.stringify(adminToSend)
       });
-
-      const { message } = await res.json();
-      alert(message);
+      const { error, message } = await res.json();
+      setMessageReq(message);
+      if (!error) {
+        setSuccesModal(!successModal);
+        setTimeout(() => {
+          redirectPath();
+        }, 2000);
+      } else {
+        setErrorModal(!errorModal);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -88,6 +110,24 @@ const Form = () => {
 
   return (
     <div className={styles.container}>
+      <Modal
+        title={id ? 'Admin Updated' : 'Admin Created'}
+        text={messageReq}
+        isOpen={successModal}
+        onClose={() => {
+          setSuccesModal(!successModal);
+          redirectPath();
+        }}
+      />
+      <Modal
+        title={'ERROR'}
+        text={messageReq}
+        isOpen={errorModal}
+        onClose={() => setErrorModal(!errorModal)}
+        warning
+      >
+        <Button text={'Close'} variant={'delete'} clickAction={() => setErrorModal(!errorModal)} />
+      </Modal>
       <form className={`${styles.form} ${styles.list}`} onSubmit={id ? handleUpdate : handleSubmit}>
         <h2 className={styles.title}>{id ? 'Edit Admin' : 'Add Admin'}</h2>
         <div className={styles.inputGroup}>

@@ -39,11 +39,13 @@ function Admins() {
       });
 
       const { error, message } = await res.json();
+      setMessageReq(message);
       if (!error) {
-        setMessageReq(message);
         setSuccesModal(!successModal);
+        setTimeout(() => {
+          setSuccesModal(false);
+        }, 2000);
       } else {
-        setMessageReq(message);
         setErrorModal(!errorModal);
       }
       setAdmins(admins.filter((admin) => admin._id !== id));
@@ -78,14 +80,13 @@ function Admins() {
         />
       </Modal>
       <Modal
+        title={'Admin Deleted'}
         isOpen={successModal}
         text={messageReq}
         onClose={() => {
           setSuccesModal(!successModal);
         }}
-      >
-        <Button variant={'add'} text={'OK'} clickAction={() => setSuccesModal(!successModal)} />
-      </Modal>
+      />
       <Modal
         isOpen={errorModal}
         title={'ERROR'}
@@ -95,7 +96,7 @@ function Admins() {
           setErrorModal(!errorModal);
         }}
       >
-        <Button variant={'add'} text={'OK'} clickAction={() => setErrorModal(!errorModal)} />
+        <Button variant={'delete'} text={'Close'} clickAction={() => setErrorModal(!errorModal)} />
       </Modal>
       <section className={styles.list}>
         <header className={styles.header}>
