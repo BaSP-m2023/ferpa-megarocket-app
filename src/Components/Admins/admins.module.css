@@ -84,22 +84,8 @@
   width: 80%;
 }
 
-.inputGroup {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  width: 50%;
-  margin-bottom: 20px;
-}
-
 .emptySpan {
   color: white;
   font-size: 20px;
   font-weight: bold;
-}
-
-.modalBtns {
-  display: flex;
-  margin-top: 20px;
-  justify-content: space-around;
 }

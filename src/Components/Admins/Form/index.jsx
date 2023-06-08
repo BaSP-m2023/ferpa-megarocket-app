@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import styles from './admins.module.css';
-import { Input } from '../Shared/Inputs';
+import styles from './adminsForm.module.css';
+import { Input } from '../../Shared/Inputs';
 import { Link, useParams, useHistory } from 'react-router-dom';
-import Button from '../Shared/Button';
-import Modal from '../Shared/Modal';
+import Button from '../../Shared/Button';
+import Modal from '../../Shared/Modal';
 
 const Form = () => {
   const [inputs, setInputs] = useState({});
