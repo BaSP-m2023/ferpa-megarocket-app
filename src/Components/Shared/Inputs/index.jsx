@@ -18,7 +18,7 @@ export const Select = ({ value, placeholder, onChangeSelect, label, options, nam
         <option hidden>{placeholder}</option>
         {options.map((item) => {
           return (
-            <option key={item._id} value={item._id}>
+            <option key={item._id} value={item.value}>
               {item.name}
             </option>
           );
