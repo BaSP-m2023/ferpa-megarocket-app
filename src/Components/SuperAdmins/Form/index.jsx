@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './form.module.css';
 import { Input } from '../../Shared/Inputs';
-import { Link, useParams, useLocation, useHistory } from 'react-router-dom';
+import { Link, useParams, useLocation, Redirect } from 'react-router-dom';
 import Modal from '../../Shared/Modal';
 import Button from '../../Shared/Button';
 
@@ -11,7 +11,7 @@ const Form = () => {
   const [pass, setPass] = useState('');
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const history = useHistory();
+  const [redirect, setRedirect] = useState(false);
   const location = useLocation();
 
   const getSuperAdmins = async (id) => {
@@ -47,6 +47,12 @@ const Form = () => {
       });
       const data = await response.json();
       setMessage(data.message);
+
+      if (response.ok) {
+        setTimeout(() => {
+          setRedirect(true);
+        }, 2500);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -63,6 +69,12 @@ const Form = () => {
       });
       const data = await response.json();
       setMessage(data.message);
+
+      if (response.ok) {
+        setTimeout(() => {
+          setRedirect(true);
+        }, 2500);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -87,13 +99,11 @@ const Form = () => {
       onEdit(id);
     }
   };
-  const reDirect = () => {
-    history.push('/super-admins');
-  };
 
   return (
     <div className={styles.formContainer}>
-      <Modal onClose={reDirect} isOpen={showModal} title={message} success />
+      {redirect && <Redirect to="/super-admins" />}
+      <Modal onClose={() => setShowModal(false)} isOpen={showModal} text={message} />
       <div className={styles.formBox}>
         <h3 className={styles.title}>
           {location.pathname.includes('create') ? 'Add New Super Admin' : 'Edit Super Admin'}

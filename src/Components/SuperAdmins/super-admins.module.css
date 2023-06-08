@@ -48,6 +48,7 @@
   align-self: center;
   width: 80%;
   border-collapse: collapse;
+  padding-bottom: 100px;
 }
 
 .thead {
@@ -87,74 +88,4 @@
 .inputBox {
   display: flex;
   align-items: center;
-}
-
-.btnAdd {
-  margin-top: 10px;
-  margin-left: 10%;
-  width: 150px;
-  height: 60px;
-  background-color: #46A37C;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 19px;
-  color: white;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.btnEdit {
-  margin-top: 10px;
-  margin-left: 10%;
-  width: 100px;
-  height: 30px;
-  background-color: #ffc904;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 19px;
-  color: white;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.deleteBtn {
-  width: 2vw;
-  height: 2vw;
-  border: none;
-  background-color: transparent;
-  background-image: url(../../../public/assets/images/super-admin-delete-icon.png);
-  background-size: cover;
-  cursor: pointer;
-}
-
-.editBtn {
-  width: 2vw;
-  height: 2vw;
-  border: none;
-  background-color: transparent;
-  background-image: url(../../../public/assets/images/super-admin-edit-icon.png);
-  background-size: cover;
-  cursor: pointer;
-}
-
-.passBtn {
-  width: 2.5vw;
-  height: 2.5vw;
-  border: none;
-  background-color: transparent;
-  color: white;
-  background-image: url(../../../public/assets/images/super-admin-pass-icon.png);
-  background-size: cover;
-  cursor: pointer;
-}
-
-.pass {
-  -webkit-text-security: disc;
-  /* Para navegadores basados en WebKit */
-  -moz-text-security: disc;
-  /* Para navegadores basados en Gecko (Firefox) */
 }
