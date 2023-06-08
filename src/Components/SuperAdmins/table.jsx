@@ -56,8 +56,6 @@ const Table = ({ superadmins, deleteItem, message }) => {
           </tr>
         ))}
       </tbody>
-
-      {/* Modal de confirmación de eliminación */}
       <Modal
         warning
         isOpen={confirmModal}
@@ -75,8 +73,6 @@ const Table = ({ superadmins, deleteItem, message }) => {
           }}
         />
       </Modal>
-
-      {/* Modal de eliminación exitosa */}
       <Modal
         isOpen={deleteModal}
         title={'Super Admin deleted'}
