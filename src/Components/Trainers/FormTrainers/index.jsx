@@ -1,14 +1,20 @@
 import React from 'react';
 import Button from '../../Shared/Button';
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { Input } from '../../Shared/Inputs';
 import Modal from '../../Shared/Modal';
 
 const TrainerAddForm = () => {
   const [successAddModal, setSuccessAddModal] = useState(false);
+  const [successEditModal, setSuccessEditModal] = useState(false);
   const [inputs, setInputs] = useState({});
   const { id } = useParams();
+  const history = useHistory();
+  const onRedirect = {
+    pathname: '/trainers',
+    state: { message: '' }
+  };
   useEffect(() => {
     if (id) {
       getTrainerID(id);
@@ -30,7 +36,6 @@ const TrainerAddForm = () => {
     }
   };
   const putTrainer = async (id, item) => {
-    console.log(item);
     const setEditTrainer = {
       firstName: item.firstName,
       lastName: item.lastName,
@@ -56,6 +61,10 @@ const TrainerAddForm = () => {
       } else {
         throw message;
       }
+      setTimeout(() => {
+        onRedirect.state.message = data.message;
+        history.push(onRedirect);
+      }, 1500);
     } catch (error) {
       console.error(error);
     }
@@ -76,6 +85,10 @@ const TrainerAddForm = () => {
       } else {
         throw message;
       }
+      setTimeout(() => {
+        onRedirect.state.message = data.message;
+        history.push(onRedirect);
+      }, 1500);
     } catch (error) {
       console.error(error);
     }
@@ -89,10 +102,12 @@ const TrainerAddForm = () => {
 
   const onSubmitAdd = (e) => {
     e.preventDefault();
+    setSuccessAddModal(!successAddModal);
     sendTrainer(inputs);
   };
   const onSubmitEdit = (e) => {
     e.preventDefault();
+    setSuccessEditModal(!successEditModal);
     putTrainer(id, inputs);
   };
   return (
@@ -164,6 +179,12 @@ const TrainerAddForm = () => {
         isOpen={successAddModal}
         onClose={() => setSuccessAddModal(!successAddModal)}
         title={'Trainer Added successfully'}
+      ></Modal>
+      <Modal
+        success
+        isOpen={successEditModal}
+        onClose={() => setSuccessEditModal(!successEditModal)}
+        title={'Trainer Edited successfully'}
       ></Modal>
       <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting />
     </form>
