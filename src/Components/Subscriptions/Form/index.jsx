@@ -21,7 +21,7 @@ const Form = () => {
   };
 
   const selectActivities = classes.map((obj) => {
-    return { _id: obj._id, name: obj.activityId.name };
+    return { _id: obj._id, name: `${obj.activityId?.name}, ${obj.day}, ${obj.hour} hrs` };
   });
 
   const selectMembers = members.map((obj) => {
