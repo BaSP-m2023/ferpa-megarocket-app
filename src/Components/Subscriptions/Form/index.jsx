@@ -74,7 +74,6 @@ const Form = () => {
   };
 
   const createSub = async () => {
-    console.log(currentSub);
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
         method: 'POST',
@@ -112,7 +111,6 @@ const Form = () => {
       } else {
         setModalErrorText(data.message);
         setModalError(true);
-        console.log(data);
       }
     } catch (error) {
       console.error(error);
@@ -130,7 +128,6 @@ const Form = () => {
           classId: editSub.classId._id,
           date: editSub.date.slice(0, 10)
         });
-        console.log(editSub);
         setValues({
           member: `${editSub.memberId.lastName}, ${editSub.memberId.firstName}`,
           activity: `${editSub.classId.activityId?.name}, ${editSub.classId.day}, ${editSub.classId.hour} hrs`
