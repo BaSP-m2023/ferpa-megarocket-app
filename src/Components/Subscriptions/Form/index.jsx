@@ -13,6 +13,7 @@ const Form = () => {
   const [currentSub, setCurrentSub] = useState({ classId: '', memberId: '', date: '' });
   const [modalError, setModalError] = useState(false);
   const [modalErrorText, setModalErrorText] = useState('');
+  const [values, setValues] = useState({ member: '', activity: '' });
   const history = useHistory();
 
   const onRedirect = {
@@ -27,6 +28,20 @@ const Form = () => {
   const selectMembers = members.map((obj) => {
     return { _id: obj._id, name: `${obj.lastName}, ${obj.firstName}` };
   });
+
+  const handleClassId = (value) => {
+    const classId = selectActivities.find((obj) => obj.name === value);
+    if (classId) {
+      setCurrentSub((prev) => ({ ...prev, classId: classId._id }));
+    }
+  };
+
+  const handleMemberId = (value) => {
+    const memberId = selectMembers.find((obj) => obj.name === value);
+    if (memberId) {
+      setCurrentSub((prev) => ({ ...prev, memberId: memberId._id }));
+    }
+  };
 
   const getMembers = async () => {
     try {
@@ -59,6 +74,7 @@ const Form = () => {
   };
 
   const createSub = async () => {
+    console.log(currentSub);
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
         method: 'POST',
@@ -96,6 +112,7 @@ const Form = () => {
       } else {
         setModalErrorText(data.message);
         setModalError(true);
+        console.log(data);
       }
     } catch (error) {
       console.error(error);
@@ -112,6 +129,11 @@ const Form = () => {
           memberId: editSub.memberId._id,
           classId: editSub.classId._id,
           date: editSub.date.slice(0, 10)
+        });
+        console.log(editSub);
+        setValues({
+          member: `${editSub.memberId.lastName}, ${editSub.memberId.firstName}`,
+          activity: `${editSub.classId.activityId?.name}, ${editSub.classId.day}, ${editSub.classId.hour} hrs`
         });
       };
       getSub();
@@ -145,10 +167,11 @@ const Form = () => {
             dark
             placeholder={'Select'}
             label={'Member'}
+            value={values.member}
             options={selectMembers}
-            value={currentSub.memberId}
             onChangeSelect={(e) => {
-              setCurrentSub((prev) => ({ ...prev, memberId: e.target.value }));
+              handleMemberId(e.target.value);
+              setValues((e) => (prev) => ({ ...prev, member: e.target.id }));
             }}
           />
         </div>
@@ -157,10 +180,11 @@ const Form = () => {
             dark
             placeholder={'Select'}
             label={'Activity'}
+            value={values.activity}
             options={selectActivities}
-            value={currentSub.classId}
             onChangeSelect={(e) => {
-              setCurrentSub((prev) => ({ ...prev, classId: e.target.value }));
+              handleClassId(e.target.value);
+              setValues((e) => (prev) => ({ ...prev, activity: e.target.id }));
             }}
           />
         </div>
