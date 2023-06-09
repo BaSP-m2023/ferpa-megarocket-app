@@ -45,12 +45,14 @@
 
 .modalSuccess {
   background-color: #49A37B;
+  height: 8vw;
   color: white;
   letter-spacing: 0.5px;
 }
 
 .modalTitle {
   display: inline-block;
+  margin-top: 0;
   width: 34vw;
   font-size: 2vw;
 }
