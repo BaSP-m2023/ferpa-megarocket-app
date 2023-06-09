@@ -1,0 +1,61 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('../../../../public/assets/images/admins-background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.formBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: 50px;
+  padding: 50px 0;
+  background-color: rgba(55, 56, 103, 0.5);
+}
+
+.title {
+  text-align: center;
+  color: white;
+  font-size: 40px;
+  line-height: 48px;
+  width: 80%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.field {
+  margin-bottom: 20px;
+}
+
+.checkboxField {
+  display: flex;
+  margin: 20px 0;
+}
+
+.checkboxField label {
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  font-size: 20px;
+  line-height: 29px;
+  margin-right: 20px;
+}
+
+.checkbox {
+  accent-color: white;
+  width: 18px;
+  height: 18px;
+}
+
+.btns {
+  align-self: center;
+  margin: 20px 0;
+}

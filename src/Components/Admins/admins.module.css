@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-.th, .td {
+.th,
+.td {
   text-align: start;
 }
 
@@ -13,7 +14,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 70vh;
   background-image: url('../../../public/assets/images/admins-background.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .list {
@@ -23,7 +28,7 @@
   width: 80%;
   margin: 50px;
   padding: 50px 0;
-  background-color: rgba(55, 56, 103, 0.5);;
+  background-color: rgba(55, 56, 103, 0.5);
   font-family: 'Roboto', sans-serif;
 }
 
@@ -40,34 +45,6 @@
   color: white;
   font-size: 40px;
   line-height: 48px;
-}
-
-.btn {
-  width: 150px;
-  height: 50px;
-  background-color: #46A37C;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 19px;
-  color: white;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.btnClosed {
-  width: 150px;
-  height: 50px;
-  background-color: #FF3E1D;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 19px;
-  color: white;
-  text-transform: uppercase;
-  cursor: pointer;
 }
 
 .table {
@@ -100,121 +77,15 @@
   text-align: end;
 }
 
-.icons img {
-  margin-right: 20px;
-  cursor: pointer;
-}
-
 .form {
   display: flex;
-  flex-wrap: wrap;
-  width: 80%;
-}
-
-.inputGroup {
-  display: flex;
+  align-items: center;
   flex-direction: column;
-  width: 50%;
-  margin-bottom: 20px;
-}
-
-.inputGroup label {
-  color: white;
-  font-size: 20px;
-  line-height: 29px;
-}
-
-.inputGroup input {
-  width: 90%;
-  border: 2px solid #2F3058;
-  border-radius: 4px;
-  background-color: rgba(165, 165, 165, 0.5);
-  height: 40px;
-  padding: 20px;
-  color: white;
-  font-size: 16px;
-}
-
-.inputGroup input::placeholder {
-  color: rgba(55, 56, 103, 0.8);
-}
-
-.submitBtn {
-  align-self: center;
-  width: 45%;
-  height: 40px;
-  background-color: #46A37C;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 19px;
-  color: white;
-  text-transform: uppercase;
-  cursor: pointer;
+  width: 80%;
 }
 
 .emptySpan {
   color: white;
   font-size: 20px;
   font-weight: bold;
-}
-
-.modalContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80%;
-  margin-top: 20px;
-  border-radius: 5px;
-}
-
-.modalHeader {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  padding: 20px 0;
-  color: white;
-  font-size: 25px;
-  font-weight: bold;
-}
-
-.modalForm {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.modalBtns {
-  display: flex;
-  width: 50%;
-  margin-top: 20px;
-  justify-content: space-around;
-}
-
-.saveBtn {
-  width: 40%;
-  height: 40px;
-  background-color: #46A37C;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 19px;
-  color: white;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.closeBtn {
-  width: 40%;
-  height: 40px;
-  background-color: #FF3E1D;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 19px;
-  color: white;
-  text-transform: uppercase;
-  cursor: pointer;
 }
