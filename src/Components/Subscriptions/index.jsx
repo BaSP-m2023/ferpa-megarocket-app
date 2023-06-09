@@ -7,6 +7,7 @@ import { Link, useLocation } from 'react-router-dom';
 function Subscriptions() {
   const location = useLocation();
   const [subscriptions, setSubscriptions] = useState([]);
+  const [subsLoaded, setSubsLoaded] = useState(false);
   const [currentId, setCurrentId] = useState('');
 
   const [modalSucess, setModalSucess] = useState(false);
@@ -34,6 +35,7 @@ function Subscriptions() {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/all`);
       const { data } = await res.json();
       setSubscriptions(data);
+      setSubsLoaded(true);
     } catch (error) {
       console.error(error);
     }
@@ -88,7 +90,7 @@ function Subscriptions() {
               <th className={styles.tdBtn}></th>
             </tr>
           </thead>
-          {subscriptions.length === 0 ? (
+          {!subsLoaded ? (
             ''
           ) : (
             <tbody>
@@ -119,9 +121,16 @@ function Subscriptions() {
             </tbody>
           )}
         </table>
-        {subscriptions.length === 0 ? (
+        {!subsLoaded ? (
           <div className={styles.loading}>
-            <h2 className={styles.loadingTitle}>ESPERANDO DATOS...</h2>
+            <h2 className={styles.loadingTitle}>WAITING FOR DATA...</h2>
+          </div>
+        ) : (
+          ''
+        )}
+        {subsLoaded && subscriptions.length === 0 ? (
+          <div className={styles.loading}>
+            <h2 className={styles.loadingTitle}>THERE IS NO SUBSCRIPTIONS</h2>
           </div>
         ) : (
           ''

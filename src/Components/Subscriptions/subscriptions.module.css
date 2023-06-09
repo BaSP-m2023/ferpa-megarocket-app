@@ -47,10 +47,10 @@
 
 .loading {
   display: flex;
-  justify-content: center;
   align-items: center;
   width: 80vw;
   height: 15vw;
+  margin-left: 4vw;
   color: white;
   font-size: 3vw;
   text-align: center;
