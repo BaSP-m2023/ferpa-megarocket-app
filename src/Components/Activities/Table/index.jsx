@@ -2,6 +2,7 @@ import styles from './table.module.css';
 import { Link } from 'react-router-dom';
 import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal';
+import { useState } from 'react';
 
 const Table = ({
   activities,
@@ -12,8 +13,30 @@ const Table = ({
   setConfirmModal,
   setDeleteModal
 }) => {
+  const [currentID, setCurrentID] = useState('');
+
   return (
     <div className={styles.tableContainer}>
+      <Modal
+        warning
+        isOpen={confirmModal}
+        title={'Delete Activity'}
+        text={'Are you sure you want to delete this activity?'}
+        onClose={() => setConfirmModal(!confirmModal)}
+      >
+        <Button
+          text={'Cancel'}
+          variant={'white'}
+          clickAction={() => setConfirmModal(!confirmModal)}
+        />
+        <Button text={'Delete'} variant={'delete'} clickAction={() => onDelete(currentID)} />
+      </Modal>
+      <Modal
+        isOpen={deleteModal}
+        title={message}
+        success
+        onClose={() => setDeleteModal(!deleteModal)}
+      />
       <table className={styles.table}>
         <tbody className={styles.tbody}>
           <tr className={styles.trHead}>
@@ -25,48 +48,25 @@ const Table = ({
           </tr>
           {activities.map((activity) => {
             return (
-              <>
-                <Modal
-                  warning
-                  isOpen={confirmModal}
-                  title={'Delete Activity'}
-                  text={'Are you sure you want to delete this activity?'}
-                  onClose={() => setConfirmModal(!confirmModal)}
-                >
+              <tr className={styles.trBody} key={activity?._id}>
+                <td>{activity?.name}</td>
+                <td className={styles.thDes}>{activity?.description}</td>
+                <td className={styles.thStatus}>{activity?.isActive ? 'Active' : 'Inactive'}</td>
+                <td className={styles.tdIcon}>
+                  <Link to={`/activities/edit/${activity._id}`}>
+                    <Button variant={'edit'} />
+                  </Link>
+                </td>
+                <td>
                   <Button
-                    text={'Cancel'}
-                    variant={'white'}
-                    clickAction={() => setConfirmModal(!confirmModal)}
+                    variant={'deleteIcon'}
+                    clickAction={() => {
+                      setConfirmModal(!confirmModal);
+                      setCurrentID(activity._id);
+                    }}
                   />
-                  <Button
-                    text={'Delete'}
-                    variant={'delete'}
-                    clickAction={() => onDelete(activity._id)}
-                  />
-                </Modal>
-                <Modal
-                  isOpen={deleteModal}
-                  title={message}
-                  success
-                  onClose={() => setDeleteModal(!deleteModal)}
-                />
-                <tr className={styles.trBody} key={activity?._id}>
-                  <td>{activity?.name}</td>
-                  <td className={styles.thDes}>{activity?.description}</td>
-                  <td className={styles.thStatus}>{activity?.isActive ? 'Active' : 'Inactive'}</td>
-                  <td className={styles.tdIcon}>
-                    <Link to={`/activities/edit/${activity._id}`}>
-                      <Button variant={'edit'} />
-                    </Link>
-                  </td>
-                  <td>
-                    <Button
-                      variant={'deleteIcon'}
-                      clickAction={() => setConfirmModal(!confirmModal)}
-                    />
-                  </td>
-                </tr>
-              </>
+                </td>
+              </tr>
             );
           })}
         </tbody>
