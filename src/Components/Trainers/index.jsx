@@ -5,10 +5,12 @@ import Button from '../Shared/Button';
 import Modal from '../Shared/Modal';
 
 const Trainers = () => {
+  const [visiblePasswords, setVisiblePasswords] = useState([]);
   const [currentId, setCurrentId] = useState('');
   const [successModal, setSuccessModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [trainers, setTrainers] = useState([]);
+
   const getTrainers = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
@@ -17,6 +19,12 @@ const Trainers = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const togglePasswordVisibility = (index) => {
+    const updatedVisiblePasswords = [...visiblePasswords];
+    updatedVisiblePasswords[index] = !updatedVisiblePasswords[index];
+    setVisiblePasswords(updatedVisiblePasswords);
   };
 
   const deleteTrainer = async (_id) => {
@@ -85,7 +93,7 @@ const Trainers = () => {
             </tr>
           </thead>
           <tbody>
-            {trainers.map((item) => {
+            {trainers.map((item, index) => {
               return (
                 <tr key={item._id}>
                   <td className={styles.list}>{item.firstName}</td>
@@ -94,19 +102,27 @@ const Trainers = () => {
                   <td className={styles.list}>{item.phone}</td>
                   <td className={styles.list}>{item.email}</td>
                   <td className={styles.list}>{item.city}</td>
-                  <td className={styles.list}>{item.password}</td>
+                  <td className={styles.list}>
+                    {visiblePasswords[index] ? item?.password : '*'.repeat(item?.password.length)}
+                  </td>
                   <td className={styles.list}>{item.salary}</td>
                   <td>
-                    <Link to={`/trainers/Form/${item._id}`}>
-                      <Button variant={'edit'} />
-                    </Link>
-                    <Button
-                      variant={'deleteIcon'}
-                      clickAction={() => {
-                        setDeleteModal(!deleteModal);
-                        setCurrentId(item._id);
-                      }}
-                    />
+                    <div className={styles.buttons}>
+                      <Button
+                        variant={'seePassword'}
+                        clickAction={() => togglePasswordVisibility(index)}
+                      />
+                      <Link to={`/trainers/Form/${item._id}`}>
+                        <Button variant={'edit'} />
+                      </Link>
+                      <Button
+                        variant={'deleteIcon'}
+                        clickAction={() => {
+                          setDeleteModal(!deleteModal);
+                          setCurrentId(item._id);
+                        }}
+                      />
+                    </div>
                   </td>
                 </tr>
               );

@@ -17,6 +17,10 @@
   height: 70%;
   background-color: rgba(55, 56, 103, 0.5);
 }
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
 .inside {
   display: flex;
   justify-content: space-between;
