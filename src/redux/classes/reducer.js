@@ -15,7 +15,7 @@ export const classReducer = (state = INITIAL_STATE, action) => {
       return { ...state, classes: action.payload, isLoading: false };
     }
     case GET_CLASSES_ERROR: {
-      return { error: 'Classes not found', isLoading: false };
+      return { error: action.payload, isLoading: false };
     }
     default: {
       return state;
