@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { Input } from '../../Shared/Inputs';
 import Modal from '../../Shared/Modal';
+import styles from './form.module.css';
 
 const TrainerAddForm = () => {
   const [successAddModal, setSuccessAddModal] = useState(false);
@@ -24,12 +25,10 @@ const TrainerAddForm = () => {
   const getTrainerID = async (id) => {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`);
-      const { data, error, message } = await res.json();
+      const { data } = await res.json();
       if (data) {
         setInputs(data);
       }
-      console.log(error);
-      console.log(message);
       return data;
     } catch (error) {
       console.error(error);
@@ -55,7 +54,6 @@ const TrainerAddForm = () => {
         }
       });
       const { message, error, data } = await response.json();
-      console.log(data);
       if (!error) {
         console.log(message);
       } else {
@@ -70,7 +68,6 @@ const TrainerAddForm = () => {
     }
   };
   const sendTrainer = async (item) => {
-    console.log(item);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`, {
         method: 'POST',
@@ -111,83 +108,87 @@ const TrainerAddForm = () => {
     putTrainer(id, inputs);
   };
   return (
-    <form onSubmit={id ? onSubmitEdit : onSubmitAdd}>
-      <div>
-        <Input
-          labelText={'Name'}
-          nameValue={'firstName'}
-          placeholder={'First Name'}
-          value={inputs.firstName}
-          onChangeInput={handleChange}
-        />
-        <Input
-          labelText={'LastName'}
-          nameValue={'lastName'}
-          placeholder={'Last Name'}
-          value={inputs.lastName}
-          onChangeInput={handleChange}
-        />
-        <Input
-          labelText={'DNI'}
-          nameValue={'dni'}
-          placeholder={'DNI'}
-          value={inputs.dni}
-          onChangeInput={handleChange}
-        />
-        <Input
-          labelText={'Phone'}
-          nameValue={'phone'}
-          placeholder={'Phone'}
-          value={inputs.phone}
-          onChangeInput={handleChange}
-        />
-        <Input
-          labelText={'Email'}
-          nameValue={'email'}
-          placeholder={'Email'}
-          value={inputs.email}
-          onChangeInput={handleChange}
-        />
-        <Input
-          labelText={'City'}
-          nameValue={'city'}
-          placeholder={'City'}
-          value={inputs.city}
-          onChangeInput={handleChange}
-        />
-        <Input
-          labelText={'Password'}
-          nameValue={'password'}
-          type={'password'}
-          placeholder={'Password'}
-          value={inputs.password}
-          onChangeInput={handleChange}
-        />
-        <Input
-          labelText={'Salary'}
-          nameValue={'salary'}
-          placeholder={'Salary'}
-          value={inputs.salary}
-          onChangeInput={handleChange}
-        />
-      </div>
-      <Link to={'/trainers'}>
-        <Button text={'Cancel'} variant={'white'} />
-      </Link>
-      <Modal
-        success
-        isOpen={successAddModal}
-        onClose={() => setSuccessAddModal(!successAddModal)}
-        title={'Trainer Added successfully'}
-      ></Modal>
-      <Modal
-        success
-        isOpen={successEditModal}
-        onClose={() => setSuccessEditModal(!successEditModal)}
-        title={'Trainer Edited successfully'}
-      ></Modal>
-      <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting />
-    </form>
+    <div className={styles.formContainer}>
+      <form className={styles.form} onSubmit={id ? onSubmitEdit : onSubmitAdd}>
+        <div className={styles.field}>
+          <Input
+            labelText={'Name'}
+            nameValue={'firstName'}
+            placeholder={'First Name'}
+            value={inputs.firstName}
+            onChangeInput={handleChange}
+          />
+          <Input
+            labelText={'LastName'}
+            nameValue={'lastName'}
+            placeholder={'Last Name'}
+            value={inputs.lastName}
+            onChangeInput={handleChange}
+          />
+          <Input
+            labelText={'DNI'}
+            nameValue={'dni'}
+            placeholder={'DNI'}
+            value={inputs.dni}
+            onChangeInput={handleChange}
+          />
+          <Input
+            labelText={'Phone'}
+            nameValue={'phone'}
+            placeholder={'Phone'}
+            value={inputs.phone}
+            onChangeInput={handleChange}
+          />
+          <Input
+            labelText={'Email'}
+            nameValue={'email'}
+            placeholder={'Email'}
+            value={inputs.email}
+            onChangeInput={handleChange}
+          />
+          <Input
+            labelText={'City'}
+            nameValue={'city'}
+            placeholder={'City'}
+            value={inputs.city}
+            onChangeInput={handleChange}
+          />
+          <Input
+            labelText={'Password'}
+            nameValue={'password'}
+            type={'password'}
+            placeholder={'Password'}
+            value={inputs.password}
+            onChangeInput={handleChange}
+          />
+          <Input
+            labelText={'Salary'}
+            nameValue={'salary'}
+            placeholder={'Salary'}
+            value={inputs.salary}
+            onChangeInput={handleChange}
+          />
+        </div>
+        <div className={styles.buttons}>
+          <Link to={'/trainers'}>
+            <Button text={'Cancel'} variant={'white'} />
+          </Link>
+          <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting />
+        </div>
+        <Modal
+          success
+          isOpen={successAddModal}
+          onClose={() => setSuccessAddModal(!successAddModal)}
+          title={'Trainer Added successfully'}
+        ></Modal>
+        <Modal
+          success
+          isOpen={successEditModal}
+          onClose={() => setSuccessEditModal(!successEditModal)}
+          title={'Trainer Edited successfully'}
+        ></Modal>
+      </form>
+    </div>
   );
 };
 

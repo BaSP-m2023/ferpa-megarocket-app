@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+    align-items: center;
+    background-image: url('../../../../public/assets/images/admins-background.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+  }
+  .field {
+    margin-bottom: 20px;
+  }
+  .buttons {
+    align-self: center;
+    margin: 20px 0px;
+  }

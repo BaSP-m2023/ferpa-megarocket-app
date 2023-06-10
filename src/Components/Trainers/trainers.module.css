@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 .container {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  font-family: 'Roboto', sans-serif;
   align-items: center;
   background-image: url('../../../public/assets/images/subscriptions-background.jpg');
   background-repeat: no-repeat;
@@ -11,6 +14,7 @@
   min-height: 80vh;
 }
 .header {
+  height: 70%;
   background-color: rgba(55, 56, 103, 0.5);
 }
 .inside {
@@ -22,8 +26,21 @@
   font-size: 40px;
   color: white;
 }
+.titlesUp {
+  display: flex;
+  justify-content: center;
+}
 .titles {
-  font-size: 30px;
+  text-align: start;
+  border-bottom: 1px solid white;
+  color: white;
+  font-size: 25px;
+}
+.list {
+  border-bottom: 1px solid white;
+  padding-top: 1vh;
+  padding-right: 5vh;
+  color: white;
 }
 .show {
   display: block;
