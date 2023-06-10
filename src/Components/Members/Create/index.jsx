@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './addMembers.module.css';
 import { Input } from '../../Shared/Inputs';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal';
 
@@ -20,6 +20,8 @@ const MembersCreate = () => {
 
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
+
+  const history = useHistory;
 
   const handleFirstName = (e) => {
     setFirstName(e.target.value);
@@ -90,9 +92,21 @@ const MembersCreate = () => {
           membership
         })
       });
-
       const data = await newMembers.json();
       setMessage(data.message);
+      if (!data.error) {
+        setFirstName('');
+        setLastName('');
+        setDni('');
+        setPhone('');
+        setEmail('');
+        setCity('');
+        setBirthday('');
+        setPostalCode('');
+        setIsActive(true);
+        setMembership('Classic');
+        history.push('/members');
+      }
     } catch (error) {
       console.error(error);
     }
@@ -112,28 +126,11 @@ const MembersCreate = () => {
       isActive,
       membership
     });
-    setFirstName('');
-    setLastName('');
-    setDni('');
-    setPhone('');
-    setEmail('');
-    setCity('');
-    setBirthday('');
-    setPostalCode('');
-    setIsActive(true);
-    setMembership('Classic');
-    setShowModal(true);
   };
 
   return (
     <div className={styles.formContainer}>
-      <Modal
-        onClose={() => setShowModal(false)}
-        isOpen={showModal}
-        title={message}
-        success={true}
-      />
-      ;
+      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
       <div>
         <h3>Create new member</h3>
         <form onSubmit={(e) => handleSubmit(e)}>

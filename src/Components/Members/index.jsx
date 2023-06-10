@@ -11,11 +11,9 @@ function Members() {
 
   const deleteMember = async (id) => {
     try {
-      const apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
         method: 'DELETE'
       });
-      const data = await apiResponse.json();
-      alert(data.message);
       setMembers([...members.filter((members) => members._id !== id)]);
     } catch (error) {
       console.error(error);

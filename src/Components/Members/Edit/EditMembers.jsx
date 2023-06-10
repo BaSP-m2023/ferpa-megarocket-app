@@ -91,7 +91,6 @@ const MembersEdit = () => {
 
       const data = await response.json();
       setMessage(data.message);
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -105,18 +104,12 @@ const MembersEdit = () => {
 
   return (
     <div className={styles.container}>
-      <Modal
-        onClose={() => setShowModal(false)}
-        isOpen={showModal}
-        title={message}
-        success={true}
-      />
-      ;
+      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
       <div>
         <h3 className={styles.whiteLetters}>Edit current member</h3>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div>
-            {member ? (
+            {member.length !== 0 ? (
               <Input
                 labelText={'Name'}
                 type={'text'}
@@ -128,7 +121,7 @@ const MembersEdit = () => {
             )}
           </div>
           <div>
-            {member ? (
+            {member.length !== 0 ? (
               <Input
                 labelText={'Surname'}
                 type={'text'}
@@ -140,7 +133,7 @@ const MembersEdit = () => {
             )}
           </div>
           <div>
-            {member ? (
+            {member.length !== 0 ? (
               <Input
                 labelText={'DNI'}
                 type={'text'}
@@ -152,7 +145,7 @@ const MembersEdit = () => {
             )}
           </div>
           <div>
-            {member ? (
+            {member.length !== 0 ? (
               <Input
                 labelText={'Phone'}
                 type={'text'}
@@ -164,7 +157,7 @@ const MembersEdit = () => {
             )}
           </div>
           <div>
-            {member ? (
+            {member.length !== 0 ? (
               <Input
                 labelText={'Email'}
                 type={'text'}
@@ -176,7 +169,7 @@ const MembersEdit = () => {
             )}
           </div>
           <div>
-            {member ? (
+            {member.length !== 0 ? (
               <Input
                 labelText={'City'}
                 type={'text'}
@@ -188,7 +181,7 @@ const MembersEdit = () => {
             )}
           </div>
           <div>
-            {member ? (
+            {member.length !== 0 ? (
               <Input
                 labelText={'Birthday'}
                 type={'text'}
@@ -200,7 +193,7 @@ const MembersEdit = () => {
             )}
           </div>
           <div>
-            {member ? (
+            {member.length !== 0 ? (
               <Input
                 labelText={'Zip Code'}
                 type={'text'}
@@ -212,7 +205,7 @@ const MembersEdit = () => {
             )}
           </div>
           <div>
-            {member ? (
+            {member.length !== 0 ? (
               <div>
                 <label className={styles.whiteLetters}>Its Active?</label>
                 <select onChange={handleIsActiveChange}>
@@ -225,7 +218,7 @@ const MembersEdit = () => {
             )}
           </div>
           <div>
-            {member ? (
+            {member.length !== 0 ? (
               <label className={styles.whiteLetters}>
                 Membership:
                 <select onChange={handleMembershipChange}>
