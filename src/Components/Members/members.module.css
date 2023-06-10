@@ -5,5 +5,29 @@
   align-items: center;
   flex-direction: column;
   height: 1000px;
+  background-image: url(../../../public/assets/images/admins-background.jpg);
 }
 
+.whiteLetters {
+  color: white;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 95%;
+  padding: 0 0 50px 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 95%;
+  margin: 50px;
+  padding: 50px 0;
+  background-color: rgba(55, 56, 103, 0.5);
+  font-family: 'Roboto', sans-serif;
+}
