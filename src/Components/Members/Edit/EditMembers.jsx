@@ -25,7 +25,7 @@ const MembersEdit = () => {
     {
       _id: 3,
       name: 'Black Membership',
-      value: 'Black Membership'
+      value: 'Black'
     }
   ];
 
