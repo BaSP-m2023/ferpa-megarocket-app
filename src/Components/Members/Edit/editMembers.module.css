@@ -4,10 +4,23 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  height: 1000px;
+  min-height: 70vh;
   background-image: url(../../../../public/assets/images/admins-background.jpg);
 }
 
 .whiteLetters {
   color: white;
+  text-align: center;
+}
+
+.form {
+  background-color: rgba(55, 56, 103, 0.5);
+  min-width: 60vw;
+  padding: 50px 150px;
+}
+
+.theButtons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 35px;
 }

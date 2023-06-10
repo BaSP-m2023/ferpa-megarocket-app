@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './editMembers.module.css';
-import { Input, Select } from '../../Shared/Inputs';
+import { Input, Select, DatePicker } from '../../Shared/Inputs';
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Button from '../../Shared/Button/index';
@@ -84,7 +84,7 @@ const MembersEdit = () => {
   };
 
   const handleBirthdayChange = (e) => {
-    setMember({ ...member, birthDay: e.target.value });
+    setMember({ ...member, birthDay: e });
   };
 
   const handlePostalCodeChange = (e) => {
@@ -137,8 +137,8 @@ const MembersEdit = () => {
     <div className={styles.container}>
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
       <div>
-        <h3 className={styles.whiteLetters}>Edit current member</h3>
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmit(e)} className={styles.form}>
+          <h3 className={styles.whiteLetters}>Edit current member</h3>
           <div>
             {member.length !== 0 ? (
               <Input
@@ -213,11 +213,10 @@ const MembersEdit = () => {
           </div>
           <div>
             {member.length !== 0 ? (
-              <Input
-                labelText={'Birthday'}
-                type={'text'}
-                value={member.birthDay}
-                onChangeInput={handleBirthdayChange}
+              <DatePicker
+                label={'Birthday'}
+                value={member.birthDay.slice(0, 10)}
+                onChangeDate={handleBirthdayChange}
               />
             ) : (
               <div> Loading...</div>
@@ -264,20 +263,12 @@ const MembersEdit = () => {
                 />
               </div>
             ) : (
-              // <label className={styles.whiteLetters}>
-              //   Membership:
-              //   <select onChange={handleMembershipChange}>
-              //     <option value="Classic">Classic</option>
-              //     <option value="Only Classes">Only Classes</option>
-              //     <option value="Black">Black Membership</option>
-              //   </select>
-              // </label>
               <div> Loading...</div>
             )}
           </div>
-          <div>
+          <div className={styles.theButtons}>
             <Link to="/members">
-              <Button text={'return'} variant={'white'} />
+              <Button text={'Cancel'} variant={'white'} />
             </Link>
             <Button text={'Update'} variant={'add'} clickAction={handleSubmit} />
           </div>

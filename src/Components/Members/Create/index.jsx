@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './addMembers.module.css';
-import { Input, Select } from '../../Shared/Inputs';
+import { Input, Select, DatePicker } from '../../Shared/Inputs';
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Button from '../../Shared/Button';
@@ -68,7 +68,7 @@ const MembersCreate = () => {
   };
 
   const handleBirthdayChange = (e) => {
-    setBirthday(e.target.value);
+    setBirthday(e);
   };
 
   const handlePostalCodeChange = (e) => {
@@ -151,8 +151,8 @@ const MembersCreate = () => {
     <div className={styles.container}>
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
       <div>
-        <h3>Create new member</h3>
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmit(e)} className={styles.form}>
+          <h3 className={styles.whiteLetters}>Create new member</h3>
           <div>
             <Input
               labelText={'Name'}
@@ -208,13 +208,7 @@ const MembersCreate = () => {
             />
           </div>
           <div>
-            <Input
-              labelText={'Birthday'}
-              type={'text'}
-              placeholder={'01/01/2000'}
-              value={birthDay}
-              onChangeInput={handleBirthdayChange}
-            />
+            <DatePicker label={'Birthday'} value={birthDay} onChangeDate={handleBirthdayChange} />
           </div>
           <div>
             <Input
@@ -235,11 +229,11 @@ const MembersCreate = () => {
               nameValue={'day'}
             />
           </div>
-          <div>
+          <div className={styles.theButtons}>
             <Link to="/members">
-              <Button text={'return'} variant={'white'} />
+              <Button text={'Cancel'} variant={'white'} />
             </Link>
-            <Button text={'Create'} variant={'add'} clickAction={handleSubmit} />
+            <Button text={'Add new member'} variant={'add'} clickAction={handleSubmit} />
           </div>
         </form>
       </div>
