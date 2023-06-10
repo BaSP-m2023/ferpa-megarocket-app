@@ -11,6 +11,7 @@ import SubscriptionForm from '../Subscriptions/Form';
 import SuperAdmins from '../SuperAdmins';
 import SuperAdminsForm from '../SuperAdmins/Form';
 import Trainers from '../Trainers';
+import FormTrainers from '../Trainers/FormTrainers';
 import AdminsForm from '../Admins/Form';
 
 import Form from '../Classes/Form';
@@ -38,7 +39,8 @@ function Layout() {
       <Route path="/super-admins/create" component={SuperAdminsForm} />
       <Route path="/super-admins/edit/:id" component={SuperAdminsForm} />
       <Route exact path="/trainers" component={Trainers} />
-      <Route path="/trainers/:id" component={Trainers} />
+      <Route exact path="/trainers/Form" component={FormTrainers} />
+      <Route path="/trainers/Form/:id" component={FormTrainers} />
       <Route path="/home" component={Home} />
       <Route exact path="/">
         <Redirect to="/home" />

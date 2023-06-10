@@ -1,21 +1,15 @@
 import { useEffect, useState } from 'react';
 import styles from './trainers.module.css';
+import { Link } from 'react-router-dom';
+import Button from '../Shared/Button';
+import Modal from '../Shared/Modal';
 
 const Trainers = () => {
-  const [trainers, setTrainers] = useState([]);
-  const [toggleAdd, setToggleAdd] = useState(false);
-  const [toggleEdit, setToggleEdit] = useState(false);
+  const [visiblePasswords, setVisiblePasswords] = useState([]);
   const [currentId, setCurrentId] = useState('');
-  const [trainer, setTrainer] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    password: '',
-    salary: ''
-  });
+  const [successModal, setSuccessModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [trainers, setTrainers] = useState([]);
 
   const getTrainers = async () => {
     try {
@@ -27,62 +21,25 @@ const Trainers = () => {
     }
   };
 
+  const togglePasswordVisibility = (index) => {
+    const updatedVisiblePasswords = [...visiblePasswords];
+    updatedVisiblePasswords[index] = !updatedVisiblePasswords[index];
+    setVisiblePasswords(updatedVisiblePasswords);
+  };
+
   const deleteTrainer = async (_id) => {
-    const option = window.confirm('Are you sure??');
-    if (option) {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${_id}`, {
-          method: 'DELETE'
-        });
-        const { message, error } = await response.json();
-        if (!error) {
-          setTrainers([...trainers.filter((trainer) => trainer._id !== _id)]);
-        } else {
-          throw message;
-        }
-      } catch (error) {
-        alert(error);
-      }
-    }
-  };
-
-  const sendTrainer = async (item) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`, {
-        method: 'POST',
-        body: JSON.stringify(item),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const { data, message, error } = await response.json();
-      if (!error) {
-        addTrainer(data);
-        setToggleAdd(false);
-      } else {
-        throw message;
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const putTrainer = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify(trainer),
-        headers: {
-          'Content-Type': 'application/json'
-        }
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${_id}`, {
+        method: 'DELETE'
       });
       const { message, error } = await response.json();
       if (!error) {
-        getTrainers();
-        setToggleEdit(false);
+        setTrainers([...trainers.filter((trainer) => trainer._id !== _id)]);
       } else {
         throw message;
       }
+      setDeleteModal(!deleteModal);
+      setSuccessModal(!successModal);
     } catch (error) {
       console.error(error);
     }
@@ -92,221 +49,87 @@ const Trainers = () => {
     getTrainers();
   }, []);
 
-  const addTrainer = ({ _id, firstName, lastName, dni, phone, email, city, password, salary }) => {
-    const newTrainer = {
-      _id,
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      password,
-      salary
-    };
-    setTrainers([...trainers, newTrainer]);
-  };
-
-  const onChangeInput = (e) => {
-    setTrainer({
-      ...trainer,
-      [e.target.name]: e.target.value
-    });
-  };
-  const onSubmitAdd = (e) => {
-    e.preventDefault();
-    sendTrainer(trainer);
-  };
-  const showEditTrainer = (item) => {
-    setTrainer({
-      firstName: item.firstName,
-      lastName: item.lastName,
-      dni: item.dni.toString(),
-      phone: item.phone.toString(),
-      email: item.email,
-      city: item.city,
-      password: item.password,
-      salary: item.salary.toString()
-    });
-    setToggleEdit(true);
-    setToggleAdd(false);
-    setCurrentId(item._id);
-  };
-
-  const editTrainer = (e) => {
-    e.preventDefault();
-    putTrainer(currentId);
-  };
-
   return (
     <section className={styles.container}>
-      <h2>Trainers</h2>
-      <button
-        className={!toggleAdd ? styles.show : styles.hide}
-        id="adding"
-        onClick={() => {
-          setToggleAdd(true);
-          setToggleEdit(false);
-          setTrainer({
-            firstName: '',
-            lastName: '',
-            dni: '',
-            phone: '',
-            email: '',
-            city: '',
-            password: '',
-            salary: ''
-          });
-        }}
+      <Modal
+        warning
+        isOpen={deleteModal}
+        onClose={() => setDeleteModal(!deleteModal)}
+        title={'Delete Trainer'}
+        text={'Are you sure you want to delete this Trainer?'}
       >
-        Add
-      </button>
-      {toggleAdd && (
-        <form onSubmit={onSubmitAdd}>
-          <div>
-            <fieldset>
-              <label>Name</label>
-              <input name="firstName" type="text" onChange={onChangeInput} />
-            </fieldset>
-            <fieldset>
-              <label>Last Name</label>
-              <input name="lastName" type="text" onChange={onChangeInput} />
-            </fieldset>
-            <fieldset>
-              <label>Dni</label>
-              <input name="dni" type="text" onChange={onChangeInput} />
-            </fieldset>
-            <fieldset>
-              <label>Phone</label>
-              <input name="phone" type="text" onChange={onChangeInput} />
-            </fieldset>
-            <fieldset>
-              <label>Email</label>
-              <input name="email" type="text" onChange={onChangeInput} />
-            </fieldset>
-            <fieldset>
-              <label>City</label>
-              <input name="city" type="text" onChange={onChangeInput} />
-            </fieldset>
-            <fieldset>
-              <label>Password</label>
-              <input name="password" type="text" onChange={onChangeInput} />
-            </fieldset>
-            <fieldset>
-              <label>Salary</label>
-              <input name="salary" type="text" onChange={onChangeInput} />
-            </fieldset>
-          </div>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setToggleAdd(false);
-            }}
-          >
-            Cancel
-          </button>
-          <button type="submit">Add</button>
-        </form>
-      )}
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Last Name</th>
-            <th>Dni</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>City</th>
-            <th>Password</th>
-            <th>Salary</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {trainers.map((item) => {
-            return (
-              <tr key={item._id}>
-                <td>{item.firstName}</td>
-                <td>{item.lastName}</td>
-                <td>{item.dni}</td>
-                <td>{item.phone}</td>
-                <td>{item.email}</td>
-                <td>{item.city}</td>
-                <td>{item.password}</td>
-                <td>{item.salary}</td>
-                <td>
-                  <button onClick={() => showEditTrainer(item)}>Edit</button>
-                  <button className={styles.deleteBtn} onClick={() => deleteTrainer(item._id)}>
-                    X
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      {toggleEdit && (
-        <form onSubmit={editTrainer}>
-          <div>
-            <fieldset>
-              <label>Name</label>
-              <input
-                value={trainer.firstName}
-                onChange={onChangeInput}
-                name="firstName"
-                type="text"
-              />
-            </fieldset>
-            <fieldset>
-              <label>Last Name</label>
-              <input
-                value={trainer.lastName}
-                onChange={onChangeInput}
-                name="lastName"
-                type="text"
-              />
-            </fieldset>
-            <fieldset>
-              <label>Dni</label>
-              <input value={trainer.dni} onChange={onChangeInput} name="dni" type="text" />
-            </fieldset>
-            <fieldset>
-              <label>Phone</label>
-              <input value={trainer.phone} onChange={onChangeInput} name="phone" type="text" />
-            </fieldset>
-            <fieldset>
-              <label>Email</label>
-              <input value={trainer.email} onChange={onChangeInput} name="email" type="text" />
-            </fieldset>
-            <fieldset>
-              <label>City</label>
-              <input value={trainer.city} onChange={onChangeInput} name="city" type="text" />
-            </fieldset>
-            <fieldset>
-              <label>Password</label>
-              <input
-                value={trainer.password}
-                onChange={onChangeInput}
-                name="password"
-                type="text"
-              />
-            </fieldset>
-            <fieldset>
-              <label>Salary</label>
-              <input value={trainer.salary} onChange={onChangeInput} name="salary" type="text" />
-            </fieldset>
-          </div>
-          <button type="submit">Edit</button>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setToggleEdit(false);
-            }}
-          >
-            Cancel
-          </button>
-        </form>
-      )}
+        <Button
+          text={'Cancel'}
+          variant={'white'}
+          clickAction={() => setDeleteModal(!deleteModal)}
+        />
+        <Button text={'Delete'} variant={'delete'} clickAction={() => deleteTrainer(currentId)} />
+      </Modal>
+      <Modal
+        success
+        isOpen={successModal}
+        onClose={() => setSuccessModal(!successModal)}
+        title={'Trainer Deleted successfully'}
+      ></Modal>
+      <div className={styles.header}>
+        <div className={styles.inside}>
+          <h2 className={styles.title}>Trainers</h2>
+          <Link to={'/trainers/Form'}>
+            <Button text={'add trainer'} variant={'add'} />
+          </Link>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th className={styles.titles}>Name</th>
+              <th className={styles.titles}>Last Name</th>
+              <th className={styles.titles}>Dni</th>
+              <th className={styles.titles}>Phone</th>
+              <th className={styles.titles}>Email</th>
+              <th className={styles.titles}>City</th>
+              <th className={styles.titles}>Password</th>
+              <th className={styles.titles}>Salary</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {trainers.map((item, index) => {
+              return (
+                <tr key={item._id}>
+                  <td className={styles.list}>{item.firstName}</td>
+                  <td className={styles.list}>{item.lastName}</td>
+                  <td className={styles.list}>{item.dni}</td>
+                  <td className={styles.list}>{item.phone}</td>
+                  <td className={styles.list}>{item.email}</td>
+                  <td className={styles.list}>{item.city}</td>
+                  <td className={styles.list}>
+                    {visiblePasswords[index] ? item?.password : '*'.repeat(item?.password.length)}
+                  </td>
+                  <td className={styles.list}>{item.salary}</td>
+                  <td>
+                    <div className={styles.buttons}>
+                      <Button
+                        variant={'seePassword'}
+                        clickAction={() => togglePasswordVisibility(index)}
+                      />
+                      <Link to={`/trainers/Form/${item._id}`}>
+                        <Button variant={'edit'} />
+                      </Link>
+                      <Button
+                        variant={'deleteIcon'}
+                        clickAction={() => {
+                          setDeleteModal(!deleteModal);
+                          setCurrentId(item._id);
+                        }}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 };
