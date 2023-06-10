@@ -36,9 +36,14 @@ function Members() {
 
   return (
     <section className={styles.container + ' ' + styles.whiteLetters}>
-      <h2>Members</h2>
       <div>
         <table className={styles.list}>
+          <div className={styles.header}>
+            <h2>Members</h2>
+            <Link to={'/members/create'}>
+              <Button text={'Create new member'} variant={'add'} />
+            </Link>
+          </div>
           <tbody>
             <tr>
               <th>Name</th>
@@ -95,11 +100,6 @@ function Members() {
             })}
           </tbody>
         </table>
-      </div>
-      <div>
-        <Link to={'/members/create'}>
-          <Button text={'Create new member'} variant={'add'} />
-        </Link>
       </div>
     </section>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './addMembers.module.css';
-import { Input } from '../../Shared/Inputs';
+import { Input, Select } from '../../Shared/Inputs';
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Button from '../../Shared/Button';
@@ -18,10 +18,28 @@ const MembersCreate = () => {
   const [isActive, setIsActive] = useState(true);
   const [membership, setMembership] = useState('Classic');
 
+  const memberships = [
+    {
+      _id: 1,
+      name: 'Classic',
+      value: 'Classic'
+    },
+    {
+      _id: 2,
+      name: 'Only Classes',
+      value: 'Only Classes'
+    },
+    {
+      _id: 3,
+      name: 'Black Membership',
+      value: 'Black Membership'
+    }
+  ];
+
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
 
-  const history = useHistory;
+  const history = useHistory();
 
   const handleFirstName = (e) => {
     setFirstName(e.target.value);
@@ -94,6 +112,7 @@ const MembersCreate = () => {
       });
       const data = await newMembers.json();
       setMessage(data.message);
+      setShowModal(true);
       if (!data.error) {
         setFirstName('');
         setLastName('');
@@ -129,7 +148,7 @@ const MembersCreate = () => {
   };
 
   return (
-    <div className={styles.formContainer}>
+    <div className={styles.container}>
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
       <div>
         <h3>Create new member</h3>
@@ -207,14 +226,14 @@ const MembersCreate = () => {
             />
           </div>
           <div>
-            <label>
-              Membership:
-              <select onChange={handleMembershipChange}>
-                <option value="Classic">Classic</option>
-                <option value="Only Classes">Only Classes</option>
-                <option value="Black">Black Membership</option>
-              </select>
-            </label>
+            <Select
+              label={'Membership'}
+              value={memberships.value}
+              placeholder={'Classic'}
+              onChangeSelect={handleMembershipChange}
+              options={memberships}
+              nameValue={'day'}
+            />
           </div>
           <div>
             <Link to="/members">

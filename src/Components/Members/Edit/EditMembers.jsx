@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './editMembers.module.css';
-import { Input } from '../../Shared/Inputs';
+import { Input, Select } from '../../Shared/Inputs';
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Button from '../../Shared/Button/index';
@@ -10,6 +10,37 @@ const MembersEdit = () => {
   const [member, setMember] = useState([]);
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
+
+  const memberships = [
+    {
+      _id: 1,
+      name: 'Classic',
+      value: 'Classic'
+    },
+    {
+      _id: 2,
+      name: 'Only Classes',
+      value: 'Only Classes'
+    },
+    {
+      _id: 3,
+      name: 'Black Membership',
+      value: 'Black Membership'
+    }
+  ];
+
+  const activeTypes = [
+    {
+      _id: 1,
+      name: 'Yes',
+      value: true
+    },
+    {
+      _id: 2,
+      name: 'No',
+      value: false
+    }
+  ];
 
   const { id } = useParams();
 
@@ -207,11 +238,14 @@ const MembersEdit = () => {
           <div>
             {member.length !== 0 ? (
               <div>
-                <label className={styles.whiteLetters}>Its Active?</label>
-                <select onChange={handleIsActiveChange}>
-                  <option value={true}>Yes</option>
-                  <option value={false}>No</option>
-                </select>
+                <Select
+                  label={'Is active?'}
+                  value={activeTypes.value}
+                  placeholder={'Yes'}
+                  onChangeSelect={handleIsActiveChange}
+                  options={activeTypes}
+                  nameValue={'day'}
+                />
               </div>
             ) : (
               <div> Loading...</div>
@@ -219,15 +253,25 @@ const MembersEdit = () => {
           </div>
           <div>
             {member.length !== 0 ? (
-              <label className={styles.whiteLetters}>
-                Membership:
-                <select onChange={handleMembershipChange}>
-                  <option value="Classic">Classic</option>
-                  <option value="Only Classes">Only Classes</option>
-                  <option value="Black">Black Membership</option>
-                </select>
-              </label>
+              <div>
+                <Select
+                  label={'Membership'}
+                  value={memberships.value}
+                  placeholder={member.membership}
+                  onChangeSelect={handleMembershipChange}
+                  options={memberships}
+                  nameValue={'day'}
+                />
+              </div>
             ) : (
+              // <label className={styles.whiteLetters}>
+              //   Membership:
+              //   <select onChange={handleMembershipChange}>
+              //     <option value="Classic">Classic</option>
+              //     <option value="Only Classes">Only Classes</option>
+              //     <option value="Black">Black Membership</option>
+              //   </select>
+              // </label>
               <div> Loading...</div>
             )}
           </div>

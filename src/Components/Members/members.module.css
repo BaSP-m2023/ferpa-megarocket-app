@@ -12,6 +12,15 @@
   color: white;
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 95%;
+  padding: 0 0 50px 0;
+  font-family: 'Roboto', sans-serif;
+}
+
 .list {
   display: flex;
   flex-direction: column;
