@@ -76,12 +76,7 @@ const TrainerAddForm = () => {
           'Content-Type': 'application/json'
         }
       });
-      const { data, message, error } = await response.json();
-      if (!error) {
-        console.log(data);
-      } else {
-        throw message;
-      }
+      const { data } = await response.json();
       setTimeout(() => {
         onRedirect.state.message = data.message;
         history.push(onRedirect);
@@ -109,85 +104,87 @@ const TrainerAddForm = () => {
   };
   return (
     <div className={styles.formContainer}>
-      <form className={styles.form} onSubmit={id ? onSubmitEdit : onSubmitAdd}>
-        <div className={styles.field}>
-          <Input
-            labelText={'Name'}
-            nameValue={'firstName'}
-            placeholder={'First Name'}
-            value={inputs.firstName}
-            onChangeInput={handleChange}
-          />
-          <Input
-            labelText={'LastName'}
-            nameValue={'lastName'}
-            placeholder={'Last Name'}
-            value={inputs.lastName}
-            onChangeInput={handleChange}
-          />
-          <Input
-            labelText={'DNI'}
-            nameValue={'dni'}
-            placeholder={'DNI'}
-            value={inputs.dni}
-            onChangeInput={handleChange}
-          />
-          <Input
-            labelText={'Phone'}
-            nameValue={'phone'}
-            placeholder={'Phone'}
-            value={inputs.phone}
-            onChangeInput={handleChange}
-          />
-          <Input
-            labelText={'Email'}
-            nameValue={'email'}
-            placeholder={'Email'}
-            value={inputs.email}
-            onChangeInput={handleChange}
-          />
-          <Input
-            labelText={'City'}
-            nameValue={'city'}
-            placeholder={'City'}
-            value={inputs.city}
-            onChangeInput={handleChange}
-          />
-          <Input
-            labelText={'Password'}
-            nameValue={'password'}
-            type={'password'}
-            placeholder={'Password'}
-            value={inputs.password}
-            onChangeInput={handleChange}
-          />
-          <Input
-            labelText={'Salary'}
-            nameValue={'salary'}
-            placeholder={'Salary'}
-            value={inputs.salary}
-            onChangeInput={handleChange}
-          />
-        </div>
-        <div className={styles.buttons}>
-          <Link to={'/trainers'}>
-            <Button text={'Cancel'} variant={'white'} />
-          </Link>
-          <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting />
-        </div>
-        <Modal
-          success
-          isOpen={successAddModal}
-          onClose={() => setSuccessAddModal(!successAddModal)}
-          title={'Trainer Added successfully'}
-        ></Modal>
-        <Modal
-          success
-          isOpen={successEditModal}
-          onClose={() => setSuccessEditModal(!successEditModal)}
-          title={'Trainer Edited successfully'}
-        ></Modal>
-      </form>
+      <div className={styles.fromBackground}>
+        <form className={styles.form} onSubmit={id ? onSubmitEdit : onSubmitAdd}>
+          <div className={styles.field}>
+            <Input
+              labelText={'Name'}
+              nameValue={'firstName'}
+              placeholder={'First Name'}
+              value={inputs.firstName}
+              onChangeInput={handleChange}
+            />
+            <Input
+              labelText={'LastName'}
+              nameValue={'lastName'}
+              placeholder={'Last Name'}
+              value={inputs.lastName}
+              onChangeInput={handleChange}
+            />
+            <Input
+              labelText={'DNI'}
+              nameValue={'dni'}
+              placeholder={'DNI'}
+              value={inputs.dni}
+              onChangeInput={handleChange}
+            />
+            <Input
+              labelText={'Phone'}
+              nameValue={'phone'}
+              placeholder={'Phone'}
+              value={inputs.phone}
+              onChangeInput={handleChange}
+            />
+            <Input
+              labelText={'Email'}
+              nameValue={'email'}
+              placeholder={'Email'}
+              value={inputs.email}
+              onChangeInput={handleChange}
+            />
+            <Input
+              labelText={'City'}
+              nameValue={'city'}
+              placeholder={'City'}
+              value={inputs.city}
+              onChangeInput={handleChange}
+            />
+            <Input
+              labelText={'Password'}
+              nameValue={'password'}
+              type={'password'}
+              placeholder={'Password'}
+              value={inputs.password}
+              onChangeInput={handleChange}
+            />
+            <Input
+              labelText={'Salary'}
+              nameValue={'salary'}
+              placeholder={'Salary'}
+              value={inputs.salary}
+              onChangeInput={handleChange}
+            />
+          </div>
+          <div className={styles.buttons}>
+            <Link to={'/trainers'}>
+              <Button text={'Cancel'} variant={'white'} />
+            </Link>
+            <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting />
+          </div>
+          <Modal
+            success
+            isOpen={successAddModal}
+            onClose={() => setSuccessAddModal(!successAddModal)}
+            title={'Trainer Added successfully'}
+          ></Modal>
+          <Modal
+            success
+            isOpen={successEditModal}
+            onClose={() => setSuccessEditModal(!successEditModal)}
+            title={'Trainer Edited successfully'}
+          ></Modal>
+        </form>
+      </div>
     </div>
   );
 };

@@ -10,6 +10,12 @@
     background-position: center;
     background-size: cover;
   }
+  .fromBackground{
+    display: flex;
+    justify-content: center;
+    background-color: rgba(55, 56, 103, 0.5);
+    width: 80%;
+  }
   .form {
     display: flex;
     flex-direction: column;
