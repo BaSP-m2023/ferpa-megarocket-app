@@ -1,0 +1,15 @@
+import { getClassesPending, getClassesSuccess, getClasseserror } from './actions';
+
+export const getClasses = () => {
+  return async (dispatch) => {
+    dispatch(getClassesPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`);
+      const response_1 = await response.json();
+      dispatch(getClassesSuccess(response_1.data));
+      return response_1.data;
+    } catch (error) {
+      dispatch(getClasseserror(error.toString()));
+    }
+  };
+};
