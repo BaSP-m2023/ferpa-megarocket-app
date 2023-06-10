@@ -1,9 +1,16 @@
 import { useState, useEffect } from 'react';
 import styles from './admins.module.css';
-import List from './List';
+import Button from '../Shared/Button';
+import { Link } from 'react-router-dom';
+import Modal from '../Shared/Modal/index';
 
 function Admins() {
   const [admins, setAdmins] = useState([]);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState('');
+  const [messageReq, setMessageReq] = useState('');
+  const [successModal, setSuccesModal] = useState(false);
+  const [errorModal, setErrorModal] = useState(false);
 
   useEffect(() => {
     const getAdmins = async () => {
@@ -25,89 +32,119 @@ function Admins() {
     }
   };
 
-  const getAdminID = async (id) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`);
-      const data = await res.json();
-
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const addAdmin = async (admin) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(admin)
-      });
-
-      const { message, data, error } = await res.json();
-      alert(message);
-
-      if (!error) {
-        setAdmins([...admins, data]);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const updateAdmin = async (id, updatedAdmin) => {
-    const adminIndex = admins.findIndex((admin) => admin._id === id);
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(updatedAdmin)
-      });
-
-      const { message, data, error } = await res.json();
-      alert(message);
-
-      if (!error) {
-        const actualAdmins = [...admins];
-        actualAdmins[adminIndex] = data;
-        setAdmins(actualAdmins);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const deleteAdmin = async (id) => {
     try {
-      const response = window.confirm('Are you sure you want to delete this admin?');
-      if (response) {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-          method: 'DELETE'
-        });
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
+        method: 'DELETE'
+      });
 
-        const data = await res.json();
-        alert(data.message);
-
-        setAdmins(admins.filter((admin) => admin._id !== id));
+      const { error, message } = await res.json();
+      setMessageReq(message);
+      if (!error) {
+        setSuccesModal(!successModal);
+        setTimeout(() => {
+          setSuccesModal(false);
+        }, 2000);
+      } else {
+        setErrorModal(!errorModal);
       }
+      setAdmins(admins.filter((admin) => admin._id !== id));
     } catch (error) {
       console.error(error);
     }
   };
-
+  const handleDelete = (id) => {
+    setTimeout(() => {
+      deleteAdmin(id);
+    }, 20);
+  };
   return (
     <section className={styles.container}>
-      <List
-        admins={admins}
-        addAdmin={addAdmin}
-        deleteAdmin={deleteAdmin}
-        adminToUpdate={getAdminID}
-        updateAdmin={updateAdmin}
+      <Modal
+        isOpen={deleteModal}
+        title={'Do you want to delete this Admin?'}
+        onClose={() => setDeleteModal(!deleteModal)}
+      >
+        <Button
+          variant={'delete'}
+          text={'Delete'}
+          clickAction={() => {
+            handleDelete(deleteId);
+            setDeleteModal(!deleteModal);
+          }}
+        />
+        <Button
+          variant={'white'}
+          text={'Cancel'}
+          clickAction={() => setDeleteModal(!deleteModal)}
+        />
+      </Modal>
+      <Modal
+        title={'Admin Deleted'}
+        isOpen={successModal}
+        text={messageReq}
+        onClose={() => {
+          setSuccesModal(!successModal);
+        }}
       />
+      <Modal
+        isOpen={errorModal}
+        title={'ERROR'}
+        text={messageReq}
+        warning
+        onClose={() => {
+          setErrorModal(!errorModal);
+        }}
+      >
+        <Button variant={'delete'} text={'Close'} clickAction={() => setErrorModal(!errorModal)} />
+      </Modal>
+      <section className={styles.list}>
+        <header className={styles.header}>
+          <h1 className={styles.title}>Administrators</h1>
+          <Link to="/admins/form">
+            <Button text={'Add Admin'} variant={'add'} />
+          </Link>
+        </header>
+        {admins.length > 0 ? (
+          <table className={styles.table}>
+            <tbody className={styles.tbody}>
+              <tr className={styles.thead}>
+                <th className={styles.th}>Name</th>
+                <th className={styles.th}>City</th>
+                <th className={styles.th}>Email</th>
+                <th className={styles.th}></th>
+                <th className={styles.th}></th>
+              </tr>
+              {admins.map((admin) => {
+                return (
+                  <tr className={styles.tr} key={admin._id}>
+                    <td className={styles.td}>{admin.firstName}</td>
+                    <td className={styles.td}>{admin.city}</td>
+                    <td className={styles.td}>{admin.email}</td>
+                    <td className={styles.td}></td>
+                    <td className={styles.icons}>
+                      <Link to={`/admins/form/${admin._id}`}>
+                        <Button variant={'edit'} />
+                      </Link>
+                    </td>
+                    <td className={styles.icons}>
+                      <Button
+                        variant={'deleteIcon'}
+                        clickAction={() => {
+                          setDeleteModal(!deleteModal);
+                          setDeleteId(admin._id);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        ) : (
+          <span className={styles.emptySpan}>No admins created yet</span>
+        )}
+      </section>
     </section>
   );
 }

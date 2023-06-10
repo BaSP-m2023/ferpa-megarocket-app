@@ -5,11 +5,16 @@
   justify-content: center;
   width: 100%;
   align-items: center;
-  font-size: 40px;
+  font-size: 20px;
   color: white;
   background-size: cover;
   background-repeat: no-repeat;
-  background-image: url('../Activities/assets/gym-background.png');
+  background-image: url('../../../public/assets/images/admins-background.jpg');
+}
+.buttons {
+  display: flex;
+  margin-top: 20px;
+  width: 30%;
 }
 
 .transparetnBlue {
@@ -19,6 +24,7 @@
   margin: 5%;
   padding: 7%;
   width: 70%;
+  min-width: 600px;
   height: 70%;
   background-color: rgba(52, 52, 135, 0.441);
 }
@@ -30,26 +36,25 @@
 }
 
 .table {
+  margin-bottom: 30px;
   width: 100%;
+  border-collapse: collapse;
 }
 
 .small {
   width: 10%;
   text-align: left;
   border-bottom: solid 4px white;
-  border-collapse: collapse;
 }
 
 .medium {
-  width: 15%;
+  width: 20%;
   text-align: left;
   border-bottom: solid 4px white;
-  border-collapse: collapse;
 }
 
 .large {
   width: 30%;
   text-align: left;
   border-bottom: solid 4px white;
-  border-collapse: collapse;
 }

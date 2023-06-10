@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react';
 import styles from './subscriptions.module.css';
+import Modal from '../Shared/Modal';
+import Button from '../Shared/Button';
+import { Link, useLocation } from 'react-router-dom';
 
 function Subscriptions() {
+  const location = useLocation();
   const [subscriptions, setSubscriptions] = useState([]);
-  const [members, setMembers] = useState([]);
-  const [classes, setClasses] = useState([]);
-  const [showAdd, setShowAdd] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
-  const [classId, setClassId] = useState('');
-  const [memberId, setMemberId] = useState('');
-  const [date, setDate] = useState('');
-  const [currentClassId, setCurrentClassId] = useState('');
-  const [currentMemberId, setCurrentMemberId] = useState('');
-  const [currentDate, setCurrentDate] = useState('');
+  const [subsLoaded, setSubsLoaded] = useState(false);
   const [currentId, setCurrentId] = useState('');
+
+  const [modalSucess, setModalSucess] = useState(false);
+  const [modalSucessTitle, setModalSucessTitle] = useState('');
+  const [modalConfirmDel, setModalConfirmDel] = useState(false);
 
   const onDelete = async (id) => {
     try {
@@ -22,6 +21,9 @@ function Subscriptions() {
       });
       const data = await response.json();
       setSubscriptions(subscriptions.filter((subscription) => subscription._id !== id));
+      setModalConfirmDel(!modalConfirmDel);
+      setModalSucessTitle(data.message);
+      setModalSucess(true);
       return data;
     } catch (error) {
       console.error(error);
@@ -33,291 +35,105 @@ function Subscriptions() {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/all`);
       const { data } = await res.json();
       setSubscriptions(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getMembers = async () => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members/`);
-      const { data } = await res.json();
-      setMembers(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getClasses = async () => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`);
-      const { data } = await res.json();
-      setClasses(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const onClick = async () => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
-        method: 'POST',
-        body: JSON.stringify({
-          classId: classId,
-          memberId: memberId,
-          date: date
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await res.json();
-
-      const newSubscription = {
-        _id: data.data._id,
-        classId: {
-          activityId: {
-            name: classes.find((item) => item._id === data.data.classId).activityId?.name
-          }
-        },
-        memberId: {
-          lastName: members.find((item) => item._id === data.data.memberId).lastName
-        },
-        date: data.data.date
-      };
-
-      setSubscriptions([...subscriptions, newSubscription]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    onClick();
-    setClassId('');
-    setMemberId('');
-  };
-
-  const onEdit = async (id) => {
-    const index = subscriptions.findIndex((subscription) => subscription._id === id);
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          classId: currentClassId,
-          memberId: currentMemberId,
-          date: currentDate
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await res.json();
-      const updatedSubscription = {
-        _id: data.data._id,
-        classId: {
-          activityId: {
-            name: classes.find((item) => item._id === data.data.classId).activityId?.name
-          }
-        },
-        memberId: {
-          lastName: members.find((item) => item._id === data.data.memberId).lastName
-        },
-        date: data.data.date
-      };
-      const update = [...subscriptions];
-      update[index] = updatedSubscription;
-      setSubscriptions(update);
+      setSubsLoaded(true);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
+    if (location.state) {
+      setModalSucessTitle(location.state.message);
+      setModalSucess(!modalSucess);
+    }
     getSubscriptions();
-    getMembers();
-    getClasses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <section className={styles.container}>
+      <Modal
+        isOpen={modalSucess}
+        title={modalSucessTitle}
+        success
+        onClose={() => setModalSucess(!modalSucess)}
+      ></Modal>
+      <Modal
+        isOpen={modalConfirmDel}
+        title={'Warning'}
+        onClose={() => setModalConfirmDel(!modalConfirmDel)}
+        text={'Are you sure?'}
+      >
+        <Button text={'Confirm'} clickAction={() => onDelete(currentId)} variant={'delete'} />
+        <Button
+          text={'Cancel'}
+          clickAction={() => setModalConfirmDel(!modalConfirmDel)}
+          variant={'white'}
+        />
+      </Modal>
+
       <section className={styles.list}>
-        <header className={styles.header}>
-          <h1 className={styles.title}>Subscriptions</h1>
-          <button
-            className={styles.btn}
-            onClick={() => {
-              setShowAdd(!showAdd);
-              setShowEdit(false);
-            }}
-          >
-            ADD Subs
-          </button>
-        </header>
+        <div className={styles.header}>
+          <h2 className={styles.title}>Subscriptions</h2>
+          <Link to={'/subscriptions/form'}>
+            <Button text={'ADD Subs'} variant={'add'} />
+          </Link>
+        </div>
         <table className={styles.table}>
-          <tbody className={styles.tbody}>
-            <tr className={styles.tr}>
-              <th className={styles.thead}>Subscription</th>
+          <thead>
+            <tr className={styles.trHead}>
               <th className={styles.thead}>Activity</th>
-              <th className={styles.thead}>Member Last name</th>
+              <th className={styles.thead}>Trainer</th>
+              <th className={styles.thead}>Member</th>
               <th className={styles.thead}>Date</th>
+              <th className={styles.tdBtn}></th>
+              <th className={styles.tdBtn}></th>
             </tr>
-            {subscriptions.map((subscription) => (
-              <tr key={subscription._id} className={styles.tr}>
-                <td className={styles.td}>{subscription._id}</td>
-                <td className={styles.td}>{subscription.classId?.activityId?.name}</td>
-                <td className={styles.td}>{subscription.memberId?.lastName}</td>
-                <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
-                <td className={styles.td}>
-                  <img
-                    src="/assets/images/edit-icon.svg"
-                    alt="edit"
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => {
-                      setShowEdit(!showEdit);
-                      setShowAdd(false);
-                      setCurrentClassId(subscription.classId?._id);
-                      setCurrentMemberId(subscription.memberId?._id);
-                      setCurrentDate(subscription.date.slice(0, 10));
-                      setCurrentId(subscription._id);
-                    }}
-                  />
-                </td>
-                <td className={styles.td}>
-                  <img
-                    src="/assets/images/delete-icon.svg"
-                    alt="delete"
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => {
-                      const shureDelete = window.confirm('Are you sure you want to delete?');
-                      if (shureDelete) {
-                        alert('Subscription deleted');
-                        onDelete(subscription._id);
-                      }
-                    }}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
+          </thead>
+          {!subsLoaded ? (
+            ''
+          ) : (
+            <tbody>
+              {subscriptions.map((subscription) => (
+                <tr key={subscription._id} className={styles.tr}>
+                  <td className={styles.td}>{subscription.classId?.activityId?.name}</td>
+                  <td className={styles.td}>{subscription.classId?.trainerId?.lastName}</td>
+                  <td className={styles.td}>
+                    {subscription.memberId?.lastName}, {subscription.memberId?.firstName}
+                  </td>
+                  <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
+                  <td className={styles.tdBtn}>
+                    <Link to={`/subscriptions/form/${subscription._id}`}>
+                      <Button variant={'edit'} />
+                    </Link>
+                  </td>
+                  <td className={styles.tdBtn}>
+                    <Button
+                      variant={'deleteIcon'}
+                      clickAction={() => {
+                        setCurrentId(subscription._id);
+                        setModalConfirmDel(!modalConfirmDel);
+                      }}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          )}
         </table>
-        {showAdd && (
-          <form className={styles.form} onSubmit={onSubmit}>
-            <div className={styles.inputBox}>
-              <label className={styles.label}>Activity:</label>
-              <select
-                type="text"
-                placeholder="class Id"
-                value={classId}
-                onChange={(e) => setClassId(e.target.value)}
-                required
-              >
-                <option>Select an option</option>
-                {classes.map((item) => {
-                  return (
-                    <option key={item?._id} value={item?._id}>
-                      {`${item?.activityId?.name}`}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className={styles.inputBox}>
-              <label className={styles.label}>Member:</label>
-              <select
-                type="text"
-                placeholder="Member Id"
-                value={memberId}
-                onChange={(e) => setMemberId(e.target.value)}
-                required
-              >
-                <option>Select an option</option>
-                {members.map((item) => {
-                  return (
-                    <option key={item?._id} value={item?._id}>
-                      {`${item?.lastName}, ${item?.firstName}`}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className={styles.inputBox}>
-              <label className={styles.label}>Date:</label>
-              <input
-                className={styles.submitBtn}
-                type="date"
-                name="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                required
-              />
-            </div>
-            <button className={styles.btnAdd} type="submit">
-              Add Subs
-            </button>
-          </form>
+        {!subsLoaded ? (
+          <div className={styles.loading}>
+            <h2 className={styles.loadingTitle}>WAITING FOR DATA...</h2>
+          </div>
+        ) : (
+          ''
         )}
-        {showEdit && (
-          <form className={styles.form} onSubmit={onSubmit}>
-            <div className={styles.inputBox}>
-              <label className={styles.label}>Activity:</label>
-              <select
-                type="text"
-                placeholder={currentClassId}
-                value={currentClassId}
-                onChange={(e) => setCurrentClassId(e.target.value)}
-                required
-              >
-                {classes.map((item) => {
-                  return (
-                    <option key={item?._id} value={item?._id}>
-                      {`${item?.activityId?.name}`}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className={styles.inputBox}>
-              <label className={styles.label}>Member:</label>
-              <select
-                type="text"
-                placeholder={currentMemberId}
-                value={currentMemberId}
-                onChange={(e) => setCurrentMemberId(e.target.value)}
-                required
-              >
-                {members.map((item) => {
-                  return (
-                    <option key={item?._id} value={item?._id}>
-                      {`${item?.lastName}, ${item?.firstName}`}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className={styles.inputBox}>
-              <label className={styles.label}>Date:</label>
-              <input
-                className={styles.submitBtn}
-                type="date"
-                name="date"
-                value={currentDate}
-                onChange={(e) => setCurrentDate(e.target.value)}
-                required
-              />
-            </div>
-            <button
-              className={styles.btnEdit}
-              type="submit"
-              onClick={() => {
-                onEdit(currentId);
-                setShowEdit(!showEdit);
-              }}
-            >
-              Edit Subs
-            </button>
-          </form>
+        {subsLoaded && subscriptions.length === 0 ? (
+          <div className={styles.loading}>
+            <h2 className={styles.loadingTitle}>THERE IS NO SUBSCRIPTIONS</h2>
+          </div>
+        ) : (
+          ''
         )}
       </section>
     </section>
