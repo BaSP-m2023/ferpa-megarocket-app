@@ -11,6 +11,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../public/assets/images/admins-background.jpg');
 }
+
 .buttons {
   display: flex;
   margin-top: 20px;
@@ -57,4 +58,8 @@
   width: 30%;
   text-align: left;
   border-bottom: solid 4px white;
+}
+
+.loading {
+  margin: 50px;
 }
