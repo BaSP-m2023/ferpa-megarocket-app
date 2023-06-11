@@ -3,12 +3,14 @@ import { trainersReducer } from './trainers/reducer';
 import { adminsReducers } from './admins/reducer';
 import activitiesReducer from './activities/reducer';
 import { classReducer } from './classes/reducer';
+import { superadminsReducer } from './superadmins/reducer';
 
 const reducers = combineReducers({
   trainers: trainersReducer,
   admins: adminsReducers,
   activities: activitiesReducer,
-  classes: classReducer
+  classes: classReducer,
+  superadmins: superadminsReducer
 });
 
 export default reducers;
