@@ -13,6 +13,7 @@ const Classes = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
   const dispatch = useDispatch();
+  const [currentId, setCurrentId] = useState('');
 
   const { classes, isLoading, error } = useSelector((state) => state.classes);
 
@@ -23,6 +24,9 @@ const Classes = () => {
       });
       setShowDeleteModal(!showDeleteModal);
       setShowDeleteSuccessModal(!showDeleteSuccessModal);
+      setTimeout(() => {
+        setShowDeleteSuccessModal(false);
+      }, 2000);
     } catch (error) {
       console.error(error);
     }
@@ -36,11 +40,50 @@ const Classes = () => {
   useEffect(() => {
     dispatch(getClasses());
   }, [dispatch]);
+
+  if (isLoading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.loading}>{<Loader />}</div>
+      </div>
+    );
+  }
+
+  if (error !== '') {
+    return <p className={`${styles.container} ${styles.error}`}>{error}</p>;
+  }
+
   return (
     <section className={styles.container}>
-      <div className={styles.transparetnBlue}>
+      <div className={styles.onTop}>
         <h2>Classes</h2>
+        <Link to={'./classes/form'}>
+          <Button variant={'add'} text={'Add'} />
+        </Link>
+      </div>
+      <div className={styles.transparetnBlue}>
         <div>
+          <Modal
+            isOpen={showDeleteSuccessModal}
+            title={'Class deleted successfully!'}
+            success
+            onClose={() => setShowDeleteSuccessModal(!showDeleteSuccessModal)}
+          />
+          <Modal
+            isOpen={showDeleteModal}
+            title={'Are you sure?'}
+            warning
+            onClose={() => setShowDeleteModal(!showDeleteModal)}
+          >
+            <Button
+              text={'Yes'}
+              type={'button'}
+              clickAction={() => {
+                deleteClass(currentId);
+              }}
+            />
+            <Button text={'Cancel'} type={'button'} clickAction={reDirect} />
+          </Modal>
           <table className={styles.table}>
             <thead>
               <tr>
@@ -95,6 +138,7 @@ const Classes = () => {
                           type={'button'}
                           clickAction={() => {
                             setShowDeleteModal(true);
+                            setCurrentId(theOne?._id);
                           }}
                         />
                       </td>
@@ -103,11 +147,6 @@ const Classes = () => {
                 })}
             </tbody>
           </table>
-          <div className={styles.loading}>{isLoading && <Loader />}</div>
-          {error !== '' && <p>{error}</p>}
-          <Link to={'./classes/form'}>
-            <Button variant={'add'} text={'Add'} />
-          </Link>
         </div>
       </div>
     </section>

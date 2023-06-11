@@ -3,12 +3,15 @@ import styles from './form.module.css';
 import { Input, TextArea } from '../../Shared/Inputs';
 import { Link, useParams, useLocation, useHistory } from 'react-router-dom';
 import Button from '../../Shared/Button';
+import Modal from '../../Shared/Modal';
 
 const Form = () => {
   const { id } = useParams();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [isActive, setIsActive] = useState(false);
+  const [message, setMessage] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const location = useLocation();
   const history = useHistory();
 
@@ -54,8 +57,14 @@ const Form = () => {
         }
       });
       const data = await res.json();
-      onRedirect.state.message = data.message;
-      history.push(onRedirect);
+      if (res.status !== 200) {
+        setMessage(data.message);
+        setShowModal(!showModal);
+      }
+      if (res.status === 200) {
+        onRedirect.state.message = data.message;
+        history.push(onRedirect);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -75,8 +84,13 @@ const Form = () => {
         }
       });
       const data = await res.json();
-      onRedirect.state.message = data.message;
-      history.push(onRedirect);
+      if (res.status !== 201) {
+        setMessage(data.message);
+      }
+      if (res.status === 201) {
+        onRedirect.state.message = data.message;
+        history.push(onRedirect);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -105,6 +119,7 @@ const Form = () => {
 
   return (
     <div className={styles.formContainer}>
+      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />
       <div className={styles.formBox}>
         <h3 className={styles.title}>
           {location.pathname.includes('create') ? 'Add New Activity' : 'Edit Activity'}
