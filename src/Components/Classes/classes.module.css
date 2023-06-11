@@ -10,7 +10,13 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-image: url('../../../public/assets/images/admins-background.jpg');
+  min-height: 922px;
 }
+
+.error {
+  font-size: 60px;
+}
+
 .buttons {
   display: flex;
   margin-top: 20px;
@@ -21,12 +27,26 @@
   display: flex;
   flex-flow: column;
   justify-content: space-around;
+  margin: 0 5% 5% 5%;
+  padding: 300px 7% 7% 7%;
+  width: 70%;
+  min-width: 600px;
+  height: 70%;
+  background-color: rgba(55, 56, 103, 0.8);
+  max-height: 600px;
+  overflow-y: scroll;
+}
+
+.transparetnBlueForm {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
   margin: 5%;
   padding: 7%;
   width: 70%;
   min-width: 600px;
   height: 70%;
-  background-color: rgba(52, 52, 135, 0.441);
+  background-color: rgba(55, 56, 103, 0.8);
 }
 
 .form {
@@ -57,4 +77,17 @@
   width: 30%;
   text-align: left;
   border-bottom: solid 4px white;
+}
+
+.loading {
+  margin: 50px;
+}
+
+.onTop {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(55, 56, 103, 0.8);
+  width: 70%;
+  margin: 50px 0 0 0;
+  padding: 50px 160px 0 160px;
 }
