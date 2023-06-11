@@ -1,25 +1,19 @@
 import { useEffect, useState } from 'react';
-import styles from './trainers.module.css';
 import { Link } from 'react-router-dom';
-import Button from '../Shared/Button';
+import { useSelector, useDispatch } from 'react-redux';
+import { getTrainers } from '../../redux/trainers/thunks';
+import styles from './trainers.module.css';
 import Modal from '../Shared/Modal';
+import Button from '../Shared/Button';
+import Loader from '../Shared/Loader';
 
 const Trainers = () => {
   const [visiblePasswords, setVisiblePasswords] = useState([]);
   const [currentId, setCurrentId] = useState('');
   const [successModal, setSuccessModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-  const [trainers, setTrainers] = useState([]);
-
-  const getTrainers = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
-      const data = await response.json();
-      setTrainers(data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const dispatch = useDispatch();
+  const { isLoading, trainers, error } = useSelector((state) => state.trainers);
 
   const togglePasswordVisibility = (index) => {
     const updatedVisiblePasswords = [...visiblePasswords];
@@ -34,7 +28,7 @@ const Trainers = () => {
       });
       const { message, error } = await response.json();
       if (!error) {
-        setTrainers([...trainers.filter((trainer) => trainer._id !== _id)]);
+        getTrainers([...Trainers.filter((trainer) => trainer._id !== _id)]);
       } else {
         throw message;
       }
@@ -46,9 +40,33 @@ const Trainers = () => {
   };
 
   useEffect(() => {
-    getTrainers();
-  }, []);
+    getTrainers(dispatch);
+  }, [dispatch]);
 
+  if (error) {
+    return (
+      <section className={styles.container}>
+        <div className={styles.header}>
+          <div className={styles.inside}>
+            <h2 className={styles.title}>Trainers</h2>
+          </div>
+          <p className={styles.fetchError}>{error}</p>
+        </div>
+      </section>
+    );
+  }
+  if (isLoading) {
+    return (
+      <section className={styles.container}>
+        <div className={styles.header}>
+          <div className={styles.inside}>
+            <h2 className={styles.title}>Trainers</h2>
+          </div>
+          <Loader />
+        </div>
+      </section>
+    );
+  }
   return (
     <section className={styles.container}>
       <Modal

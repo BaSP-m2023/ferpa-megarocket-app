@@ -2,7 +2,7 @@ import * as trainersConstant from './constants';
 
 const initialState = {
   trainers: [],
-  isLoading: false,
+  isLoading: true,
   error: ''
 };
 
@@ -16,7 +16,9 @@ export const trainersReducer = (state = initialState, action) => {
     case trainersConstant.GET_TRAINERS_SUCCESS:
       return {
         ...state,
-        trainers: action.payload
+        trainers: action.payload,
+        isLoading: false,
+        error: ''
       };
     case trainersConstant.GET_TRAINERS_ERROR:
       return {
