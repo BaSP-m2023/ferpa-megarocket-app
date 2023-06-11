@@ -68,11 +68,13 @@ function SuperAdmins() {
               <Button text={'Add'} variant={'add'} />
             </Link>
           </div>
+          <div>
+            <p className={styles.error}>{error}</p>
+          </div>
         </section>
       </section>
     );
   }
-
   return (
     <section className={styles.container}>
       <section className={styles.list}>

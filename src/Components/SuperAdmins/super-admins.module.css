@@ -25,6 +25,7 @@
   padding: 50px 0;
   background-color: rgba(55, 56, 103, 0.5);
 }
+
 .title {
   color: white;
   font-size: 40px;
@@ -75,4 +76,9 @@
 .inputBox {
   display: flex;
   align-items: center;
+}
+
+.error {
+  color: white;
+  font-size: 40px;
 }
