@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from '../classes.module.css';
-import { Select, Input } from '../../Shared/Inputs/index';
+import { Select } from '../../Shared/Inputs/index';
 import Button from '../../Shared/Button/index';
 import { useParams, useHistory } from 'react-router-dom';
 import Modal from '../../Shared/Modal';
@@ -63,7 +63,7 @@ const Form = () => {
     {
       _id: 1,
       name: '9hs',
-      value: 10
+      value: 9
     },
     {
       _id: 2,
@@ -126,6 +126,108 @@ const Form = () => {
       value: 21
     }
   ];
+  const slots = [
+    {
+      _id: 1,
+      name: '1',
+      value: 1
+    },
+    {
+      _id: 2,
+      name: '2',
+      value: 2
+    },
+    {
+      _id: 3,
+      name: '3',
+      value: 3
+    },
+    {
+      _id: 4,
+      name: '4',
+      value: 4
+    },
+    {
+      _id: 5,
+      name: '5',
+      value: 5
+    },
+    {
+      _id: 6,
+      name: '6',
+      value: 6
+    },
+    {
+      _id: 7,
+      name: '7',
+      value: 7
+    },
+    {
+      _id: 8,
+      name: '8',
+      value: 8
+    },
+    {
+      _id: 9,
+      name: '9',
+      value: 9
+    },
+    {
+      _id: 10,
+      name: '10',
+      value: 10
+    },
+    {
+      _id: 11,
+      name: '11',
+      value: 11
+    },
+    {
+      _id: 12,
+      name: '12',
+      value: 12
+    },
+    {
+      _id: 13,
+      name: '13',
+      value: 13
+    },
+    {
+      _id: 14,
+      name: '14',
+      value: 14
+    },
+    {
+      _id: 15,
+      name: '15',
+      value: 15
+    },
+    {
+      _id: 16,
+      name: '16',
+      value: 16
+    },
+    {
+      _id: 17,
+      name: '17',
+      value: 17
+    },
+    {
+      _id: 18,
+      name: '18',
+      value: 18
+    },
+    {
+      _id: 19,
+      name: '19',
+      value: 19
+    },
+    {
+      _id: 20,
+      name: '20',
+      value: 20
+    }
+  ];
 
   const updatedTrainers = trainers.map((trainer) => {
     return { ...trainer, name: trainer.firstName, value: trainer._id };
@@ -175,6 +277,7 @@ const Form = () => {
         }
       });
       const data = await res.json();
+      console.log(newClass);
       if (res.status === 201) {
         setSuccess(true);
         setShowSuccessModal(true);
@@ -291,7 +394,7 @@ const Form = () => {
             nameValue={'day'}
           />
           <Select
-            value={hours.day}
+            value={hours.hour}
             placeholder={id ? singleClass.hour : 'Hour'}
             onChangeSelect={(e) => onChangeInput(e)}
             options={hours}
@@ -311,16 +414,12 @@ const Form = () => {
             options={updatedTrainers}
             nameValue={'trainerId'}
           />
-          <Input
-            nameValue={'slots'}
-            type={'text'}
-            value={newClass.slots.value}
-            onChangeInput={(e) => {
-              e.target.value > 0
-                ? onChangeInput(e)
-                : setMessage('There has to be at least one slot');
-            }}
+          <Select
+            value={slots.slot}
             placeholder={id ? singleClass.slots : 'Slots'}
+            onChangeSelect={(e) => onChangeInput(e)}
+            options={slots}
+            nameValue={'slots'}
           />
           <div className={styles.buttons}>
             <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting clickAction={sendClass} />
