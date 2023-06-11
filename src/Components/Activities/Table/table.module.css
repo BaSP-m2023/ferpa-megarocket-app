@@ -16,10 +16,6 @@
   line-height: 24px;
 }
 
-.table tr:nth-child(odd) {
-  background-color: rgba(55, 56, 103, 0.1);
-}
-
 .trHead, .trBody {
   height: 70px;
 }

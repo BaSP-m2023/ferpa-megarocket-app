@@ -24,12 +24,12 @@ const Table = ({
         text={'Are you sure you want to delete this activity?'}
         onClose={() => setConfirmModal(!confirmModal)}
       >
+        <Button text={'Delete'} variant={'delete'} clickAction={() => onDelete(currentID)} />
         <Button
           text={'Cancel'}
           variant={'white'}
           clickAction={() => setConfirmModal(!confirmModal)}
         />
-        <Button text={'Delete'} variant={'delete'} clickAction={() => onDelete(currentID)} />
       </Modal>
       <Modal
         isOpen={deleteModal}

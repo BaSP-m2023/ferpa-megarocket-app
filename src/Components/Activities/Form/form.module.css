@@ -1,7 +1,8 @@
 .formContainer {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  min-height: 770px;
   background-image: url('../../../../public/assets/images/admins-background.jpg');
   background-repeat: no-repeat;
   background-position: center;
@@ -15,7 +16,7 @@
   width: 80%;
   margin: 50px;
   padding: 50px 0;
-  background-color: rgba(55, 56, 103, 0.5);
+  background-color: rgba(55, 56, 103, 0.8);
 }
 
 .title {
