@@ -13,7 +13,7 @@ export const getClassesSuccess = (data) => {
   };
 };
 
-export const getClasseserror = (error) => {
+export const getClassesError = (error) => {
   return {
     type: GET_CLASSES_ERROR,
     payload: error

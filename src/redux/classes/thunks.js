@@ -1,4 +1,4 @@
-import { getClassesPending, getClassesSuccess, getClasseserror } from './actions';
+import { getClassesPending, getClassesSuccess, getClassesError } from './actions';
 
 export const getClasses = () => {
   return async (dispatch) => {
@@ -9,7 +9,7 @@ export const getClasses = () => {
       dispatch(getClassesSuccess(data.data));
       return data.data;
     } catch (error) {
-      dispatch(getClasseserror(error.toString()));
+      dispatch(getClassesError(error.toString()));
     }
   };
 };

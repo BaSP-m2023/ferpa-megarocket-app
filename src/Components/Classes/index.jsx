@@ -14,9 +14,7 @@ const Classes = () => {
   const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
   const dispatch = useDispatch();
 
-  const classes = useSelector((state) => state.classes.classes);
-  const isLoading = useSelector((state) => state.classes.isLoading);
-  const error = useSelector((state) => state.classes.error);
+  const { classes, isLoading, error } = useSelector((state) => state.classes);
 
   const deleteClass = async (_id) => {
     try {
