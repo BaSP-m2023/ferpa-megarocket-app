@@ -42,3 +42,8 @@
   width: 90%;
   margin: 40px 0;
 }
+
+.dataError {
+  color: white;
+  font-size: 40px;
+}
