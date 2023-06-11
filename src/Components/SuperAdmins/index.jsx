@@ -14,15 +14,6 @@ function SuperAdmins() {
   const [confirmModal, setConfirmModal] = useState(false);
   const dispatch = useDispatch();
 
-  // const getSuperAdmins = async () => {
-  //   try {
-  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/`);
-  //     const data = await response.json();
-  //     setSuperAdmins(data.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
   useEffect(() => {
     dispatch(getSuperAdmins());
   }, [dispatch]);
@@ -35,7 +26,6 @@ function SuperAdmins() {
       const data = await response.json();
       setMessage(data.message);
       setDeleteModal(true);
-      // setSuperAdmins([...superAdmins.filter((superAdmins) => superAdmins._id !== id)]);
       return data;
     } catch (error) {
       console.error(error);
