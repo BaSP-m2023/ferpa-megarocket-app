@@ -277,14 +277,20 @@ const Form = () => {
         }
       });
       const data = await res.json();
-      console.log(newClass);
       if (res.status === 201) {
         setSuccess(true);
         setShowSuccessModal(true);
+        setTimeout(() => {
+          setShowSuccessModal(false);
+          reDirect();
+        }, 2000);
       } else {
         setMessage(data.error._message);
         setSuccess(false);
         setShowErrorModal(true);
+        setTimeout(() => {
+          setShowErrorModal(false);
+        }, 2000);
       }
     } catch (error) {
       console.error(error);
@@ -299,7 +305,6 @@ const Form = () => {
   };
 
   const updateClass = async (id, newClass) => {
-    console.log(newClass);
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
         method: 'PUT',
@@ -309,15 +314,20 @@ const Form = () => {
         body: JSON.stringify(newClass)
       });
       const data = await res.json();
-      console.log(res.status);
       if (res.status === 200) {
         setSuccess(true);
         setShowSuccessModal(true);
+        setTimeout(() => {
+          setShowSuccessModal(false);
+          reDirect();
+        }, 2000);
       } else {
-        console.log(data);
         setMessage(data.error._message);
         setSuccess(false);
         setShowErrorModal(true);
+        setTimeout(() => {
+          setShowErrorModal(false);
+        }, 2000);
       }
     } catch (error) {
       console.error(error);
@@ -325,7 +335,6 @@ const Form = () => {
   };
 
   const previousClass = (singleClass) => {
-    console.log(singleClass);
     id &&
       setNewClass({
         ...newClass,
@@ -335,8 +344,6 @@ const Form = () => {
         trainerId: singleClass.trainerId._id,
         slots: singleClass.slots
       });
-    console.log(newClass);
-    console.log(message);
   };
 
   const sendClass = () => {
@@ -376,11 +383,11 @@ const Form = () => {
         <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
           <h2>{id ? 'Edit' : 'Add'}</h2>
           {showSuccessModal && (
-            <Modal text={id ? 'Class Updated' : 'Class Added'} isOpen success onClose={reDirect} />
+            <Modal title={id ? 'Class Updated' : 'Class Added'} isOpen success onClose={reDirect} />
           )}
           {showErrorModal && (
             <Modal
-              text={message}
+              title={message}
               isOpen={showErrorModal}
               warning
               onClose={() => setShowErrorModal(false)}

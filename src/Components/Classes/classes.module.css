@@ -11,6 +11,7 @@
   background-repeat: no-repeat;
   background-image: url('../../../public/assets/images/admins-background.jpg');
 }
+
 .buttons {
   display: flex;
   margin-top: 20px;
@@ -26,7 +27,7 @@
   width: 70%;
   min-width: 600px;
   height: 70%;
-  background-color: rgba(52, 52, 135, 0.441);
+  background-color: rgba(55, 56, 103, 0.8);
 }
 
 .form {

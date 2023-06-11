@@ -34,6 +34,10 @@ const Classes = () => {
       setClasses([...classes.filter((justOne) => justOne._id !== _id)]);
       setShowDeleteModal(!showDeleteModal);
       setShowDeleteSuccessModal(!showDeleteSuccessModal);
+      setTimeout(() => {
+        setShowDeleteModal(false);
+        setShowDeleteSuccessModal(false);
+      }, 2000);
     } catch (error) {
       console.error(error);
     }
@@ -50,13 +54,13 @@ const Classes = () => {
         <div>
           <Modal
             isOpen={showDeleteSuccessModal}
-            text={'Class deleted successfully!'}
+            title={'Class deleted successfully!'}
             success
             onClose={() => setShowDeleteSuccessModal(!showDeleteSuccessModal)}
           />
           <Modal
             isOpen={showDeleteModal}
-            text={'Are you sure?'}
+            title={'Are you sure?'}
             warning
             onClose={() => setShowDeleteModal(!showDeleteModal)}
           >
