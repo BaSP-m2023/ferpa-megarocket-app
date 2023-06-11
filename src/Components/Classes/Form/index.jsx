@@ -364,7 +364,7 @@ const Form = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.transparetnBlue}>
+      <div className={styles.transparetnBlueForm}>
         <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
           <h2>{id ? 'Edit' : 'Add'}</h2>
           {showSuccessModal && (
