@@ -1,16 +1,16 @@
-import { getAdminsPending, getAdminsSuccess, getAdminsError } from './actions';
+import * as actionsConstants from './actions';
 
 export const getAdmins = async (dispatch) => {
   try {
-    dispatch(getAdminsPending());
+    dispatch(actionsConstants.getAdminsPending());
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
     if (res.status === 200) {
       const { data } = await res.json();
-      dispatch(getAdminsSuccess(data));
+      dispatch(actionsConstants.getAdminsSuccess(data));
     } else {
       throw new Error('There was an error fetching admins');
     }
   } catch (error) {
-    dispatch(getAdminsError(error));
+    dispatch(actionsConstants.getAdminsError(error));
   }
 };
