@@ -1,36 +1,31 @@
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAdmins } from '../../redux/admins/thunks';
+import { Link } from 'react-router-dom';
 import styles from './admins.module.css';
 import Button from '../Shared/Button';
-import { Link } from 'react-router-dom';
 import Modal from '../Shared/Modal/index';
+import Loader from '../Shared/Loader';
 
 function Admins() {
-  const [admins, setAdmins] = useState([]);
+  const getData = useSelector((state) => state.admins.get.data);
+  const getPending = useSelector((state) => state.admins.get.isPending);
+  const getError = useSelector((state) => state.admins.get.error);
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState('');
   const [messageReq, setMessageReq] = useState('');
   const [successModal, setSuccesModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
+  const getDispatch = useDispatch();
 
   useEffect(() => {
-    const getAdmins = async () => {
-      const svAdmins = await getAllAdmins();
-      setAdmins(svAdmins);
-    };
-
-    getAdmins();
-  }, []);
-
-  const getAllAdmins = async () => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
-      const { data } = await res.json();
-
-      return data;
-    } catch (error) {
-      console.error(error);
+    getAdmins(getDispatch);
+    if (getError) {
+      setErrorModal(getError);
+      setErrorModal(!errorModal);
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getDispatch]);
 
   const deleteAdmin = async (id) => {
     try {
@@ -48,16 +43,23 @@ function Admins() {
       } else {
         setErrorModal(!errorModal);
       }
-      setAdmins(admins.filter((admin) => admin._id !== id));
     } catch (error) {
       console.error(error);
     }
   };
+
   const handleDelete = (id) => {
     setTimeout(() => {
       deleteAdmin(id);
     }, 20);
   };
+  if (getPending) {
+    return (
+      <section className={styles.container}>
+        <Loader />
+      </section>
+    );
+  }
   return (
     <section className={styles.container}>
       <Modal
@@ -105,7 +107,7 @@ function Admins() {
             <Button text={'Add Admin'} variant={'add'} />
           </Link>
         </header>
-        {admins.length > 0 ? (
+        {getData.length > 0 ? (
           <table className={styles.table}>
             <tbody className={styles.tbody}>
               <tr className={styles.thead}>
@@ -115,7 +117,7 @@ function Admins() {
                 <th className={styles.th}></th>
                 <th className={styles.th}></th>
               </tr>
-              {admins.map((admin) => {
+              {getData.map((admin) => {
                 return (
                   <tr className={styles.tr} key={admin._id}>
                     <td className={styles.td}>{admin.firstName}</td>
