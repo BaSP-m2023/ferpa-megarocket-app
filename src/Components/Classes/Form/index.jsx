@@ -14,7 +14,6 @@ const Form = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [message, setMessage] = useState('');
-  const [success, setSuccess] = useState(false);
   const [newClass, setNewClass] = useState({
     day: '',
     hour: '',
@@ -278,15 +277,13 @@ const Form = () => {
       });
       const data = await res.json();
       if (res.status === 201) {
-        setSuccess(true);
         setShowSuccessModal(true);
         setTimeout(() => {
           setShowSuccessModal(false);
-          reDirect();
+          history.push('/classes');
         }, 2000);
       } else {
         setMessage(data.error._message);
-        setSuccess(false);
         setShowErrorModal(true);
         setTimeout(() => {
           setShowErrorModal(false);
@@ -315,15 +312,13 @@ const Form = () => {
       });
       const data = await res.json();
       if (res.status === 200) {
-        setSuccess(true);
         setShowSuccessModal(true);
         setTimeout(() => {
           setShowSuccessModal(false);
-          reDirect();
+          history.push('/classes');
         }, 2000);
       } else {
         setMessage(data.error._message);
-        setSuccess(false);
         setShowErrorModal(true);
         setTimeout(() => {
           setShowErrorModal(false);
@@ -367,23 +362,21 @@ const Form = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [singleClass]);
 
-  const reDirect = () => {
-    success
-      ? history.push('/classes')
-      : id
-      ? history.push(`/classes/form/${id}`)
-      : history.push('/classes/form/');
-  };
-  const back = () => {
-    history.push('/classes');
-  };
   return (
     <div className={styles.container}>
       <div className={styles.transparetnBlue}>
         <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
           <h2>{id ? 'Edit' : 'Add'}</h2>
           {showSuccessModal && (
-            <Modal title={id ? 'Class Updated' : 'Class Added'} isOpen success onClose={reDirect} />
+            <Modal
+              title={id ? 'Class Updated' : 'Class Added'}
+              isOpen
+              success
+              onClose={() => {
+                setShowSuccessModal(false);
+                history.push('/classes');
+              }}
+            />
           )}
           {showErrorModal && (
             <Modal
@@ -430,7 +423,12 @@ const Form = () => {
           />
           <div className={styles.buttons}>
             <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting clickAction={sendClass} />
-            <Button variant={'white'} text={'Cancel'} submitting clickAction={back} />
+            <Button
+              variant={'white'}
+              text={'Cancel'}
+              submitting
+              clickAction={() => history.push('/classes')}
+            />
           </div>
         </form>
       </div>

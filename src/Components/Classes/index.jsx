@@ -35,7 +35,6 @@ const Classes = () => {
       setShowDeleteModal(!showDeleteModal);
       setShowDeleteSuccessModal(!showDeleteSuccessModal);
       setTimeout(() => {
-        setShowDeleteModal(false);
         setShowDeleteSuccessModal(false);
       }, 2000);
     } catch (error) {
@@ -49,8 +48,13 @@ const Classes = () => {
 
   return (
     <section className={styles.container}>
-      <div className={styles.transparetnBlue}>
+      <div className={styles.onTop}>
         <h2>Classes</h2>
+        <Link to={'./classes/form'}>
+          <Button variant={'add'} text={'Add'} />
+        </Link>
+      </div>
+      <div className={styles.transparetnBlue}>
         <div>
           <Modal
             isOpen={showDeleteSuccessModal}
@@ -114,9 +118,6 @@ const Classes = () => {
               })}
             </tbody>
           </table>
-          <Link to={'./classes/form'}>
-            <Button variant={'add'} text={'Add'} />
-          </Link>
         </div>
       </div>
     </section>
