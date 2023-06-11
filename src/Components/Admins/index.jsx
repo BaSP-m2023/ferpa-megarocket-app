@@ -21,7 +21,7 @@ function Admins() {
   useEffect(() => {
     getAdmins(getDispatch);
     if (getError) {
-      setErrorModal(getError);
+      setErrorModal(getError.toString());
       setErrorModal(!errorModal);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
