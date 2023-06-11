@@ -9,6 +9,7 @@ const Classes = () => {
   const [classes, setClasses] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
+  const [currentId, setCurrentId] = useState('');
 
   useEffect(() => {
     getClasses();
@@ -47,6 +48,27 @@ const Classes = () => {
       <div className={styles.transparetnBlue}>
         <h2>Classes</h2>
         <div>
+          <Modal
+            isOpen={showDeleteSuccessModal}
+            text={'Class deleted successfully!'}
+            success
+            onClose={() => setShowDeleteSuccessModal(!showDeleteSuccessModal)}
+          />
+          <Modal
+            isOpen={showDeleteModal}
+            text={'Are you sure?'}
+            warning
+            onClose={() => setShowDeleteModal(!showDeleteModal)}
+          >
+            <Button
+              text={'Yes'}
+              type={'button'}
+              clickAction={() => {
+                deleteClass(currentId);
+              }}
+            />
+            <Button text={'Cancel'} type={'button'} clickAction={reDirect} />
+          </Modal>
           <table className={styles.table}>
             <thead>
               <tr>
@@ -74,32 +96,12 @@ const Classes = () => {
                       </Link>
                     </td>
                     <td className={styles.small}>
-                      <Modal
-                        isOpen={showDeleteSuccessModal}
-                        text={'Class deleted successfully!!!!!'}
-                        success
-                        onClose={() => setShowDeleteSuccessModal(!showDeleteSuccessModal)}
-                      />
-                      <Modal
-                        isOpen={showDeleteModal}
-                        text={'Are you sure?'}
-                        warning
-                        onClose={() => setShowDeleteModal(!showDeleteModal)}
-                      >
-                        <Button
-                          text={'Yes'}
-                          type={'button'}
-                          clickAction={() => {
-                            deleteClass(theOne?._id);
-                          }}
-                        />
-                        <Button text={'Cancel'} type={'button'} clickAction={reDirect} />
-                      </Modal>
                       <Button
                         variant={'deleteIcon'}
                         type={'button'}
                         clickAction={() => {
                           setShowDeleteModal(true);
+                          setCurrentId(theOne?._id);
                         }}
                       />
                     </td>

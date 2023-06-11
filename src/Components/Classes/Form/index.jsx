@@ -10,8 +10,11 @@ const Form = () => {
   const { id } = useParams();
   const [activities, setActivities] = useState([]);
   const [trainers, setTrainers] = useState([]);
-  const [singleClass, setSingleClass] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [singleClass, setSingleClass] = useState({});
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [message, setMessage] = useState('');
+  const [success, setSuccess] = useState(false);
   const [newClass, setNewClass] = useState({
     day: '',
     hour: '',
@@ -156,7 +159,7 @@ const Form = () => {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`);
       const data = await res.json();
       setSingleClass(data.data);
-      console.log(data.data);
+      previousClass(singleClass);
     } catch (error) {
       console.error(error);
     }
@@ -171,7 +174,15 @@ const Form = () => {
           'Content-type': 'application/json'
         }
       });
-      await res.json();
+      const data = await res.json();
+      if (res.status === 201) {
+        setSuccess(true);
+        setShowSuccessModal(true);
+      } else {
+        setMessage(data.error._message);
+        setSuccess(false);
+        setShowErrorModal(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -185,6 +196,7 @@ const Form = () => {
   };
 
   const updateClass = async (id, newClass) => {
+    console.log(newClass);
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
         method: 'PUT',
@@ -193,32 +205,66 @@ const Form = () => {
         },
         body: JSON.stringify(newClass)
       });
-      await res.json();
+      const data = await res.json();
+      console.log(res.status);
+      if (res.status === 200) {
+        setSuccess(true);
+        setShowSuccessModal(true);
+      } else {
+        console.log(data);
+        setMessage(data.error._message);
+        setSuccess(false);
+        setShowErrorModal(true);
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const sendClass = () => {
-    setShowModal(true);
-    if (id) {
-      updateClass(id, newClass);
-    } else {
-      addClass(newClass);
-    }
+  const previousClass = (singleClass) => {
+    console.log(singleClass);
+    id &&
+      setNewClass({
+        ...newClass,
+        day: singleClass.day,
+        hour: singleClass.hour,
+        activityId: singleClass.activityId._id,
+        trainerId: singleClass.trainerId._id,
+        slots: singleClass.slots
+      });
+    console.log(newClass);
+    console.log(message);
   };
+
+  const sendClass = () => {
+    id ? updateClass(id, newClass) : addClass(newClass);
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
   };
   useEffect(() => {
     getActivities();
     getTrainers();
-    if (id) {
-      getClassById(id);
-    }
+    id && getClassById(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (Object.keys(singleClass).length > 0) {
+      previousClass(singleClass);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [singleClass]);
+
   const reDirect = () => {
+    success
+      ? history.push('/classes')
+      : id
+      ? history.push(`/classes/form/${id}`)
+      : history.push('/classes/form/');
+  };
+  const back = () => {
     history.push('/classes');
   };
   return (
@@ -226,8 +272,16 @@ const Form = () => {
       <div className={styles.transparetnBlue}>
         <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
           <h2>{id ? 'Edit' : 'Add'}</h2>
-          {showModal && (
+          {showSuccessModal && (
             <Modal text={id ? 'Class Updated' : 'Class Added'} isOpen success onClose={reDirect} />
+          )}
+          {showErrorModal && (
+            <Modal
+              text={message}
+              isOpen={showErrorModal}
+              warning
+              onClose={() => setShowErrorModal(false)}
+            />
           )}
           <Select
             value={weekDays.day}
@@ -261,12 +315,16 @@ const Form = () => {
             nameValue={'slots'}
             type={'text'}
             value={newClass.slots.value}
-            onChangeInput={(e) => onChangeInput(e)}
+            onChangeInput={(e) => {
+              e.target.value > 0
+                ? onChangeInput(e)
+                : setMessage('There has to be at least one slot');
+            }}
             placeholder={id ? singleClass.slots : 'Slots'}
           />
           <div className={styles.buttons}>
             <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting clickAction={sendClass} />
-            <Button variant={'white'} text={'Cancel'} submitting clickAction={reDirect} />
+            <Button variant={'white'} text={'Cancel'} submitting clickAction={back} />
           </div>
         </form>
       </div>
