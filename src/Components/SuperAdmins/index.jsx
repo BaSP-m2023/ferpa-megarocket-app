@@ -68,7 +68,6 @@ function SuperAdmins() {
               <Button text={'Add'} variant={'add'} />
             </Link>
           </div>
-          <p className={styles.dataError}>{error}</p>
         </section>
       </section>
     );
