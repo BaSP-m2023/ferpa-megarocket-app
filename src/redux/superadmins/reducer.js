@@ -5,9 +5,9 @@ import {
 } from './constants';
 
 const initialState = {
-  superadmins: [],
+  data: [],
   loading: false,
-  error: null
+  error: ''
 };
 
 export const superadminsReducer = (state = initialState, action) => {
@@ -15,13 +15,12 @@ export const superadminsReducer = (state = initialState, action) => {
     case GET_SUPERADMINS_PENDING:
       return {
         ...state,
-        loading: true,
-        error: null
+        loading: !state.loading
       };
     case GET_SUPERADMINS_SUCCESS:
       return {
         ...state,
-        superadmins: action.payload,
+        data: action.payload,
         loading: false
       };
     case GET_SUPERADMINS_ERROR:
