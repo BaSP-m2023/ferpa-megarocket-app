@@ -85,7 +85,7 @@ const Classes = () => {
             <Button text={'Cancel'} type={'button'} clickAction={reDirect} />
           </Modal>
           <table className={styles.table}>
-            <thead>
+            <thead className={styles.onTopToo}>
               <tr>
                 <th className={styles.large}>Activity Name</th>
                 <th className={styles.medium}>Day</th>
