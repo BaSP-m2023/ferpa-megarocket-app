@@ -2,14 +2,17 @@ import { useEffect, useState } from 'react';
 import styles from './subscriptions.module.css';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSubscriptions } from '../../redux/subscriptions/thunks';
+import Loader from '../Shared/Loader';
 
 function Subscriptions() {
   const location = useLocation();
-  const [subscriptions, setSubscriptions] = useState([]);
-  const [subsLoaded, setSubsLoaded] = useState(false);
+  const { data, isPending, error } = useSelector((state) => state.subscriptions);
+  const dispatch = useDispatch();
   const [currentId, setCurrentId] = useState('');
-
+  const history = useHistory();
   const [modalSucess, setModalSucess] = useState(false);
   const [modalSucessTitle, setModalSucessTitle] = useState('');
   const [modalConfirmDel, setModalConfirmDel] = useState(false);
@@ -20,7 +23,6 @@ function Subscriptions() {
         method: 'DELETE'
       });
       const data = await response.json();
-      setSubscriptions(subscriptions.filter((subscription) => subscription._id !== id));
       setModalConfirmDel(!modalConfirmDel);
       setModalSucessTitle(data.message);
       setModalSucess(true);
@@ -30,25 +32,18 @@ function Subscriptions() {
     }
   };
 
-  const getSubscriptions = async () => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/all`);
-      const { data } = await res.json();
-      setSubscriptions(data);
-      setSubsLoaded(true);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     if (location.state) {
       setModalSucessTitle(location.state.message);
       setModalSucess(!modalSucess);
+      history.replace({ ...history.location, state: undefined });
     }
-    getSubscriptions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    getSubscriptions(dispatch);
+  }, [dispatch]);
 
   return (
     <section className={styles.container}>
@@ -62,7 +57,7 @@ function Subscriptions() {
         isOpen={modalConfirmDel}
         title={'Warning'}
         onClose={() => setModalConfirmDel(!modalConfirmDel)}
-        text={'Are you sure?'}
+        text={'Are you sure that you want to delete?'}
       >
         <Button text={'Confirm'} clickAction={() => onDelete(currentId)} variant={'delete'} />
         <Button
@@ -90,11 +85,11 @@ function Subscriptions() {
               <th className={styles.tdBtn}></th>
             </tr>
           </thead>
-          {!subsLoaded ? (
+          {isPending ? (
             ''
           ) : (
             <tbody>
-              {subscriptions.map((subscription) => (
+              {data.map((subscription) => (
                 <tr key={subscription._id} className={styles.tr}>
                   <td className={styles.td}>{subscription.classId?.activityId?.name}</td>
                   <td className={styles.td}>{subscription.classId?.trainerId?.lastName}</td>
@@ -121,20 +116,14 @@ function Subscriptions() {
             </tbody>
           )}
         </table>
-        {!subsLoaded ? (
+        {isPending ? (
           <div className={styles.loading}>
-            <h2 className={styles.loadingTitle}>WAITING FOR DATA...</h2>
+            <Loader />
           </div>
         ) : (
           ''
         )}
-        {subsLoaded && subscriptions.length === 0 ? (
-          <div className={styles.loading}>
-            <h2 className={styles.loadingTitle}>THERE IS NO SUBSCRIPTIONS</h2>
-          </div>
-        ) : (
-          ''
-        )}
+        {error !== '' ? <p>{error}</p> : ''}
       </section>
     </section>
   );
