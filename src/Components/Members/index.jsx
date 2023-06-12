@@ -12,7 +12,7 @@ function Members() {
   const [memberId, setMemberId] = useState('');
   const { data, isPending, error } = useSelector((state) => state.members);
   const [members, setMembers] = useState([]);
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
 
   const deleteMember = async (id) => {
     try {
@@ -57,16 +57,18 @@ function Members() {
 
   return (
     <section className={styles.container + ' ' + styles.whiteLetters}>
-      <table className={styles.list}>
-        <div className={styles.header}>
-          <h2>Members</h2>
-          <Link to={'/members/create'}>
-            <Button text={'Create new member'} variant={'add'} />
-          </Link>
-        </div>
-        {error !== '' ? (
+      <div className={styles.header}>
+        <h2>Members</h2>
+        <Link to={'/members/create'}>
+          <Button text={'Create new member'} variant={'add'} />
+        </Link>
+      </div>
+      {error !== '' ? (
+        <div>
           <p className={styles.whiteLetters}>{error}</p>
-        ) : (
+        </div>
+      ) : (
+        <table className={styles.list}>
           <tbody>
             <tr>
               <th>Name</th>
@@ -122,8 +124,8 @@ function Members() {
               );
             })}
           </tbody>
-        )}
-      </table>
+        </table>
+      )}
     </section>
   );
 }
