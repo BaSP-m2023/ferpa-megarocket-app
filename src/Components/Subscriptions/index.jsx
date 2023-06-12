@@ -15,21 +15,6 @@ function Subscriptions() {
   const [modalSucess, setModalSucess] = useState(false);
   const [modalConfirmDel, setModalConfirmDel] = useState(false);
 
-  /*  const onDelete = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
-        method: 'DELETE'
-      });
-      const data = await response.json();
-      setModalConfirmDel(!modalConfirmDel);
-      setModalSucessTitle(data.message);
-      setModalSucess(true);
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  }; */
-
   useEffect(() => {
     if (location.state) {
       setModalSucess(!modalSucess);
@@ -97,30 +82,31 @@ function Subscriptions() {
             ''
           ) : (
             <tbody>
-              {subs.map((subscription) => (
-                <tr key={subscription._id} className={styles.tr}>
-                  <td className={styles.td}>{subscription.classId?.activityId?.name}</td>
-                  <td className={styles.td}>{subscription.classId?.trainerId?.lastName}</td>
-                  <td className={styles.td}>
-                    {subscription.memberId?.lastName}, {subscription.memberId?.firstName}
-                  </td>
-                  <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
-                  <td className={styles.tdBtn}>
-                    <Link to={`/subscriptions/form/${subscription._id}`}>
-                      <Button variant={'edit'} />
-                    </Link>
-                  </td>
-                  <td className={styles.tdBtn}>
-                    <Button
-                      variant={'deleteIcon'}
-                      clickAction={() => {
-                        selectId(dispatch, subscription._id);
-                        setModalConfirmDel(!modalConfirmDel);
-                      }}
-                    />
-                  </td>
-                </tr>
-              ))}
+              {subs &&
+                subs.map((subscription) => (
+                  <tr key={subscription._id} className={styles.tr}>
+                    <td className={styles.td}>{subscription.classId?.activityId?.name}</td>
+                    <td className={styles.td}>{subscription.classId?.trainerId?.lastName}</td>
+                    <td className={styles.td}>
+                      {subscription.memberId?.lastName}, {subscription.memberId?.firstName}
+                    </td>
+                    <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
+                    <td className={styles.tdBtn}>
+                      <Link to={`/subscriptions/form/${subscription._id}`}>
+                        <Button variant={'edit'} />
+                      </Link>
+                    </td>
+                    <td className={styles.tdBtn}>
+                      <Button
+                        variant={'deleteIcon'}
+                        clickAction={() => {
+                          selectId(dispatch, subscription._id);
+                          setModalConfirmDel(!modalConfirmDel);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           )}
         </table>

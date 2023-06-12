@@ -40,3 +40,17 @@ export const deleteSubscriptionError = (error) => {
     payload: error
   };
 };
+
+export const postSubscriptionSuccess = (newSubscription, message) => {
+  return {
+    type: actionConstant.POST_SUBSCRIPTIONS_SUCCESS,
+    payload: { newSubscription, message }
+  };
+};
+
+export const postSubscriptionError = (error) => {
+  return {
+    type: actionConstant.POST_SUBSCRIPTIONS_ERROR,
+    payload: error
+  };
+};

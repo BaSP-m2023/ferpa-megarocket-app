@@ -6,9 +6,7 @@ export const getSubscriptions = async (dispatch) => {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/all`);
     const data = await res.json();
     dispatch(actions.getSubscriptionsSuccess(data.data));
-    dispatch(actions.subscriptionsPending());
   } catch (error) {
-    dispatch(actions.subscriptionsPending());
     dispatch(actions.getSubscriptionsError(error.toString()));
   }
 };
@@ -24,10 +22,29 @@ export const deleteSubscriptions = async (dispatch, id) => {
       method: 'DELETE'
     });
     const data = await res.json();
-    dispatch(actions.deleteSubscriptionSuccess(data.message, id));
-    dispatch(actions.subscriptionsPending());
+    data.error
+      ? dispatch(actions.deleteSubscriptionError(data.message))
+      : dispatch(actions.deleteSubscriptionSuccess(data.message, id));
   } catch (error) {
-    dispatch(actions.subscriptionsPending());
     dispatch(actions.deleteSubscriptionError(error.toString()));
+  }
+};
+
+export const postSubscriptions = async (dispatch, newSub) => {
+  dispatch(actions.subscriptionsPending());
+  try {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
+      method: 'POST',
+      body: JSON.stringify(newSub),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await res.json();
+    data.error
+      ? dispatch(actions.postSubscriptionError(data.message))
+      : dispatch(actions.postSubscriptionSuccess(data.data, data.message));
+  } catch (error) {
+    dispatch(actions.postSubscriptionError(error.toString()));
   }
 };
