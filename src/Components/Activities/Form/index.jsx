@@ -3,7 +3,7 @@ import styles from './form.module.css';
 import { Input, TextArea } from '../../Shared/Inputs';
 import { Link, useParams, useLocation, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { postActivity } from '../../../redux/activities/thunks';
+import { postActivity, putActivity } from '../../../redux/activities/thunks';
 import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal';
 
@@ -17,11 +17,6 @@ const Form = () => {
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
-
-  const onRedirect = {
-    pathname: '/activities',
-    state: { message: '' }
-  };
 
   const handleModal = () => {
     setShowModal(!showModal);
@@ -50,33 +45,6 @@ const Form = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onEdit = async (id) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          name,
-          description,
-          isActive
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await res.json();
-      if (res.status !== 200) {
-        // setMessage(data.message);
-        setShowModal(!showModal);
-      }
-      if (res.status === 200) {
-        onRedirect.state.message = data.message;
-        history.push(onRedirect);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
@@ -91,7 +59,7 @@ const Form = () => {
     }
 
     if (location.pathname.includes('edit')) {
-      await onEdit(id);
+      await putActivity(dispatch, id, { name, description, isActive });
     }
   };
 

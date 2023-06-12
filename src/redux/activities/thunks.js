@@ -65,3 +65,28 @@ export const deleteActivity = async (dispatch, id) => {
     dispatch(actions.deleteActivitiesError(error.message));
   }
 };
+
+export const putActivity = async (dispatch, id, activtyUpdated) => {
+  dispatch(actions.putActivitiesPending());
+  try {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(activtyUpdated),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await res.json();
+    dispatch(actions.resetInitialState());
+
+    if (res.status === 200) {
+      dispatch(actions.putActivitiesSuccess(id, data.data, data.message));
+    }
+
+    if (res.status !== 200) {
+      throw new Error(data.message);
+    }
+  } catch (error) {
+    dispatch(actions.putActivitiesError(error.message));
+  }
+};

@@ -77,6 +77,28 @@ const reducer = (state = INITIAL_STATE, action) => {
         isPending: false,
         error: true
       };
+    case actionConstant.PUT_ACTIVITIES_PENDING:
+      return {
+        ...state,
+        isPending: true
+      };
+    case actionConstant.PUT_ACTIVITIES_SUCCESS: {
+      const activityToUpdate = state.data.indexOf(action.payload.id);
+      state.data[activityToUpdate] = action.payload.activityUpdated;
+      return {
+        ...state,
+        isPending: false,
+        message: action.payload.message,
+        success: true
+      };
+    }
+    case actionConstant.PUT_ACTIVITIES_ERROR:
+      return {
+        ...state,
+        message: action.payload,
+        isPending: false,
+        error: true
+      };
     default:
       return state;
   }

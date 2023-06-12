@@ -65,3 +65,23 @@ export const deleteActivitiesError = (error) => {
     payload: error
   };
 };
+
+export const putActivitiesPending = () => {
+  return {
+    type: actionConstant.PUT_ACTIVITIES_PENDING
+  };
+};
+
+export const putActivitiesSuccess = (id, activityUpdated, message) => {
+  return {
+    type: actionConstant.PUT_ACTIVITIES_SUCCESS,
+    payload: { id, activityUpdated, message }
+  };
+};
+
+export const putActivitiesError = (error) => {
+  return {
+    type: actionConstant.PUT_ACTIVITIES_ERROR,
+    payload: error
+  };
+};
