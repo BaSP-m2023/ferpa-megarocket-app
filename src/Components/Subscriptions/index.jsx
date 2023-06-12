@@ -4,20 +4,18 @@ import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSubscriptions } from '../../redux/subscriptions/thunks';
+import { getSubscriptions, selectId, deleteSubscriptions } from '../../redux/subscriptions/thunks';
 import Loader from '../Shared/Loader';
 
 function Subscriptions() {
   const location = useLocation();
-  const { data, isPending, error } = useSelector((state) => state.subscriptions);
+  const { subs, isPending, error, id, message } = useSelector((state) => state.subscriptions);
   const dispatch = useDispatch();
-  const [currentId, setCurrentId] = useState('');
   const history = useHistory();
   const [modalSucess, setModalSucess] = useState(false);
-  const [modalSucessTitle, setModalSucessTitle] = useState('');
   const [modalConfirmDel, setModalConfirmDel] = useState(false);
 
-  const onDelete = async (id) => {
+  /*  const onDelete = async (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
         method: 'DELETE'
@@ -30,11 +28,10 @@ function Subscriptions() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }; */
 
   useEffect(() => {
     if (location.state) {
-      setModalSucessTitle(location.state.message);
       setModalSucess(!modalSucess);
       history.replace({ ...history.location, state: undefined });
     }
@@ -43,23 +40,34 @@ function Subscriptions() {
 
   useEffect(() => {
     getSubscriptions(dispatch);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   return (
     <section className={styles.container}>
       <Modal
         isOpen={modalSucess}
-        title={modalSucessTitle}
+        title={message}
         success
         onClose={() => setModalSucess(!modalSucess)}
       ></Modal>
       <Modal
         isOpen={modalConfirmDel}
         title={'Warning'}
-        onClose={() => setModalConfirmDel(!modalConfirmDel)}
+        onClose={() => {
+          setModalConfirmDel(!modalConfirmDel);
+        }}
         text={'Are you sure that you want to delete?'}
       >
-        <Button text={'Confirm'} clickAction={() => onDelete(currentId)} variant={'delete'} />
+        <Button
+          text={'Confirm'}
+          clickAction={() => {
+            deleteSubscriptions(dispatch, id);
+            setModalConfirmDel(!modalConfirmDel);
+            setModalSucess(true);
+          }}
+          variant={'delete'}
+        />
         <Button
           text={'Cancel'}
           clickAction={() => setModalConfirmDel(!modalConfirmDel)}
@@ -89,7 +97,7 @@ function Subscriptions() {
             ''
           ) : (
             <tbody>
-              {data.map((subscription) => (
+              {subs.map((subscription) => (
                 <tr key={subscription._id} className={styles.tr}>
                   <td className={styles.td}>{subscription.classId?.activityId?.name}</td>
                   <td className={styles.td}>{subscription.classId?.trainerId?.lastName}</td>
@@ -106,7 +114,7 @@ function Subscriptions() {
                     <Button
                       variant={'deleteIcon'}
                       clickAction={() => {
-                        setCurrentId(subscription._id);
+                        selectId(dispatch, subscription._id);
                         setModalConfirmDel(!modalConfirmDel);
                       }}
                     />
