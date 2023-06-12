@@ -25,6 +25,9 @@ export const deleteAdmin = async (dispatch, id) => {
       const message = 'Admin deleted';
       dispatch(actionsConstants.deleteAdminsSuccess(message));
     }
+    if (res.status === 404) {
+      throw new Error('Admin not found');
+    }
   } catch (error) {
     dispatch(actionsConstants.deleteAdminsError(error));
   }
