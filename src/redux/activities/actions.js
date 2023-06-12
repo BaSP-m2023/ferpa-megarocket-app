@@ -19,3 +19,23 @@ export const getActivitiesError = (error) => {
     payload: error
   };
 };
+
+export const postActivitiesPending = () => {
+  return {
+    type: actionConstant.POST_ACTIVITIES_PENDING
+  };
+};
+
+export const postActivitiesSuccess = (newActivity, message) => {
+  return {
+    type: actionConstant.POST_ACTIVITIES_SUCCESS,
+    payload: { newActivity, message }
+  };
+};
+
+export const postActivitiesError = (error) => {
+  return {
+    type: actionConstant.POST_ACTIVITIES_ERROR,
+    payload: error
+  };
+};

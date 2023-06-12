@@ -9,8 +9,8 @@ import Modal from '../Shared/Modal';
 import Loader from '../Shared/Loader';
 
 function Activities() {
-  const { data, isPending, error } = useSelector((state) => state.activities);
-  const [message, setMessage] = useState('');
+  const { data, isPending, message } = useSelector((state) => state.activities);
+  // const [message, setMessage] = useState('');
   const [deleteModal, setDeleteModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -21,7 +21,7 @@ function Activities() {
   useEffect(() => {
     if (location.state) {
       setShowModal(!showModal);
-      setMessage(location.state.message);
+      // setMessage(location.state.message);
     }
     history.replace({ ...history.location, state: undefined });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -33,7 +33,7 @@ function Activities() {
         method: 'DELETE'
       });
       const data = await res.json();
-      setMessage(data.message);
+      // setMessage(data.message);
       setConfirmModal(!confirmModal);
       setDeleteModal(!deleteModal);
       return data;
@@ -72,8 +72,8 @@ function Activities() {
           </Link>
         </div>
         <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />
-        {error !== '' ? (
-          <p className={styles.dataError}>{error}</p>
+        {message !== '' ? (
+          <p className={styles.dataError}>{message}</p>
         ) : (
           <Table
             activities={data}
