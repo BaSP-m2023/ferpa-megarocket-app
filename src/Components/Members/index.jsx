@@ -1,49 +1,72 @@
 import { useEffect, useState } from 'react';
 import styles from './members.module.css';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMembers } from '../../redux/members/thunks';
 import Button from '../Shared/Button/';
 import Modal from '../Shared/Modal/';
+import Loader from '../Shared/Loader';
 
 function Members() {
-  const [members, setMembers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [memberId, setMemberId] = useState('');
+  const { data, isPending, error } = useSelector((state) => state.members);
+  const [members, setMembers] = useState([data]);
+  const dispatch = useDispatch;
 
   const deleteMember = async (id) => {
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
         method: 'DELETE'
       });
-      setMembers([...members.filter((members) => members._id !== id)]);
+      setMembers([...members.filter((member) => member._id !== id)]);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const getMembers = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
-      const data = await response.json();
-      setMembers(data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const getMembers = async () => {
+  //   try {
+  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
+  //     const data = await response.json();
+  //     setMembers(data.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   useEffect(() => {
-    getMembers();
-  }, []);
+    getMembers(dispatch);
+  }, [dispatch]);
 
-  return (
-    <section className={styles.container + ' ' + styles.whiteLetters}>
-      <div>
-        <table className={styles.list}>
+  if (isPending) {
+    return (
+      <div className={styles.container + ' ' + styles.whiteLetters}>
+        <div className={styles.list}>
           <div className={styles.header}>
             <h2>Members</h2>
             <Link to={'/members/create'}>
               <Button text={'Create new member'} variant={'add'} />
             </Link>
           </div>
+          <Loader />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <section className={styles.container + ' ' + styles.whiteLetters}>
+      <table className={styles.list}>
+        <div className={styles.header}>
+          <h2>Members</h2>
+          <Link to={'/members/create'}>
+            <Button text={'Create new member'} variant={'add'} />
+          </Link>
+        </div>
+        {error !== '' ? (
+          <p className={styles.whiteLetters}>{error}</p>
+        ) : (
           <tbody>
             <tr>
               <th>Name</th>
@@ -99,8 +122,8 @@ function Members() {
               );
             })}
           </tbody>
-        </table>
-      </div>
+        )}
+      </table>
     </section>
   );
 }
