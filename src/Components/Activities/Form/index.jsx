@@ -2,43 +2,43 @@ import React, { useEffect, useState } from 'react';
 import styles from './form.module.css';
 import { Input, TextArea } from '../../Shared/Inputs';
 import { Link, useParams, useLocation, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { postActivity } from '../../../redux/activities/thunks';
 import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal';
 
 const Form = () => {
+  const { data, message, success, error } = useSelector((state) => state.activities);
   const { id } = useParams();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [isActive, setIsActive] = useState(false);
-  const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
   const location = useLocation();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const onRedirect = {
     pathname: '/activities',
     state: { message: '' }
   };
 
-  const getActivity = async (id) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`);
-      const { data } = await res.json();
-      return data;
-    } catch (error) {
-      console.error(error);
+  useEffect(() => {
+    if (success) {
+      history.push('/activities');
     }
-  };
+    if (error) {
+      setShowModal(!showModal);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success, error]);
 
   useEffect(() => {
     if (location.pathname.includes('edit')) {
-      const setupForm = async () => {
-        const { name, description, isActive } = await getActivity(id);
-        setName(name);
-        setDescription(description);
-        setIsActive(isActive);
-      };
-      setupForm();
+      const activity = data.find((activity) => activity._id === id);
+      setName(activity.name);
+      setDescription(activity.description);
+      setIsActive(activity.isActive);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -58,36 +58,10 @@ const Form = () => {
       });
       const data = await res.json();
       if (res.status !== 200) {
-        setMessage(data.message);
+        // setMessage(data.message);
         setShowModal(!showModal);
       }
       if (res.status === 200) {
-        onRedirect.state.message = data.message;
-        history.push(onRedirect);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const onAdd = async () => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`, {
-        method: 'POST',
-        body: JSON.stringify({
-          name,
-          description,
-          isActive
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await res.json();
-      if (res.status !== 201) {
-        setMessage(data.message);
-      }
-      if (res.status === 201) {
         onRedirect.state.message = data.message;
         history.push(onRedirect);
       }
@@ -106,10 +80,7 @@ const Form = () => {
 
   const sendActivity = async () => {
     if (location.pathname.includes('create')) {
-      await onAdd({ name, description, isActive });
-      setName('');
-      setDescription('');
-      setIsActive(false);
+      await postActivity(dispatch, { name, description, isActive });
     }
 
     if (location.pathname.includes('edit')) {

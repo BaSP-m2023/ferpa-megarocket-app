@@ -39,3 +39,9 @@ export const postActivitiesError = (error) => {
     payload: error
   };
 };
+
+export const resetInitialState = () => {
+  return {
+    type: actionConstant.RESET_INITIAL_STATE
+  };
+};

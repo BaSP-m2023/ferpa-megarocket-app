@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getActivities } from '../../redux/activities/thunks';
 import styles from './activities.module.css';
@@ -9,21 +9,18 @@ import Modal from '../Shared/Modal';
 import Loader from '../Shared/Loader';
 
 function Activities() {
-  const { data, isPending, message } = useSelector((state) => state.activities);
-  // const [message, setMessage] = useState('');
+  const { data, isPending, message, success, error } = useSelector((state) => state.activities);
+  const [modalMessage, setModalMessage] = useState('');
   const [deleteModal, setDeleteModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const location = useLocation();
-  const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (location.state) {
+    if (success) {
       setShowModal(!showModal);
-      // setMessage(location.state.message);
+      setModalMessage(message);
     }
-    history.replace({ ...history.location, state: undefined });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -71,8 +68,13 @@ function Activities() {
             <Button text={'Add'} variant={'add'} />
           </Link>
         </div>
-        <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />
-        {message !== '' ? (
+        <Modal
+          onClose={() => setShowModal(false)}
+          isOpen={showModal}
+          title={modalMessage}
+          success
+        />
+        {error ? (
           <p className={styles.dataError}>{message}</p>
         ) : (
           <Table
