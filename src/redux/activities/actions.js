@@ -1,5 +1,11 @@
 import * as actionConstant from './constants';
 
+export const resetInitialState = () => {
+  return {
+    type: actionConstant.RESET_INITIAL_STATE
+  };
+};
+
 export const getActivitiesPending = () => {
   return {
     type: actionConstant.GET_ACTIVITIES_PENDING
@@ -40,8 +46,22 @@ export const postActivitiesError = (error) => {
   };
 };
 
-export const resetInitialState = () => {
+export const deleteActivitiesPending = () => {
   return {
-    type: actionConstant.RESET_INITIAL_STATE
+    type: actionConstant.DELETE_ACTIVITIES_PENDING
+  };
+};
+
+export const deleteActivitiesSuccess = (id, message) => {
+  return {
+    type: actionConstant.DELETE_ACTIVITIES_SUCCESS,
+    payload: { id, message }
+  };
+};
+
+export const deleteActivitiesError = (error) => {
+  return {
+    type: actionConstant.DELETE_ACTIVITIES_ERROR,
+    payload: error
   };
 };

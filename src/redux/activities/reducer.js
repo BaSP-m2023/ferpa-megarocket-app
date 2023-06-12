@@ -55,6 +55,28 @@ const reducer = (state = INITIAL_STATE, action) => {
         isPending: false,
         error: true
       };
+    case actionConstant.DELETE_ACTIVITIES_PENDING:
+      return {
+        ...state,
+        isPending: true
+      };
+    case actionConstant.DELETE_ACTIVITIES_SUCCESS: {
+      const updatedData = state.data.filter((activity) => activity._id !== action.payload.id);
+      return {
+        ...state,
+        data: updatedData,
+        isPending: false,
+        message: action.payload.message,
+        success: true
+      };
+    }
+    case actionConstant.DELETE_ACTIVITIES_ERROR:
+      return {
+        ...state,
+        message: action.payload,
+        isPending: false,
+        error: true
+      };
     default:
       return state;
   }

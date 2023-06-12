@@ -23,12 +23,19 @@ const Form = () => {
     state: { message: '' }
   };
 
+  const handleModal = () => {
+    setShowModal(!showModal);
+    setTimeout(() => {
+      setShowModal();
+    }, 4000);
+  };
+
   useEffect(() => {
     if (success) {
       history.push('/activities');
     }
     if (error) {
-      setShowModal(!showModal);
+      handleModal();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success, error]);
