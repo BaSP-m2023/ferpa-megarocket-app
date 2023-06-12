@@ -24,6 +24,24 @@ const getReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
+const deleteReducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+    case actionsConstants.DELETE_ADMINS_PENDING: {
+      return { ...state, isPending: true };
+    }
+    case actionsConstants.DELETE_ADMINS_SUCCESS: {
+      return { ...state, data: action.payload, isPending: false };
+    }
+    case actionsConstants.DELETE_ADMINS_ERROR: {
+      return { error: action.payload, isPending: false };
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 export const adminsReducers = combineReducers({
-  get: getReducer
+  get: getReducer,
+  delete: deleteReducer
 });

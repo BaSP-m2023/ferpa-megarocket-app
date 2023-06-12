@@ -19,3 +19,24 @@ export const getAdminsError = (error) => {
     payload: error
   };
 };
+
+export const deleteAdminsPending = (data) => {
+  return {
+    type: actionsConstants.DELETE_ADMINS_PENDING,
+    payload: data
+  };
+};
+
+export const deleteAdminsSuccess = (data) => {
+  return {
+    type: actionsConstants.DELETE_ADMINS_SUCCESS,
+    payload: data
+  };
+};
+
+export const deleteAdminsError = (error) => {
+  return {
+    type: actionsConstants.DELETE_ADMINS_ERROR,
+    payload: error
+  };
+};

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAdmins } from '../../redux/admins/thunks';
+import { getAdmins, deleteAdmin } from '../../redux/admins/thunks';
 import { Link } from 'react-router-dom';
 import styles from './admins.module.css';
 import Button from '../Shared/Button';
@@ -11,48 +11,29 @@ function Admins() {
   const getData = useSelector((state) => state.admins.get.data);
   const getPending = useSelector((state) => state.admins.get.isPending);
   const getError = useSelector((state) => state.admins.get.error);
+  const deletePending = useSelector((state) => state.admins.delete.isPending);
+  const deleteData = useSelector((state) => state.admins.delete.data);
+  // const deleteError = useSelector((state) => state.admins.delete.error);
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState('');
-  const [messageReq, setMessageReq] = useState('');
   const [successModal, setSuccesModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
-  const getDispatch = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getAdmins(getDispatch);
+    getAdmins(dispatch);
     if (getError) {
       setErrorModal(getError.toString());
       setErrorModal(!errorModal);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getDispatch]);
-
-  const deleteAdmin = async (id) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-        method: 'DELETE'
-      });
-
-      const { error, message } = await res.json();
-      setMessageReq(message);
-      if (!error) {
-        setSuccesModal(!successModal);
-        setTimeout(() => {
-          setSuccesModal(false);
-        }, 2000);
-      } else {
-        setErrorModal(!errorModal);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  }, [dispatch, deletePending]);
 
   const handleDelete = (id) => {
-    setTimeout(() => {
-      deleteAdmin(id);
-    }, 20);
+    deleteAdmin(dispatch, id);
+    setSuccesModal(!deletePending);
   };
+
   if (getPending) {
     return (
       <section className={styles.container}>
@@ -84,7 +65,7 @@ function Admins() {
       <Modal
         title={'Admin Deleted'}
         isOpen={successModal}
-        text={messageReq}
+        text={deleteData}
         onClose={() => {
           setSuccesModal(!successModal);
         }}
@@ -92,7 +73,7 @@ function Admins() {
       <Modal
         isOpen={errorModal}
         title={'ERROR'}
-        text={messageReq}
+        text={deleteData}
         warning
         onClose={() => {
           setErrorModal(!errorModal);
