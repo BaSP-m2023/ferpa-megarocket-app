@@ -11,7 +11,7 @@ function Members() {
   const [showModal, setShowModal] = useState(false);
   const [memberId, setMemberId] = useState('');
   const { data, isPending, error } = useSelector((state) => state.members);
-  const [members, setMembers] = useState([data]);
+  const [members, setMembers] = useState([]);
   const dispatch = useDispatch;
 
   const deleteMember = async (id) => {
@@ -75,7 +75,7 @@ function Members() {
               <th>Email</th>
               <th>Phone</th>
             </tr>
-            {members.map((item) => {
+            {data.map((item) => {
               return (
                 <tr key={item._id}>
                   <td>{item.firstName}</td>
