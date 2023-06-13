@@ -6,6 +6,7 @@ import styles from './admins.module.css';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal/index';
 import Loader from '../Shared/Loader';
+import * as actionsConstants from '../../redux/admins/actions';
 
 function Admins() {
   const getData = useSelector((state) => state.admins.get.data);
@@ -24,22 +25,25 @@ function Admins() {
 
   useEffect(() => {
     getAdmins(dispatch);
+    if (!deletePending && !deleteError) {
+      setSuccesModal(true);
+      setTimeout(() => {
+        setSuccesModal(false);
+      }, 2000);
+      dispatch(actionsConstants.deleteAdminsPending());
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, deletePending]);
+  }, [deletePending]);
 
   useEffect(() => {
     if (errorGetSwitch || errorDeleteSwitch) {
       setErrorModal(true);
     }
-    return () => {
-      deleteAdmin(dispatch);
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorGetSwitch, errorDeleteSwitch]);
 
   const handleDelete = (id) => {
     deleteAdmin(dispatch, id);
-    setSuccesModal(!deletePending);
   };
 
   if (getPending) {
