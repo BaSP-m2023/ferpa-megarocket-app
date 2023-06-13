@@ -19,3 +19,20 @@ export const getTrainersError = (error) => {
     payload: error
   };
 };
+export const deleteTrainersPending = () => {
+  return {
+    type: trainersConstant.DELETE_TRAINERS_PENDING
+  };
+};
+export const deleteTrainersSuccess = (id) => {
+  return {
+    type: trainersConstant.DELETE_TRAINERS_SUCCESS,
+    payload: id
+  };
+};
+export const deleteTrainersError = (error) => {
+  return {
+    type: trainersConstant.DELETE_TRAINERS_ERROR,
+    payload: error
+  };
+};
