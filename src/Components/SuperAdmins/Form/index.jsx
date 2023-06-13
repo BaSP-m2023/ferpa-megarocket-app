@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import styles from './form.module.css';
 import { Input } from '../../Shared/Inputs';
-import { Link, useParams, useLocation, Redirect } from 'react-router-dom';
+import { Link, useParams, useLocation, Redirect, useHistory } from 'react-router-dom';
 import Modal from '../../Shared/Modal';
 import Button from '../../Shared/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { postSuperAdmins } from '../../../redux/superadmins/thunks';
 
 const Form = () => {
   const { id } = useParams();
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
-  const [message, setMessage] = useState('');
+  // const [messageTry, setMessageTry] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [redirect, setRedirect] = useState(false);
   const location = useLocation();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { message, success, error } = useSelector((state) => state.superadmins);
 
   const getSuperAdmins = async (id) => {
     try {
@@ -36,6 +41,16 @@ const Form = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (success) {
+      history.push('/super-admins');
+    }
+    if (error) {
+      setShowModal(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error, success]);
+
   const onEdit = async (id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
@@ -46,7 +61,8 @@ const Form = () => {
         }
       });
       const data = await response.json();
-      setMessage(data.message);
+      console.log(data);
+      // setMessageTry(data.message);
 
       if (response.ok) {
         setTimeout(() => {
@@ -58,27 +74,27 @@ const Form = () => {
     }
   };
 
-  const onAdd = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
-        method: 'POST',
-        body: JSON.stringify({ email, password: pass }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await response.json();
-      setMessage(data.message);
+  // const onAdd = async () => {
+  //   try {
+  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
+  //       method: 'POST',
+  //       body: JSON.stringify({ email, password: pass }),
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       }
+  //     });
+  //     const data = await response.json();
+  //     setMessage(data.message);
 
-      if (response.ok) {
-        setTimeout(() => {
-          setRedirect(true);
-        }, 2500);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     if (response.ok) {
+  //       setTimeout(() => {
+  //         setRedirect(true);
+  //       }, 2500);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -86,13 +102,8 @@ const Form = () => {
   };
 
   const sendSuperAdmin = () => {
-    setShowModal(true);
-
     if (location.pathname.includes('create')) {
-      onAdd({ email, pass });
-      setEmail('');
-      setPass('');
-      setShowModal(true);
+      postSuperAdmins(dispatch, { email, password: pass });
     }
 
     if (location.pathname.includes('edit')) {

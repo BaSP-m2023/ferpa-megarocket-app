@@ -1,35 +1,46 @@
-import {
-  GET_SUPERADMINS_PENDING,
-  GET_SUPERADMINS_SUCCESS,
-  GET_SUPERADMINS_ERROR
-} from './constants';
+import * as actionConstant from './constants';
 
-const initialState = {
+const INITIAL_STATE = {
   data: [],
+  message: '',
   loading: false,
-  error: ''
+  error: false,
+  success: false
 };
 
-export const superadminsReducer = (state = initialState, action) => {
+const superadminsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case GET_SUPERADMINS_PENDING:
+    case actionConstant.GET_SUPERADMINS_PENDING:
+      return { ...state, loading: true };
+    case actionConstant.GET_SUPERADMINS_SUCCESS:
+      return { ...state, data: action.payload, loading: false, error: false };
+    case actionConstant.GET_SUPERADMINS_ERROR:
+      return { ...state, error: action.payload, loading: false };
+    case actionConstant.POST_SUPERADMINS_PENDING:
       return {
         ...state,
-        loading: !state.loading
+        loading: true,
+        success: false
       };
-    case GET_SUPERADMINS_SUCCESS:
+    case actionConstant.POST_SUPERADMINS_SUCCESS:
       return {
         ...state,
-        data: action.payload,
-        loading: false
+        data: [...state.data, action.payload.newSuperadmin],
+        loading: false,
+        message: action.payload.message,
+        success: true,
+        error: false
       };
-    case GET_SUPERADMINS_ERROR:
+    case actionConstant.POST_SUPERADMINS_ERROR:
       return {
         ...state,
-        error: action.payload,
-        loading: false
+        message: action.payload,
+        loading: false,
+        error: true
       };
     default:
       return state;
   }
 };
+
+export default superadminsReducer;

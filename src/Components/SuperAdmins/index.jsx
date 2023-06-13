@@ -4,19 +4,28 @@ import { getSuperAdmins } from '../../redux/superadmins/thunks';
 import { Link } from 'react-router-dom';
 import styles from './super-admins.module.css';
 import Table from './table';
+import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import Loader from '../Shared/Loader';
 
-function SuperAdmins() {
-  const { data, loading, error } = useSelector((state) => state.superadmins);
-  const [message, setMessage] = useState('');
+const SuperAdmins = () => {
+  const { data, loading, error, success, message } = useSelector((state) => state.superadmins);
+  const [messageTry, setMessageTry] = useState('');
   const [deleteModal, setDeleteModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getSuperAdmins());
+    getSuperAdmins(dispatch);
   }, [dispatch]);
+
+  useEffect(() => {
+    if (success) {
+      setShowModal(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const deleteItem = async (id) => {
     try {
@@ -24,7 +33,7 @@ function SuperAdmins() {
         method: 'DELETE'
       });
       const data = await response.json();
-      setMessage(data.message);
+      setMessageTry(data.message);
       setDeleteModal(true);
       return data;
     } catch (error) {
@@ -48,7 +57,7 @@ function SuperAdmins() {
         </section>
       </section>
     );
-  } else if (error !== '') {
+  } else if (error) {
     return (
       <section className={styles.container}>
         <section className={styles.list}>
@@ -77,15 +86,16 @@ function SuperAdmins() {
         <Table
           superadmins={data}
           deleteItem={deleteItem}
-          message={message}
+          message={messageTry}
           confirmModal={confirmModal}
           deleteModal={deleteModal}
           setConfirmModal={setConfirmModal}
           setDeleteModal={setDeleteModal}
         />
       </section>
+      <Modal onClose={() => setShowModal(false)} isOpen={showModal} text={message} />
     </section>
   );
-}
+};
 
 export default SuperAdmins;
