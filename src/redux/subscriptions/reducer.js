@@ -2,6 +2,7 @@ import * as actionConstant from './constants';
 
 const INITIAL_STATE = {
   subs: [],
+  sub: { classId: '', memberId: '', date: '' },
   error: false,
   message: '',
   id: '',
@@ -10,6 +11,14 @@ const INITIAL_STATE = {
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case actionConstant.RESET_STATE:
+      return {
+        ...state,
+        sub: { classId: '', memberId: '', date: '' },
+        error: false,
+        id: '',
+        isPending: false
+      };
     case actionConstant.SUBSCRIPTIONS_PENDING:
       return { ...state, isPending: true };
     case actionConstant.SELECT_ID:
@@ -43,6 +52,21 @@ const reducer = (state = INITIAL_STATE, action) => {
         subs: [...state.subs, action.payload.newSubscription]
       };
     case actionConstant.POST_SUBSCRIPTIONS_ERROR:
+      return {
+        ...state,
+        isPending: false,
+        message: action.payload,
+        error: true
+      };
+    case actionConstant.PUT_SUBSCRIPTIONS_SUCCESS:
+      state.subs.filter((sub) => sub._id !== action.payload.id);
+      return {
+        ...state,
+        isPending: false,
+        message: action.payload.message,
+        error: false
+      };
+    case actionConstant.PUT_SUBSCRIPTIONS_ERROR:
       return {
         ...state,
         isPending: false,

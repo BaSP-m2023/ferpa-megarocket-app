@@ -1,19 +1,20 @@
 import React from 'react';
 import styles from './form.module.css';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Select, DatePicker } from '../../Shared/Inputs';
 import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal';
-import { postSubscriptions } from '../../../redux/subscriptions/thunks';
+import { postSubscriptions, updateSubscription } from '../../../redux/subscriptions/thunks';
+import { getClasses } from '../../../redux/classes/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import { store } from '../../../redux/store';
 
 const Form = () => {
-  const { error, message } = useSelector((state) => state.subscriptions);
+  const { subs, message, id } = useSelector((state) => state.subscriptions);
+  const { classes } = useSelector((state) => state.classes);
   const dispatch = useDispatch();
-  const { idParam } = useParams();
   const [members, setMembers] = useState([]);
-  const [classes, setClasses] = useState([]);
   const [currentSub, setCurrentSub] = useState({ classId: '', memberId: '', date: '' });
   const [modalError, setModalError] = useState(false);
   const [values, setValues] = useState({ member: '', activity: '' });
@@ -56,83 +57,35 @@ const Form = () => {
     }
   };
 
-  const getClasses = async () => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`);
-      const { data } = await res.json();
-      setClasses(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getSubscription = async (idParam) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${idParam}`);
-      const { data } = await res.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const editSub = async () => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${idParam}`, {
-        method: 'PUT',
-        body: JSON.stringify(currentSub),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await res.json();
-      if (!data.error) {
-        onRedirect.state.message = data.message;
-        history.push(onRedirect);
-      } else {
-        /* setModalErrorText(data.message); */
-        setModalError(true);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     getMembers();
-    getClasses();
-    if (idParam) {
-      const getSub = async () => {
-        const editSub = await getSubscription(idParam);
-        setCurrentSub({
-          memberId: editSub.memberId._id,
-          classId: editSub.classId._id,
-          date: editSub.date.slice(0, 10)
-        });
-        setValues({
-          member: `${editSub.memberId.lastName}, ${editSub.memberId.firstName}`,
-          activity: `${editSub.classId.activityId?.name}, ${editSub.classId.day}, ${editSub.classId.hour} hrs`
-        });
-      };
-      getSub();
+    dispatch(getClasses());
+    console.log(id);
+    if (id !== '') {
+      const editSub = subs.find((sub) => sub._id === id);
+      console.log(editSub);
+      setCurrentSub({
+        memberId: editSub.memberId?._id,
+        classId: editSub.classId?._id,
+        date: editSub.date.slice(0, 10)
+      });
+      setValues({
+        member: `${editSub.memberId?.lastName}, ${editSub.memberId?.firstName}`,
+        activity: `${editSub.classId?.activityId?.name}, ${editSub.classId?.day}, ${editSub.classId?.hour} hrs`
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   const handleClick = async () => {
-    if (!idParam) {
-      await postSubscriptions(dispatch, currentSub);
-      console.log(error);
-      if (!error) {
-        console.log('hi');
-        onRedirect.state.message = message;
-        history.push(onRedirect);
-      } else {
-        setModalError(true);
-        console.log('holaaaa');
-      }
+    !id ? postSubscriptions(dispatch, currentSub) : updateSubscription(dispatch, currentSub, id);
+    const updatedState = store.getState();
+    const updatedError = updatedState.subscriptions.error;
+    if (!updatedError) {
+      onRedirect.state.message = message;
+      history.push(onRedirect);
     } else {
-      editSub(idParam);
+      setModalError(true);
     }
   };
 
@@ -152,7 +105,7 @@ const Form = () => {
         <Button variant={'white'} text={'Accept'} clickAction={() => setModalError(!modalError)} />
       </Modal>
       <form className={styles.form}>
-        <h2 className={styles.formTitle}>{idParam ? 'EDIT SUBSCRIPTION' : 'ADD SUBSCRIPTION'}</h2>
+        <h2 className={styles.formTitle}>{id ? 'EDIT SUBSCRIPTION' : 'ADD SUBSCRIPTION'}</h2>
         <div className={styles.inputBox}>
           <Select
             dark
@@ -185,7 +138,7 @@ const Form = () => {
         <div className={styles.formBtns}>
           <Button
             variant={'add'}
-            text={idParam ? 'Edit' : 'Add'}
+            text={id ? 'Edit' : 'Add'}
             clickAction={(e) => {
               e.preventDefault();
               handleClick();

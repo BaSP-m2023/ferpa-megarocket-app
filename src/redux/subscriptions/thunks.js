@@ -1,6 +1,11 @@
 import * as actions from './actions';
 
+export const selectId = (dispatch, id) => {
+  dispatch(actions.selectIdAction(id));
+};
+
 export const getSubscriptions = async (dispatch) => {
+  dispatch(actions.resetState());
   dispatch(actions.subscriptionsPending());
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/all`);
@@ -11,11 +16,8 @@ export const getSubscriptions = async (dispatch) => {
   }
 };
 
-export const selectId = (dispatch, id) => {
-  dispatch(actions.selectIdAction(id));
-};
-
 export const deleteSubscriptions = async (dispatch, id) => {
+  dispatch(actions.resetState());
   dispatch(actions.subscriptionsPending());
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
@@ -31,6 +33,7 @@ export const deleteSubscriptions = async (dispatch, id) => {
 };
 
 export const postSubscriptions = async (dispatch, newSub) => {
+  dispatch(actions.resetState());
   dispatch(actions.subscriptionsPending());
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
@@ -46,5 +49,25 @@ export const postSubscriptions = async (dispatch, newSub) => {
       : dispatch(actions.postSubscriptionSuccess(data.data, data.message));
   } catch (error) {
     dispatch(actions.postSubscriptionError(error.toString()));
+  }
+};
+
+export const updateSubscription = async (dispatch, update, id) => {
+  dispatch(actions.resetState());
+  dispatch(actions.subscriptionsPending());
+  try {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(update),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await res.json();
+    data.error
+      ? dispatch(actions.putSubscriptionError(data.message))
+      : dispatch(actions.putSubscriptionSuccess(data.data, data.message, id));
+  } catch (error) {
+    dispatch(actions.putSubscriptionError(error.toString()));
   }
 };

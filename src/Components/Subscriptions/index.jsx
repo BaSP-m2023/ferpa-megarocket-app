@@ -93,7 +93,10 @@ function Subscriptions() {
                     <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
                     <td className={styles.tdBtn}>
                       <Link to={`/subscriptions/form/${subscription._id}`}>
-                        <Button variant={'edit'} />
+                        <Button
+                          variant={'edit'}
+                          clickAction={() => selectId(dispatch, subscription._id)}
+                        />
                       </Link>
                     </td>
                     <td className={styles.tdBtn}>

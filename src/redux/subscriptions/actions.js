@@ -1,5 +1,11 @@
 import * as actionConstant from './constants';
 
+export const resetState = () => {
+  return {
+    type: actionConstant.RESET_STATE
+  };
+};
+
 export const subscriptionsPending = () => {
   return {
     type: actionConstant.SUBSCRIPTIONS_PENDING
@@ -51,6 +57,20 @@ export const postSubscriptionSuccess = (newSubscription, message) => {
 export const postSubscriptionError = (error) => {
   return {
     type: actionConstant.POST_SUBSCRIPTIONS_ERROR,
+    payload: error
+  };
+};
+
+export const putSubscriptionSuccess = (updatedSub, message, id) => {
+  return {
+    type: actionConstant.PUT_SUBSCRIPTIONS_SUCCESS,
+    payload: { updatedSub, message, id }
+  };
+};
+
+export const putSubscriptionError = (error) => {
+  return {
+    type: actionConstant.PUT_SUBSCRIPTIONS_ERROR,
     payload: error
   };
 };
