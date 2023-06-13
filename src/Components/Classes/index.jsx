@@ -3,34 +3,37 @@ import styles from './classes.module.css';
 import { Link, useHistory } from 'react-router-dom';
 import Button from '../Shared/Button/index';
 import Modal from '../Shared/Modal';
-import { getClasses } from '../../redux/classes/thunks';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { getClasses, deleteClass } from '../../redux/classes/thunks';
+import { useSelector, useDispatch } from 'react-redux';
 import Loader from '../../Components/Shared/Loader';
 
 const Classes = () => {
-  const history = useHistory();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
-  const dispatch = useDispatch();
   const [currentId, setCurrentId] = useState('');
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-  const { classes, isLoading, error } = useSelector((state) => state.classes);
+  const { classes, isLoading, error, serverMessage, success } = useSelector(
+    (state) => state.classes
+  );
 
-  const deleteClass = async (_id) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${_id}`, {
-        method: 'DELETE'
-      });
-      setShowDeleteModal(!showDeleteModal);
-      setShowDeleteSuccessModal(!showDeleteSuccessModal);
-      setTimeout(() => {
-        setShowDeleteSuccessModal(false);
-      }, 2000);
-    } catch (error) {
-      console.error(error);
+  const deleteSingleClass = (_id) => {
+    dispatch(deleteClass(_id));
+    if (success) {
+      setShowDeleteModal(false);
     }
   };
+
+  const check = () => {
+    if (success) {
+      setShowDeleteModal(false);
+    }
+  };
+  useEffect(() => {
+    check();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success]);
 
   const reDirect = () => {
     history.push('/classes');
@@ -44,13 +47,21 @@ const Classes = () => {
   if (isLoading) {
     return (
       <div className={styles.container}>
-        <div className={styles.loading}>{<Loader />}</div>
+        <div className={styles.transparetnBlue}>
+          <div className={styles.loading}>{<Loader />}</div>
+        </div>
       </div>
     );
   }
 
-  if (error !== '') {
-    return <p className={`${styles.container} ${styles.error}`}>{error}</p>;
+  if (error === true) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.transparetnBlue}>
+          <p className={styles.error}>{serverMessage}</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -73,79 +84,62 @@ const Classes = () => {
             isOpen={showDeleteModal}
             title={'Are you sure?'}
             warning
-            onClose={() => setShowDeleteModal(!showDeleteModal)}
+            onClose={() => setShowDeleteModal(false)}
           >
             <Button
               text={'Yes'}
               type={'button'}
               clickAction={() => {
-                deleteClass(currentId);
+                deleteSingleClass(currentId);
               }}
             />
             <Button text={'Cancel'} type={'button'} clickAction={reDirect} />
           </Modal>
           <table className={styles.table}>
-            <thead>
-              <tr>
-                <th className={styles.large}>Activity Name</th>
-                <th className={styles.medium}>Day</th>
-                <th className={styles.small}>Hour</th>
-                <th className={styles.medium}>Trainer</th>
-                <th className={styles.small}>Slots</th>
-                <th className={styles.small}>Edit</th>
-                <th className={styles.small}>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {classes &&
-                classes.map((theOne) => {
-                  return (
-                    <tr key={theOne?._id}>
-                      <td className={styles.large}>{theOne?.activityId?.name}</td>
-                      <td className={styles.medium}>{theOne?.day}</td>
-                      <td className={styles.small}>{theOne?.hour}</td>
-                      <td className={styles.medium}>{theOne?.trainerId?.firstName}</td>
-                      <td className={styles.small}>{theOne?.slots}</td>
-                      <td className={styles.small}>
-                        <Link to={`/classes/form/${theOne?._id}`}>
-                          <Button text={'Edit Item'} variant={'edit'} />
-                        </Link>
-                      </td>
-                      <td className={styles.small}>
-                        <Modal
-                          isOpen={showDeleteSuccessModal}
-                          text={'Class deleted successfully!!!!!'}
-                          success
-                          onClose={() => setShowDeleteSuccessModal(!showDeleteSuccessModal)}
-                        />
-                        <Modal
-                          isOpen={showDeleteModal}
-                          text={'Are you sure?'}
-                          warning
-                          onClose={() => setShowDeleteModal(!showDeleteModal)}
-                        >
+            <div className={styles.fixed}>
+              <thead>
+                <tr>
+                  <th className={styles.large}>Activity Name</th>
+                  <th className={styles.medium}>Day</th>
+                  <th className={styles.small}>Hour</th>
+                  <th className={styles.medium}>Trainer</th>
+                  <th className={styles.small}>Slots</th>
+                  <th className={styles.small}>Edit</th>
+                  <th className={styles.small}>Delete</th>
+                </tr>
+              </thead>
+            </div>
+            <div className={styles.scroll}>
+              <tbody>
+                {classes &&
+                  classes.map((theOne) => {
+                    return (
+                      <tr key={theOne?._id}>
+                        <td className={styles.large}>{theOne?.activityId?.name}</td>
+                        <td className={styles.medium}>{theOne?.day}</td>
+                        <td className={styles.small}>{theOne?.hour}</td>
+                        <td className={styles.medium}>{theOne?.trainerId?.firstName}</td>
+                        <td className={styles.small}>{theOne?.slots}</td>
+                        <td className={styles.small}>
+                          <Link to={`/classes/form/${theOne?._id}`}>
+                            <Button text={'Edit Item'} variant={'edit'} />
+                          </Link>
+                        </td>
+                        <td className={styles.small}>
                           <Button
-                            text={'Yes'}
+                            variant={'deleteIcon'}
                             type={'button'}
                             clickAction={() => {
-                              deleteClass(theOne?._id);
+                              setCurrentId(theOne?._id);
+                              setShowDeleteModal(!showDeleteModal);
                             }}
                           />
-                          <Button text={'Cancel'} type={'button'} clickAction={reDirect} />
-                        </Modal>
-                        <Button
-                          variant={'deleteIcon'}
-                          type={'button'}
-                          clickAction={() => {
-                            setShowDeleteModal(true);
-                            setCurrentId(theOne?._id);
-                          }}
-                        />
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </div>
           </table>
         </div>
       </div>
