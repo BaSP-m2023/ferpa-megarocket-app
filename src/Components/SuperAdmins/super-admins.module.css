@@ -2,26 +2,28 @@
 
 .container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-image: url('../../../public/assets/images/subscriptions-background.jpg');
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 15%;
+  width: 80%;
+}
+
 .list {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 80%;
   margin: 50px;
-  padding-bottom: 50px;
+  padding: 50px 0;
   background-color: rgba(55, 56, 103, 0.5);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-family: 'Roboto', sans-serif;
-}
-
-.header {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
 }
 
 .title {
@@ -74,4 +76,9 @@
 .inputBox {
   display: flex;
   align-items: center;
+}
+
+.error {
+  color: white;
+  font-size: 40px;
 }
