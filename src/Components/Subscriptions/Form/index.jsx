@@ -7,14 +7,16 @@ import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal';
 import { postSubscriptions, updateSubscription } from '../../../redux/subscriptions/thunks';
 import { getClasses } from '../../../redux/classes/thunks';
+import { getMembers } from '../../../redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { store } from '../../../redux/store';
 
 const Form = () => {
   const { subs, message, id } = useSelector((state) => state.subscriptions);
   const { classes } = useSelector((state) => state.classes);
+  const { data } = useSelector((state) => state.members);
+  const members = data;
   const dispatch = useDispatch();
-  const [members, setMembers] = useState([]);
   const [currentSub, setCurrentSub] = useState({ classId: '', memberId: '', date: '' });
   const [modalError, setModalError] = useState(false);
   const [values, setValues] = useState({ member: '', activity: '' });
@@ -47,20 +49,9 @@ const Form = () => {
     }
   };
 
-  const getMembers = async () => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members/`);
-      const { data } = await res.json();
-      setMembers(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
-    getMembers();
+    getMembers(dispatch);
     dispatch(getClasses());
-    console.log(id);
     if (id !== '') {
       const editSub = subs.find((sub) => sub._id === id);
       console.log(editSub);
@@ -136,6 +127,9 @@ const Form = () => {
           <DatePicker dark label={'Date'} value={currentSub.date} onChangeDate={handleDatePicker} />
         </div>
         <div className={styles.formBtns}>
+          <Link to={'/subscriptions'}>
+            <Button variant={'white'} text={'Cancel'} />
+          </Link>
           <Button
             variant={'add'}
             text={id ? 'Edit' : 'Add'}
@@ -144,9 +138,6 @@ const Form = () => {
               handleClick();
             }}
           />
-          <Link to={'/subscriptions'}>
-            <Button variant={'white'} text={'Cancel'} />
-          </Link>
         </div>
       </form>
     </section>

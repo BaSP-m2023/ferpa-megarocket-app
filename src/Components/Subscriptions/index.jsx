@@ -25,7 +25,6 @@ function Subscriptions() {
 
   useEffect(() => {
     getSubscriptions(dispatch);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   return (
@@ -42,7 +41,7 @@ function Subscriptions() {
         onClose={() => {
           setModalConfirmDel(!modalConfirmDel);
         }}
-        text={'Are you sure that you want to delete?'}
+        text={'Are you sure that you want to delete this subscription?'}
       >
         <Button
           text={'Confirm'}
