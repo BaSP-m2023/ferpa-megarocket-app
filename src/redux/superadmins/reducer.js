@@ -10,6 +10,13 @@ const INITIAL_STATE = {
 
 const superadminsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case actionConstant.RESET_INITIAL_STATE:
+      return {
+        ...state,
+        message: '',
+        error: false,
+        success: false
+      };
     case actionConstant.GET_SUPERADMINS_PENDING:
       return { ...state, loading: true };
     case actionConstant.GET_SUPERADMINS_SUCCESS:
@@ -36,6 +43,28 @@ const superadminsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         message: action.payload,
         loading: false,
+        error: true
+      };
+    case actionConstant.DELETE_SUPERADMINS_PENDING:
+      return {
+        ...state,
+        isPending: true
+      };
+    case actionConstant.DELETE_SUPERADMINS_SUCCESS: {
+      const updatedData = state.data.filter((superadmins) => superadmins._id !== action.payload.id);
+      return {
+        ...state,
+        data: updatedData,
+        isPending: false,
+        message: action.payload.message,
+        success: true
+      };
+    }
+    case actionConstant.DELETE_SUPERADMINS_ERROR:
+      return {
+        ...state,
+        message: action.payload,
+        isPending: false,
         error: true
       };
     default:

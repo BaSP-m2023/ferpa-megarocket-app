@@ -98,7 +98,9 @@ const Form = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setShowModal(true);
+    if (success) {
+      setShowModal(false);
+    }
   };
 
   const sendSuperAdmin = () => {

@@ -9,8 +9,7 @@ import Button from '../Shared/Button';
 import Loader from '../Shared/Loader';
 
 const SuperAdmins = () => {
-  const { data, loading, error, success, message } = useSelector((state) => state.superadmins);
-  const [messageTry, setMessageTry] = useState('');
+  const { loading, error, success, message } = useSelector((state) => state.superadmins);
   const [deleteModal, setDeleteModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -27,19 +26,19 @@ const SuperAdmins = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const deleteItem = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
-        method: 'DELETE'
-      });
-      const data = await response.json();
-      setMessageTry(data.message);
-      setDeleteModal(true);
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const deleteItem = async (id) => {
+  //   try {
+  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
+  //       method: 'DELETE'
+  //     });
+  //     const data = await response.json();
+  //     setMessageTry(data.message);
+  //     setDeleteModal(true);
+  //     return data;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   if (loading) {
     return (
@@ -84,9 +83,6 @@ const SuperAdmins = () => {
           </Link>
         </div>
         <Table
-          superadmins={data}
-          deleteItem={deleteItem}
-          message={messageTry}
           confirmModal={confirmModal}
           deleteModal={deleteModal}
           setConfirmModal={setConfirmModal}
