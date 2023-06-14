@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTrainers, deleteTrainer } from '../../redux/trainers/thunks';
 import styles from './trainers.module.css';
@@ -13,6 +13,7 @@ const Trainers = () => {
   const [successModal, setSuccessModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
   const { isLoading, trainers, error, success } = useSelector((state) => state.trainers);
 
   const togglePasswordVisibility = (index) => {
@@ -26,12 +27,14 @@ const Trainers = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (successModal) {
+    if (success) {
       setTimeout(() => {
-        setSuccessModal(false);
+        history.push('/trainers');
+        setSuccessModal(!successModal);
       }, 2000);
     }
-  }, [successModal]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success]);
 
   useEffect(() => {
     if (success) {

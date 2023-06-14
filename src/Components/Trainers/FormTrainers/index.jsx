@@ -1,8 +1,10 @@
+import { Link, useParams, useHistory } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Input } from '../../Shared/Inputs';
+import { sendTrainer } from '../../../redux/trainers/thunks';
+import { useSelector, useDispatch } from 'react-redux';
 import React from 'react';
 import Button from '../../Shared/Button';
-import { useState, useEffect } from 'react';
-import { Link, useParams, useHistory } from 'react-router-dom';
-import { Input } from '../../Shared/Inputs';
 import Modal from '../../Shared/Modal';
 import styles from './form.module.css';
 
@@ -10,7 +12,10 @@ const TrainerAddForm = () => {
   const [successAddModal, setSuccessAddModal] = useState(false);
   const [successEditModal, setSuccessEditModal] = useState(false);
   const [inputs, setInputs] = useState({});
+  const { isLoading, trainers, error, success } = useSelector((state) => state.trainers);
+  console.log(isLoading, trainers, error, success);
   const { id } = useParams();
+  const dispatch = useDispatch();
   const history = useHistory();
   const onRedirect = {
     pathname: '/trainers',
@@ -22,6 +27,14 @@ const TrainerAddForm = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        history.push('/trainers');
+      }, 2000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success]);
   const getTrainerID = async (id) => {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`);
@@ -67,24 +80,6 @@ const TrainerAddForm = () => {
       console.error(error);
     }
   };
-  const sendTrainer = async (item) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`, {
-        method: 'POST',
-        body: JSON.stringify(item),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const { data } = await response.json();
-      setTimeout(() => {
-        onRedirect.state.message = data.message;
-        history.push(onRedirect);
-      }, 1500);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -95,7 +90,7 @@ const TrainerAddForm = () => {
   const onSubmitAdd = (e) => {
     e.preventDefault();
     setSuccessAddModal(!successAddModal);
-    sendTrainer(inputs);
+    sendTrainer(dispatch, inputs);
   };
   const onSubmitEdit = (e) => {
     e.preventDefault();
