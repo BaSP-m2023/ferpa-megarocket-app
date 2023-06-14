@@ -1,13 +1,21 @@
 import * as actions from './actions';
 
 export const getSuperAdmins = async (dispatch) => {
+  dispatch(actions.getSuperadminsPending());
   try {
-    dispatch(actions.getSuperadminsPending());
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/`);
     const data = await res.json();
-    dispatch(actions.getSuperadminsSuccess(data.data));
+    dispatch(actions.resetInitialState());
+
+    if (res.status === 200) {
+      dispatch(actions.getSuperadminsSuccess(data.data));
+    }
+
+    if (res.status !== 200) {
+      throw new Error(data.message);
+    }
   } catch (error) {
-    dispatch(actions.getSuperadminsError(error.toString()));
+    dispatch(actions.getSuperadminsError(error.message));
   }
 };
 
@@ -22,10 +30,10 @@ export const postSuperAdmins = async (dispatch, newSuperadmin) => {
       }
     });
     const data = await res.json();
+    dispatch(actions.resetInitialState());
 
     if (res.status === 201) {
       dispatch(actions.postSuperadminsSuccess(data.data, data.message));
-      dispatch(actions.resetInitialState());
     }
 
     if (res.status !== 201) {

@@ -20,14 +20,18 @@ const superadminsReducer = (state = INITIAL_STATE, action) => {
     case actionConstant.GET_SUPERADMINS_PENDING:
       return { ...state, loading: true };
     case actionConstant.GET_SUPERADMINS_SUCCESS:
-      return { ...state, data: action.payload, loading: false, error: false };
+      return { ...state, data: action.payload, loading: false };
     case actionConstant.GET_SUPERADMINS_ERROR:
-      return { ...state, error: action.payload, loading: false };
+      return {
+        ...state,
+        message: action.payload,
+        isPending: false,
+        error: true
+      };
     case actionConstant.POST_SUPERADMINS_PENDING:
       return {
         ...state,
-        loading: true,
-        success: false
+        loading: true
       };
     case actionConstant.POST_SUPERADMINS_SUCCESS:
       return {
@@ -35,8 +39,7 @@ const superadminsReducer = (state = INITIAL_STATE, action) => {
         data: [...state.data, action.payload.newSuperadmin],
         loading: false,
         message: action.payload.message,
-        success: true,
-        error: false
+        success: true
       };
     case actionConstant.POST_SUPERADMINS_ERROR:
       return {

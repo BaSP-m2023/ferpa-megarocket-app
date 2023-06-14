@@ -10,8 +10,6 @@ import Loader from '../Shared/Loader';
 
 const SuperAdmins = () => {
   const { loading, error, success, message } = useSelector((state) => state.superadmins);
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [confirmModal, setConfirmModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
 
@@ -68,12 +66,7 @@ const SuperAdmins = () => {
             <Button text={'Add'} variant={'add'} />
           </Link>
         </div>
-        <Table
-          confirmModal={confirmModal}
-          deleteModal={deleteModal}
-          setConfirmModal={setConfirmModal}
-          setDeleteModal={setDeleteModal}
-        />
+        <Table />
       </section>
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} text={message} />
     </section>

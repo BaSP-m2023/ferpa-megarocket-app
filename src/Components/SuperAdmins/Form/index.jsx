@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postSuperAdmins, putSuperAdmin } from '../../../redux/superadmins/thunks';
 
 const Form = () => {
+  const { data, message, success, error } = useSelector((state) => state.superadmins);
   const { id } = useParams();
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
@@ -15,7 +16,6 @@ const Form = () => {
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { data, message, success, error } = useSelector((state) => state.superadmins);
 
   useEffect(() => {
     if (location.pathname.includes('edit')) {
@@ -38,9 +38,6 @@ const Form = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (success) {
-      setShowModal(false);
-    }
   };
 
   const sendSuperAdmin = () => {
@@ -93,7 +90,6 @@ const Form = () => {
             <Button
               text={location.pathname.includes('create') ? 'Create' : 'Edit'}
               variant={'add'}
-              submitting
               clickAction={() => sendSuperAdmin()}
             />
           </div>

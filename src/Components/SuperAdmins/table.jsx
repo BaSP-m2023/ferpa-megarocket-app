@@ -8,11 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const Table = () => {
   const [visiblePasswords, setVisiblePasswords] = useState([]);
+  const { data, message, success } = useSelector((state) => state.superadmins);
+  const [currentID, setCurrentID] = useState('');
   const [confirmModal, setConfirmModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-  const [currentID, setCurrentID] = useState('');
   const dispatch = useDispatch();
-  const { data, message, success } = useSelector((state) => state.superadmins);
 
   const togglePasswordVisibility = (index) => {
     const updatedVisiblePasswords = [...visiblePasswords];
@@ -20,8 +20,13 @@ const Table = () => {
     setVisiblePasswords(updatedVisiblePasswords);
   };
 
+  const handleModal = () => {
+    setDeleteModal(false);
+  };
+
   useEffect(() => {
     if (success) {
+      handleModal();
       setDeleteModal(message);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,15 +74,14 @@ const Table = () => {
         text={'Are you sure you want to delete this SuperAdmin?'}
         onClose={() => setConfirmModal(false)}
       >
-        <Button text={'Cancel'} variant={'white'} clickAction={() => setConfirmModal(false)} />
         <Button
           text={'Delete'}
           variant={'delete'}
           clickAction={() => {
             deleteSuperAdmin(dispatch, currentID);
-            setConfirmModal(false);
           }}
         />
+        <Button text={'Cancel'} variant={'white'} clickAction={() => setConfirmModal(false)} />
       </Modal>
       <Modal
         isOpen={deleteModal}
