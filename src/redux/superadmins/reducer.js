@@ -13,7 +13,6 @@ const superadminsReducer = (state = INITIAL_STATE, action) => {
     case actionConstant.RESET_INITIAL_STATE:
       return {
         ...state,
-        message: '',
         error: false,
         success: false
       };

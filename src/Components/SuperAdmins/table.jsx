@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const Table = () => {
   const [visiblePasswords, setVisiblePasswords] = useState([]);
   const { data, message, success } = useSelector((state) => state.superadmins);
-  const [modalMessage, setModalMessage] = useState('');
+  // const [modalMessage, setModalMessage] = useState('');
   const [currentID, setCurrentID] = useState('');
   const [confirmModal, setConfirmModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -25,7 +25,6 @@ const Table = () => {
   useEffect(() => {
     if (success) {
       handleModal();
-      setModalMessage(message);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -83,13 +82,13 @@ const Table = () => {
           variant={'delete'}
           clickAction={() => {
             deleteSuperAdmin(dispatch, currentID);
+            setConfirmModal(false);
+            setDeleteModal(true);
           }}
         />
         <Button text={'Cancel'} variant={'white'} clickAction={() => setConfirmModal(false)} />
       </Modal>
-      <Modal isOpen={deleteModal} title={modalMessage} onClose={() => setDeleteModal(false)}>
-        <Button text={'OK'} variant={'add'} clickAction={() => setDeleteModal(false)} />
-      </Modal>
+      <Modal isOpen={deleteModal} title={message} onClose={() => setDeleteModal(false)} success />
     </table>
   );
 };
