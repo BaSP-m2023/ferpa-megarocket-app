@@ -65,3 +65,23 @@ export const deleteSuperadminsError = (error) => {
     payload: error
   };
 };
+
+export const putSuperadminsPending = () => {
+  return {
+    type: actionConstant.PUT_SUPERADMINS_PENDING
+  };
+};
+
+export const putSuperadminsSuccess = (id, superadminUpdated, message) => {
+  return {
+    type: actionConstant.PUT_SUPERADMINS_SUCCESS,
+    payload: { id, superadminUpdated, message }
+  };
+};
+
+export const putSuperadminsError = (error) => {
+  return {
+    type: actionConstant.PUT_SUPERADMINS_ERROR,
+    payload: error
+  };
+};

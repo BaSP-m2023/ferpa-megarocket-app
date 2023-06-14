@@ -26,20 +26,6 @@ const SuperAdmins = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const deleteItem = async (id) => {
-  //   try {
-  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
-  //       method: 'DELETE'
-  //     });
-  //     const data = await response.json();
-  //     setMessageTry(data.message);
-  //     setDeleteModal(true);
-  //     return data;
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   if (loading) {
     return (
       <section className={styles.container}>

@@ -57,3 +57,29 @@ export const deleteSuperAdmin = async (dispatch, id) => {
     dispatch(actions.deleteSuperadminsError(error.message));
   }
 };
+
+export const putSuperAdmin = async (dispatch, id, superadminUpdated) => {
+  dispatch(actions.putSuperadminsPending());
+  try {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(superadminUpdated),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await res.json();
+    dispatch(actions.resetInitialState());
+
+    if (res.status === 200) {
+      dispatch(actions.putSuperadminsSuccess(id, data.data, data.message));
+      dispatch(actions.resetInitialState());
+    }
+
+    if (res.status !== 200) {
+      throw new Error(data.message);
+    }
+  } catch (error) {
+    dispatch(actions.putSuperadminsError(error.message));
+  }
+};

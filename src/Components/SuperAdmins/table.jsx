@@ -22,7 +22,6 @@ const Table = () => {
 
   useEffect(() => {
     if (success) {
-      confirmModal();
       setDeleteModal(message);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

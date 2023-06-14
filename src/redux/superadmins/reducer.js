@@ -67,6 +67,31 @@ const superadminsReducer = (state = INITIAL_STATE, action) => {
         isPending: false,
         error: true
       };
+    case actionConstant.PUT_SUPERADMINS_PENDING:
+      return {
+        ...state,
+        isPending: true
+      };
+    case actionConstant.PUT_SUPERADMINS_SUCCESS: {
+      const superadminToUpdate = state.data.find(
+        (superadmin) => superadmin._id === action.payload.id
+      );
+      const index = state.data.indexOf(superadminToUpdate);
+      state.data[index] = action.payload.superadminUpdated;
+      return {
+        ...state,
+        isPending: false,
+        message: action.payload.message,
+        success: true
+      };
+    }
+    case actionConstant.PUT_SUPERADMINS_ERROR:
+      return {
+        ...state,
+        message: action.payload,
+        isPending: false,
+        error: true
+      };
     default:
       return state;
   }
