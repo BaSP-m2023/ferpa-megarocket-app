@@ -8,14 +8,14 @@ import Modal from '../Shared/Modal/index';
 import Loader from '../Shared/Loader';
 import * as actionsConstants from '../../redux/admins/actions';
 
-function Admins() {
+const Admins = () => {
   const { isPending, data, error, errorSwitch, message } = useSelector((state) => state.admins);
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState('');
   const [successModal, setSuccesModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
   const dispatch = useDispatch();
-  console.log(error);
+
   useEffect(() => {
     getAdmins(dispatch);
     if (message && !errorSwitch) {
@@ -135,6 +135,6 @@ function Admins() {
       </section>
     </section>
   );
-}
+};
 
 export default Admins;
