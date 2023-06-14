@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAdmins, updateAdmin } from '../../../redux/admins/thunks';
+import { getAdmins, updateAdmin, addAdmin } from '../../../redux/admins/thunks';
 import styles from './adminsForm.module.css';
 import { Input } from '../../Shared/Inputs';
 import { Link, useParams, useHistory } from 'react-router-dom';
@@ -40,8 +40,8 @@ const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    addAdmin(inputs);
-
+    addAdmin(dispatch, inputs);
+    setMessageReq();
     setInputs({});
   };
 
@@ -55,30 +55,30 @@ const Form = () => {
     history.push(path);
   };
 
-  const addAdmin = async (admin) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(admin)
-      });
-      const { error, message } = await res.json();
-      setMessageReq(message);
-      if (!error) {
-        setSuccesModal(!successModal);
-        setTimeout(() => {
-          redirectPath();
-        }, 2000);
-      } else {
-        setErrorModal(!errorModal);
-        setInputs(admin);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const addAdmin = async (admin) => {
+  //   try {
+  //     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-type': 'application/json'
+  //       },
+  //       body: JSON.stringify(admin)
+  //     });
+  //     const { error, message } = await res.json();
+  //     setMessageReq(message);
+  //     if (!error) {
+  //       setSuccesModal(!successModal);
+  //       setTimeout(() => {
+  //         redirectPath();
+  //       }, 2000);
+  //     } else {
+  //       setErrorModal(!errorModal);
+  //       setInputs(admin);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   // const updateAdmin = async (id, updatedAdmin) => {
   //   const adminToSend = { ...updatedAdmin };

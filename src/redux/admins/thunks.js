@@ -58,3 +58,26 @@ export const updateAdmin = async (dispatch, id, updatedAdmin) => {
     dispatch(actionsConstants.putAdminsError(error.toString()));
   }
 };
+
+export const addAdmin = async (dispatch, admin) => {
+  dispatch(actionsConstants.addAdminsPending());
+  try {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(admin)
+    });
+    const { message } = await res.json();
+    if (res.status === 201) {
+      const message = 'Admin Created';
+      dispatch(actionsConstants.addAdminsSuccess(message));
+    }
+    if (res.status === 400) {
+      throw new Error(message);
+    }
+  } catch (error) {
+    dispatch(actionsConstants.addAdminsError(error.toString()));
+  }
+};
