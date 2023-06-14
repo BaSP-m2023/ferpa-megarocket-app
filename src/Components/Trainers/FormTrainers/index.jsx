@@ -1,7 +1,7 @@
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Input } from '../../Shared/Inputs';
-import { sendTrainer } from '../../../redux/trainers/thunks';
+import { sendTrainer, putTrainer } from '../../../redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import React from 'react';
 import Button from '../../Shared/Button';
@@ -11,75 +11,46 @@ import styles from './form.module.css';
 const TrainerAddForm = () => {
   const [successAddModal, setSuccessAddModal] = useState(false);
   const [successEditModal, setSuccessEditModal] = useState(false);
-  const [inputs, setInputs] = useState({});
-  const { isLoading, trainers, error, success } = useSelector((state) => state.trainers);
-  console.log(isLoading, trainers, error, success);
+  const [inputs, setInputs] = useState({
+    firstName: '',
+    lastName: '',
+    dni: '',
+    phone: '',
+    email: '',
+    city: '',
+    password: '',
+    salary: ''
+  });
   const { id } = useParams();
+  const { trainers } = useSelector((state) => state.trainers);
   const dispatch = useDispatch();
   const history = useHistory();
-  const onRedirect = {
-    pathname: '/trainers',
-    state: { message: '' }
-  };
+  // const onRedirect = {
+  //   pathname: '/trainers',
+  //   state: { message: '' }
+  // };
   useEffect(() => {
     if (id) {
-      getTrainerID(id);
+      const trainer = trainers.find((trainer) => trainer._id === id);
+      setInputs(trainer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
-    if (success) {
+    if (successAddModal) {
       setTimeout(() => {
         history.push('/trainers');
+        setSuccessAddModal(!successAddModal);
+      }, 2000);
+    }
+    if (successEditModal) {
+      setTimeout(() => {
+        history.push('/trainers');
+        setSuccessEditModal(!successEditModal);
       }, 2000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [success]);
-  const getTrainerID = async (id) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`);
-      const { data } = await res.json();
-      if (data) {
-        setInputs(data);
-      }
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const putTrainer = async (id, item) => {
-    const setEditTrainer = {
-      firstName: item.firstName,
-      lastName: item.lastName,
-      dni: item.dni.toString(),
-      phone: item.phone.toString(),
-      email: item.email,
-      city: item.city,
-      password: item.password,
-      salary: item.salary.toString()
-    };
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify(setEditTrainer),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const { message, error, data } = await response.json();
-      if (!error) {
-        console.log(message);
-      } else {
-        throw message;
-      }
-      setTimeout(() => {
-        onRedirect.state.message = data.message;
-        history.push(onRedirect);
-      }, 1500);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  }, [successAddModal, successEditModal]);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -95,7 +66,7 @@ const TrainerAddForm = () => {
   const onSubmitEdit = (e) => {
     e.preventDefault();
     setSuccessEditModal(!successEditModal);
-    putTrainer(id, inputs);
+    putTrainer(dispatch, id, inputs);
   };
   return (
     <div className={styles.formContainer}>

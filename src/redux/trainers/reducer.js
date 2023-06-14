@@ -68,6 +68,24 @@ export const trainersReducer = (state = initialState, action) => {
         error: action.payload,
         success: false
       };
+    case trainersConstant.EDIT_TRAINERS_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case trainersConstant.EDIT_TRAINERS_SUCCESS:
+      state.trainers.filter((trainer) => trainer._id !== action.payload._id);
+      state.trainers.push(action.payload.updatedTrainer);
+      return {
+        ...state,
+        isLoading: false,
+        error: ''
+      };
+    case trainersConstant.EDIT_TRAINERS_ERROR:
+      return {
+        ...state,
+        error: action.payload
+      };
     default:
       return state;
   }

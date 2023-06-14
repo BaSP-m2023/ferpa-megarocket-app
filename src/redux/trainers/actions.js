@@ -49,3 +49,14 @@ export const addTrainersError = (error) => ({
   type: trainersConstant.ADD_TRAINERS_ERROR,
   payload: error
 });
+export const editTrainersPending = () => ({
+  type: trainersConstant.EDIT_TRAINERS_PENDING
+});
+export const editTrainersSuccess = (updatedTrainer, id) => ({
+  type: trainersConstant.EDIT_TRAINERS_SUCCESS,
+  payload: { updatedTrainer, id }
+});
+export const editTrainersError = (error) => ({
+  type: trainersConstant.EDIT_TRAINERS_ERROR,
+  payload: error
+});
