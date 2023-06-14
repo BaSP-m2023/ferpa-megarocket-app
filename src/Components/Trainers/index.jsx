@@ -26,6 +26,14 @@ const Trainers = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    if (successModal) {
+      setTimeout(() => {
+        setSuccessModal(false);
+      }, 2000);
+    }
+  }, [successModal]);
+
+  useEffect(() => {
     if (success) {
       setSuccessModal(!successModal);
     }
@@ -66,14 +74,18 @@ const Trainers = () => {
         text={'Are you sure you want to delete this Trainer?'}
       >
         <Button
+          text={'Delete'}
+          variant={'delete'}
+          clickAction={() => {
+            deleteTrainer(dispatch, currentId);
+            setDeleteModal(!deleteModal);
+            setSuccessModal(!successModal);
+          }}
+        />
+        <Button
           text={'Cancel'}
           variant={'white'}
           clickAction={() => setDeleteModal(!deleteModal)}
-        />
-        <Button
-          text={'Delete'}
-          variant={'delete'}
-          clickAction={() => deleteTrainer(dispatch, currentId)}
         />
       </Modal>
       <Modal

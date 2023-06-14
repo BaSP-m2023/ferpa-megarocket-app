@@ -26,3 +26,19 @@ export const deleteTrainer = async (dispatch, id) => {
     dispatch(trainersActions.deleteTrainersError(error.message));
   }
 };
+export const sendTrainer = async (dispatch, item) => {
+  try {
+    dispatch(trainersActions.addTrainersPending());
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`, {
+      method: 'POST',
+      body: JSON.stringify(item),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const { data } = await response.json();
+    dispatch(trainersActions.addTrainersSuccess(data));
+  } catch (error) {
+    dispatch(trainersActions.addTrainersError());
+  }
+};

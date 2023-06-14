@@ -36,3 +36,16 @@ export const deleteTrainersError = (error) => {
     payload: error
   };
 };
+export const addTrainersPending = () => ({
+  type: trainersConstant.ADD_TRAINERS_PENDING
+});
+
+export const addTrainersSuccess = (trainer) => ({
+  type: trainersConstant.ADD_TRAINERS_SUCCESS,
+  payload: trainer
+});
+
+export const addTrainersError = (error) => ({
+  type: trainersConstant.ADD_TRAINERS_ERROR,
+  payload: error
+});

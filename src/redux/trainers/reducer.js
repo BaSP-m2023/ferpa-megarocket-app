@@ -26,13 +26,6 @@ export const trainersReducer = (state = initialState, action) => {
         ...state,
         error: action.payload
       };
-    default:
-      return state;
-  }
-};
-
-export const trainersDeleteReducer = (state = initialState, action) => {
-  switch (action.type) {
     case trainersConstant.DELETE_TRAINERS_PENDING:
       return {
         ...state,
@@ -50,6 +43,26 @@ export const trainersDeleteReducer = (state = initialState, action) => {
       };
     }
     case trainersConstant.DELETE_TRAINERS_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        success: false
+      };
+    case trainersConstant.ADD_TRAINERS_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case trainersConstant.ADD_TRAINERS_SUCCESS: {
+      return {
+        ...state,
+        trainers: [...state.trainers, action.payload],
+        isLoading: false,
+        error: '',
+        success: true
+      };
+    }
+    case trainersConstant.ADD_TRAINERS_ERROR:
       return {
         ...state,
         error: action.payload,
