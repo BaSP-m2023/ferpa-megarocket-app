@@ -10,19 +10,28 @@ import Loader from '../Shared/Loader';
 
 const SuperAdmins = () => {
   const { loading, error, success, message } = useSelector((state) => state.superadmins);
+  const [modalMessage, setModalMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
+
+  const handleModal = () => {
+    setShowModal(!showModal);
+    setTimeout(() => {
+      setShowModal();
+    }, 2000);
+  };
+
+  useEffect(() => {
+    if (success) {
+      handleModal();
+      setModalMessage(message);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     getSuperAdmins(dispatch);
   }, [dispatch]);
-
-  useEffect(() => {
-    if (success) {
-      setShowModal(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   if (loading) {
     return (
@@ -68,7 +77,7 @@ const SuperAdmins = () => {
         </div>
         <Table />
       </section>
-      <Modal onClose={() => setShowModal(false)} isOpen={showModal} text={message} />
+      <Modal onClose={() => setShowModal(false)} isOpen={showModal} tittle={modalMessage} success />
     </section>
   );
 };

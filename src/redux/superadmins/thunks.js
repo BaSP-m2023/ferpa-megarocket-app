@@ -81,7 +81,6 @@ export const putSuperAdmin = async (dispatch, id, superadminUpdated) => {
 
     if (res.status === 200) {
       dispatch(actions.putSuperadminsSuccess(id, data.data, data.message));
-      dispatch(actions.resetInitialState());
     }
 
     if (res.status !== 200) {
