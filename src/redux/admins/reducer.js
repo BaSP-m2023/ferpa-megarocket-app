@@ -1,48 +1,35 @@
-import { combineReducers } from 'redux';
 import * as actionsConstants from './constants';
 
 const INITIAL_STATE = {
   isPending: true,
-  errSwitch: false,
   data: [],
-  error: ''
+  error: '',
+  errorSwitch: false,
+  message: ''
 };
 
-const getReducer = (state = INITIAL_STATE, action) => {
+export const adminsReducers = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actionsConstants.GET_ADMINS_PENDING: {
-      return { ...state, isPending: true, errSwitch: false };
+      return { ...state, isPending: true, errorSwitch: false, message: '' };
     }
     case actionsConstants.GET_ADMINS_SUCCESS: {
-      return { ...state, data: action.payload, isPending: false, errSwitch: false };
+      return { ...state, data: action.payload, isPending: false };
     }
     case actionsConstants.GET_ADMINS_ERROR: {
-      return { error: action.payload, isPending: false, errSwitch: true };
+      return { error: action.payload, isPending: false };
     }
-    default: {
-      return state;
-    }
-  }
-};
-
-const deleteReducer = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
     case actionsConstants.DELETE_ADMINS_PENDING: {
-      return { ...state, isPending: true, errSwitch: false };
+      return { ...state, isPending: true, message: '', errorSwitch: false };
     }
     case actionsConstants.DELETE_ADMINS_SUCCESS: {
-      return { ...state, data: action.payload, isPending: false, errSwitch: false };
+      return { ...state, message: action.payload, isPending: false };
     }
     case actionsConstants.DELETE_ADMINS_ERROR: {
-      return { error: action.payload, isPending: false, errSwitch: true };
+      return { error: action.payload, isPending: false, errorSwitch: true };
     }
     default: {
       return state;
     }
   }
 };
-
-export const adminsReducers = combineReducers({
-  get: getReducer,
-  delete: deleteReducer
-});

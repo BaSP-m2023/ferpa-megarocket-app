@@ -29,6 +29,6 @@ export const deleteAdmin = async (dispatch, id) => {
       throw new Error('Admin not found');
     }
   } catch (error) {
-    dispatch(actionsConstants.deleteAdminsError(error));
+    dispatch(actionsConstants.deleteAdminsError(error.toString()));
   }
 };

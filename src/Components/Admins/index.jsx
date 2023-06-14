@@ -9,23 +9,16 @@ import Loader from '../Shared/Loader';
 import * as actionsConstants from '../../redux/admins/actions';
 
 function Admins() {
-  const getData = useSelector((state) => state.admins.get.data);
-  const getPending = useSelector((state) => state.admins.get.isPending);
-  const getError = useSelector((state) => state.admins.get.error);
-  const errorGetSwitch = useSelector((state) => state.admins.get.errSwitch);
-  const deletePending = useSelector((state) => state.admins.delete.isPending);
-  const deleteData = useSelector((state) => state.admins.delete.data);
-  const deleteError = useSelector((state) => state.admins.delete.error);
-  const errorDeleteSwitch = useSelector((state) => state.admins.delete.errSwitch);
+  const { isPending, data, error, errorSwitch, message } = useSelector((state) => state.admins);
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState('');
   const [successModal, setSuccesModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
   const dispatch = useDispatch();
-
+  console.log(error);
   useEffect(() => {
     getAdmins(dispatch);
-    if (!deletePending && !deleteError) {
+    if (message && !errorSwitch) {
       setSuccesModal(true);
       setTimeout(() => {
         setSuccesModal(false);
@@ -33,20 +26,20 @@ function Admins() {
       dispatch(actionsConstants.deleteAdminsPending());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deletePending]);
+  }, [message]);
 
   useEffect(() => {
-    if (errorGetSwitch || errorDeleteSwitch) {
+    if (errorSwitch) {
       setErrorModal(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [errorGetSwitch, errorDeleteSwitch]);
+  }, [errorSwitch]);
 
   const handleDelete = (id) => {
     deleteAdmin(dispatch, id);
   };
 
-  if (getPending) {
+  if (isPending) {
     return (
       <section className={styles.container}>
         <Loader />
@@ -77,7 +70,7 @@ function Admins() {
       <Modal
         title={'Admin Deleted'}
         isOpen={successModal}
-        text={deleteData}
+        text={message}
         onClose={() => {
           setSuccesModal(!successModal);
         }}
@@ -85,7 +78,7 @@ function Admins() {
       <Modal
         isOpen={errorModal}
         title={'ERROR'}
-        text={getError.toString() || deleteError.toString()}
+        text={error}
         warning
         onClose={() => {
           setErrorModal(!errorModal);
@@ -100,7 +93,7 @@ function Admins() {
             <Button text={'Add Admin'} variant={'add'} />
           </Link>
         </header>
-        {getData.length > 0 ? (
+        {data?.length > 0 ? (
           <table className={styles.table}>
             <tbody className={styles.tbody}>
               <tr className={styles.thead}>
@@ -110,7 +103,7 @@ function Admins() {
                 <th className={styles.th}></th>
                 <th className={styles.th}></th>
               </tr>
-              {getData.map((admin) => {
+              {data?.map((admin) => {
                 return (
                   <tr className={styles.tr} key={admin._id}>
                     <td className={styles.td}>{admin.firstName}</td>
