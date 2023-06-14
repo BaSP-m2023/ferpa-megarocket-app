@@ -15,16 +15,23 @@
   color: #373867;
 }
 
-.modalOverlaySuccess {
+.modalOverlayPop {
   position: fixed;
-  top: 1vw;
-  right: 1vw;
+  top: 0.4vw;
+  right: 0.4vw;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Roboto';
   font-weight: bold;
-  color: #373867;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: transform 0.5s ease;
+}
+
+.modalOverlayPop.open {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .modalChildren {
@@ -39,38 +46,51 @@
   background-color: #fff;
   border-radius: 0.5vw;
   padding: 1vw;
-  max-width: 35vw;
-  width: 100%;
+  min-height: 5vw;
+  min-width: 20vw;
 }
 
 .modalSuccess {
   background-color: #49A37B;
-  height: 8vw;
+  border: 0.1vw solid white;
+  min-height: 5vw;
+  min-width: 20vw;
+  max-width: 25vw;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
+.modalError {
+  background-color: #a30000;
+  border: 0.1vw solid white;
+  min-height: 5vw;
+  min-width: 20vw;
+  max-width: 25vw;
   color: white;
   letter-spacing: 0.5px;
 }
 
 .modalTitle {
   display: inline-block;
-  margin-top: 0;
-  width: 34vw;
-  font-size: 2vw;
+  margin: 0;
+  font-size: 22px;
 }
 
 .modalWarn {
-  color: red;
+  color: #a30000;
 }
 
 .modalText{
   align-self: center;
-  margin-bottom: 4vw;
+  margin: 2vw 0;
+  font-size: 16px;
 }
 
 .modalCloseBtn {
   position:absolute;
-  top: 1vw;
-  right: 1vw;
-  font-size: 2vw;
+  top: 0;
+  right: 0;
+  font-size: 1.2vw;
   width: 2vw;
   height: 2vw;
   text-align: center;
