@@ -60,6 +60,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       };
     case actionConstant.PUT_SUBSCRIPTIONS_SUCCESS:
       state.subs.filter((sub) => sub._id !== action.payload.id);
+      state.subs.push(action.payload.updatedSub);
       return {
         ...state,
         isPending: false,

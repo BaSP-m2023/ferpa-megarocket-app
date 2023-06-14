@@ -69,9 +69,12 @@ const Form = () => {
   }, [dispatch]);
 
   const handleClick = async () => {
-    !id ? postSubscriptions(dispatch, currentSub) : updateSubscription(dispatch, currentSub, id);
+    !id
+      ? await postSubscriptions(dispatch, currentSub)
+      : await updateSubscription(dispatch, currentSub, id);
     const updatedState = store.getState();
     const updatedError = updatedState.subscriptions.error;
+    console.log(updatedError);
     if (!updatedError) {
       onRedirect.state.message = message;
       history.push(onRedirect);
