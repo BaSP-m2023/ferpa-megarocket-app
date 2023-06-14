@@ -96,7 +96,7 @@ const Classes = () => {
             <Button text={'Cancel'} type={'button'} clickAction={reDirect} />
           </Modal>
           <table className={styles.table}>
-            <div className={styles.fixed}>
+            <div>
               <thead>
                 <tr>
                   <th className={styles.large}>Activity Name</th>
