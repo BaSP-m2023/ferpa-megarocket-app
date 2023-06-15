@@ -4,42 +4,32 @@ import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSubscriptions } from '../../redux/subscriptions/thunks';
+import { getSubscriptions, selectId, deleteSubscriptions } from '../../redux/subscriptions/thunks';
 import Loader from '../Shared/Loader';
 
 function Subscriptions() {
   const location = useLocation();
-  const { data, isPending, error } = useSelector((state) => state.subscriptions);
+  const { subs, isPending, error, id, message } = useSelector((state) => state.subscriptions);
   const dispatch = useDispatch();
-  const [currentId, setCurrentId] = useState('');
   const history = useHistory();
-  const [modalSucess, setModalSucess] = useState(false);
-  const [modalSucessTitle, setModalSucessTitle] = useState('');
+  const [modalSuccess, setModalSuccess] = useState(false);
   const [modalConfirmDel, setModalConfirmDel] = useState(false);
-
-  const onDelete = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
-        method: 'DELETE'
-      });
-      const data = await response.json();
-      setModalConfirmDel(!modalConfirmDel);
-      setModalSucessTitle(data.message);
-      setModalSucess(true);
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   useEffect(() => {
     if (location.state) {
-      setModalSucessTitle(location.state.message);
-      setModalSucess(!modalSucess);
       history.replace({ ...history.location, state: undefined });
+      setModalSuccess(!modalSuccess);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (modalSuccess) {
+      setTimeout(() => {
+        setModalSuccess(!modalSuccess);
+      }, 2000);
+    }
+  }, [modalSuccess]);
 
   useEffect(() => {
     getSubscriptions(dispatch);
@@ -48,18 +38,28 @@ function Subscriptions() {
   return (
     <section className={styles.container}>
       <Modal
-        isOpen={modalSucess}
-        title={modalSucessTitle}
+        isOpen={modalSuccess}
+        title={message}
         success
-        onClose={() => setModalSucess(!modalSucess)}
+        onClose={() => setModalSuccess(!modalSuccess)}
       ></Modal>
       <Modal
         isOpen={modalConfirmDel}
         title={'Warning'}
-        onClose={() => setModalConfirmDel(!modalConfirmDel)}
-        text={'Are you sure that you want to delete?'}
+        onClose={() => {
+          setModalConfirmDel(!modalConfirmDel);
+        }}
+        text={'Are you sure that you want to delete this subscription?'}
       >
-        <Button text={'Confirm'} clickAction={() => onDelete(currentId)} variant={'delete'} />
+        <Button
+          text={'Confirm'}
+          clickAction={() => {
+            deleteSubscriptions(dispatch, id);
+            setModalConfirmDel(!modalConfirmDel);
+            setModalSuccess(true);
+          }}
+          variant={'delete'}
+        />
         <Button
           text={'Cancel'}
           clickAction={() => setModalConfirmDel(!modalConfirmDel)}
@@ -89,30 +89,34 @@ function Subscriptions() {
             ''
           ) : (
             <tbody>
-              {data.map((subscription) => (
-                <tr key={subscription._id} className={styles.tr}>
-                  <td className={styles.td}>{subscription.classId?.activityId?.name}</td>
-                  <td className={styles.td}>{subscription.classId?.trainerId?.lastName}</td>
-                  <td className={styles.td}>
-                    {subscription.memberId?.lastName}, {subscription.memberId?.firstName}
-                  </td>
-                  <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
-                  <td className={styles.tdBtn}>
-                    <Link to={`/subscriptions/form/${subscription._id}`}>
-                      <Button variant={'edit'} />
-                    </Link>
-                  </td>
-                  <td className={styles.tdBtn}>
-                    <Button
-                      variant={'deleteIcon'}
-                      clickAction={() => {
-                        setCurrentId(subscription._id);
-                        setModalConfirmDel(!modalConfirmDel);
-                      }}
-                    />
-                  </td>
-                </tr>
-              ))}
+              {subs &&
+                subs.map((subscription) => (
+                  <tr key={subscription._id} className={styles.tr}>
+                    <td className={styles.td}>{subscription.classId?.activityId?.name}</td>
+                    <td className={styles.td}>{subscription.classId?.trainerId?.lastName}</td>
+                    <td className={styles.td}>
+                      {subscription.memberId?.lastName}, {subscription.memberId?.firstName}
+                    </td>
+                    <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
+                    <td className={styles.tdBtn}>
+                      <Link to={`/subscriptions/form/${subscription._id}`}>
+                        <Button
+                          variant={'edit'}
+                          clickAction={() => selectId(dispatch, subscription._id)}
+                        />
+                      </Link>
+                    </td>
+                    <td className={styles.tdBtn}>
+                      <Button
+                        variant={'deleteIcon'}
+                        clickAction={() => {
+                          selectId(dispatch, subscription._id);
+                          setModalConfirmDel(!modalConfirmDel);
+                        }}
+                      />
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           )}
         </table>
