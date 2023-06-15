@@ -4,16 +4,18 @@ import { Select } from '../../Shared/Inputs/index';
 import Button from '../../Shared/Button/index';
 import { useParams, useHistory } from 'react-router-dom';
 import Modal from '../../Shared/Modal';
+import { postClass, putClass } from '../../../redux/classes/thunks';
+import { useSelector, useDispatch } from 'react-redux';
+import Loader from '../../Shared/Loader/';
+import { getActivities } from '../../../redux/activities/thunks';
+import { getTrainers } from '../../../redux/trainers/thunks';
 
 const Form = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
-  const [activities, setActivities] = useState([]);
-  const [trainers, setTrainers] = useState([]);
   const [singleClass, setSingleClass] = useState({});
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
-  const [message, setMessage] = useState('');
   const [newClass, setNewClass] = useState({
     day: '',
     hour: '',
@@ -228,33 +230,16 @@ const Form = () => {
     }
   ];
 
+  const { isLoading, serverMessage, success, error } = useSelector((state) => state.classes);
+  const { trainers } = useSelector((state) => state.trainers);
+  const { data } = useSelector((state) => state.activities);
+
   const updatedTrainers = trainers.map((trainer) => {
     return { ...trainer, name: trainer.firstName, value: trainer._id };
   });
-  const updatedActivity = activities.map((activity) => {
+  const updatedActivity = data.map((activity) => {
     return { ...activity, name: activity.name, value: activity._id };
   });
-
-  const getActivities = async () => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`);
-      const data = await res.json();
-      setActivities(data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getTrainers = async () => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`);
-      const data = await res.json();
-      setTrainers(data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const getClassById = async () => {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`);
@@ -266,67 +251,11 @@ const Form = () => {
     }
   };
 
-  const addClass = async (newClass) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`, {
-        method: 'POST',
-        body: JSON.stringify(newClass),
-        headers: {
-          'Content-type': 'application/json'
-        }
-      });
-      const data = await res.json();
-      if (res.status === 201) {
-        setShowSuccessModal(true);
-        setTimeout(() => {
-          setShowSuccessModal(false);
-          history.push('/classes');
-        }, 2000);
-      } else {
-        setMessage(data.error._message);
-        setShowErrorModal(true);
-        setTimeout(() => {
-          setShowErrorModal(false);
-        }, 2000);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const onChangeInput = (e) => {
     setNewClass({
       ...newClass,
       [e.target.name]: e.target.value
     });
-  };
-
-  const updateClass = async (id, newClass) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(newClass)
-      });
-      const data = await res.json();
-      if (res.status === 200) {
-        setShowSuccessModal(true);
-        setTimeout(() => {
-          setShowSuccessModal(false);
-          history.push('/classes');
-        }, 2000);
-      } else {
-        setMessage(data.error._message);
-        setShowErrorModal(true);
-        setTimeout(() => {
-          setShowErrorModal(false);
-        }, 2000);
-      }
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   const previousClass = (singleClass) => {
@@ -341,16 +270,33 @@ const Form = () => {
       });
   };
 
+  useEffect(() => {
+    if (success) {
+      history.push('/classes');
+    }
+    if (error) {
+      setShowErrorModal(true);
+      setTimeout(() => {
+        setShowErrorModal(false);
+      }, 4000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success, error]);
+
   const sendClass = () => {
-    id ? updateClass(id, newClass) : addClass(newClass);
+    if (id) {
+      dispatch(putClass(id, newClass));
+    } else {
+      dispatch(postClass(newClass));
+    }
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
   };
   useEffect(() => {
-    getActivities();
-    getTrainers();
+    getActivities(dispatch);
+    getTrainers(dispatch);
     id && getClassById(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -361,26 +307,24 @@ const Form = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [singleClass]);
+  if (isLoading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.transparetnBlueForm}>
+          <div className={styles.loading}>{<Loader />}</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles.transparetnBlueForm}>
         <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
           <h2>{id ? 'Edit' : 'Add'}</h2>
-          {showSuccessModal && (
-            <Modal
-              title={id ? 'Class Updated' : 'Class Added'}
-              isOpen
-              success
-              onClose={() => {
-                setShowSuccessModal(false);
-                history.push('/classes');
-              }}
-            />
-          )}
           {showErrorModal && (
             <Modal
-              title={message}
+              title={serverMessage}
               isOpen={showErrorModal}
               warning
               onClose={() => setShowErrorModal(false)}
@@ -422,7 +366,14 @@ const Form = () => {
             nameValue={'slots'}
           />
           <div className={styles.buttons}>
-            <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting clickAction={sendClass} />
+            <Button
+              variant={'add'}
+              text={id ? 'Edit' : 'Add'}
+              submitting
+              clickAction={() => {
+                sendClass();
+              }}
+            />
             <Button
               variant={'white'}
               text={'Cancel'}
