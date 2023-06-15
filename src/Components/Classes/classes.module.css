@@ -10,7 +10,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-image: url('../../../public/assets/images/admins-background.jpg');
-  height: 921px;
+  height: 787px;
 }
 
 .error {
@@ -33,6 +33,8 @@
   min-width: 600px;
   background-color: rgba(55, 56, 103, 0.8);
   height: 60%;
+  border-radius: 0 0px 20px 20px;
+  box-shadow: 10px 10px 20px -6px rgba(0, 0, 0, 0.59);
 }
 
 .transparetnBlueForm {
@@ -45,6 +47,8 @@
   min-width: 600px;
   max-height: 100px;
   background-color: rgba(55, 56, 103, 0.8);
+  border-radius: 20px;
+  box-shadow: 10px 10px 20px -6px rgba(0, 0, 0, 0.59);
 }
 
 .form {
@@ -91,6 +95,7 @@
   margin: 0 0;
   padding: 50px 160px 0 160px;
   height: 200px;
+  border-radius: 20px 20px 0 0px;
 }
 
 .scroll {
@@ -102,4 +107,9 @@
   position: fixed;
   width: 55%;
   top: 35%;
+}
+
+.loading {
+  border-radius: 20px;
+  box-shadow: 10px 10px 20px -6px rgba(0, 0, 0, 0.59);
 }

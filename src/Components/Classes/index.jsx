@@ -32,6 +32,7 @@ const Classes = () => {
       setMessage(serverMessage);
       setShowDeleteModal(false);
       setShowSuccessModal(true);
+      dispatch(getClasses());
       setTimeout(() => {
         setShowSuccessModal(false);
       }, 2000);
@@ -55,7 +56,7 @@ const Classes = () => {
   if (isLoading) {
     return (
       <div className={styles.container}>
-        <div className={styles.transparetnBlue}>
+        <div className={`${styles.transparetnBlue} ${styles.loading}`}>
           <div className={styles.loading}>{<Loader />}</div>
         </div>
       </div>
@@ -98,13 +99,15 @@ const Classes = () => {
           />
           <Modal
             isOpen={showDeleteModal}
-            title={'Are you sure?'}
+            title={'Delete'}
+            text={'Are you sure you want to delete?'}
             warning
             onClose={() => setShowDeleteModal(false)}
           >
             <Button
               text={'Yes'}
               type={'button'}
+              variant={'delete'}
               clickAction={() => {
                 deleteSingleClass(currentId);
               }}
