@@ -8,7 +8,7 @@ const INITIAL_STATE = {
   message: ''
 };
 
-export const adminsReducers = (state = INITIAL_STATE, action) => {
+const adminsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case typeConstants.GET_ADMINS_PENDING: {
       return { ...state, isPending: true, errorSwitch: false, message: '' };
@@ -51,3 +51,5 @@ export const adminsReducers = (state = INITIAL_STATE, action) => {
     }
   }
 };
+
+export default adminsReducer;
