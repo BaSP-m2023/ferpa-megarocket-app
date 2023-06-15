@@ -11,7 +11,7 @@ export const getAdmins = async (dispatch) => {
       throw new Error('There was an error fetching admins');
     }
   } catch (error) {
-    dispatch(actionsConstants.getAdminsError(error));
+    dispatch(actionsConstants.getAdminsError(error.toString()));
   }
 };
 

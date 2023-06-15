@@ -17,6 +17,7 @@ const Admins = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(actionsConstants.deleteAdminsPending());
     getAdmins(dispatch);
     if (message && !errorSwitch) {
       setSuccesModal(true);
@@ -25,6 +26,9 @@ const Admins = () => {
       }, 2000);
       dispatch(actionsConstants.deleteAdminsPending());
     }
+    return () => {
+      dispatch(actionsConstants.deleteAdminsPending());
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [message]);
 

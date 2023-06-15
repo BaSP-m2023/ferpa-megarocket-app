@@ -1,4 +1,4 @@
-import * as actionsConstants from './constants';
+import * as typeConstants from './constants';
 
 const INITIAL_STATE = {
   isPending: true,
@@ -10,40 +10,40 @@ const INITIAL_STATE = {
 
 export const adminsReducers = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case actionsConstants.GET_ADMINS_PENDING: {
+    case typeConstants.GET_ADMINS_PENDING: {
       return { ...state, isPending: true, errorSwitch: false, message: '' };
     }
-    case actionsConstants.GET_ADMINS_SUCCESS: {
+    case typeConstants.GET_ADMINS_SUCCESS: {
       return { ...state, data: action.payload, isPending: false };
     }
-    case actionsConstants.GET_ADMINS_ERROR: {
+    case typeConstants.GET_ADMINS_ERROR: {
       return { error: action.payload, isPending: false, errorSwitch: true };
     }
-    case actionsConstants.DELETE_ADMINS_PENDING: {
+    case typeConstants.DELETE_ADMINS_PENDING: {
       return { ...state, isPending: true, message: '', errorSwitch: false };
     }
-    case actionsConstants.DELETE_ADMINS_SUCCESS: {
+    case typeConstants.DELETE_ADMINS_SUCCESS: {
       return { ...state, message: action.payload, isPending: false };
     }
-    case actionsConstants.DELETE_ADMINS_ERROR: {
+    case typeConstants.DELETE_ADMINS_ERROR: {
       return { error: action.payload, isPending: false, errorSwitch: true };
     }
-    case actionsConstants.PUT_ADMINS_PENDING: {
+    case typeConstants.PUT_ADMINS_PENDING: {
       return { ...state, isPending: true, message: '', errorSwitch: false };
     }
-    case actionsConstants.PUT_ADMINS_SUCCESS: {
-      return { ...state, message: action.payload, isPending: false };
+    case typeConstants.PUT_ADMINS_SUCCESS: {
+      return { ...state, message: action.payload, error: '', isPending: false };
     }
-    case actionsConstants.PUT_ADMINS_ERROR: {
+    case typeConstants.PUT_ADMINS_ERROR: {
       return { error: action.payload, isPending: false, errorSwitch: true };
     }
-    case actionsConstants.ADD_ADMINS_PENDING: {
-      return { ...state, isPending: true, message: '', errorSwitch: false };
+    case typeConstants.ADD_ADMINS_PENDING: {
+      return { ...state, isPending: true, message: '', error: '', errorSwitch: false };
     }
-    case actionsConstants.ADD_ADMINS_SUCCESS: {
+    case typeConstants.ADD_ADMINS_SUCCESS: {
       return { ...state, message: action.payload, isPending: false };
     }
-    case actionsConstants.ADD_ADMINS_ERROR: {
+    case typeConstants.ADD_ADMINS_ERROR: {
       return { error: action.payload, isPending: false, errorSwitch: true };
     }
     default: {

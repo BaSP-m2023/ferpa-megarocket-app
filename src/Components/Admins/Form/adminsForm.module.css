@@ -35,6 +35,11 @@
   line-height: 48px;
 }
 
+.passMessage {
+  color: white;
+  padding-left: 5px;
+}
+
 .inputGroup {
   display: flex;
   flex-direction: column;
