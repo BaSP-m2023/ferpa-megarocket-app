@@ -10,7 +10,6 @@ import Loader from '../Shared/Loader';
 
 const SuperAdmins = () => {
   const { loading, error, success, message } = useSelector((state) => state.superadmins);
-  // const [modalMessage, setModalMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
 
@@ -18,11 +17,10 @@ const SuperAdmins = () => {
     setShowModal(!showModal);
     setTimeout(() => {
       setShowModal();
-    }, 4000);
+    }, 2000);
   };
 
   useEffect(() => {
-    console.log(message);
     if (success) {
       handleModal();
     }
@@ -31,7 +29,8 @@ const SuperAdmins = () => {
 
   useEffect(() => {
     getSuperAdmins(dispatch);
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (loading) {
     return (

@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 const Table = () => {
   const [visiblePasswords, setVisiblePasswords] = useState([]);
   const { data, message, success } = useSelector((state) => state.superadmins);
-  // const [modalMessage, setModalMessage] = useState('');
   const [currentID, setCurrentID] = useState('');
   const [confirmModal, setConfirmModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);

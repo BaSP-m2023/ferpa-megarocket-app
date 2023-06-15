@@ -24,7 +24,7 @@ const superadminsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         message: action.payload,
-        isPending: false,
+        loading: false,
         error: true
       };
     case actionConstant.POST_SUPERADMINS_PENDING:
@@ -50,14 +50,14 @@ const superadminsReducer = (state = INITIAL_STATE, action) => {
     case actionConstant.DELETE_SUPERADMINS_PENDING:
       return {
         ...state,
-        isPending: true
+        loading: true
       };
     case actionConstant.DELETE_SUPERADMINS_SUCCESS: {
       const updatedData = state.data.filter((superadmins) => superadmins._id !== action.payload.id);
       return {
         ...state,
         data: updatedData,
-        isPending: false,
+        loading: false,
         message: action.payload.message,
         success: true
       };
@@ -66,13 +66,13 @@ const superadminsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         message: action.payload,
-        isPending: false,
+        loading: false,
         error: true
       };
     case actionConstant.PUT_SUPERADMINS_PENDING:
       return {
         ...state,
-        isPending: true
+        loading: true
       };
     case actionConstant.PUT_SUPERADMINS_SUCCESS: {
       const superadminToUpdate = state.data.find(
@@ -82,7 +82,7 @@ const superadminsReducer = (state = INITIAL_STATE, action) => {
       state.data[index] = action.payload.superadminUpdated;
       return {
         ...state,
-        isPending: false,
+        loading: false,
         message: action.payload.message,
         success: true
       };
@@ -91,7 +91,7 @@ const superadminsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         message: action.payload,
-        isPending: false,
+        loading: false,
         error: true
       };
     default:
