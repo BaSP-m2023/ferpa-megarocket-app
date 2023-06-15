@@ -83,8 +83,9 @@ const reducer = (state = INITIAL_STATE, action) => {
         isPending: true
       };
     case actionConstant.PUT_ACTIVITIES_SUCCESS: {
-      const activityToUpdate = state.data.indexOf(action.payload.id);
-      state.data[activityToUpdate] = action.payload.activityUpdated;
+      const activityToUpdate = state.data.find((activity) => activity._id === action.payload.id);
+      const index = state.data.indexOf(activityToUpdate);
+      state.data[index] = action.payload.activityUpdated;
       return {
         ...state,
         isPending: false,
