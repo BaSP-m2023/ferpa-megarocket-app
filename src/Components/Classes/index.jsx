@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import styles from './classes.module.css';
-import { Link, useHistory } from 'react-router-dom';
-import Button from '../Shared/Button/index';
 import Modal from '../Shared/Modal';
+import styles from './classes.module.css';
+import Button from '../Shared/Button/index';
+import { Link, useHistory } from 'react-router-dom';
 import { getClasses, deleteClass } from '../../redux/classes/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import Loader from '../../Components/Shared/Loader';
@@ -10,6 +10,8 @@ import Loader from '../../Components/Shared/Loader';
 const Classes = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [message, setMessage] = useState('');
   const [currentId, setCurrentId] = useState('');
   const history = useHistory();
   const dispatch = useDispatch();
@@ -27,7 +29,12 @@ const Classes = () => {
 
   const check = () => {
     if (success) {
+      setMessage(serverMessage);
       setShowDeleteModal(false);
+      setShowSuccessModal(true);
+      setTimeout(() => {
+        setShowSuccessModal(false);
+      }, 2000);
     }
   };
   useEffect(() => {
@@ -42,7 +49,8 @@ const Classes = () => {
 
   useEffect(() => {
     dispatch(getClasses());
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (isLoading) {
     return (
@@ -68,6 +76,14 @@ const Classes = () => {
     <section className={styles.container}>
       <div className={styles.onTop}>
         <h2>Classes</h2>
+        <Modal
+          title={message}
+          isOpen={showSuccessModal}
+          success
+          onClose={() => {
+            setShowSuccessModal(false);
+          }}
+        />
         <Link to={'./classes/form'}>
           <Button variant={'add'} text={'Add'} />
         </Link>

@@ -5,8 +5,7 @@ import Button from '../../Shared/Button/index';
 import { useParams, useHistory } from 'react-router-dom';
 import Modal from '../../Shared/Modal';
 import { postClass, putClass } from '../../../redux/classes/thunks';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Loader from '../../Shared/Loader/';
 import { getActivities } from '../../../redux/activities/thunks';
 import { getTrainers } from '../../../redux/trainers/thunks';
@@ -16,7 +15,6 @@ const Form = () => {
   const history = useHistory();
   const { id } = useParams();
   const [singleClass, setSingleClass] = useState({});
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [newClass, setNewClass] = useState({
     day: '',
@@ -278,6 +276,9 @@ const Form = () => {
     }
     if (error) {
       setShowErrorModal(true);
+      setTimeout(() => {
+        setShowErrorModal(false);
+      }, 4000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success, error]);
@@ -321,16 +322,6 @@ const Form = () => {
       <div className={styles.transparetnBlueForm}>
         <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
           <h2>{id ? 'Edit' : 'Add'}</h2>
-          {showSuccessModal && (
-            <Modal
-              title={id ? 'Class Updated' : serverMessage}
-              isOpen
-              success
-              onClose={() => {
-                setShowSuccessModal(false);
-              }}
-            />
-          )}
           {showErrorModal && (
             <Modal
               title={serverMessage}
