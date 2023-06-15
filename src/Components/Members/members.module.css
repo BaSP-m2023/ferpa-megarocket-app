@@ -8,6 +8,11 @@
   background-image: url(../../../public/assets/images/admins-background.jpg);
 }
 
+.purpleBack {
+  background-color: rgba(55, 56, 103, 0.5);
+  font-family: 'Roboto', sans-serif;
+}
+
 .whiteLetters {
   color: white;
 }
@@ -28,6 +33,4 @@
   width: 95%;
   margin: 50px;
   padding: 50px 0;
-  background-color: rgba(55, 56, 103, 0.5);
-  font-family: 'Roboto', sans-serif;
 }
