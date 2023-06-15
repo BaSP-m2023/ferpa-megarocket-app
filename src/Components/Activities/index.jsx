@@ -12,6 +12,7 @@ function Activities() {
   const { isPending, message, success, error } = useSelector((state) => state.activities);
   const [modalMessage, setModalMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [errorModal, setErrorModal] = useState(true);
   const dispatch = useDispatch();
 
   const handleModal = () => {
@@ -31,12 +32,16 @@ function Activities() {
 
   useEffect(() => {
     getActivities(dispatch);
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (isPending) {
     return (
       <section className={styles.container}>
         <div className={styles.list}>
+          <div className={styles.header}>
+            <h2 className={styles.title}>Activities</h2>
+          </div>
           <Loader />
         </div>
       </section>
@@ -47,7 +52,12 @@ function Activities() {
     <section className={styles.container}>
       <div className={styles.list}>
         {error ? (
-          <p className={styles.dataError}>{message}</p>
+          <>
+            <div className={styles.header}>
+              <h2 className={styles.title}>Activities</h2>
+            </div>
+            <Modal onClose={() => setErrorModal(false)} isOpen={errorModal} title={message} error />
+          </>
         ) : (
           <>
             <div className={styles.header}>

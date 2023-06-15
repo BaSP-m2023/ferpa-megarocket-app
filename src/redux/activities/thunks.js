@@ -4,15 +4,15 @@ export const getActivities = async (dispatch) => {
   dispatch(actions.getActivitiesPending());
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`);
-    const data = await res.json();
+    const { data, message } = await res.json();
     dispatch(actions.resetInitialState());
 
     if (res.status === 200) {
-      dispatch(actions.getActivitiesSuccess(data.data));
+      dispatch(actions.getActivitiesSuccess(data));
     }
 
     if (res.status !== 200) {
-      throw new Error(data.message);
+      throw new Error(message);
     }
   } catch (error) {
     dispatch(actions.getActivitiesError(error.message));
@@ -29,15 +29,15 @@ export const postActivity = async (dispatch, newActivity) => {
         'Content-Type': 'application/json'
       }
     });
-    const data = await res.json();
+    const { data, message } = await res.json();
     dispatch(actions.resetInitialState());
 
     if (res.status === 201) {
-      dispatch(actions.postActivitiesSuccess(data.data, data.message));
+      dispatch(actions.postActivitiesSuccess(data, message));
     }
 
     if (res.status !== 201) {
-      throw new Error(data.message);
+      throw new Error(message);
     }
   } catch (error) {
     dispatch(actions.postActivitiesError(error.message));
@@ -50,16 +50,16 @@ export const deleteActivity = async (dispatch, id) => {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
       method: 'DELETE'
     });
-    const data = await res.json();
+    const { message } = await res.json();
     dispatch(actions.resetInitialState());
 
     if (res.status === 200) {
-      dispatch(actions.deleteActivitiesSuccess(id, data.message));
+      dispatch(actions.deleteActivitiesSuccess(id, message));
       dispatch(actions.resetInitialState());
     }
 
     if (res.status !== 200) {
-      throw new Error(data.message);
+      throw new Error(message);
     }
   } catch (error) {
     dispatch(actions.deleteActivitiesError(error.message));
@@ -76,15 +76,15 @@ export const putActivity = async (dispatch, id, activtyUpdated) => {
         'Content-Type': 'application/json'
       }
     });
-    const data = await res.json();
+    const { data, message } = await res.json();
     dispatch(actions.resetInitialState());
 
     if (res.status === 200) {
-      dispatch(actions.putActivitiesSuccess(id, data.data, data.message));
+      dispatch(actions.putActivitiesSuccess(id, data, message));
     }
 
     if (res.status !== 200) {
-      throw new Error(data.message);
+      throw new Error(message);
     }
   } catch (error) {
     dispatch(actions.putActivitiesError(error.message));

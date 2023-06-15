@@ -65,7 +65,7 @@ const Form = () => {
 
   return (
     <div className={styles.formContainer}>
-      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />
+      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} error />
       <div className={styles.formBox}>
         <h3 className={styles.title}>
           {location.pathname.includes('create') ? 'Add New Activity' : 'Edit Activity'}
