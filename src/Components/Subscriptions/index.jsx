@@ -12,16 +12,24 @@ function Subscriptions() {
   const { subs, isPending, error, id, message } = useSelector((state) => state.subscriptions);
   const dispatch = useDispatch();
   const history = useHistory();
-  const [modalSucess, setModalSucess] = useState(false);
+  const [modalSuccess, setModalSuccess] = useState(false);
   const [modalConfirmDel, setModalConfirmDel] = useState(false);
 
   useEffect(() => {
     if (location.state) {
-      setModalSucess(!modalSucess);
       history.replace({ ...history.location, state: undefined });
+      setModalSuccess(!modalSuccess);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (modalSuccess) {
+      setTimeout(() => {
+        setModalSuccess(!modalSuccess);
+      }, 2000);
+    }
+  }, [modalSuccess]);
 
   useEffect(() => {
     getSubscriptions(dispatch);
@@ -30,10 +38,10 @@ function Subscriptions() {
   return (
     <section className={styles.container}>
       <Modal
-        isOpen={modalSucess}
+        isOpen={modalSuccess}
         title={message}
         success
-        onClose={() => setModalSucess(!modalSucess)}
+        onClose={() => setModalSuccess(!modalSuccess)}
       ></Modal>
       <Modal
         isOpen={modalConfirmDel}
@@ -48,7 +56,7 @@ function Subscriptions() {
           clickAction={() => {
             deleteSubscriptions(dispatch, id);
             setModalConfirmDel(!modalConfirmDel);
-            setModalSucess(true);
+            setModalSuccess(true);
           }}
           variant={'delete'}
         />
