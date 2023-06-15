@@ -4,33 +4,33 @@ import { getSuperAdmins } from '../../redux/superadmins/thunks';
 import { Link } from 'react-router-dom';
 import styles from './super-admins.module.css';
 import Table from './table';
+import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import Loader from '../Shared/Loader';
 
-function SuperAdmins() {
-  const { data, loading, error } = useSelector((state) => state.superadmins);
-  const [message, setMessage] = useState('');
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [confirmModal, setConfirmModal] = useState(false);
+const SuperAdmins = () => {
+  const { loading, error, success, message } = useSelector((state) => state.superadmins);
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getSuperAdmins());
-  }, [dispatch]);
-
-  const deleteItem = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
-        method: 'DELETE'
-      });
-      const data = await response.json();
-      setMessage(data.message);
-      setDeleteModal(true);
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
+  const handleModal = () => {
+    setShowModal(!showModal);
+    setTimeout(() => {
+      setShowModal();
+    }, 2000);
   };
+
+  useEffect(() => {
+    if (success) {
+      handleModal();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    getSuperAdmins(dispatch);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (loading) {
     return (
@@ -48,7 +48,7 @@ function SuperAdmins() {
         </section>
       </section>
     );
-  } else if (error !== '') {
+  } else if (error) {
     return (
       <section className={styles.container}>
         <section className={styles.list}>
@@ -74,18 +74,11 @@ function SuperAdmins() {
             <Button text={'Add'} variant={'add'} />
           </Link>
         </div>
-        <Table
-          superadmins={data}
-          deleteItem={deleteItem}
-          message={message}
-          confirmModal={confirmModal}
-          deleteModal={deleteModal}
-          setConfirmModal={setConfirmModal}
-          setDeleteModal={setDeleteModal}
-        />
+        <Table />
       </section>
+      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />
     </section>
   );
-}
+};
 
 export default SuperAdmins;

@@ -1,24 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './super-admins.module.css';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal';
+import { deleteSuperAdmin } from '../../redux/superadmins/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Table = ({ superadmins, deleteItem, message }) => {
+const Table = () => {
   const [visiblePasswords, setVisiblePasswords] = useState([]);
+  const { data, message, success } = useSelector((state) => state.superadmins);
+  const [currentID, setCurrentID] = useState('');
   const [confirmModal, setConfirmModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-  const [superadminIdToDelete, setSuperadminIdToDelete] = useState(null);
+  const dispatch = useDispatch();
+
+  const handleModal = () => {
+    setDeleteModal(!deleteModal);
+    setTimeout(() => {
+      setDeleteModal();
+    }, 2000);
+  };
+
+  useEffect(() => {
+    if (success) {
+      handleModal();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const togglePasswordVisibility = (index) => {
     const updatedVisiblePasswords = [...visiblePasswords];
     updatedVisiblePasswords[index] = !updatedVisiblePasswords[index];
     setVisiblePasswords(updatedVisiblePasswords);
-  };
-
-  const handleDeleteSuperAdmin = (superadminId) => {
-    deleteItem(superadminId);
-    setDeleteModal(true);
   };
 
   return (
@@ -28,7 +41,7 @@ const Table = ({ superadmins, deleteItem, message }) => {
           <th className={styles.th}>Email:</th>
           <th className={styles.th}>Password:</th>
         </tr>
-        {superadmins.map((superadmin, index) => (
+        {data.map((superadmin, index) => (
           <tr key={superadmin?._id} className={styles.trBody}>
             <td className={styles.td}>{superadmin?.email}</td>
             <td className={styles.td}>
@@ -49,7 +62,7 @@ const Table = ({ superadmins, deleteItem, message }) => {
                 variant={'deleteIcon'}
                 clickAction={() => {
                   setConfirmModal(true);
-                  setSuperadminIdToDelete(superadmin._id);
+                  setCurrentID(superadmin._id);
                 }}
               />
             </td>
@@ -63,24 +76,18 @@ const Table = ({ superadmins, deleteItem, message }) => {
         text={'Are you sure you want to delete this SuperAdmin?'}
         onClose={() => setConfirmModal(false)}
       >
-        <Button text={'Cancel'} variant={'white'} clickAction={() => setConfirmModal(false)} />
         <Button
           text={'Delete'}
           variant={'delete'}
           clickAction={() => {
-            handleDeleteSuperAdmin(superadminIdToDelete);
+            deleteSuperAdmin(dispatch, currentID);
             setConfirmModal(false);
+            setDeleteModal(true);
           }}
         />
+        <Button text={'Cancel'} variant={'white'} clickAction={() => setConfirmModal(false)} />
       </Modal>
-      <Modal
-        isOpen={deleteModal}
-        title={'Super Admin deleted'}
-        text={message}
-        onClose={() => setDeleteModal(false)}
-      >
-        <Button text={'OK'} variant={'add'} clickAction={() => setDeleteModal(false)} />
-      </Modal>
+      <Modal isOpen={deleteModal} title={message} onClose={() => setDeleteModal(false)} success />
     </table>
   );
 };
