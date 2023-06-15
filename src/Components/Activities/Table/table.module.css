@@ -2,7 +2,6 @@
 .tableContainer {
   width: 80%;
   height: 50vh;
-  overflow-y: scroll;
 }
 
 .table {
@@ -10,10 +9,21 @@
   border-collapse: collapse;
 }
 
+.tHead {
+  color: white;
+  font-size: 20px;
+  line-height: 24px;
+}
+
 .tbody {
   color: white;
   font-size: 20px;
   line-height: 24px;
+}
+
+.scroll {
+  overflow-y: scroll;
+  height: 380px;
 }
 
 .trHead, .trBody {
@@ -28,11 +38,11 @@
   font-size: 22px;
   font-weight: 600;
   line-height: 14px;
+  border-bottom: 3px solid white;
 }
 
 .trBody {
   font-size: 18px;
-  border-bottom: 3px solid white;
 }
 
 .thName {
@@ -47,7 +57,6 @@
 
 .thStatus {
   text-align: start;
-  width: 15%;
 }
 
 .thIcon {

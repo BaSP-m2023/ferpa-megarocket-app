@@ -56,38 +56,44 @@ const Table = () => {
         onClose={() => setDeleteModal(!deleteModal)}
       />
       <table className={styles.table}>
-        <tbody className={styles.tbody}>
-          <tr className={styles.trHead}>
-            <th className={styles.thName}>Activity</th>
-            <th className={styles.thDes}>Description</th>
-            <th className={styles.thStatus}>Status</th>
-            <th className={styles.thIcon}></th>
-            <th className={styles.thIcon}></th>
-          </tr>
-          {data.map((activity) => {
-            return (
-              <tr className={styles.trBody} key={activity?._id}>
-                <td>{activity?.name}</td>
-                <td className={styles.thDes}>{activity?.description}</td>
-                <td className={styles.thStatus}>{activity?.isActive ? 'Active' : 'Inactive'}</td>
-                <td className={styles.tdIcon}>
-                  <Link to={`/activities/edit/${activity._id}`}>
-                    <Button variant={'edit'} />
-                  </Link>
-                </td>
-                <td>
-                  <Button
-                    variant={'deleteIcon'}
-                    clickAction={() => {
-                      setConfirmModal(!confirmModal);
-                      setCurrentID(activity._id);
-                    }}
-                  />
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
+        <div>
+          <thead className={styles.tHead}>
+            <tr className={styles.trHead}>
+              <th className={styles.thName}>Activity</th>
+              <th className={styles.thDes}>Description</th>
+              <th className={styles.thStatus}>Status</th>
+              <th className={styles.thIcon}></th>
+              <th className={styles.thIcon}></th>
+            </tr>
+          </thead>
+        </div>
+        <div className={styles.scroll}>
+          <tbody className={styles.tbody}>
+            {data.map((activity) => {
+              return (
+                <tr className={styles.trBody} key={activity?._id}>
+                  <td className={styles.thName}>{activity?.name}</td>
+                  <td className={styles.thDes}>{activity?.description}</td>
+                  <td className={styles.thStatus}>{activity?.isActive ? 'Active' : 'Inactive'}</td>
+                  <td className={styles.tdIcon}>
+                    <Link to={`/activities/edit/${activity._id}`}>
+                      <Button variant={'edit'} />
+                    </Link>
+                  </td>
+                  <td className={styles.tdIcon}>
+                    <Button
+                      variant={'deleteIcon'}
+                      clickAction={() => {
+                        setConfirmModal(!confirmModal);
+                        setCurrentID(activity._id);
+                      }}
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </div>
       </table>
     </div>
   );

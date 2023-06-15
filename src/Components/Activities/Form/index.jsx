@@ -6,9 +6,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postActivity, putActivity } from '../../../redux/activities/thunks';
 import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal';
+import Loader from '../../Shared/Loader';
 
 const Form = () => {
-  const { data, message, success, error } = useSelector((state) => state.activities);
+  const { data, message, success, error, isPending } = useSelector((state) => state.activities);
   const { id } = useParams();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -70,43 +71,47 @@ const Form = () => {
         <h3 className={styles.title}>
           {location.pathname.includes('create') ? 'Add New Activity' : 'Edit Activity'}
         </h3>
-        <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
-          <div className={styles.field}>
-            <Input
-              labelText={'Name'}
-              type={'text'}
-              placeholder={'Activity name'}
-              value={name}
-              onChangeInput={handleNameChange}
+        {isPending ? (
+          <Loader />
+        ) : (
+          <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
+            <div className={styles.field}>
+              <Input
+                labelText={'Name'}
+                type={'text'}
+                placeholder={'Activity name'}
+                value={name}
+                onChangeInput={handleNameChange}
+              />
+            </div>
+            <TextArea
+              label={'Description'}
+              placeholder={'Activity description'}
+              value={description}
+              onChangeArea={setDescription}
             />
-          </div>
-          <TextArea
-            label={'Description'}
-            placeholder={'Activity description'}
-            value={description}
-            onChangeArea={setDescription}
-          />
-          <div className={styles.checkboxField}>
-            <label>Is Active?</label>
-            <input
-              className={styles.checkbox}
-              type="checkbox"
-              checked={isActive}
-              value={isActive}
-              onChange={(e) => setIsActive(e.currentTarget.checked)}
-            />
-          </div>
-          <div className={styles.btns}>
-            <Link to="/activities">
-              <Button text={'Cancel'} variant={'white'} />
-            </Link>
-            <Button
-              text={location.pathname.includes('edit') ? 'Edit' : 'Add'}
-              variant={'add'}
-              clickAction={sendActivity}
-            />
-          </div>
-        </form>
+            <div className={styles.checkboxField}>
+              <label>Is Active?</label>
+              <input
+                className={styles.checkbox}
+                type="checkbox"
+                checked={isActive}
+                value={isActive}
+                onChange={(e) => setIsActive(e.currentTarget.checked)}
+              />
+            </div>
+            <div className={styles.btns}>
+              <Link to="/activities">
+                <Button text={'Cancel'} variant={'white'} />
+              </Link>
+              <Button
+                text={location.pathname.includes('edit') ? 'Edit' : 'Add'}
+                variant={'add'}
+                clickAction={sendActivity}
+              />
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );
