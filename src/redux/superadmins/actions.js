@@ -1,19 +1,87 @@
-import {
-  GET_SUPERADMINS_PENDING,
-  GET_SUPERADMINS_SUCCESS,
-  GET_SUPERADMINS_ERROR
-} from './constants';
+import * as actionConstant from './constants';
 
-export const getSuperadminsPending = () => ({
-  type: GET_SUPERADMINS_PENDING
-});
+export const resetInitialState = () => {
+  return {
+    type: actionConstant.RESET_INITIAL_STATE
+  };
+};
 
-export const getSuperadminsSuccess = (data) => ({
-  type: GET_SUPERADMINS_SUCCESS,
-  payload: data
-});
+export const getSuperadminsPending = () => {
+  return {
+    type: actionConstant.GET_SUPERADMINS_PENDING
+  };
+};
 
-export const getSuperadminsError = (error) => ({
-  type: GET_SUPERADMINS_ERROR,
-  payload: error
-});
+export const getSuperadminsSuccess = (data) => {
+  return {
+    type: actionConstant.GET_SUPERADMINS_SUCCESS,
+    payload: data
+  };
+};
+
+export const getSuperadminsError = (error) => {
+  return {
+    type: actionConstant.GET_SUPERADMINS_ERROR,
+    payload: error
+  };
+};
+
+export const postSuperadminsPending = () => {
+  return {
+    type: actionConstant.POST_SUPERADMINS_PENDING
+  };
+};
+
+export const postSuperadminsSuccess = (newSuperadmin, message) => {
+  return {
+    type: actionConstant.POST_SUPERADMINS_SUCCESS,
+    payload: { newSuperadmin, message }
+  };
+};
+
+export const postSuperadminsError = (error) => {
+  return {
+    type: actionConstant.POST_SUPERADMINS_ERROR,
+    payload: error
+  };
+};
+
+export const deleteSuperadminsPending = () => {
+  return {
+    type: actionConstant.DELETE_SUPERADMINS_PENDING
+  };
+};
+
+export const deleteSuperadminsSuccess = (id, message) => {
+  return {
+    type: actionConstant.DELETE_SUPERADMINS_SUCCESS,
+    payload: { id, message }
+  };
+};
+
+export const deleteSuperadminsError = (error) => {
+  return {
+    type: actionConstant.DELETE_SUPERADMINS_ERROR,
+    payload: error
+  };
+};
+
+export const putSuperadminsPending = () => {
+  return {
+    type: actionConstant.PUT_SUPERADMINS_PENDING
+  };
+};
+
+export const putSuperadminsSuccess = (id, superadminUpdated, message) => {
+  return {
+    type: actionConstant.PUT_SUPERADMINS_SUCCESS,
+    payload: { id, superadminUpdated, message }
+  };
+};
+
+export const putSuperadminsError = (error) => {
+  return {
+    type: actionConstant.PUT_SUPERADMINS_ERROR,
+    payload: error
+  };
+};

@@ -1,109 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import styles from './form.module.css';
 import { Input } from '../../Shared/Inputs';
-import { Link, useParams, useLocation, Redirect } from 'react-router-dom';
+import { Link, useParams, useLocation, useHistory } from 'react-router-dom';
 import Modal from '../../Shared/Modal';
 import Button from '../../Shared/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { postSuperAdmins, putSuperAdmin } from '../../../redux/superadmins/thunks';
 
 const Form = () => {
+  const { data, message, success, error } = useSelector((state) => state.superadmins);
   const { id } = useParams();
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
-  const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [redirect, setRedirect] = useState(false);
   const location = useLocation();
-
-  const getSuperAdmins = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`);
-      const { data } = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (location.pathname.includes('edit')) {
-      const setupForm = async () => {
-        const { email, password } = await getSuperAdmins(id);
-        setEmail(email);
-        setPass(password);
-      };
-      setupForm();
+      const superadmin = data.find((superadmin) => superadmin._id === id);
+      setEmail(superadmin.email);
+      setPass(superadmin.password);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onEdit = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify({ email, password: pass }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await response.json();
-      setMessage(data.message);
-
-      if (response.ok) {
-        setTimeout(() => {
-          setRedirect(true);
-        }, 2500);
-      }
-    } catch (error) {
-      console.error(error);
+  useEffect(() => {
+    if (success) {
+      history.push('/super-admins');
     }
-  };
-
-  const onAdd = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
-        method: 'POST',
-        body: JSON.stringify({ email, password: pass }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await response.json();
-      setMessage(data.message);
-
-      if (response.ok) {
-        setTimeout(() => {
-          setRedirect(true);
-        }, 2500);
-      }
-    } catch (error) {
-      console.error(error);
+    if (error) {
+      setShowModal(true);
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error, success]);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setShowModal(true);
   };
 
   const sendSuperAdmin = () => {
-    setShowModal(true);
-
     if (location.pathname.includes('create')) {
-      onAdd({ email, pass });
-      setEmail('');
-      setPass('');
-      setShowModal(true);
+      postSuperAdmins(dispatch, { email, password: pass });
     }
 
     if (location.pathname.includes('edit')) {
-      onEdit(id);
+      putSuperAdmin(dispatch, id, { email, password: pass });
     }
   };
 
   return (
     <div className={styles.formContainer}>
-      {redirect && <Redirect to="/super-admins" />}
-      <Modal onClose={() => setShowModal(false)} isOpen={showModal} text={message} />
+      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} error />
       <div className={styles.formBox}>
         <h3 className={styles.title}>
           {location.pathname.includes('create') ? 'Add New Super Admin' : 'Edit Super Admin'}
@@ -141,7 +90,6 @@ const Form = () => {
             <Button
               text={location.pathname.includes('create') ? 'Create' : 'Edit'}
               variant={'add'}
-              submitting
               clickAction={() => sendSuperAdmin()}
             />
           </div>

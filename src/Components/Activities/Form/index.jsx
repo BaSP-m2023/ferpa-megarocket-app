@@ -2,99 +2,49 @@ import React, { useEffect, useState } from 'react';
 import styles from './form.module.css';
 import { Input, TextArea } from '../../Shared/Inputs';
 import { Link, useParams, useLocation, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { postActivity, putActivity } from '../../../redux/activities/thunks';
 import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal';
+import Loader from '../../Shared/Loader';
 
 const Form = () => {
+  const { data, message, success, error, isPending } = useSelector((state) => state.activities);
   const { id } = useParams();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [isActive, setIsActive] = useState(false);
-  const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
   const location = useLocation();
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  const onRedirect = {
-    pathname: '/activities',
-    state: { message: '' }
-  };
-
-  const getActivity = async (id) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`);
-      const { data } = await res.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
+  const handleModal = () => {
+    setShowModal(!showModal);
+    setTimeout(() => {
+      setShowModal();
+    }, 4000);
   };
 
   useEffect(() => {
+    if (success) {
+      history.push('/activities');
+    }
+    if (error) {
+      handleModal();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success, error]);
+
+  useEffect(() => {
     if (location.pathname.includes('edit')) {
-      const setupForm = async () => {
-        const { name, description, isActive } = await getActivity(id);
-        setName(name);
-        setDescription(description);
-        setIsActive(isActive);
-      };
-      setupForm();
+      const activity = data.find((activity) => activity._id === id);
+      setName(activity.name);
+      setDescription(activity.description);
+      setIsActive(activity.isActive);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const onEdit = async (id) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          name,
-          description,
-          isActive
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await res.json();
-      if (res.status !== 200) {
-        setMessage(data.message);
-        setShowModal(!showModal);
-      }
-      if (res.status === 200) {
-        onRedirect.state.message = data.message;
-        history.push(onRedirect);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const onAdd = async () => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`, {
-        method: 'POST',
-        body: JSON.stringify({
-          name,
-          description,
-          isActive
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await res.json();
-      if (res.status !== 201) {
-        setMessage(data.message);
-      }
-      if (res.status === 201) {
-        onRedirect.state.message = data.message;
-        history.push(onRedirect);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -106,61 +56,62 @@ const Form = () => {
 
   const sendActivity = async () => {
     if (location.pathname.includes('create')) {
-      await onAdd({ name, description, isActive });
-      setName('');
-      setDescription('');
-      setIsActive(false);
+      await postActivity(dispatch, { name, description, isActive });
     }
 
     if (location.pathname.includes('edit')) {
-      await onEdit(id);
+      await putActivity(dispatch, id, { name, description, isActive });
     }
   };
 
   return (
     <div className={styles.formContainer}>
-      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />
+      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} error />
       <div className={styles.formBox}>
         <h3 className={styles.title}>
           {location.pathname.includes('create') ? 'Add New Activity' : 'Edit Activity'}
         </h3>
-        <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
-          <div className={styles.field}>
-            <Input
-              labelText={'Name'}
-              type={'text'}
-              placeholder={'Activity name'}
-              value={name}
-              onChangeInput={handleNameChange}
+        {isPending ? (
+          <Loader />
+        ) : (
+          <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
+            <div className={styles.field}>
+              <Input
+                labelText={'Name'}
+                type={'text'}
+                placeholder={'Activity name'}
+                value={name}
+                onChangeInput={handleNameChange}
+              />
+            </div>
+            <TextArea
+              label={'Description'}
+              placeholder={'Activity description'}
+              value={description}
+              onChangeArea={setDescription}
             />
-          </div>
-          <TextArea
-            label={'Description'}
-            placeholder={'Activity description'}
-            value={description}
-            onChangeArea={setDescription}
-          />
-          <div className={styles.checkboxField}>
-            <label>Is Active?</label>
-            <input
-              className={styles.checkbox}
-              type="checkbox"
-              checked={isActive}
-              value={isActive}
-              onChange={(e) => setIsActive(e.currentTarget.checked)}
-            />
-          </div>
-          <div className={styles.btns}>
-            <Link to="/activities">
-              <Button text={'Cancel'} variant={'white'} />
-            </Link>
-            <Button
-              text={location.pathname.includes('edit') ? 'Edit' : 'Add'}
-              variant={'add'}
-              clickAction={sendActivity}
-            />
-          </div>
-        </form>
+            <div className={styles.checkboxField}>
+              <label>Is Active?</label>
+              <input
+                className={styles.checkbox}
+                type="checkbox"
+                checked={isActive}
+                value={isActive}
+                onChange={(e) => setIsActive(e.currentTarget.checked)}
+              />
+            </div>
+            <div className={styles.btns}>
+              <Link to="/activities">
+                <Button text={'Cancel'} variant={'white'} />
+              </Link>
+              <Button
+                text={location.pathname.includes('edit') ? 'Edit' : 'Add'}
+                variant={'add'}
+                clickAction={sendActivity}
+              />
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );
