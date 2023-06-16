@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTrainers } from '../../redux/trainers/thunks';
+import { getTrainers, deleteTrainer } from '../../redux/trainers/thunks';
 import styles from './trainers.module.css';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
@@ -13,7 +13,7 @@ const Trainers = () => {
   const [successModal, setSuccessModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const dispatch = useDispatch();
-  const { isLoading, trainers, error } = useSelector((state) => state.trainers);
+  const { isLoading, trainers, error, formError } = useSelector((state) => state.trainers);
 
   const togglePasswordVisibility = (index) => {
     const updatedVisiblePasswords = [...visiblePasswords];
@@ -21,29 +21,20 @@ const Trainers = () => {
     setVisiblePasswords(updatedVisiblePasswords);
   };
 
-  const deleteTrainer = async (_id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${_id}`, {
-        method: 'DELETE'
-      });
-      const { message, error } = await response.json();
-      if (!error) {
-        getTrainers([...Trainers.filter((trainer) => trainer._id !== _id)]);
-      } else {
-        throw message;
-      }
-      setDeleteModal(!deleteModal);
-      setSuccessModal(!successModal);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     getTrainers(dispatch);
   }, [dispatch]);
 
-  if (error) {
+  useEffect(() => {
+    if (successModal) {
+      setTimeout(() => {
+        setSuccessModal(!successModal);
+      }, 2000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [successModal]);
+
+  if (formError) {
     return (
       <section className={styles.container}>
         <div className={styles.header}>
@@ -77,17 +68,25 @@ const Trainers = () => {
         text={'Are you sure you want to delete this Trainer?'}
       >
         <Button
+          text={'Delete'}
+          variant={'delete'}
+          clickAction={() => {
+            deleteTrainer(dispatch, currentId);
+            setDeleteModal(!deleteModal);
+            setSuccessModal(!successModal);
+          }}
+        />
+        <Button
           text={'Cancel'}
           variant={'white'}
           clickAction={() => setDeleteModal(!deleteModal)}
         />
-        <Button text={'Delete'} variant={'delete'} clickAction={() => deleteTrainer(currentId)} />
       </Modal>
       <Modal
         success
         isOpen={successModal}
         onClose={() => setSuccessModal(!successModal)}
-        title={'Trainer Deleted successfully'}
+        title={error}
       ></Modal>
       <div className={styles.header}>
         <div className={styles.inside}>
@@ -96,7 +95,7 @@ const Trainers = () => {
             <Button text={'add trainer'} variant={'add'} />
           </Link>
         </div>
-        <table>
+        <table className={styles.hola}>
           <thead>
             <tr>
               <th className={styles.titles}>Name</th>

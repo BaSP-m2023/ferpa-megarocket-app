@@ -1,90 +1,46 @@
+import { Link, useParams, useHistory } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Input } from '../../Shared/Inputs';
+import { sendTrainer, putTrainer } from '../../../redux/trainers/thunks';
+import { useSelector, useDispatch } from 'react-redux';
 import React from 'react';
 import Button from '../../Shared/Button';
-import { useState, useEffect } from 'react';
-import { Link, useParams, useHistory } from 'react-router-dom';
-import { Input } from '../../Shared/Inputs';
 import Modal from '../../Shared/Modal';
 import styles from './form.module.css';
 
 const TrainerAddForm = () => {
   const [successAddModal, setSuccessAddModal] = useState(false);
   const [successEditModal, setSuccessEditModal] = useState(false);
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState({
+    firstName: '',
+    lastName: '',
+    dni: '',
+    phone: '',
+    email: '',
+    city: '',
+    password: '',
+    salary: ''
+  });
   const { id } = useParams();
+  const { trainers, success, error, formError } = useSelector((state) => state.trainers);
+  const dispatch = useDispatch();
   const history = useHistory();
-  const onRedirect = {
-    pathname: '/trainers',
-    state: { message: '' }
-  };
   useEffect(() => {
     if (id) {
-      getTrainerID(id);
+      const trainer = trainers.find((trainer) => trainer._id === id);
+      setInputs(trainer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const getTrainerID = async (id) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`);
-      const { data } = await res.json();
-      if (data) {
-        setInputs(data);
-      }
-      return data;
-    } catch (error) {
-      console.error(error);
+  useEffect(() => {
+    if (success) {
+      handleModalSuccess();
     }
-  };
-  const putTrainer = async (id, item) => {
-    const setEditTrainer = {
-      firstName: item.firstName,
-      lastName: item.lastName,
-      dni: item.dni.toString(),
-      phone: item.phone.toString(),
-      email: item.email,
-      city: item.city,
-      password: item.password,
-      salary: item.salary.toString()
-    };
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify(setEditTrainer),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const { message, error, data } = await response.json();
-      if (!error) {
-        console.log(message);
-      } else {
-        throw message;
-      }
-      setTimeout(() => {
-        onRedirect.state.message = data.message;
-        history.push(onRedirect);
-      }, 1500);
-    } catch (error) {
-      console.error(error);
+    if (formError) {
+      handleModalError();
     }
-  };
-  const sendTrainer = async (item) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`, {
-        method: 'POST',
-        body: JSON.stringify(item),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const { data } = await response.json();
-      setTimeout(() => {
-        onRedirect.state.message = data.message;
-        history.push(onRedirect);
-      }, 1500);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success, formError]);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -92,15 +48,28 @@ const TrainerAddForm = () => {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
+  const handleModalError = () => {
+    setTimeout(() => {
+      setSuccessEditModal(!successEditModal);
+    }, 2000);
+  };
+
+  const handleModalSuccess = () => {
+    setTimeout(() => {
+      history.push('/trainers');
+      setSuccessAddModal(!successAddModal);
+    }, 2000);
+  };
+
   const onSubmitAdd = (e) => {
     e.preventDefault();
     setSuccessAddModal(!successAddModal);
-    sendTrainer(inputs);
+    sendTrainer(dispatch, inputs);
   };
   const onSubmitEdit = (e) => {
     e.preventDefault();
     setSuccessEditModal(!successEditModal);
-    putTrainer(id, inputs);
+    putTrainer(dispatch, id, inputs);
   };
   return (
     <div className={styles.formContainer}>
@@ -150,6 +119,13 @@ const TrainerAddForm = () => {
               onChangeInput={handleChange}
             />
             <Input
+              labelText={'Salary'}
+              nameValue={'salary'}
+              placeholder={'Salary'}
+              value={inputs.salary}
+              onChangeInput={handleChange}
+            />
+            <Input
               labelText={'Password'}
               nameValue={'password'}
               type={'password'}
@@ -157,13 +133,10 @@ const TrainerAddForm = () => {
               value={inputs.password}
               onChangeInput={handleChange}
             />
-            <Input
-              labelText={'Salary'}
-              nameValue={'salary'}
-              placeholder={'Salary'}
-              value={inputs.salary}
-              onChangeInput={handleChange}
-            />
+            <p className={styles.passwordAlert}>
+              * The password must have uppercase letters, lowercase letters, number and at least 8
+              characters
+            </p>
           </div>
           <div className={styles.buttons}>
             <Link to={'/trainers'}>
@@ -175,13 +148,13 @@ const TrainerAddForm = () => {
             success
             isOpen={successAddModal}
             onClose={() => setSuccessAddModal(!successAddModal)}
-            title={'Trainer Added successfully'}
+            title={error}
           ></Modal>
           <Modal
             success
             isOpen={successEditModal}
             onClose={() => setSuccessEditModal(!successEditModal)}
-            title={'Trainer Edited successfully'}
+            title={error}
           ></Modal>
         </form>
       </div>
