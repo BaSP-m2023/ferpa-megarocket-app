@@ -3,6 +3,7 @@ import styles from './editMembers.module.css';
 import { Input, Select, DatePicker } from '../../Shared/Inputs';
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { updateMember } from '../../../redux/members/thunks';
 import Button from '../../Shared/Button/index';
 import Modal from '../../Shared/Modal';
 
@@ -99,37 +100,37 @@ const MembersEdit = () => {
     setMember({ ...member, isActive: e.target.value });
   };
 
-  const updateMember = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          firstName: member.firstName,
-          lastName: member.lastName,
-          dni: member.dni,
-          phone: member.phone,
-          email: member.email,
-          city: member.city,
-          birthDay: member.birthDay,
-          postalCode: member.postalCode,
-          isActive: member.isActive,
-          membership: member.membership
-        })
-      });
+  // const updateMember = async (id) => {
+  //   try {
+  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
+  //       method: 'PUT',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({
+  //         firstName: member.firstName,
+  //         lastName: member.lastName,
+  //         dni: member.dni,
+  //         phone: member.phone,
+  //         email: member.email,
+  //         city: member.city,
+  //         birthDay: member.birthDay,
+  //         postalCode: member.postalCode,
+  //         isActive: member.isActive,
+  //         membership: member.membership
+  //       })
+  //     });
 
-      const data = await response.json();
-      setMessage(data.message);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     const data = await response.json();
+  //     setMessage(data.message);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateMember(id);
+    updateMember(id, member);
     setShowModal(true);
   };
 

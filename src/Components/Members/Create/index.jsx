@@ -7,16 +7,7 @@ import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal';
 
 const MembersCreate = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [dni, setDni] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [city, setCity] = useState('');
-  const [birthDay, setBirthday] = useState('');
-  const [postalCode, setPostalCode] = useState('');
-  const [isActive, setIsActive] = useState(true);
-  const [membership, setMembership] = useState('Classic');
+  const [member, setMember] = useState([]);
 
   const memberships = [
     {
@@ -36,61 +27,65 @@ const MembersCreate = () => {
     }
   ];
 
+  const activeTypes = [
+    {
+      _id: 1,
+      name: 'Yes',
+      value: true
+    },
+    {
+      _id: 2,
+      name: 'No',
+      value: false
+    }
+  ];
+
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
 
   const history = useHistory();
 
   const handleFirstName = (e) => {
-    setFirstName(e.target.value);
+    setMember({ ...member, firstName: e.target.value });
   };
 
   const handleLastName = (e) => {
-    setLastName(e.target.value);
+    setMember({ ...member, lastName: e.target.value });
   };
 
   const handleDniChange = (e) => {
-    const value = e.target.value;
-    setDni(value);
+    setMember({ ...member, dni: e.target.value });
   };
 
   const handlePhoneChange = (e) => {
-    const value = e.target.value;
-    setPhone(value);
+    setMember({ ...member, phone: e.target.value });
   };
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+    setMember({ ...member, email: e.target.value });
   };
 
   const handleCityChange = (e) => {
-    setCity(e.target.value);
+    setMember({ ...member, city: e.target.value });
   };
 
   const handleBirthdayChange = (e) => {
-    setBirthday(e);
+    setMember({ ...member, birthDay: e });
   };
 
   const handlePostalCodeChange = (e) => {
-    setPostalCode(e.target.value);
+    setMember({ ...member, postalCode: e.target.value });
   };
 
   const handleMembershipChange = (e) => {
-    setMembership(e.target.value);
+    setMember({ ...member, membership: e.target.value });
   };
 
-  const addMember = async ({
-    firstName,
-    lastName,
-    dni,
-    phone,
-    email,
-    city,
-    birthDay,
-    postalCode,
-    isActive,
-    membership
-  }) => {
+  const handleIsActiveChange = (e) => {
+    setMember({ ...member, isActive: e.target.value });
+  };
+
+  const addMember = async (member) => {
     try {
       const newMembers = await fetch(`${process.env.REACT_APP_API_URL}/api/members/`, {
         method: 'POST',
@@ -98,32 +93,22 @@ const MembersCreate = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          firstName,
-          lastName,
-          dni,
-          phone,
-          email,
-          city,
-          birthDay,
-          postalCode,
-          isActive,
-          membership
+          firstName: member.firstName,
+          lastName: member.lastName,
+          dni: member.dni,
+          phone: member.phone,
+          email: member.email,
+          city: member.city,
+          birthDay: member.birthDay,
+          postalCode: member.postalCode,
+          isActive: member.isActive,
+          membership: member.membership
         })
       });
       const data = await newMembers.json();
       setMessage(data.message);
       setShowModal(true);
       if (!data.error) {
-        setFirstName('');
-        setLastName('');
-        setDni('');
-        setPhone('');
-        setEmail('');
-        setCity('');
-        setBirthday('');
-        setPostalCode('');
-        setIsActive(true);
-        setMembership('Classic');
         history.push('/members');
       }
     } catch (error) {
@@ -133,18 +118,7 @@ const MembersCreate = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addMember({
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      birthDay,
-      postalCode,
-      isActive,
-      membership
-    });
+    addMember(member);
   };
 
   return (
@@ -158,7 +132,7 @@ const MembersCreate = () => {
               labelText={'Name'}
               type={'text'}
               placeholder={'Name'}
-              value={firstName}
+              value={member.firstName}
               onChangeInput={handleFirstName}
             />
           </div>
@@ -167,7 +141,7 @@ const MembersCreate = () => {
               labelText={'Surname'}
               type={'text'}
               placeholder={'Surname'}
-              value={lastName}
+              value={member.lastName}
               onChangeInput={handleLastName}
             />
           </div>
@@ -176,7 +150,7 @@ const MembersCreate = () => {
               labelText={'DNI'}
               type={'text'}
               placeholder={'DNI'}
-              value={dni}
+              value={member.dni}
               onChangeInput={handleDniChange}
             />
           </div>
@@ -185,7 +159,7 @@ const MembersCreate = () => {
               labelText={'Phone'}
               type={'text'}
               placeholder={'ex: 096513178'}
-              value={phone}
+              value={member.phone}
               onChangeInput={handlePhoneChange}
             />
           </div>
@@ -194,7 +168,7 @@ const MembersCreate = () => {
               labelText={'Email'}
               type={'text'}
               placeholder={'robertomariaoverdrive@soybostero.edu'}
-              value={email}
+              value={member.email}
               onChangeInput={handleEmailChange}
             />
           </div>
@@ -203,20 +177,34 @@ const MembersCreate = () => {
               labelText={'City'}
               type={'text'}
               placeholder={'Your city'}
-              value={city}
+              value={member.city}
               onChangeInput={handleCityChange}
             />
           </div>
           <div>
-            <DatePicker label={'Birthday'} value={birthDay} onChangeDate={handleBirthdayChange} />
+            <DatePicker
+              label={'Birthday'}
+              value={member.birthDay.slice(0, 10)}
+              onChangeDate={handleBirthdayChange}
+            />
           </div>
           <div>
             <Input
               labelText={'Zip Code'}
               type={'text'}
               placeholder={'Your postal code'}
-              value={postalCode}
+              value={member.postalCode}
               onChangeInput={handlePostalCodeChange}
+            />
+          </div>
+          <div>
+            <Select
+              label={'Is active?'}
+              value={activeTypes.value}
+              placeholder={'Yes'}
+              onChangeSelect={handleIsActiveChange}
+              options={activeTypes}
+              nameValue={'day'}
             />
           </div>
           <div>
