@@ -13,8 +13,7 @@ const Trainers = () => {
   const [successModal, setSuccessModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const dispatch = useDispatch();
-  // const history = useHistory();
-  const { isLoading, trainers, error } = useSelector((state) => state.trainers);
+  const { isLoading, trainers, error, formError } = useSelector((state) => state.trainers);
 
   const togglePasswordVisibility = (index) => {
     const updatedVisiblePasswords = [...visiblePasswords];
@@ -35,7 +34,7 @@ const Trainers = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [successModal]);
 
-  if (error) {
+  if (formError) {
     return (
       <section className={styles.container}>
         <div className={styles.header}>
@@ -87,7 +86,7 @@ const Trainers = () => {
         success
         isOpen={successModal}
         onClose={() => setSuccessModal(!successModal)}
-        title={'Trainer Deleted successfully'}
+        title={error}
       ></Modal>
       <div className={styles.header}>
         <div className={styles.inside}>
@@ -96,7 +95,7 @@ const Trainers = () => {
             <Button text={'add trainer'} variant={'add'} />
           </Link>
         </div>
-        <table>
+        <table className={styles.hola}>
           <thead>
             <tr>
               <th className={styles.titles}>Name</th>

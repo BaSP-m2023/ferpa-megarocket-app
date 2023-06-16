@@ -5,9 +5,14 @@ export const getTrainers = async (dispatch) => {
     dispatch(trainersActions.getTrainersPending());
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
     const data = await response.json();
-    dispatch(trainersActions.getTrainersSuccess(data.data));
+    if (!data.error) {
+      dispatch(trainersActions.getTrainersSuccess(data.data));
+    }
+    if (data.error) {
+      throw new Error(data.message);
+    }
   } catch (error) {
-    dispatch(trainersActions.getTrainersError(error.toString()));
+    dispatch(trainersActions.getTrainersError(error.message));
   }
 };
 export const deleteTrainer = async (dispatch, id) => {
@@ -18,7 +23,7 @@ export const deleteTrainer = async (dispatch, id) => {
     });
     const { message, error } = await response.json();
     if (!error) {
-      dispatch(trainersActions.deleteTrainersSuccess(id));
+      dispatch(trainersActions.deleteTrainersSuccess(id, message));
     } else {
       throw new Error(message);
     }
@@ -36,10 +41,15 @@ export const sendTrainer = async (dispatch, item) => {
         'Content-Type': 'application/json'
       }
     });
-    const { data } = await response.json();
-    dispatch(trainersActions.addTrainersSuccess(data));
+    const { data, message, error } = await response.json();
+    if (!error) {
+      dispatch(trainersActions.addTrainersSuccess(data, message));
+    }
+    if (error) {
+      throw new Error(message);
+    }
   } catch (error) {
-    dispatch(trainersActions.addTrainersError(error.toString()));
+    dispatch(trainersActions.addTrainersError(error.message));
   }
 };
 export const putTrainer = async (dispatch, id, updatedTrainer) => {
@@ -63,13 +73,14 @@ export const putTrainer = async (dispatch, id, updatedTrainer) => {
         'Content-Type': 'application/json'
       }
     });
-    const data = await response.json();
-    if (!data.error) {
-      dispatch(trainersActions.editTrainersSuccess(data.data, id));
-    } else {
-      dispatch(trainersActions.editTrainersError(data.message));
+    const { data, message, error } = await response.json();
+    if (!error) {
+      dispatch(trainersActions.editTrainersSuccess(data.data, id, message));
+    }
+    if (error) {
+      throw new Error(message);
     }
   } catch (error) {
-    dispatch(trainersActions.editTrainersError(error.toString()));
+    dispatch(trainersActions.editTrainersError(error.message));
   }
 };

@@ -24,10 +24,10 @@ export const deleteTrainersPending = () => {
     type: trainersConstant.DELETE_TRAINERS_PENDING
   };
 };
-export const deleteTrainersSuccess = (id) => {
+export const deleteTrainersSuccess = (id, message) => {
   return {
     type: trainersConstant.DELETE_TRAINERS_SUCCESS,
-    payload: id
+    payload: { id, message }
   };
 };
 export const deleteTrainersError = (error) => {
@@ -40,9 +40,9 @@ export const addTrainersPending = () => ({
   type: trainersConstant.ADD_TRAINERS_PENDING
 });
 
-export const addTrainersSuccess = (trainer) => ({
+export const addTrainersSuccess = (trainer, message) => ({
   type: trainersConstant.ADD_TRAINERS_SUCCESS,
-  payload: trainer
+  payload: { trainer, message }
 });
 
 export const addTrainersError = (error) => ({
@@ -52,9 +52,9 @@ export const addTrainersError = (error) => ({
 export const editTrainersPending = () => ({
   type: trainersConstant.EDIT_TRAINERS_PENDING
 });
-export const editTrainersSuccess = (updatedTrainer, id) => ({
+export const editTrainersSuccess = (updatedTrainer, id, message) => ({
   type: trainersConstant.EDIT_TRAINERS_SUCCESS,
-  payload: { updatedTrainer, id }
+  payload: { updatedTrainer, id, message }
 });
 export const editTrainersError = (error) => ({
   type: trainersConstant.EDIT_TRAINERS_ERROR,

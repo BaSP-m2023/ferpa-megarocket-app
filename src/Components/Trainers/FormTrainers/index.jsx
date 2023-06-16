@@ -22,13 +22,9 @@ const TrainerAddForm = () => {
     salary: ''
   });
   const { id } = useParams();
-  const { trainers } = useSelector((state) => state.trainers);
+  const { trainers, success, error, formError } = useSelector((state) => state.trainers);
   const dispatch = useDispatch();
   const history = useHistory();
-  // const onRedirect = {
-  //   pathname: '/trainers',
-  //   state: { message: '' }
-  // };
   useEffect(() => {
     if (id) {
       const trainer = trainers.find((trainer) => trainer._id === id);
@@ -37,25 +33,32 @@ const TrainerAddForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
-    if (successAddModal) {
-      setTimeout(() => {
-        history.push('/trainers');
-        setSuccessAddModal(!successAddModal);
-      }, 2000);
+    if (success) {
+      handleModalSuccess();
     }
-    if (successEditModal) {
-      setTimeout(() => {
-        history.push('/trainers');
-        setSuccessEditModal(!successEditModal);
-      }, 2000);
+    if (formError) {
+      handleModalError();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [successAddModal, successEditModal]);
+  }, [success, formError]);
 
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
+  };
+
+  const handleModalError = () => {
+    setTimeout(() => {
+      setSuccessEditModal(!successEditModal);
+    }, 2000);
+  };
+
+  const handleModalSuccess = () => {
+    setTimeout(() => {
+      history.push('/trainers');
+      setSuccessAddModal(!successAddModal);
+    }, 2000);
   };
 
   const onSubmitAdd = (e) => {
@@ -141,13 +144,13 @@ const TrainerAddForm = () => {
             success
             isOpen={successAddModal}
             onClose={() => setSuccessAddModal(!successAddModal)}
-            title={'Trainer Added successfully'}
+            title={error}
           ></Modal>
           <Modal
             success
             isOpen={successEditModal}
             onClose={() => setSuccessEditModal(!successEditModal)}
-            title={'Trainer Edited successfully'}
+            title={error}
           ></Modal>
         </form>
       </div>
