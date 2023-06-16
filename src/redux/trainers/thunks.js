@@ -65,7 +65,6 @@ export const putTrainer = async (dispatch, id, updatedTrainer) => {
   };
   try {
     dispatch(trainersActions.editTrainersPending());
-    console.log(updatedTrainer);
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
       method: 'PUT',
       body: JSON.stringify(trainer),
@@ -75,7 +74,7 @@ export const putTrainer = async (dispatch, id, updatedTrainer) => {
     });
     const { data, message, error } = await response.json();
     if (!error) {
-      dispatch(trainersActions.editTrainersSuccess(data.data, id, message));
+      dispatch(trainersActions.editTrainersSuccess(data, id, message));
     }
     if (error) {
       throw new Error(message);

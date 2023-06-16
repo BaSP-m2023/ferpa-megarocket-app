@@ -119,6 +119,13 @@ const TrainerAddForm = () => {
               onChangeInput={handleChange}
             />
             <Input
+              labelText={'Salary'}
+              nameValue={'salary'}
+              placeholder={'Salary'}
+              value={inputs.salary}
+              onChangeInput={handleChange}
+            />
+            <Input
               labelText={'Password'}
               nameValue={'password'}
               type={'password'}
@@ -126,13 +133,10 @@ const TrainerAddForm = () => {
               value={inputs.password}
               onChangeInput={handleChange}
             />
-            <Input
-              labelText={'Salary'}
-              nameValue={'salary'}
-              placeholder={'Salary'}
-              value={inputs.salary}
-              onChangeInput={handleChange}
-            />
+            <p className={styles.passwordAlert}>
+              * The password must have uppercase letters, lowercase letters, number and at least 8
+              characters
+            </p>
           </div>
           <div className={styles.buttons}>
             <Link to={'/trainers'}>
