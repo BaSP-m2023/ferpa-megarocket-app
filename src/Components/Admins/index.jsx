@@ -1,59 +1,49 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAdmins } from '../../redux/admins/thunks';
+import { getAdmins, deleteAdmin } from '../../redux/admins/thunks';
 import { Link } from 'react-router-dom';
 import styles from './admins.module.css';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal/index';
 import Loader from '../Shared/Loader';
+import * as actionsConstants from '../../redux/admins/actions';
 
-function Admins() {
-  const getData = useSelector((state) => state.admins.get.data);
-  const getPending = useSelector((state) => state.admins.get.isPending);
-  const getError = useSelector((state) => state.admins.get.error);
+const Admins = () => {
+  const { isPending, data, error, errorSwitch, message } = useSelector((state) => state.admins);
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState('');
-  const [messageReq, setMessageReq] = useState('');
   const [successModal, setSuccesModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
-  const getDispatch = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getAdmins(getDispatch);
-    if (getError) {
-      setErrorModal(getError.toString());
-      setErrorModal(!errorModal);
+    dispatch(actionsConstants.deleteAdminsPending());
+    getAdmins(dispatch);
+    if (message && !errorSwitch) {
+      setSuccesModal(true);
+      setTimeout(() => {
+        setSuccesModal(false);
+      }, 2000);
+      dispatch(actionsConstants.deleteAdminsPending());
+    }
+    return () => {
+      dispatch(actionsConstants.deleteAdminsPending());
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [message]);
+
+  useEffect(() => {
+    if (errorSwitch) {
+      setErrorModal(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getDispatch]);
-
-  const deleteAdmin = async (id) => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-        method: 'DELETE'
-      });
-
-      const { error, message } = await res.json();
-      setMessageReq(message);
-      if (!error) {
-        setSuccesModal(!successModal);
-        setTimeout(() => {
-          setSuccesModal(false);
-        }, 2000);
-      } else {
-        setErrorModal(!errorModal);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  }, [errorSwitch]);
 
   const handleDelete = (id) => {
-    setTimeout(() => {
-      deleteAdmin(id);
-    }, 20);
+    deleteAdmin(dispatch, id);
   };
-  if (getPending) {
+
+  if (isPending) {
     return (
       <section className={styles.container}>
         <Loader />
@@ -84,7 +74,7 @@ function Admins() {
       <Modal
         title={'Admin Deleted'}
         isOpen={successModal}
-        text={messageReq}
+        text={message}
         onClose={() => {
           setSuccesModal(!successModal);
         }}
@@ -92,7 +82,7 @@ function Admins() {
       <Modal
         isOpen={errorModal}
         title={'ERROR'}
-        text={messageReq}
+        text={error}
         warning
         onClose={() => {
           setErrorModal(!errorModal);
@@ -107,7 +97,7 @@ function Admins() {
             <Button text={'Add Admin'} variant={'add'} />
           </Link>
         </header>
-        {getData.length > 0 ? (
+        {data?.length > 0 ? (
           <table className={styles.table}>
             <tbody className={styles.tbody}>
               <tr className={styles.thead}>
@@ -117,7 +107,7 @@ function Admins() {
                 <th className={styles.th}></th>
                 <th className={styles.th}></th>
               </tr>
-              {getData.map((admin) => {
+              {data?.map((admin) => {
                 return (
                   <tr className={styles.tr} key={admin._id}>
                     <td className={styles.td}>{admin.firstName}</td>
@@ -149,6 +139,6 @@ function Admins() {
       </section>
     </section>
   );
-}
+};
 
 export default Admins;
