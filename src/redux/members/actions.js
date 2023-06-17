@@ -3,9 +3,6 @@ import {
   GET_MEMBERS_PENDING,
   GET_MEMBERS_SUCCESS,
   GET_MEMBERS_ERROR,
-  GET_MEMBER_BY_ID_PENDING,
-  GET_MEMBER_BY_ID_SUCCESS,
-  GET_MEMBER_BY_ID_ERROR,
   UPDATE_MEMBERS_PENDING,
   UPDATE_MEMBERS_SUCCESS,
   UPDATE_MEMBERS_ERROR,
@@ -43,33 +40,13 @@ export const getMembersError = (error) => {
   };
 };
 
-export const getMemberByIdPending = () => {
-  return {
-    type: GET_MEMBER_BY_ID_PENDING
-  };
-};
-
-export const getMemberByIdSuccess = (data) => {
-  return {
-    type: GET_MEMBER_BY_ID_SUCCESS,
-    payload: data
-  };
-};
-
-export const getMemberByIdError = (error) => {
-  return {
-    type: GET_MEMBER_BY_ID_ERROR,
-    payload: error
-  };
-};
-
 export const updateMemberPending = () => ({
   type: UPDATE_MEMBERS_PENDING
 });
 
-export const updateMemberSuccess = (data) => ({
+export const updateMemberSuccess = (id, memberUpdated, message) => ({
   type: UPDATE_MEMBERS_SUCCESS,
-  payload: data
+  payload: { id, memberUpdated, message }
 });
 
 export const updateMemberError = (error) => ({
@@ -81,9 +58,9 @@ export const createMemberPending = () => ({
   type: CREATE_MEMBERS_PENDING
 });
 
-export const createMemberSuccess = (data) => ({
+export const createMemberSuccess = (newMember, message) => ({
   type: CREATE_MEMBERS_SUCCESS,
-  payload: data
+  payload: { newMember, message }
 });
 
 export const createMemberError = (error) => ({
@@ -95,9 +72,9 @@ export const deleteMemberPending = () => ({
   type: DELETE_MEMBERS_PENDING
 });
 
-export const deleteMemberSuccess = (data) => ({
+export const deleteMemberSuccess = (id, message) => ({
   type: DELETE_MEMBERS_SUCCESS,
-  payload: data
+  payload: { id, message }
 });
 
 export const deleteMemberError = (error) => ({

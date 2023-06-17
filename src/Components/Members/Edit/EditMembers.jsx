@@ -3,19 +3,20 @@ import styles from './editMembers.module.css';
 import { Input, Select, DatePicker } from '../../Shared/Inputs';
 import { useState, useEffect } from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
-import { updateMember, getMemberById } from '../../../redux/members/thunks';
+import { updateMember } from '../../../redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../Shared/Button/index';
 import Modal from '../../Shared/Modal';
+import Loader from '../../Shared/Loader';
 
 const MembersEdit = () => {
   const [member, setMember] = useState([]);
-  const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.members);
+  const { data, message, success, error } = useSelector((state) => state.members);
   const history = useHistory();
+  const { id } = useParams();
 
   const memberships = [
     {
@@ -48,39 +49,34 @@ const MembersEdit = () => {
     }
   ];
 
-  const { id } = useParams();
-
   useEffect(() => {
+    const memberToUpdate = data.find((member) => member._id === id);
     setMember({
-      firstName: data.getById.data?.firstName ?? '',
-      lastName: data.getById.data?.lastName ?? '',
-      dni: data.getById.data?.dni ?? '',
-      phone: data.getById.data?.phone ?? '',
-      email: data.getById.data?.email ?? '',
-      city: data.getById.data?.city ?? '',
-      birthDay: data.getById.data?.birthDay ?? '',
-      postalCode: data.getById.data?.postalCode ?? '',
-      isActive: data.getById.data?.isActive ?? true,
-      membership: data.getById.data?.membership ?? 'Classic'
+      firstName: memberToUpdate?.firstName ?? '',
+      lastName: memberToUpdate?.lastName ?? '',
+      dni: memberToUpdate?.dni ?? '',
+      phone: memberToUpdate?.phone ?? '',
+      email: memberToUpdate?.email ?? '',
+      city: memberToUpdate?.city ?? '',
+      birthDay: memberToUpdate?.birthDay ?? '',
+      postalCode: memberToUpdate?.postalCode ?? '',
+      isActive: memberToUpdate?.isActive ?? true,
+      membership: memberToUpdate?.membership ?? ''
     });
-  }, [data.getById.data, data.getById.success]);
+  }, []);
 
   useEffect(() => {
-    dispatch(getMemberById(id));
-    setMessage(data.put.message);
-    if (data.put.success) {
+    if (success) {
       setShowModal(true);
       setTimeout(() => {
         history.push('/members');
       }, 2000);
-      data.put.success = false;
     }
-    if (data.put.error) {
+    if (error) {
       setShowModalError(true);
-      data.put.error = false;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data.put.message, data.put.success]);
+  }, [error, success]);
 
   const handleFirstName = (e) => {
     setMember({ ...member, firstName: e.target.value });
@@ -149,7 +145,7 @@ const MembersEdit = () => {
                 onChangeInput={handleFirstName}
               />
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -161,7 +157,7 @@ const MembersEdit = () => {
                 onChangeInput={handleLastName}
               />
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -173,7 +169,7 @@ const MembersEdit = () => {
                 onChangeInput={handleDniChange}
               />
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -185,7 +181,7 @@ const MembersEdit = () => {
                 onChangeInput={handlePhoneChange}
               />
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -197,7 +193,7 @@ const MembersEdit = () => {
                 onChangeInput={handleEmailChange}
               />
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -209,7 +205,7 @@ const MembersEdit = () => {
                 onChangeInput={handleCityChange}
               />
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -220,7 +216,7 @@ const MembersEdit = () => {
                 onChangeDate={handleBirthdayChange}
               />
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -232,7 +228,7 @@ const MembersEdit = () => {
                 onChangeInput={handlePostalCodeChange}
               />
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -248,7 +244,7 @@ const MembersEdit = () => {
                 />
               </div>
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -264,7 +260,7 @@ const MembersEdit = () => {
                 />
               </div>
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div className={styles.theButtons}>

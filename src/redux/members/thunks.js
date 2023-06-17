@@ -1,10 +1,8 @@
 import {
+  resetInitialState,
   getMembersPending,
   getMembersSuccess,
   getMembersError,
-  getMemberByIdPending,
-  getMemberByIdSuccess,
-  getMemberByIdError,
   updateMemberPending,
   updateMemberSuccess,
   updateMemberError,
@@ -18,93 +16,88 @@ import {
 
 export const getMembers = () => {
   return async (dispatch) => {
+    dispatch(getMembersPending());
     try {
-      dispatch(getMembersPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
-      const data = await response.json();
-      if (data.error) {
-        throw new Error(data.message);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
+      const { data, message } = await res.json();
+      dispatch(resetInitialState());
+      if (res.ok) {
+        dispatch(getMembersSuccess(data));
       }
-      dispatch(getMembersSuccess(data.data));
+      if (!res.ok) {
+        throw new Error(message);
+      }
     } catch (error) {
-      dispatch(getMembersError(error));
+      dispatch(getMembersError(error.message));
     }
   };
 };
 
-export const getMemberById = (id) => {
+export const updateMember = (id, member) => {
   return async (dispatch) => {
+    dispatch(updateMemberPending());
+
     try {
-      dispatch(getMemberByIdPending());
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`);
-      const data = await response.json();
-      if (data.error) {
-        throw new Error(data.message);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          firstName: member.firstName,
+          lastName: member.lastName,
+          dni: member.dni,
+          phone: member.phone,
+          email: member.email,
+          city: member.city,
+          birthDay: member.birthDay,
+          postalCode: member.postalCode,
+          isActive: member.isActive,
+          membership: member.membership
+        })
+      });
+
+      const { data, message } = await res.json();
+      dispatch(resetInitialState());
+
+      if (res.ok) {
+        dispatch(updateMemberSuccess(id, data, message));
       }
-      dispatch(getMemberByIdSuccess(data.data));
+      if (!res.ok) {
+        throw new Error(message);
+      }
     } catch (error) {
-      dispatch(getMemberByIdError(error));
+      dispatch(updateMemberError(error.message));
     }
   };
 };
 
-export const updateMember = (id, member) => async (dispatch) => {
-  dispatch(updateMemberPending());
+export const createMember = (member) => {
+  return async (dispatch) => {
+    dispatch(createMemberPending());
 
-  try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        firstName: member.firstName,
-        lastName: member.lastName,
-        dni: member.dni,
-        phone: member.phone,
-        email: member.email,
-        city: member.city,
-        birthDay: member.birthDay,
-        postalCode: member.postalCode,
-        isActive: member.isActive,
-        membership: member.membership
-      })
-    });
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(member)
+      });
 
-    const updatedMember = await response.json();
+      const { data, message } = await res.json();
+      dispatch(resetInitialState());
 
-    if (response.ok) {
-      dispatch(updateMemberSuccess(updatedMember));
-    } else {
-      dispatch(updateMemberError('Failed to update member.'));
+      if (res.ok) {
+        dispatch(createMemberSuccess(data, message));
+      }
+      if (!res.ok) {
+        throw new Error(message);
+      }
+    } catch (error) {
+      dispatch(createMemberError(error.message));
     }
-  } catch (error) {
-    dispatch(updateMemberError('An error occurred while updating member.'));
-  }
-};
-
-export const createMember = (member) => async (dispatch) => {
-  dispatch(createMemberPending());
-
-  try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(member)
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      dispatch(createMemberSuccess(data));
-    } else {
-      dispatch(createMemberError('Failed to create member.'));
-    }
-  } catch (error) {
-    dispatch(createMemberError('An error occurred while creating member.'));
-  }
+  };
 };
 
 export const deleteMember = (id) => {
@@ -115,12 +108,14 @@ export const deleteMember = (id) => {
         method: 'DELETE'
       });
       const { message } = await res.json();
+      dispatch(resetInitialState());
 
-      if (res.status === 200) {
-        dispatch(deleteMemberSuccess(message));
+      if (res.ok) {
+        dispatch(deleteMemberSuccess(id, message));
+        dispatch(resetInitialState());
       }
 
-      if (res.status !== 200) {
+      if (!res.ok) {
         throw new Error(message);
       }
     } catch (error) {
