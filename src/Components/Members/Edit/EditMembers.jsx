@@ -131,7 +131,6 @@ const MembersEdit = () => {
         title={message}
         error
       />
-      ;
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
       <div>
         <form onSubmit={(e) => handleSubmit(e)} className={styles.form}>

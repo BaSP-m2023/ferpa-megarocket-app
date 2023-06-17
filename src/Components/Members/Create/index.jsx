@@ -74,7 +74,6 @@ const MembersCreate = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createMember(member));
-    console.log(member);
   };
 
   return (
@@ -85,7 +84,6 @@ const MembersCreate = () => {
         title={message}
         error
       />
-      ;
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
       <div>
         <form onSubmit={(e) => handleSubmit(e)} className={styles.form}>
