@@ -3,6 +3,9 @@ import {
   getMembersPending,
   getMembersSuccess,
   getMembersError,
+  getMemberByIdPending,
+  getMemberByIdSuccess,
+  getMemberByIdError,
   updateMemberPending,
   updateMemberSuccess,
   updateMemberError,
@@ -14,15 +17,38 @@ import {
   deleteMemberError
 } from './actions';
 
-export const getMembers = async (dispatch) => {
-  try {
-    dispatch(getMembersPending());
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
-    const data = await response.json();
-    dispatch(getMembersSuccess(data.data));
-  } catch (error) {
-    dispatch(getMembersError(error.toString()));
-  }
+export const getMembers = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(getMembersPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`);
+      const data = await response.json();
+      if (data.error) {
+        throw new Error(data.message);
+      }
+      dispatch(getMembersSuccess(data.data));
+    } catch (error) {
+      dispatch(getMembersError(error));
+    }
+  };
+};
+
+export const getMemberById = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch(getMemberByIdPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`);
+      const data = await response.json();
+      if (data.error) {
+        throw new Error(data.message);
+      }
+      console.log(data.data);
+      dispatch(getMemberByIdSuccess(data.data));
+      console.log(data.data);
+    } catch (error) {
+      dispatch(getMemberByIdError(error));
+    }
+  };
 };
 
 export const updateMember = (id, member) => async (dispatch) => {
@@ -84,24 +110,26 @@ export const createMember = (member) => async (dispatch) => {
   }
 };
 
-export const deleteMember = async (dispatch, id) => {
-  dispatch(deleteMemberPending());
-  try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
-      method: 'DELETE'
-    });
-    const { message } = await res.json();
-    dispatch(resetInitialState());
-
-    if (res.status === 200) {
-      dispatch(deleteMemberSuccess(id, message));
+export const deleteMember = (id) => {
+  return async (dispatch) => {
+    dispatch(deleteMemberPending());
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
+        method: 'DELETE'
+      });
+      const { message } = await res.json();
       dispatch(resetInitialState());
-    }
 
-    if (res.status !== 200) {
-      throw new Error(message);
+      if (res.status === 200) {
+        dispatch(deleteMemberSuccess(id, message));
+        dispatch(resetInitialState());
+      }
+
+      if (res.status !== 200) {
+        throw new Error(message);
+      }
+    } catch (error) {
+      dispatch(deleteMemberError(error.message));
     }
-  } catch (error) {
-    dispatch(deleteMemberError(error.message));
-  }
+  };
 };

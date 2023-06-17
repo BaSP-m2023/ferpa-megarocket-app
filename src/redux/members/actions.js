@@ -3,6 +3,9 @@ import {
   GET_MEMBERS_PENDING,
   GET_MEMBERS_SUCCESS,
   GET_MEMBERS_ERROR,
+  GET_MEMBER_BY_ID_PENDING,
+  GET_MEMBER_BY_ID_SUCCESS,
+  GET_MEMBER_BY_ID_ERROR,
   UPDATE_MEMBERS_PENDING,
   UPDATE_MEMBERS_SUCCESS,
   UPDATE_MEMBERS_ERROR,
@@ -36,6 +39,26 @@ export const getMembersSuccess = (data) => {
 export const getMembersError = (error) => {
   return {
     type: GET_MEMBERS_ERROR,
+    payload: error
+  };
+};
+
+export const getMemberByIdPending = () => {
+  return {
+    type: GET_MEMBER_BY_ID_PENDING
+  };
+};
+
+export const getMemberByIdSuccess = (data) => {
+  return {
+    type: GET_MEMBER_BY_ID_SUCCESS,
+    payload: data
+  };
+};
+
+export const getMemberByIdError = (error) => {
+  return {
+    type: GET_MEMBER_BY_ID_ERROR,
     payload: error
   };
 };

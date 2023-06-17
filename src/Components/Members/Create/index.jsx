@@ -1,13 +1,26 @@
 import React from 'react';
 import styles from './addMembers.module.css';
 import { Input, Select, DatePicker } from '../../Shared/Inputs';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { createMember } from '../../../redux/members/thunks';
 
 const MembersCreate = () => {
-  const [member, setMember] = useState([]);
+  const [member, setMember] = useState({
+    firstName: '',
+    lastName: '',
+    dni: '',
+    phone: '',
+    email: '',
+    city: '',
+    birthDay: '',
+    postalCode: '',
+    isActive: true,
+    membership: 'Classic'
+  });
 
   const memberships = [
     {
@@ -27,98 +40,36 @@ const MembersCreate = () => {
     }
   ];
 
-  const activeTypes = [
-    {
-      _id: 1,
-      name: 'Yes',
-      value: true
-    },
-    {
-      _id: 2,
-      name: 'No',
-      value: false
-    }
-  ];
-
+  const dispatch = useDispatch();
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
 
   const history = useHistory();
+  const data = useSelector((state) => state.members);
 
-  const handleFirstName = (e) => {
-    setMember({ ...member, firstName: e.target.value });
-  };
+  useEffect(() => {
+    setMessage(data.post.message);
 
-  const handleLastName = (e) => {
-    setMember({ ...member, lastName: e.target.value });
-  };
+    if (data.post.success) {
+      history.push('/members');
+      data.post.success = false;
+    }
+  }, [data.post.message, data.post.error]);
 
-  const handleDniChange = (e) => {
-    setMember({ ...member, dni: e.target.value });
-  };
-
-  const handlePhoneChange = (e) => {
-    setMember({ ...member, phone: e.target.value });
-  };
-
-  const handleEmailChange = (e) => {
-    setMember({ ...member, email: e.target.value });
-  };
-
-  const handleCityChange = (e) => {
-    setMember({ ...member, city: e.target.value });
+  const handleOnChange = (event) => {
+    setMember({
+      ...member,
+      [event.target.name]: event.target.value
+    });
   };
 
   const handleBirthdayChange = (e) => {
     setMember({ ...member, birthDay: e });
   };
 
-  const handlePostalCodeChange = (e) => {
-    setMember({ ...member, postalCode: e.target.value });
-  };
-
-  const handleMembershipChange = (e) => {
-    setMember({ ...member, membership: e.target.value });
-  };
-
-  const handleIsActiveChange = (e) => {
-    setMember({ ...member, isActive: e.target.value });
-  };
-
-  const addMember = async (member) => {
-    try {
-      const newMembers = await fetch(`${process.env.REACT_APP_API_URL}/api/members/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          firstName: member.firstName,
-          lastName: member.lastName,
-          dni: member.dni,
-          phone: member.phone,
-          email: member.email,
-          city: member.city,
-          birthDay: member.birthDay,
-          postalCode: member.postalCode,
-          isActive: member.isActive,
-          membership: member.membership
-        })
-      });
-      const data = await newMembers.json();
-      setMessage(data.message);
-      setShowModal(true);
-      if (!data.error) {
-        history.push('/members');
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    addMember(member);
+    dispatch(createMember(member));
   };
 
   return (
@@ -133,7 +84,8 @@ const MembersCreate = () => {
               type={'text'}
               placeholder={'Name'}
               value={member.firstName}
-              onChangeInput={handleFirstName}
+              onChangeInput={handleOnChange}
+              nameValue={'firstName'}
             />
           </div>
           <div>
@@ -142,7 +94,8 @@ const MembersCreate = () => {
               type={'text'}
               placeholder={'Surname'}
               value={member.lastName}
-              onChangeInput={handleLastName}
+              onChangeInput={handleOnChange}
+              nameValue={'lastName'}
             />
           </div>
           <div>
@@ -151,7 +104,8 @@ const MembersCreate = () => {
               type={'text'}
               placeholder={'DNI'}
               value={member.dni}
-              onChangeInput={handleDniChange}
+              onChangeInput={handleOnChange}
+              nameValue={'dni'}
             />
           </div>
           <div>
@@ -160,7 +114,8 @@ const MembersCreate = () => {
               type={'text'}
               placeholder={'ex: 096513178'}
               value={member.phone}
-              onChangeInput={handlePhoneChange}
+              nameValue={'phone'}
+              onChangeInput={handleOnChange}
             />
           </div>
           <div>
@@ -169,7 +124,8 @@ const MembersCreate = () => {
               type={'text'}
               placeholder={'robertomariaoverdrive@soybostero.edu'}
               value={member.email}
-              onChangeInput={handleEmailChange}
+              nameValue={'email'}
+              onChangeInput={handleOnChange}
             />
           </div>
           <div>
@@ -178,13 +134,14 @@ const MembersCreate = () => {
               type={'text'}
               placeholder={'Your city'}
               value={member.city}
-              onChangeInput={handleCityChange}
+              nameValue={'city'}
+              onChangeInput={handleOnChange}
             />
           </div>
           <div>
             <DatePicker
               label={'Birthday'}
-              value={member.birthDay.slice(0, 10)}
+              nameValue={'birthDay'}
               onChangeDate={handleBirthdayChange}
             />
           </div>
@@ -194,17 +151,8 @@ const MembersCreate = () => {
               type={'text'}
               placeholder={'Your postal code'}
               value={member.postalCode}
-              onChangeInput={handlePostalCodeChange}
-            />
-          </div>
-          <div>
-            <Select
-              label={'Is active?'}
-              value={activeTypes.value}
-              placeholder={'Yes'}
-              onChangeSelect={handleIsActiveChange}
-              options={activeTypes}
-              nameValue={'day'}
+              nameValue={'postalCode'}
+              onChangeInput={handleOnChange}
             />
           </div>
           <div>
@@ -212,9 +160,9 @@ const MembersCreate = () => {
               label={'Membership'}
               value={memberships.value}
               placeholder={'Classic'}
-              onChangeSelect={handleMembershipChange}
+              onChangeSelect={handleOnChange}
               options={memberships}
-              nameValue={'day'}
+              nameValue={'membership'}
             />
           </div>
           <div className={styles.theButtons}>

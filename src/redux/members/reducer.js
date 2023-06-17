@@ -1,7 +1,7 @@
 import * as actionConstant from './constants';
 import { combineReducers } from 'redux';
 
-const INITIAL_STATE = {
+const initialState = {
   data: [],
   message: '',
   error: '',
@@ -9,7 +9,7 @@ const INITIAL_STATE = {
   success: false
 };
 
-const getReducer = (state = INITIAL_STATE, action) => {
+const getReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionConstant.RESET_INITIAL_STATE:
       return {
@@ -29,7 +29,27 @@ const getReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-const putReducer = (state = INITIAL_STATE, action) => {
+const getByIdReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case actionConstant.RESET_INITIAL_STATE:
+      return {
+        ...state,
+        message: '',
+        error: false,
+        success: false
+      };
+    case actionConstant.GET_MEMBER_BY_ID_PENDING:
+      return { ...state, isPending: true };
+    case actionConstant.GET_MEMBER_BY_ID_SUCCESS:
+      return { ...state, data: action.payload, isPending: false };
+    case actionConstant.GET_MEMBER_BY_ID_ERROR:
+      return { ...state, error: action.payload, isPending: false };
+    default:
+      return state;
+  }
+};
+
+const putReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionConstant.RESET_INITIAL_STATE:
       return {
@@ -63,7 +83,7 @@ const putReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-const postReducer = (state = INITIAL_STATE, action) => {
+const postReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionConstant.RESET_INITIAL_STATE:
       return {
@@ -80,6 +100,7 @@ const postReducer = (state = INITIAL_STATE, action) => {
         data: [...state.data, action.payload.newMember],
         isPending: false,
         message: action.payload.message,
+        error: false,
         success: true
       };
     case actionConstant.CREATE_MEMBERS_ERROR:
@@ -94,7 +115,7 @@ const postReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-const deleteReducer = (state = INITIAL_STATE, action) => {
+const deleteReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionConstant.RESET_INITIAL_STATE:
       return {
@@ -106,10 +127,8 @@ const deleteReducer = (state = INITIAL_STATE, action) => {
     case actionConstant.DELETE_MEMBERS_PENDING:
       return { ...state, isPending: true };
     case actionConstant.DELETE_MEMBERS_SUCCESS: {
-      const updatedData = state.data.filter((member) => member._id !== action.payload.id);
       return {
         ...state,
-        data: updatedData,
         isPending: false,
         message: action.payload.message,
         success: true
@@ -129,6 +148,7 @@ const deleteReducer = (state = INITIAL_STATE, action) => {
 
 const membersReducer = combineReducers({
   get: getReducer,
+  getById: getByIdReducer,
   put: putReducer,
   post: postReducer,
   delete: deleteReducer

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './members.module.css';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMembers } from '../../redux/members/thunks';
+import { getMembers, deleteMember } from '../../redux/members/thunks';
 import Button from '../Shared/Button/';
 import Modal from '../Shared/Modal/';
 import Loader from '../Shared/Loader';
@@ -10,24 +10,17 @@ import Loader from '../Shared/Loader';
 function Members() {
   const [showModal, setShowModal] = useState(false);
   const [memberId, setMemberId] = useState('');
-  const { data, isPending, error } = useSelector((state) => state.members);
-  const [members, setMembers] = useState([]);
+  const { isPending } = useSelector((state) => state.members);
+  const data = useSelector((state) => state.members);
   const dispatch = useDispatch();
 
-  const deleteMember = async (id) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
-        method: 'DELETE'
-      });
-      setMembers([...members.filter((member) => member._id !== id)]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
-    getMembers(dispatch);
-  }, [dispatch]);
+    dispatch(getMembers());
+  }, []);
+
+  const delMember = (id) => {
+    dispatch(deleteMember(id));
+  };
 
   if (isPending) {
     return (
@@ -54,9 +47,9 @@ function Members() {
             <Button text={'Create new member'} variant={'add'} />
           </Link>
         </div>
-        {error !== '' ? (
+        {data.get.error !== '' ? (
           <div>
-            <p className={styles.whiteLetters}>{error}</p>
+            <p className={styles.whiteLetters}>{data.get.error}</p>
           </div>
         ) : (
           <table className={styles.list}>
@@ -68,7 +61,7 @@ function Members() {
                 <th>Email</th>
                 <th>Phone</th>
               </tr>
-              {data.map((item) => {
+              {data.get.data.map((item) => {
                 return (
                   <tr key={item._id}>
                     <td>{item.firstName}</td>
@@ -92,7 +85,7 @@ function Members() {
                         text={'Delete'}
                         variant={'delete'}
                         clickAction={() => {
-                          deleteMember(memberId);
+                          delMember(memberId);
                           setShowModal(false);
                         }}
                       />
