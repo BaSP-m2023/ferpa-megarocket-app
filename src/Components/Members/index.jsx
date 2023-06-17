@@ -2,32 +2,37 @@ import { useEffect, useState } from 'react';
 import styles from './members.module.css';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMembers } from '../../redux/members/thunks';
+import { getMembers, deleteMember } from '../../redux/members/thunks';
 import Button from '../Shared/Button/';
 import Modal from '../Shared/Modal/';
 import Loader from '../Shared/Loader';
 
 function Members() {
   const [showModal, setShowModal] = useState(false);
+  const [showModalDeleteSuccess, setShowModalDeleteSuccess] = useState(false);
   const [memberId, setMemberId] = useState('');
-  const { data, isPending, error } = useSelector((state) => state.members);
-  const [members, setMembers] = useState([]);
+  const { data, isPending, message, error, success } = useSelector((state) => state.members);
+  const [theMessage, setTheMessage] = useState('');
   const dispatch = useDispatch();
 
-  const deleteMember = async (id) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
-        method: 'DELETE'
-      });
-      setMembers([...members.filter((member) => member._id !== id)]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  useEffect(() => {
+    dispatch(getMembers());
+  }, []);
 
   useEffect(() => {
-    getMembers(dispatch);
-  }, [dispatch]);
+    if (success) {
+      setTheMessage(message);
+      setShowModalDeleteSuccess(true);
+      setTimeout(() => {
+        setShowModalDeleteSuccess(false);
+      }, 2000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success]);
+
+  const delMember = (id) => {
+    dispatch(deleteMember(id));
+  };
 
   if (isPending) {
     return (
@@ -54,12 +59,18 @@ function Members() {
             <Button text={'Create new member'} variant={'add'} />
           </Link>
         </div>
-        {error !== '' ? (
+        {error ? (
           <div>
-            <p className={styles.whiteLetters}>{error}</p>
+            <p className={styles.whiteLetters}>{message}</p>
           </div>
         ) : (
           <table className={styles.list}>
+            <Modal
+              onClose={() => setShowModalDeleteSuccess(false)}
+              isOpen={showModalDeleteSuccess}
+              title={theMessage}
+              success
+            ></Modal>
             <tbody>
               <tr>
                 <th>Name</th>
@@ -82,26 +93,7 @@ function Members() {
                         <Button variant={'edit'} />
                       </Link>
                     </td>
-                    <Modal
-                      onClose={() => setShowModal(false)}
-                      isOpen={showModal}
-                      title={`Are you sure you want to delete this member?`}
-                      warning={true}
-                    >
-                      <Button
-                        text={'Delete'}
-                        variant={'delete'}
-                        clickAction={() => {
-                          deleteMember(memberId);
-                          setShowModal(false);
-                        }}
-                      />
-                      <Button
-                        text={'Cancel'}
-                        variant={'white'}
-                        clickAction={() => setShowModal(false)}
-                      />
-                    </Modal>
+
                     <td>
                       <Button
                         variant={'deleteIcon'}
@@ -115,6 +107,23 @@ function Members() {
                 );
               })}
             </tbody>
+            <Modal
+              onClose={() => setShowModal(false)}
+              isOpen={showModal}
+              title={`Confirm Delete`}
+              text={'Are you sure that you want to delete this member?'}
+              warning={true}
+            >
+              <Button
+                text={'Delete'}
+                variant={'delete'}
+                clickAction={() => {
+                  delMember(memberId);
+                  setShowModal(false);
+                }}
+              />
+              <Button text={'Cancel'} variant={'white'} clickAction={() => setShowModal(false)} />
+            </Modal>
           </table>
         )}
       </div>

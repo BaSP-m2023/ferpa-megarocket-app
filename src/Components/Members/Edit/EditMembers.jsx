@@ -2,14 +2,21 @@ import React from 'react';
 import styles from './editMembers.module.css';
 import { Input, Select, DatePicker } from '../../Shared/Inputs';
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
+import { updateMember } from '../../../redux/members/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../Shared/Button/index';
 import Modal from '../../Shared/Modal';
+import Loader from '../../Shared/Loader';
 
 const MembersEdit = () => {
   const [member, setMember] = useState([]);
-  const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [showModalError, setShowModalError] = useState(false);
+  const dispatch = useDispatch();
+  const { data, message, success, error } = useSelector((state) => state.members);
+  const history = useHistory();
+  const { id } = useParams();
 
   const memberships = [
     {
@@ -42,22 +49,34 @@ const MembersEdit = () => {
     }
   ];
 
-  const { id } = useParams();
-
-  const getMember = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`);
-      const data = await response.json();
-      setMember(data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  useEffect(() => {
+    const memberToUpdate = data.find((member) => member._id === id);
+    setMember({
+      firstName: memberToUpdate?.firstName ?? '',
+      lastName: memberToUpdate?.lastName ?? '',
+      dni: memberToUpdate?.dni ?? '',
+      phone: memberToUpdate?.phone ?? '',
+      email: memberToUpdate?.email ?? '',
+      city: memberToUpdate?.city ?? '',
+      birthDay: memberToUpdate?.birthDay ?? '',
+      postalCode: memberToUpdate?.postalCode ?? '',
+      isActive: memberToUpdate?.isActive ?? true,
+      membership: memberToUpdate?.membership ?? ''
+    });
+  }, []);
 
   useEffect(() => {
-    getMember(id);
+    if (success) {
+      setShowModal(true);
+      setTimeout(() => {
+        history.push('/members');
+      }, 2000);
+    }
+    if (error) {
+      setShowModalError(true);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [error, success]);
 
   const handleFirstName = (e) => {
     setMember({ ...member, firstName: e.target.value });
@@ -99,42 +118,19 @@ const MembersEdit = () => {
     setMember({ ...member, isActive: e.target.value });
   };
 
-  const updateMember = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          firstName: member.firstName,
-          lastName: member.lastName,
-          dni: member.dni,
-          phone: member.phone,
-          email: member.email,
-          city: member.city,
-          birthDay: member.birthDay,
-          postalCode: member.postalCode,
-          isActive: member.isActive,
-          membership: member.membership
-        })
-      });
-
-      const data = await response.json();
-      setMessage(data.message);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateMember(id);
-    setShowModal(true);
+    dispatch(updateMember(id, member));
   };
 
   return (
     <div className={styles.container}>
+      <Modal
+        onClose={() => setShowModalError(false)}
+        isOpen={showModalError}
+        title={message}
+        error
+      />
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
       <div>
         <form onSubmit={(e) => handleSubmit(e)} className={styles.form}>
@@ -148,7 +144,7 @@ const MembersEdit = () => {
                 onChangeInput={handleFirstName}
               />
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -160,7 +156,7 @@ const MembersEdit = () => {
                 onChangeInput={handleLastName}
               />
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -172,7 +168,7 @@ const MembersEdit = () => {
                 onChangeInput={handleDniChange}
               />
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -184,7 +180,7 @@ const MembersEdit = () => {
                 onChangeInput={handlePhoneChange}
               />
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -196,7 +192,7 @@ const MembersEdit = () => {
                 onChangeInput={handleEmailChange}
               />
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -208,7 +204,7 @@ const MembersEdit = () => {
                 onChangeInput={handleCityChange}
               />
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -219,7 +215,7 @@ const MembersEdit = () => {
                 onChangeDate={handleBirthdayChange}
               />
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -231,7 +227,7 @@ const MembersEdit = () => {
                 onChangeInput={handlePostalCodeChange}
               />
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -247,7 +243,7 @@ const MembersEdit = () => {
                 />
               </div>
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div>
@@ -263,7 +259,7 @@ const MembersEdit = () => {
                 />
               </div>
             ) : (
-              <div> Loading...</div>
+              <Loader />
             )}
           </div>
           <div className={styles.theButtons}>

@@ -1,22 +1,26 @@
 import React from 'react';
 import styles from './addMembers.module.css';
 import { Input, Select, DatePicker } from '../../Shared/Inputs';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { createMember } from '../../../redux/members/thunks';
 
 const MembersCreate = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [dni, setDni] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [city, setCity] = useState('');
-  const [birthDay, setBirthday] = useState('');
-  const [postalCode, setPostalCode] = useState('');
-  const [isActive, setIsActive] = useState(true);
-  const [membership, setMembership] = useState('Classic');
+  const [member, setMember] = useState({
+    firstName: '',
+    lastName: '',
+    dni: '',
+    phone: '',
+    email: '',
+    city: '',
+    birthDay: '',
+    postalCode: '',
+    isActive: true,
+    membership: 'Classic'
+  });
 
   const memberships = [
     {
@@ -36,119 +40,50 @@ const MembersCreate = () => {
     }
   ];
 
-  const [message, setMessage] = useState('');
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
+  const [showModalError, setShowModalError] = useState(false);
 
   const history = useHistory();
+  const { error, success, message } = useSelector((state) => state.members);
 
-  const handleFirstName = (e) => {
-    setFirstName(e.target.value);
-  };
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        history.push('/members');
+      }, 2000);
+      setShowModal(true);
+    }
+    if (error) {
+      setShowModalError(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success, error]);
 
-  const handleLastName = (e) => {
-    setLastName(e.target.value);
-  };
-
-  const handleDniChange = (e) => {
-    const value = e.target.value;
-    setDni(value);
-  };
-
-  const handlePhoneChange = (e) => {
-    const value = e.target.value;
-    setPhone(value);
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handleCityChange = (e) => {
-    setCity(e.target.value);
+  const handleOnChange = (event) => {
+    setMember({
+      ...member,
+      [event.target.name]: event.target.value
+    });
   };
 
   const handleBirthdayChange = (e) => {
-    setBirthday(e);
-  };
-
-  const handlePostalCodeChange = (e) => {
-    setPostalCode(e.target.value);
-  };
-
-  const handleMembershipChange = (e) => {
-    setMembership(e.target.value);
-  };
-
-  const addMember = async ({
-    firstName,
-    lastName,
-    dni,
-    phone,
-    email,
-    city,
-    birthDay,
-    postalCode,
-    isActive,
-    membership
-  }) => {
-    try {
-      const newMembers = await fetch(`${process.env.REACT_APP_API_URL}/api/members/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          dni,
-          phone,
-          email,
-          city,
-          birthDay,
-          postalCode,
-          isActive,
-          membership
-        })
-      });
-      const data = await newMembers.json();
-      setMessage(data.message);
-      setShowModal(true);
-      if (!data.error) {
-        setFirstName('');
-        setLastName('');
-        setDni('');
-        setPhone('');
-        setEmail('');
-        setCity('');
-        setBirthday('');
-        setPostalCode('');
-        setIsActive(true);
-        setMembership('Classic');
-        history.push('/members');
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    setMember({ ...member, birthDay: e });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addMember({
-      firstName,
-      lastName,
-      dni,
-      phone,
-      email,
-      city,
-      birthDay,
-      postalCode,
-      isActive,
-      membership
-    });
+    dispatch(createMember(member));
   };
 
   return (
     <div className={styles.container}>
+      <Modal
+        onClose={() => setShowModalError(false)}
+        isOpen={showModalError}
+        title={message}
+        error
+      />
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
       <div>
         <form onSubmit={(e) => handleSubmit(e)} className={styles.form}>
@@ -158,8 +93,9 @@ const MembersCreate = () => {
               labelText={'Name'}
               type={'text'}
               placeholder={'Name'}
-              value={firstName}
-              onChangeInput={handleFirstName}
+              value={member.firstName}
+              onChangeInput={handleOnChange}
+              nameValue={'firstName'}
             />
           </div>
           <div>
@@ -167,8 +103,9 @@ const MembersCreate = () => {
               labelText={'Surname'}
               type={'text'}
               placeholder={'Surname'}
-              value={lastName}
-              onChangeInput={handleLastName}
+              value={member.lastName}
+              onChangeInput={handleOnChange}
+              nameValue={'lastName'}
             />
           </div>
           <div>
@@ -176,8 +113,9 @@ const MembersCreate = () => {
               labelText={'DNI'}
               type={'text'}
               placeholder={'DNI'}
-              value={dni}
-              onChangeInput={handleDniChange}
+              value={member.dni}
+              onChangeInput={handleOnChange}
+              nameValue={'dni'}
             />
           </div>
           <div>
@@ -185,8 +123,9 @@ const MembersCreate = () => {
               labelText={'Phone'}
               type={'text'}
               placeholder={'ex: 096513178'}
-              value={phone}
-              onChangeInput={handlePhoneChange}
+              value={member.phone}
+              nameValue={'phone'}
+              onChangeInput={handleOnChange}
             />
           </div>
           <div>
@@ -194,8 +133,9 @@ const MembersCreate = () => {
               labelText={'Email'}
               type={'text'}
               placeholder={'robertomariaoverdrive@soybostero.edu'}
-              value={email}
-              onChangeInput={handleEmailChange}
+              value={member.email}
+              nameValue={'email'}
+              onChangeInput={handleOnChange}
             />
           </div>
           <div>
@@ -203,20 +143,26 @@ const MembersCreate = () => {
               labelText={'City'}
               type={'text'}
               placeholder={'Your city'}
-              value={city}
-              onChangeInput={handleCityChange}
+              value={member.city}
+              nameValue={'city'}
+              onChangeInput={handleOnChange}
             />
           </div>
           <div>
-            <DatePicker label={'Birthday'} value={birthDay} onChangeDate={handleBirthdayChange} />
+            <DatePicker
+              label={'Birthday'}
+              nameValue={'birthDay'}
+              onChangeDate={handleBirthdayChange}
+            />
           </div>
           <div>
             <Input
               labelText={'Zip Code'}
               type={'text'}
               placeholder={'Your postal code'}
-              value={postalCode}
-              onChangeInput={handlePostalCodeChange}
+              value={member.postalCode}
+              nameValue={'postalCode'}
+              onChangeInput={handleOnChange}
             />
           </div>
           <div>
@@ -224,9 +170,9 @@ const MembersCreate = () => {
               label={'Membership'}
               value={memberships.value}
               placeholder={'Classic'}
-              onChangeSelect={handleMembershipChange}
+              onChangeSelect={handleOnChange}
               options={memberships}
-              nameValue={'day'}
+              nameValue={'membership'}
             />
           </div>
           <div className={styles.theButtons}>
