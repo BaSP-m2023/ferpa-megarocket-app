@@ -12,6 +12,7 @@ const MembersEdit = () => {
   const [member, setMember] = useState([]);
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [showModalError, setShowModalError] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector((state) => state.members);
   const history = useHistory();
@@ -50,7 +51,6 @@ const MembersEdit = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    console.log(data.getById.data);
     setMember({
       firstName: data.getById.data?.firstName ?? '',
       lastName: data.getById.data?.lastName ?? '',
@@ -69,8 +69,15 @@ const MembersEdit = () => {
     dispatch(getMemberById(id));
     setMessage(data.put.message);
     if (data.put.success) {
-      history.push('/members');
+      setShowModal(true);
+      setTimeout(() => {
+        history.push('/members');
+      }, 2000);
       data.put.success = false;
+    }
+    if (data.put.error) {
+      setShowModalError(true);
+      data.put.error = false;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data.put.message, data.put.success]);
@@ -118,11 +125,17 @@ const MembersEdit = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateMember(id, member));
-    setShowModal(true);
   };
 
   return (
     <div className={styles.container}>
+      <Modal
+        onClose={() => setShowModalError(false)}
+        isOpen={showModalError}
+        title={message}
+        error
+      />
+      ;
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
       <div>
         <form onSubmit={(e) => handleSubmit(e)} className={styles.form}>

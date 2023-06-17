@@ -51,13 +51,13 @@ const getByIdReducer = (state = initialState, action) => {
 
 const putReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionConstant.RESET_INITIAL_STATE:
-      return {
-        ...state,
-        message: '',
-        error: false,
-        success: false
-      };
+    // case actionConstant.RESET_INITIAL_STATE:
+    //   return {
+    //     ...state,
+    //     message: '',
+    //     error: false,
+    //     success: false
+    //   };
     case actionConstant.UPDATE_MEMBERS_PENDING:
       return { ...state, isPending: true };
     case actionConstant.UPDATE_MEMBERS_SUCCESS: {
@@ -68,7 +68,8 @@ const putReducer = (state = initialState, action) => {
         ...state,
         isPending: false,
         message: action.payload.message,
-        success: true
+        success: true,
+        error: false
       };
     }
     case actionConstant.UPDATE_MEMBERS_ERROR:

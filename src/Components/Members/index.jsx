@@ -12,11 +12,12 @@ function Members() {
   const [memberId, setMemberId] = useState('');
   const { isPending } = useSelector((state) => state.members);
   const data = useSelector((state) => state.members);
+  const { message } = useSelector((state) => state.members.delete);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMembers());
-  }, []);
+  }, [message]);
 
   const delMember = (id) => {
     dispatch(deleteMember(id));
@@ -78,7 +79,8 @@ function Members() {
                     <Modal
                       onClose={() => setShowModal(false)}
                       isOpen={showModal}
-                      title={`Are you sure you want to delete this member?`}
+                      title={`Confirm Delete`}
+                      text={'Are you sure that you want to delete this member?'}
                       warning={true}
                     >
                       <Button

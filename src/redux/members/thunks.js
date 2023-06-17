@@ -1,5 +1,4 @@
 import {
-  resetInitialState,
   getMembersPending,
   getMembersSuccess,
   getMembersError,
@@ -42,9 +41,7 @@ export const getMemberById = (id) => {
       if (data.error) {
         throw new Error(data.message);
       }
-      console.log(data.data);
       dispatch(getMemberByIdSuccess(data.data));
-      console.log(data.data);
     } catch (error) {
       dispatch(getMemberByIdError(error));
     }
@@ -118,11 +115,9 @@ export const deleteMember = (id) => {
         method: 'DELETE'
       });
       const { message } = await res.json();
-      dispatch(resetInitialState());
 
       if (res.status === 200) {
-        dispatch(deleteMemberSuccess(id, message));
-        dispatch(resetInitialState());
+        dispatch(deleteMemberSuccess(message));
       }
 
       if (res.status !== 200) {

@@ -43,6 +43,7 @@ const MembersCreate = () => {
   const dispatch = useDispatch();
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [showModalError, setShowModalError] = useState(false);
 
   const history = useHistory();
   const data = useSelector((state) => state.members);
@@ -51,8 +52,11 @@ const MembersCreate = () => {
     setMessage(data.post.message);
 
     if (data.post.success) {
-      history.push('/members');
+      setTimeout(() => {
+        history.push('/members');
+      }, 2000);
       data.post.success = false;
+      setShowModal(true);
     }
   }, [data.post.message, data.post.error]);
 
@@ -70,11 +74,21 @@ const MembersCreate = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createMember(member));
+    if (data.post.error) {
+      setShowModalError(true);
+    }
   };
 
   return (
     <div className={styles.container}>
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
+      <Modal
+        onClose={() => setShowModalError(false)}
+        isOpen={showModalError}
+        title={message}
+        error
+      />
+      ;
       <div>
         <form onSubmit={(e) => handleSubmit(e)} className={styles.form}>
           <h3 className={styles.whiteLetters}>Create new member</h3>
