@@ -11,6 +11,24 @@
     padding-right: 10px;
 }
 
+.title {
+  font-size: 40px;
+  font-weight: bold;
+  color: #49A37B;
+}
+
+.logout {
+  height: 35px;
+  width: 35px;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.rightSide {
+  display: flex;
+  align-items: center;
+}
+
 .isologo{
     padding-bottom: 6px;
 }
