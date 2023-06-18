@@ -1,7 +1,19 @@
 import React from 'react';
 import styles from './inputs.module.css';
 
-export const Select = ({ value, placeholder, onChangeSelect, label, options, nameValue, dark }) => {
+export const Select = ({
+  value,
+  placeholder,
+  onChangeSelect,
+  label,
+  options,
+  nameValue,
+  dark,
+  onFocus,
+  onBlur,
+  register,
+  error
+}) => {
   return (
     <>
       <label className={dark ? `${styles.label} ${styles.dark}` : `${styles.label}`}>{label}</label>
@@ -14,6 +26,9 @@ export const Select = ({ value, placeholder, onChangeSelect, label, options, nam
         }
         value={value}
         onChange={onChangeSelect}
+        {...register(nameValue)}
+        onFocus={onFocus}
+        onBlur={onBlur}
       >
         <option hidden>{placeholder}</option>
         {options.map((item) => {
@@ -24,11 +39,24 @@ export const Select = ({ value, placeholder, onChangeSelect, label, options, nam
           );
         })}
       </select>
+      {error && <p className={styles.error}>{error}</p>}
     </>
   );
 };
 
-export const Input = ({ labelText, onChangeInput, placeholder, value, nameValue, type, dark }) => {
+export const Input = ({
+  labelText,
+  onChangeInput,
+  placeholder,
+  value,
+  nameValue,
+  type,
+  dark,
+  onFocus,
+  onBlur,
+  register,
+  error
+}) => {
   return (
     <>
       <label className={dark ? `${styles.label} ${styles.dark}` : `${styles.label}`}>
@@ -41,12 +69,26 @@ export const Input = ({ labelText, onChangeInput, placeholder, value, nameValue,
         placeholder={placeholder}
         value={value}
         name={nameValue}
+        {...register(nameValue)}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
+      {error && <p className={styles.error}>{error}</p>}
     </>
   );
 };
 
-export const DatePicker = ({ value, onChangeDate, label, nameValue, dark }) => {
+export const DatePicker = ({
+  value,
+  onChangeDate,
+  label,
+  nameValue,
+  dark,
+  register,
+  error,
+  onBlur,
+  onFocus
+}) => {
   return (
     <>
       <label className={dark ? `${styles.label} ${styles.dark}` : `${styles.label}`}>{label}</label>
@@ -56,12 +98,27 @@ export const DatePicker = ({ value, onChangeDate, label, nameValue, dark }) => {
         name={nameValue}
         value={value}
         onChange={(e) => onChangeDate(e.target.value)}
+        {...register(nameValue)}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
+      {error && <p className={styles.error}>{error}</p>}
     </>
   );
 };
 
-export const TextArea = ({ value, onChangeArea, placeholder, label, nameValue, dark }) => {
+export const TextArea = ({
+  value,
+  onChangeArea,
+  placeholder,
+  label,
+  nameValue,
+  dark,
+  onBlur,
+  onFocus,
+  register,
+  error
+}) => {
   return (
     <>
       <label className={dark ? `${styles.label} ${styles.dark}` : `${styles.label}`}>{label}</label>
@@ -76,7 +133,11 @@ export const TextArea = ({ value, onChangeArea, placeholder, label, nameValue, d
         name={nameValue}
         placeholder={placeholder}
         onChange={(e) => onChangeArea(e.target.value)}
+        {...register(nameValue)}
+        onFocus={onFocus}
+        onBlur={onBlur}
       ></textarea>
+      {error && <p className={styles.error}>{error}</p>}
     </>
   );
 };
