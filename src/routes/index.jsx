@@ -20,6 +20,7 @@ const MembersProfile = lazy(() => import('./membersHome/profile'));
 const MembersActivities = lazy(() => import('./membersHome/activities'));
 const AdminsHome = lazy(() => import('./adminsHome'));
 const AdminsProfile = lazy(() => import('./adminsHome/profile'));
+const AdminsReports = lazy(() => import('./adminsHome/reports'));
 
 function Layout() {
   return (
@@ -48,6 +49,7 @@ function Layout() {
 
         <Route exact path="/admins/home/landing" component={AdminsHome} />
         <Route exact path="/admins/home/profile" component={AdminsProfile} />
+        <Route exact path="/admins/home/reports" component={AdminsReports} />
 
         {/* //Members Routes */}
         <Route exact path="/members/home/landing" component={MembersHome} />

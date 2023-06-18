@@ -66,6 +66,13 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
+              to="/admins/home/reports"
+            >
+              <li>Reports</li>
+            </NavLink>
+            <NavLink
+              activeClassName={styles.linkFocused}
+              className={styles.link}
               to="/admins/home/activities"
             >
               <li>Activities</li>
