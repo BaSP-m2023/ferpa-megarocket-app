@@ -4,13 +4,16 @@ import { Link } from 'react-router-dom';
 function Home() {
   return (
     <section className={styles.container}>
-      <h2>Home</h2>
-      <Link to="members/home/landing">
-        <button>Members</button>
-      </Link>
-      <Link to="admins/home/landing">
-        <button>Admins</button>
-      </Link>
+      <div className={styles.member}>
+        <Link to="members/home/landing">
+          <button className={styles.button}>Members</button>
+        </Link>
+      </div>
+      <div className={styles.admin}>
+        <Link to="admins/home/landing">
+          <button className={styles.button}>Admins</button>
+        </Link>
+      </div>
     </section>
   );
 }

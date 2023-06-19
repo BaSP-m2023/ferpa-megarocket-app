@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 770px;
+  height: 74vh;
   font-family: 'Roboto', sans-serif;
   background-image: url('../../../public/assets/images/admins-background.jpg');
   background-repeat: no-repeat;
