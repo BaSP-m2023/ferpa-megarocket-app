@@ -8,18 +8,11 @@ import Button from '../Shared/Button';
 import Loader from '../Shared/Loader';
 
 const Trainers = () => {
-  const [visiblePasswords, setVisiblePasswords] = useState([]);
   const [currentId, setCurrentId] = useState('');
   const [successModal, setSuccessModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const dispatch = useDispatch();
   const { isLoading, trainers, error, formError } = useSelector((state) => state.trainers);
-
-  const togglePasswordVisibility = (index) => {
-    const updatedVisiblePasswords = [...visiblePasswords];
-    updatedVisiblePasswords[index] = !updatedVisiblePasswords[index];
-    setVisiblePasswords(updatedVisiblePasswords);
-  };
 
   useEffect(() => {
     getTrainers(dispatch);
@@ -104,7 +97,6 @@ const Trainers = () => {
               <th className={styles.titles}>Phone</th>
               <th className={styles.titles}>Email</th>
               <th className={styles.titles}>City</th>
-              <th className={styles.titles}>Password</th>
               <th className={styles.titles}>Salary</th>
               <th></th>
             </tr>
@@ -119,16 +111,9 @@ const Trainers = () => {
                   <td className={styles.list}>{item.phone}</td>
                   <td className={styles.list}>{item.email}</td>
                   <td className={styles.list}>{item.city}</td>
-                  <td className={styles.list}>
-                    {visiblePasswords[index] ? item?.password : '*'.repeat(item?.password.length)}
-                  </td>
                   <td className={styles.list}>{item.salary}</td>
                   <td>
                     <div className={styles.buttons}>
-                      <Button
-                        variant={'seePassword'}
-                        clickAction={() => togglePasswordVisibility(index)}
-                      />
                       <Link to={`/trainers/Form/${item._id}`}>
                         <Button variant={'edit'} />
                       </Link>

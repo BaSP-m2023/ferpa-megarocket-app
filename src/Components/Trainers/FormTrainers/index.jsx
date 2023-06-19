@@ -26,7 +26,9 @@ const TrainerAddForm = () => {
     lastName: Joi.string().required().min(3).max(16),
     dni: Joi.number().min(1000000).max(99999999).required(),
     phone: Joi.number().required().min(1000000000).max(9999999999),
-    email: Joi.string().required().regex(RGXEmail),
+    email: Joi.string().required().regex(RGXEmail).messages({
+      'string.pattern.base': 'Email must be in a valid format'
+    }),
     city: Joi.string().required().min(3).max(20),
     password: Joi.string().regex(RGXPassword).min(8).required().messages({
       'string.pattern.base':
