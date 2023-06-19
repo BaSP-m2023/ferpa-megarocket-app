@@ -63,6 +63,7 @@ const MembersEdit = () => {
       isActive: memberToUpdate?.isActive ?? true,
       membership: memberToUpdate?.membership ?? ''
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

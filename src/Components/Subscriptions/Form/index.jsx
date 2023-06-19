@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './form.module.css';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Select, DatePicker } from '../../Shared/Inputs';
 import Button from '../../Shared/Button';
@@ -22,6 +22,8 @@ const Form = () => {
   const [modalError, setModalError] = useState(false);
   const [values, setValues] = useState({ member: '', activity: '' });
   const history = useHistory();
+  const firstMember = data[0];
+  const location = useLocation();
 
   const onRedirect = {
     pathname: '/subscriptions',
@@ -55,7 +57,6 @@ const Form = () => {
     dispatch(getClasses());
     if (id !== '') {
       const editSub = subs.find((sub) => sub._id === id);
-      console.log(editSub);
       setCurrentSub({
         memberId: editSub.memberId?._id,
         classId: editSub.classId?._id,
@@ -78,12 +79,14 @@ const Form = () => {
   }, [modalError]);
 
   const handleClick = async () => {
+    if (location.pathname.includes('/members/home/subscriptions/form')) {
+      setCurrentSub((prev) => ({ ...prev, memberId: firstMember._id }));
+    }
     !id
       ? await postSubscriptions(dispatch, currentSub)
       : await updateSubscription(dispatch, currentSub, id);
     const updatedState = store.getState();
     const updatedError = updatedState.subscriptions.error;
-    console.log(updatedError);
     if (!updatedError) {
       onRedirect.state.message = message;
       history.push(onRedirect);
@@ -106,10 +109,8 @@ const Form = () => {
       ></Modal>
       <form className={styles.form}>
         <h2 className={styles.formTitle}>{id ? 'EDIT SUBSCRIPTION' : 'ADD SUBSCRIPTION'}</h2>
-        {isPending ? (
-          ''
-        ) : (
-          <div>
+        <div>
+          {location.pathname.includes('/admins/home/subscriptions/form') && (
             <div className={styles.inputBox}>
               <Select
                 placeholder={'Select'}
@@ -122,36 +123,36 @@ const Form = () => {
                 }}
               />
             </div>
-            <div className={styles.inputBox}>
-              <Select
-                placeholder={'Select'}
-                label={'Activity'}
-                value={values.activity}
-                options={selectActivities}
-                onChangeSelect={(e) => {
-                  handleClassId(e.target.value);
-                  setValues((e) => (prev) => ({ ...prev, activity: e.target.id }));
-                }}
-              />
-            </div>
-            <div className={styles.inputBox}>
-              <DatePicker label={'Date'} value={currentSub.date} onChangeDate={handleDatePicker} />
-            </div>
-            <div className={styles.formBtns}>
-              <Link to={'/subscriptions'}>
-                <Button variant={'white'} text={'Cancel'} />
-              </Link>
-              <Button
-                variant={'add'}
-                text={id ? 'Edit' : 'Add'}
-                clickAction={(e) => {
-                  e.preventDefault();
-                  handleClick();
-                }}
-              />
-            </div>{' '}
+          )}
+          <div className={styles.inputBox}>
+            <Select
+              placeholder={'Select'}
+              label={'Class'}
+              value={values.activity}
+              options={selectActivities}
+              onChangeSelect={(e) => {
+                handleClassId(e.target.value);
+                setValues((e) => (prev) => ({ ...prev, activity: e.target.id }));
+              }}
+            />
           </div>
-        )}
+          <div className={styles.inputBox}>
+            <DatePicker label={'Date'} value={currentSub.date} onChangeDate={handleDatePicker} />
+          </div>
+          <div className={styles.formBtns}>
+            <Link to={'/subscriptions'}>
+              <Button variant={'white'} text={'Cancel'} />
+            </Link>
+            <Button
+              variant={'add'}
+              text={id ? 'Edit' : 'Add'}
+              clickAction={(e) => {
+                e.preventDefault();
+                handleClick();
+              }}
+            />
+          </div>{' '}
+        </div>
         {isPending ? (
           <div className={styles.loading}>
             <Loader />
