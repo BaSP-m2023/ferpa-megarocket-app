@@ -15,8 +15,8 @@ const Form = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { data, message, success, error } = useSelector((state) => state.superadmins);
-  // const [email, setEmail] = useState('');
-  // const [pass, setPass] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
   const location = useLocation();
 
@@ -34,23 +34,41 @@ const Form = () => {
 
   const {
     register,
-    // reset,
+    reset,
     handleSubmit,
+    onChange,
     formState: { errors }
   } = useForm({
-    mode: 'onBlur',
-    resolver: joiResolver(schema)
+    mode: 'onChange',
+    resolver: joiResolver(schema),
+    defaultValues: {
+      email: email,
+      password: password
+    }
   });
+
+  useEffect(() => {
+    reset({ email, password });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [email, password, reset]);
+
+  console.log('texto', email, putSuperAdmin);
 
   const onSubmit = (data) => {
     console.log('Data Form', data);
+    if (location.pathname.includes('create')) {
+      postSuperAdmins(dispatch, data);
+    }
+    if (location.pathname.includes('edit')) {
+      putSuperAdmin(dispatch, id, data);
+    }
   };
 
   useEffect(() => {
     if (location.pathname.includes('edit')) {
       const superadmin = data.find((superadmin) => superadmin._id === id);
       setEmail(superadmin.email);
-      setPass(superadmin.password);
+      setPassword(superadmin.password);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -89,12 +107,13 @@ const Form = () => {
               nameValue={'email'}
               labelText={'Email:'}
               type={'text'}
+              onChange={onChange}
               placeholder={'Email:'}
               error={errors.email?.message}
               // value={email}
-              onChangeInput={(e) => {
-                setEmail(e.target.value);
-              }}
+              // onChangeInput={(e) => {
+              //   setEmail(e.target.value);
+              // }}
             />
           </div>
           <div className={styles.field}>
@@ -106,14 +125,9 @@ const Form = () => {
               placeholder={'Password:'}
               error={errors.password?.message}
               // value={pass}
-              onChangeInput={(e) => setPass(e.target.value)}
+              // onChangeInput={(e) => setPass(e.target.value)}
             />
           </div>
-          <p className={styles.comment}>
-            {
-              '* The password must have uppercase letters, lowercase letters, number and at least 8 characters'
-            }
-          </p>
           <div className={styles.buttons}>
             <Link to="/super-admins">
               <Button text={'Cancel'} variant={'white'} />
