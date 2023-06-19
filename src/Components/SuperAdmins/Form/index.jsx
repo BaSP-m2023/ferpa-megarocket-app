@@ -83,16 +83,6 @@ const Form = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, success]);
 
-  // const sendSuperAdmin = () => {
-  //   if (location.pathname.includes('create')) {
-  //     postSuperAdmins(dispatch, { email, password: pass });
-  //   }
-
-  //   if (location.pathname.includes('edit')) {
-  //     putSuperAdmin(dispatch, id, { email, password: pass });
-  //   }
-  // };
-
   return (
     <div className={styles.formContainer}>
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} error />
@@ -110,10 +100,6 @@ const Form = () => {
               onChange={onChange}
               placeholder={'Email:'}
               error={errors.email?.message}
-              // value={email}
-              // onChangeInput={(e) => {
-              //   setEmail(e.target.value);
-              // }}
             />
           </div>
           <div className={styles.field}>
@@ -124,8 +110,6 @@ const Form = () => {
               type={'password'}
               placeholder={'Password:'}
               error={errors.password?.message}
-              // value={pass}
-              // onChangeInput={(e) => setPass(e.target.value)}
             />
           </div>
           <div className={styles.buttons}>
@@ -136,7 +120,6 @@ const Form = () => {
               text={location.pathname.includes('create') ? 'Create' : 'Edit'}
               variant={'add'}
               submitting
-              // clickAction={() => sendSuperAdmin()}
             />
           </div>
         </form>
