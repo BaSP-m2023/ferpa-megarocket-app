@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './form.module.css';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Select, DatePicker } from '../../Shared/Inputs';
 import Button from '../../Shared/Button';
@@ -11,59 +11,56 @@ import { getMembers } from '../../../redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { store } from '../../../redux/store';
 import Loader from '../../Shared/Loader';
+import { useForm } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const Form = () => {
-  const { isPending, subs, message, id, error } = useSelector((state) => state.subscriptions);
+  const { id } = useParams();
+  const { isPending, subs, message, error } = useSelector((state) => state.subscriptions);
   const { classes } = useSelector((state) => state.classes);
-  const { data } = useSelector((state) => state.members);
-  const members = data;
+  const { data: members } = useSelector((state) => state.members);
   const dispatch = useDispatch();
   const [currentSub, setCurrentSub] = useState({ classId: '', memberId: '', date: '' });
   const [modalError, setModalError] = useState(false);
-  const [values, setValues] = useState({ member: '', activity: '' });
   const history = useHistory();
 
-  const onRedirect = {
-    pathname: '/subscriptions',
-    state: { message: '' }
-  };
-
-  const selectActivities = classes.map((obj) => {
-    return { _id: obj?._id, name: `${obj?.activityId?.name}, ${obj?.day}, ${obj?.hour} hrs` };
+  const schema = Joi.object({
+    memberId: Joi.string()
+      .pattern(/^[0-9a-fA-F]{24}$/)
+      .message({
+        'string.pattern.base': 'Invalid format ID'
+      }),
+    classId: Joi.string()
+      .pattern(/^[0-9a-fA-F]{24}$/)
+      .message({
+        'string.pattern.base': 'Invalid format ID'
+      }),
+    date: Joi.date().min('now').message({
+      'date.min': 'You cannot subscribe to classes that have already occurred.'
+    })
   });
 
-  const selectMembers = members.map((obj) => {
-    return { _id: obj?._id, name: `${obj?.lastName}, ${obj?.firstName}` };
+  const {
+    reset,
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(schema),
+    defaultValues: id ? currentSub : { memberId: '', classId: '', date: '' }
   });
-
-  const handleClassId = (value) => {
-    const classId = selectActivities.find((obj) => obj.name === value);
-    if (classId) {
-      setCurrentSub((prev) => ({ ...prev, classId: classId._id }));
-    }
-  };
-
-  const handleMemberId = (value) => {
-    const memberId = selectMembers.find((obj) => obj.name === value);
-    if (memberId) {
-      setCurrentSub((prev) => ({ ...prev, memberId: memberId._id }));
-    }
-  };
 
   useEffect(() => {
-    getMembers(dispatch);
+    dispatch(getMembers());
     dispatch(getClasses());
-    if (id !== '') {
+    if (id) {
       const editSub = subs.find((sub) => sub._id === id);
-      console.log(editSub);
       setCurrentSub({
-        memberId: editSub.memberId?._id,
-        classId: editSub.classId?._id,
-        date: editSub.date.slice(0, 10)
-      });
-      setValues({
-        member: `${editSub.memberId?.lastName}, ${editSub.memberId?.firstName}`,
-        activity: `${editSub.classId?.activityId?.name}, ${editSub.classId?.day}, ${editSub.classId?.hour} hrs`
+        memberId: editSub?.memberId?._id,
+        classId: editSub?.classId?._id,
+        date: editSub?.date.slice(0, 10)
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,13 +74,32 @@ const Form = () => {
     }
   }, [modalError]);
 
-  const handleClick = async () => {
-    !id
-      ? await postSubscriptions(dispatch, currentSub)
-      : await updateSubscription(dispatch, currentSub, id);
+  useEffect(() => {
+    reset(currentSub);
+  }, [currentSub, reset]);
+
+  const onRedirect = {
+    pathname: '/subscriptions',
+    state: { message: '' }
+  };
+
+  const selectActivities = classes.map((obj) => {
+    return {
+      _id: obj?._id,
+      value: obj?._id,
+      name: `${obj?.activityId?.name}, ${obj?.day}, ${obj?.hour} hrs`
+    };
+  });
+
+  const selectMembers = members.map((obj) => {
+    return { _id: obj?._id, value: obj?._id, name: `${obj?.lastName}, ${obj?.firstName}` };
+  });
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    !id ? await postSubscriptions(dispatch, data) : await updateSubscription(dispatch, data, id);
     const updatedState = store.getState();
     const updatedError = updatedState.subscriptions.error;
-    console.log(updatedError);
     if (!updatedError) {
       onRedirect.state.message = message;
       history.push(onRedirect);
@@ -92,19 +108,17 @@ const Form = () => {
     }
   };
 
-  const handleDatePicker = (dateValue) => {
-    setCurrentSub((prev) => ({ ...prev, date: dateValue }));
-  };
-
   return (
     <section className={styles.container}>
-      <Modal
-        isOpen={modalError}
-        error
-        title={message}
-        onClose={() => setModalError(!modalError)}
-      ></Modal>
-      <form className={styles.form}>
+      {
+        <Modal
+          isOpen={modalError}
+          error
+          title={message}
+          onClose={() => setModalError(!modalError)}
+        />
+      }
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <h2 className={styles.formTitle}>{id ? 'EDIT SUBSCRIPTION' : 'ADD SUBSCRIPTION'}</h2>
         {isPending ? (
           ''
@@ -112,43 +126,37 @@ const Form = () => {
           <div>
             <div className={styles.inputBox}>
               <Select
+                nameValue={'memberId'}
+                register={register}
                 placeholder={'Select'}
                 label={'Member'}
-                value={values.member}
                 options={selectMembers}
-                onChangeSelect={(e) => {
-                  handleMemberId(e.target.value);
-                  setValues((e) => (prev) => ({ ...prev, member: e.target.id }));
-                }}
+                error={errors.memberId?.message}
               />
             </div>
             <div className={styles.inputBox}>
               <Select
+                nameValue={'classId'}
+                register={register}
                 placeholder={'Select'}
                 label={'Activity'}
-                value={values.activity}
                 options={selectActivities}
-                onChangeSelect={(e) => {
-                  handleClassId(e.target.value);
-                  setValues((e) => (prev) => ({ ...prev, activity: e.target.id }));
-                }}
+                error={errors.classId?.message}
               />
             </div>
             <div className={styles.inputBox}>
-              <DatePicker label={'Date'} value={currentSub.date} onChangeDate={handleDatePicker} />
+              <DatePicker
+                nameValue={'date'}
+                register={register}
+                label={'Date'}
+                error={errors.date?.message}
+              />
             </div>
             <div className={styles.formBtns}>
               <Link to={'/subscriptions'}>
                 <Button variant={'white'} text={'Cancel'} />
               </Link>
-              <Button
-                variant={'add'}
-                text={id ? 'Edit' : 'Add'}
-                clickAction={(e) => {
-                  e.preventDefault();
-                  handleClick();
-                }}
-              />
+              <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting />
             </div>{' '}
           </div>
         )}
