@@ -1,21 +1,57 @@
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAdmins, updateAdmin, addAdmin } from '../../../redux/admins/thunks';
-import styles from './adminsForm.module.css';
-import { Input } from '../../Shared/Inputs';
 import { Link, useParams, useHistory } from 'react-router-dom';
-import Button from '../../Shared/Button';
-import Modal from '../../Shared/Modal';
-import * as actionsConstants from '../../../redux/admins/actions';
+import { Input } from 'Components/Shared/Inputs';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAdmins, updateAdmin, addAdmin } from 'redux/admins/thunks';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
+import styles from './adminsForm.module.css';
+import Button from 'Components/Shared/Button';
+import Modal from 'Components/Shared/Modal';
+import * as actionsConstants from 'redux/admins/actions';
 
 const Form = () => {
+  const history = useHistory();
+  const { id } = useParams();
+  const dispatch = useDispatch();
   const { isPending, data, error, errorSwitch, message } = useSelector((state) => state.admins);
   const [inputs, setInputs] = useState({});
   const [successModal, setSuccesModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const { id } = useParams();
+
+  const RGXPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+  const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
+  const schema = Joi.object({
+    firstName: Joi.string().min(3).max(15),
+    lastName: Joi.string().min(3).max(15),
+    dni: Joi.string().length(9),
+    phone: Joi.string().length(10),
+    email: Joi.string().regex(RGXEmail).required().messages({
+      'string.pattern.base': 'Email must be in a valid format'
+    }),
+    city: Joi.string(),
+    password: Joi.string().regex(RGXPassword).min(8).required().messages({
+      'string.pattern.base':
+        'Password must contain at least one uppercase letter, one lowercase letter, and one digit'
+    })
+  });
+
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(schema),
+    defaultValues: inputs
+  });
+
+  useEffect(() => {
+    reset(inputs);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputs, reset]);
 
   useEffect(() => {
     getAdmins(dispatch);
@@ -52,12 +88,6 @@ const Form = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorSwitch, error]);
 
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
-
   const putPending = () => {
     dispatch(actionsConstants.putAdminsPending());
   };
@@ -66,14 +96,12 @@ const Form = () => {
     dispatch(actionsConstants.addAdminsPending());
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addAdmin(dispatch, inputs);
+  const handleSubmiting = (data) => {
+    addAdmin(dispatch, data);
   };
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    updateAdmin(dispatch, id, inputs);
+  const handleUpdate = (data) => {
+    updateAdmin(dispatch, id, data);
   };
 
   const redirectPath = () => {
@@ -112,75 +140,74 @@ const Form = () => {
           }}
         />
       </Modal>
-      <form className={`${styles.form} ${styles.list}`} onSubmit={id ? handleUpdate : handleSubmit}>
+      <form
+        className={`${styles.form} ${styles.list}`}
+        onSubmit={handleSubmit(id ? handleUpdate : handleSubmiting)}
+      >
         <h2 className={styles.title}>{id ? 'Edit Admin' : 'Add Admin'}</h2>
         <div className={styles.inputGroup}>
           <Input
+            register={register}
             labelText={'First Name'}
             placeholder={'First Name'}
             nameValue={'firstName'}
-            value={inputs?.firstName || ''}
-            onChangeInput={handleChange}
+            error={errors.firstName?.message}
           />
         </div>
         <div className={styles.inputGroup}>
           <Input
+            register={register}
             labelText={'Last Name'}
             placeholder={'Last Name'}
             nameValue={'lastName'}
-            value={inputs?.lastName || ''}
-            onChangeInput={handleChange}
+            error={errors.lastName?.message}
           />
         </div>
         <div className={styles.inputGroup}>
           <Input
+            register={register}
             labelText={'DNI'}
             placeholder={'DNI Number'}
             nameValue={'dni'}
-            value={inputs?.dni || ''}
-            onChangeInput={handleChange}
+            error={errors.dni?.message}
           />
         </div>
         <div className={styles.inputGroup}>
           <Input
+            register={register}
             labelText={'Phone'}
             placeholder={'Phone'}
             nameValue={'phone'}
-            value={inputs?.phone || ''}
-            onChangeInput={handleChange}
+            error={errors.phone?.message}
           />
         </div>
         <div className={styles.inputGroup}>
           <Input
+            register={register}
             labelText={'Email'}
             placeholder={'Email'}
             nameValue={'email'}
-            value={inputs?.email || ''}
-            onChangeInput={handleChange}
+            error={errors.email?.message}
           />
         </div>
         <div className={styles.inputGroup}>
           <Input
+            register={register}
             labelText={'City'}
             placeholder={'City'}
             nameValue={'city'}
-            value={inputs?.city || ''}
-            onChangeInput={handleChange}
+            error={errors.city?.message}
           />
         </div>
         <div className={styles.inputGroup}>
           <Input
+            register={register}
             type={'password'}
             labelText={'Password'}
             placeholder={'Password'}
             nameValue={'password'}
-            value={inputs?.password || ''}
-            onChangeInput={handleChange}
+            error={errors.password?.message}
           />
-          <p className={styles.passMessage}>
-            * The password must have lowercase letters, uppercase letters, numbers, special
-            characters (@$!%*#?&) and at least 8 characters
-          </p>
         </div>
         <div className={styles.modalBtns}>
           <Link to="/admins">

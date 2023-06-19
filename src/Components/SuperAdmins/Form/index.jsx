@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useLocation, useHistory } from 'react-router-dom';
-import { Input } from '../../Shared/Inputs';
+import { Input } from 'Components/Shared/Inputs';
 import { useDispatch, useSelector } from 'react-redux';
-import { postSuperAdmins, putSuperAdmin } from '../../../redux/superadmins/thunks';
+import { postSuperAdmins, putSuperAdmin } from 'redux/superadmins/thunks';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import styles from './form.module.css';
-import Modal from '../../Shared/Modal';
-import Button from '../../Shared/Button';
+import Modal from 'Components/Shared/Modal';
+import Button from 'Components/Shared/Button';
 
 const Form = () => {
   const history = useHistory();
@@ -51,8 +51,6 @@ const Form = () => {
     reset({ email, password });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, password, reset]);
-
-  console.log('texto', email, putSuperAdmin);
 
   const onSubmit = (data) => {
     console.log('Data Form', data);
