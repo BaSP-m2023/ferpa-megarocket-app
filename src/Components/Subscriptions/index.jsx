@@ -5,15 +5,21 @@ import Button from '../Shared/Button';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSubscriptions, selectId, deleteSubscriptions } from '../../redux/subscriptions/thunks';
+import { getMembers } from '../../redux/members/thunks';
 import Loader from '../Shared/Loader';
 
 function Subscriptions() {
   const location = useLocation();
   const { subs, isPending, error, id, message } = useSelector((state) => state.subscriptions);
+  const { data } = useSelector((state) => state.members);
   const dispatch = useDispatch();
   const history = useHistory();
   const [modalSuccess, setModalSuccess] = useState(false);
   const [modalConfirmDel, setModalConfirmDel] = useState(false);
+  const firstMember = data[0];
+  const subsToShow = location.pathname.includes('/members/home/subscriptions')
+    ? subs.filter((subscription) => subscription.memberId?._id === firstMember?._id)
+    : [...subs];
 
   useEffect(() => {
     if (location.state) {
@@ -32,6 +38,7 @@ function Subscriptions() {
   }, [modalSuccess]);
 
   useEffect(() => {
+    dispatch(getMembers());
     getSubscriptions(dispatch);
   }, [dispatch]);
 
@@ -69,10 +76,20 @@ function Subscriptions() {
 
       <section className={styles.list}>
         <div className={styles.header}>
-          <h2 className={styles.title}>Subscriptions</h2>
-          <Link to={'/subscriptions/form'}>
-            <Button text={'ADD Subs'} variant={'add'} />
-          </Link>
+          <h2 className={styles.title}>
+            {location.pathname.includes('/members/home/subscriptions')
+              ? 'My Subscriptions'
+              : 'Subscriptions'}
+          </h2>
+          {location.pathname.includes('/members/home/subscriptions') ? (
+            <Link to="/members/home/subscriptions/form">
+              <Button text={'Subscribe to class'} variant={'add'} />
+            </Link>
+          ) : (
+            <Link to="/admins/home/subscriptions/form">
+              <Button text={'Add Sub'} variant={'add'} />
+            </Link>
+          )}
         </div>
         <table className={styles.table}>
           <thead>
@@ -81,44 +98,43 @@ function Subscriptions() {
               <th className={styles.thead}>Trainer</th>
               <th className={styles.thead}>Member</th>
               <th className={styles.thead}>Date</th>
-              <th className={styles.tdBtn}></th>
+              {location.pathname.includes('/admins/home/subscriptions') && (
+                <th className={styles.tdBtn}></th>
+              )}
               <th className={styles.tdBtn}></th>
             </tr>
           </thead>
-          {isPending ? (
-            ''
-          ) : (
-            <tbody>
-              {subs &&
-                subs.map((subscription) => (
-                  <tr key={subscription._id} className={styles.tr}>
-                    <td className={styles.td}>{subscription.classId?.activityId?.name}</td>
-                    <td className={styles.td}>{subscription.classId?.trainerId?.lastName}</td>
-                    <td className={styles.td}>
-                      {subscription.memberId?.lastName}, {subscription.memberId?.firstName}
-                    </td>
-                    <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
-                    <td className={styles.tdBtn}>
-                      <Link to={`/subscriptions/form/${subscription._id}`}>
-                        <Button
-                          variant={'edit'}
-                          clickAction={() => selectId(dispatch, subscription._id)}
-                        />
-                      </Link>
-                    </td>
-                    <td className={styles.tdBtn}>
+          <tbody>
+            {subsToShow.map((subscription) => (
+              <tr key={subscription._id} className={styles.tr}>
+                <td className={styles.td}>{subscription.classId?.activityId?.name}</td>
+                <td className={styles.td}>{subscription.classId?.trainerId?.lastName}</td>
+                <td className={styles.td}>
+                  {subscription.memberId?.lastName}, {subscription.memberId?.firstName}
+                </td>
+                <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
+                {location.pathname.includes('/admins/home/subscriptions') && (
+                  <td className={styles.tdBtn}>
+                    <Link to={`/subscriptions/form/${subscription._id}`}>
                       <Button
-                        variant={'deleteIcon'}
-                        clickAction={() => {
-                          selectId(dispatch, subscription._id);
-                          setModalConfirmDel(!modalConfirmDel);
-                        }}
+                        variant={'edit'}
+                        clickAction={() => selectId(dispatch, subscription._id)}
                       />
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          )}
+                    </Link>
+                  </td>
+                )}
+                <td className={styles.tdBtn}>
+                  <Button
+                    variant={'deleteIcon'}
+                    clickAction={() => {
+                      selectId(dispatch, subscription._id);
+                      setModalConfirmDel(!modalConfirmDel);
+                    }}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
         {isPending ? (
           <div className={styles.loading}>
