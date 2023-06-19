@@ -96,7 +96,6 @@ const Form = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
     !id ? await postSubscriptions(dispatch, data) : await updateSubscription(dispatch, data, id);
     const updatedState = store.getState();
     const updatedError = updatedState.subscriptions.error;
