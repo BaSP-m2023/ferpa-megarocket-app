@@ -120,15 +120,15 @@ const Classes = () => {
           <table className={styles.table}>
             <thead>
               <tr>
-                <th className={styles.large}>Activity Name</th>
-                <th className={styles.medium}>Day</th>
-                <th className={styles.small}>Hour</th>
-                <th className={styles.medium}>Trainer</th>
-                <th className={styles.small}>Slots</th>
+                <th className={`${styles.large} ${styles.border}`}>Activity Name</th>
+                <th className={`${styles.medium} ${styles.border}`}>Day</th>
+                <th className={`${styles.small} ${styles.border}`}>Hour</th>
+                <th className={`${styles.medium} ${styles.border}`}>Trainer</th>
+                <th className={`${styles.small} ${styles.border}`}>Slots</th>
                 {location.pathname.includes('admins/home/classes') && (
                   <>
-                    <th className={styles.small}>Edit</th>
-                    <th className={styles.small}>Delete</th>
+                    <th className={`${styles.small} ${styles.border}`}></th>
+                    <th className={`${styles.small} ${styles.border}`}></th>
                   </>
                 )}
               </tr>

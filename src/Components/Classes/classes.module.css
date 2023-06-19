@@ -65,22 +65,23 @@
   height: 60%;
 }
 
+.border {
+  border-bottom: solid 4px white;
+}
+
 .small {
   width: 10%;
   text-align: left;
-  border-bottom: solid 4px white;
 }
 
 .medium {
   width: 20%;
   text-align: left;
-  border-bottom: solid 4px white;
 }
 
 .large {
   width: 30%;
   text-align: left;
-  border-bottom: solid 4px white;
 }
 
 .loading {

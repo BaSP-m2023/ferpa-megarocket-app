@@ -96,7 +96,9 @@ function Subscriptions() {
             <tr className={styles.trHead}>
               <th className={styles.thead}>Activity</th>
               <th className={styles.thead}>Trainer</th>
-              <th className={styles.thead}>Member</th>
+              {location.pathname.includes('/admins/home/subscriptions') && (
+                <th className={styles.thead}>Member</th>
+              )}
               <th className={styles.thead}>Date</th>
               {location.pathname.includes('/admins/home/subscriptions') && (
                 <th className={styles.tdBtn}></th>
@@ -109,9 +111,11 @@ function Subscriptions() {
               <tr key={subscription._id} className={styles.tr}>
                 <td className={styles.td}>{subscription.classId?.activityId?.name}</td>
                 <td className={styles.td}>{subscription.classId?.trainerId?.lastName}</td>
-                <td className={styles.td}>
-                  {subscription.memberId?.lastName}, {subscription.memberId?.firstName}
-                </td>
+                {location.pathname.includes('/admins/home/subscriptions') && (
+                  <td className={styles.td}>
+                    {subscription.memberId?.lastName}, {subscription.memberId?.firstName}
+                  </td>
+                )}
                 <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
                 {location.pathname.includes('/admins/home/subscriptions') && (
                   <td className={styles.tdBtn}>
