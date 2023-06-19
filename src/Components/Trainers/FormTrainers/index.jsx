@@ -12,25 +12,27 @@ import Modal from '../../Shared/Modal';
 import styles from './form.module.css';
 
 const TrainerAddForm = () => {
-  // const [focusPass, setFocusPass] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
   const { id } = useParams();
-  const { trainers, success, error, formError, message } = useSelector((state) => state.trainers);
+  const { trainers, success, error, formError } = useSelector((state) => state.trainers);
   const dispatch = useDispatch();
   const history = useHistory();
+  const RGXPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+  const RGXEmail = /^[^@]+@[^@]+.[a-zA-Z]{2,}$/;
 
   const schema = Joi.object({
     firstName: Joi.string().required().min(3).max(16),
     lastName: Joi.string().required().min(3).max(16),
-    // dni: Joi.string().required().pattern(new RegExp('^[0-9]+$')).min(7).max(10),
-    // phone: Joi.string().required().pattern(new RegExp('^[0-9]+$')).min(7).max(15),
-    email: Joi.string().required().pattern(new RegExp('^\\S+@\\S+\\.\\S+$')),
+    dni: Joi.number().min(1000000).max(99999999).required(),
+    phone: Joi.number().required().min(1000000000).max(9999999999),
+    email: Joi.string().required().regex(RGXEmail),
     city: Joi.string().required().min(3).max(20),
-    password: Joi.string()
-      .required()
-      .pattern(new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'))
-    // salary: Joi.string().required().min(0)
+    password: Joi.string().regex(RGXPassword).min(8).required().messages({
+      'string.pattern.base':
+        'Password must contain at least one uppercase letter, one lowercase letter, and one digit'
+    }),
+    salary: Joi.number().required().min(10).max(9999999999)
   });
 
   const [inputs, setInputs] = useState({
@@ -48,13 +50,18 @@ const TrainerAddForm = () => {
     register,
     handleSubmit,
     reset,
+    onChange,
     formState: { errors }
   } = useForm({ mode: 'onChange', resolver: joiResolver(schema), defaultValues: { inputs } });
 
   useEffect(() => {
     if (id) {
       const trainer = trainers.find((trainer) => trainer._id === id);
-      setInputs(trainer);
+      const copyTrainer = { ...trainer };
+      delete copyTrainer.isActive;
+      delete copyTrainer.__v;
+      delete copyTrainer._id;
+      setInputs(copyTrainer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -74,103 +81,95 @@ const TrainerAddForm = () => {
 
   const handleModalError = () => {
     setTimeout(() => {
-      setSuccessModal(!successModal);
+      setErrorModal(!errorModal);
     }, 2000);
   };
 
   const handleModalSuccess = () => {
     setTimeout(() => {
       history.push('/trainers');
-      setErrorModal(!errorModal);
+      setSuccessModal(!successModal);
     }, 2000);
   };
 
-  const onSubmitAdd = (data) => {
-    setErrorModal(!errorModal);
-    sendTrainer(dispatch, data);
-  };
-  const onSubmitEdit = (e) => {
-    setSuccessModal(!successModal);
-    putTrainer(dispatch, id, inputs);
+  const onSubmit = (data) => {
+    if (id) {
+      setSuccessModal(!successModal);
+      putTrainer(dispatch, id, data);
+    } else {
+      setSuccessModal(!successModal);
+      sendTrainer(dispatch, data);
+    }
   };
   return (
     <div className={styles.formContainer}>
       <div className={styles.fromBackground}>
-        <form className={styles.form} onSubmit={handleSubmit(id ? onSubmitEdit : onSubmitAdd)}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.field}>
             <Input
               register={register}
+              onChangeInput={onChange}
               labelText={'Name'}
               nameValue={'firstName'}
               placeholder={'First Name'}
               error={errors.firstName?.message}
-              // value={inputs.firstName}
             />
             <Input
               register={register}
+              onChangeInput={onChange}
               labelText={'LastName'}
               nameValue={'lastName'}
               placeholder={'Last Name'}
               error={errors.lastName?.message}
-              // value={inputs.lastName}
             />
             <Input
               register={register}
+              onChangeInput={onChange}
               labelText={'DNI'}
               nameValue={'dni'}
               placeholder={'DNI'}
               error={errors.dni?.message}
-              // value={inputs.dni}
             />
             <Input
               register={register}
+              onChangeInput={onChange}
               labelText={'Phone'}
               nameValue={'phone'}
               placeholder={'Phone'}
               error={errors.phone?.message}
-              // value={inputs.phone}
             />
             <Input
               register={register}
+              onChangeInput={onChange}
               labelText={'Email'}
               nameValue={'email'}
               placeholder={'Email'}
               error={errors.email?.message}
-              // value={inputs.email}
             />
             <Input
               register={register}
+              onChangeInput={onChange}
               labelText={'City'}
               nameValue={'city'}
               placeholder={'City'}
               error={errors.city?.message}
-              // value={inputs.city}
             />
             <Input
               register={register}
+              onChangeInput={onChange}
               labelText={'Salary'}
               nameValue={'salary'}
               placeholder={'Salary'}
               error={errors.salary?.message}
-              // value={inputs.salary}
             />
             <Input
               register={register}
+              onChangeInput={onChange}
               labelText={'Password'}
               nameValue={'password'}
-              type={'password'}
               placeholder={'Password'}
-              // onFocus={() => setFocusPass(true)}
-              // onBlur={() => setFocusPass(false)}
               error={errors.password?.message}
-              // value={inputs.password}
             />
-            {/* {focusPass && (
-              <p className={styles.passwordAlert}>
-                * The password must have uppercase letters, lowercase letters, number and at least 8
-                characters
-              </p> */}
-            {/* )} */}
           </div>
           <div className={styles.buttons}>
             <Link to={'/trainers'}>
@@ -188,7 +187,7 @@ const TrainerAddForm = () => {
             success
             isOpen={successModal}
             onClose={() => setSuccessModal(!successModal)}
-            title={message}
+            title={error}
           ></Modal>
         </form>
       </div>
