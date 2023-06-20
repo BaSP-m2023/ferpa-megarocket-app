@@ -31,12 +31,7 @@ const Form = () => {
     day: Joi.string()
       .valid('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
       .required(),
-    hour: Joi.string()
-      // .pattern(/^((0[9]|1[0-9]|2[01]):00)$/)
-      .required(),
-    // .messages({
-    //   'string.pattern.base': "The schedule must be from 9:00  to 21:00  o'clock."
-    // }),
+    hour: Joi.string().required(),
     trainerId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/),
     activityId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/),
     slots: Joi.number().min(1).max(25).integer()
@@ -96,62 +91,62 @@ const Form = () => {
     {
       _id: 2,
       name: '10hs',
-      value: '10:00'
+      value: 10
     },
     {
       _id: 3,
       name: '11hs',
-      value: '11:00'
+      value: 11
     },
     {
       _id: 4,
       name: '12hs',
-      value: '12:00'
+      value: 12
     },
     {
       _id: 5,
       name: '13hs',
-      value: '13:00'
+      value: 13
     },
     {
       _id: 6,
       name: '14hs',
-      value: '14:00'
+      value: 14
     },
     {
       _id: 7,
       name: '15hs',
-      value: '15:00'
+      value: 15
     },
     {
       _id: 8,
       name: '16hs',
-      value: '16:00'
+      value: 16
     },
     {
       _id: 9,
       name: '17hs',
-      value: '17:00'
+      value: 17
     },
     {
       _id: 10,
       name: '18hs',
-      value: '18:00'
+      value: 18
     },
     {
       _id: 11,
       name: '19hs',
-      value: '19:00'
+      value: 19
     },
     {
       _id: 12,
       name: '20hs',
-      value: '20:00'
+      value: 20
     },
     {
       _id: 13,
       name: '21hs',
-      value: '21:00'
+      value: 21
     }
   ];
   const slots = [
@@ -317,6 +312,7 @@ const Form = () => {
     } else {
       dispatch(postClass(data));
     }
+    console.log(data);
   };
   useEffect(() => {
     getActivities(dispatch);
