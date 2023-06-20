@@ -64,26 +64,52 @@ const MembersEdit = () => {
   ];
 
   const schema = Joi.object({
-    firstName: Joi.string().min(3),
-    lastName: Joi.string().min(3),
-    dni: Joi.number()
-      .min(1000000)
-      .message({ 'number.min': '"dni" length must be at least 7 characters long' }),
-    phone: Joi.number()
-      .min(1000000000)
-      .max(9999999999)
-      .message({ 'number.min': '"phone" length must be 10 characters long' }),
+    firstName: Joi.string()
+      .pattern(/^[A-Za-z]+$/)
+      .min(3)
+      .max(15)
+      .messages({
+        'string.pattern.base': 'First name must contain only letters'
+      }),
+    lastName: Joi.string()
+      .pattern(/^[A-Za-z]+$/)
+      .min(3)
+      .max(15)
+      .messages({
+        'string.pattern.base': 'Last name must contain only letters'
+      }),
+    dni: Joi.string()
+      .pattern(/^[0-9]+$/)
+      .min(7)
+      .max(8)
+      .messages({
+        'string.pattern.base': 'DNI must contain only numbers'
+      }),
+    phone: Joi.string()
+      .pattern(/^[0-9]+$/)
+      .min(10)
+      .max(10)
+      .messages({
+        'string.pattern.base': 'Phone number must contain only numbers'
+      }),
     email: Joi.string()
+      .max(30)
       .pattern(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)
-      .message({ 'string.pattern.base': 'Invalid "email" format' }),
+      .messages({
+        'string.pattern.base': 'Invalid email format'
+      }),
     city: Joi.string().min(2).max(30),
-    birthDay: Joi.date().max('now'),
-    postalCode: Joi.number()
-      .min(1000)
-      .max(99999)
-      .message({ 'number.min': '"postal code" length must be 4-5 characters long' }),
+    birthDay: Joi.date().min('1930-01-01').max('2008-01-01'),
+    postalCode: Joi.string()
+      .regex(/^[^\s]+$/)
+      .min(4)
+      .max(6)
+      .messages({
+        'string.pattern.base': 'Zip must not contain empty spaces'
+      }),
     isActive: Joi.boolean(),
-    membership: Joi.string().valid('Classic', 'Only Classes', 'Black')
+    membership: Joi.string().valid('Classic', 'Only Classes', 'Black').required(),
+    isMembershipActive: Joi.boolean()
   });
 
   const {
@@ -131,8 +157,6 @@ const MembersEdit = () => {
   useEffect(() => {
     reset(member);
   }, [member, reset]);
-
-  console.log(member, id);
 
   const onSubmit = (data) => {
     dispatch(updateMember(id, member));

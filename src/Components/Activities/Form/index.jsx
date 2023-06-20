@@ -7,6 +7,9 @@ import { postActivity, putActivity } from '../../../redux/activities/thunks';
 import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal';
 import Loader from '../../Shared/Loader';
+import { useForm } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const Form = () => {
   const { data, message, success, error, isPending } = useSelector((state) => state.activities);
@@ -18,6 +21,35 @@ const Form = () => {
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const schema = Joi.object({
+    name: Joi.string()
+      .pattern(/^[A-Za-z]+$/)
+      .min(3)
+      .max(30)
+      .messages({
+        'string.pattern.base': 'Name must contain only letters'
+      }),
+    description: Joi.string()
+      .pattern(/^[A-Za-z]+$/)
+      .min(5)
+      .max(250)
+      .messages({
+        'string.pattern.base': 'Description must contain only letters'
+      }),
+    isActive: Joi.boolean()
+  });
+
+  const {
+    reset,
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(schema),
+    defaultValues: { name, description, isActive }
+  });
 
   const handleModal = () => {
     setShowModal(!showModal);
@@ -46,24 +78,20 @@ const Form = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
+  useEffect(() => {
+    reset({ name, description, isActive });
+  }, [name, description, isActive, reset]);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-  };
-
-  const sendActivity = async () => {
+  const onSubmit = async (data) => {
     if (location.pathname.includes('create')) {
-      await postActivity(dispatch, { name, description, isActive });
+      await postActivity(dispatch, data);
     }
 
     if (location.pathname.includes('edit')) {
-      await putActivity(dispatch, id, { name, description, isActive });
+      await putActivity(dispatch, id, data);
     }
   };
-
+  console.log(isActive);
   return (
     <div className={styles.formContainer}>
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} error />
@@ -71,34 +99,36 @@ const Form = () => {
         <h3 className={styles.title}>
           {location.pathname.includes('create') ? 'Add New Activity' : 'Edit Activity'}
         </h3>
-        {isPending ? (
+        {!isPending ? (
           <Loader />
         ) : (
-          <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
+          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.field}>
               <Input
+                nameValue={'name'}
                 labelText={'Name'}
                 type={'text'}
                 placeholder={'Activity name'}
-                value={name}
-                onChangeInput={handleNameChange}
+                register={register}
+                error={errors.name?.message}
               />
             </div>
             <TextArea
+              nameValue={'description'}
               label={'Description'}
               placeholder={'Activity description'}
-              value={description}
-              onChangeArea={setDescription}
+              register={register}
+              error={errors.description?.message}
             />
             <div className={styles.checkboxField}>
               <label>Is Active?</label>
               <input
                 className={styles.checkbox}
+                name={'isActive'}
                 type="checkbox"
-                checked={isActive}
-                value={isActive}
-                onChange={(e) => setIsActive(e.currentTarget.checked)}
+                {...register('isActive')}
               />
+              {errors.isActive && <span>{errors.isActive.message}</span>}
             </div>
             <div className={styles.btns}>
               <Link to="/activities">
@@ -107,7 +137,7 @@ const Form = () => {
               <Button
                 text={location.pathname.includes('edit') ? 'Edit' : 'Add'}
                 variant={'add'}
-                clickAction={sendActivity}
+                submitting
               />
             </div>
           </form>

@@ -25,6 +25,8 @@ const Form = () => {
   const [modalError, setModalError] = useState(false);
   const history = useHistory();
 
+  const now = new Date().toISOString().split('T')[0];
+
   const schema = Joi.object({
     memberId: Joi.string()
       .pattern(/^[0-9a-fA-F]{24}$/)
@@ -36,7 +38,7 @@ const Form = () => {
       .message({
         'string.pattern.base': 'Invalid format ID'
       }),
-    date: Joi.date().min('now').message({
+    date: Joi.date().min(now).message({
       'date.min': 'You cannot subscribe to classes that have already occurred.'
     })
   });
