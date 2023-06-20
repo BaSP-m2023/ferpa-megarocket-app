@@ -5,7 +5,7 @@ function Home() {
   return (
     <section className={styles.container}>
       <div className={styles.member}>
-        <Link to="members/home/landing">
+        <Link to="members/home/profile">
           <button className={styles.button}>Members</button>
         </Link>
       </div>
