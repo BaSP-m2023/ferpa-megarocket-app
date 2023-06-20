@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 60vh;
+}
+
+.header {
+  margin: 25px 0;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.dataWraper {
+  display: flex;
+  align-items: center;
+}
+
+.userData {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40vw;
+}
+
+.infoTag {
+  font-weight: 400;
+  color: black;
+}
+
+.userInfo {
+  margin: 5px 0;
+}
+
+.membershipData {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 25px;
+}
+
+.membershipType {
+  background-color: #474885;
+  color: rgb(255, 255, 255);
+  padding: 5px 14px 7px 14px;
+  border-radius: 7px;
+  border-color: rgb(0, 0, 0);
+  border-width: 2.5px;
+  border-style: solid;
+}
+
+.membershipUnit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.activeNo {
+  background-color: rgb(255, 153, 0);
+  color: rgb(0, 0, 0);
+  padding: 15px 14px 0 14px;
+  border-radius: 7px;
+  border-color: rgb(0, 0, 0);
+  border-width: 2.5px;
+  border-style: solid;
+}
+
+.activeYes {
+  background-color: darkgreen;
+  color: white;
+  padding: 15px 14px 0 14px;
+  border-radius: 7px;
+  border-color: rgb(0, 208, 83);
+  border-width: 2.5px;
+  border-style: solid;
+}
