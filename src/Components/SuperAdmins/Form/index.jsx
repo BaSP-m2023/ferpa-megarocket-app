@@ -28,7 +28,7 @@ const Form = () => {
     }),
     password: Joi.string().regex(RGXPassword).min(8).required().messages({
       'string.pattern.base':
-        'Password must contain at least one uppercase letter, one lowercase letter, and one digit'
+        'Password must contain at least one uppercase letter, one lowercase letter, and be at least 8 characters long'
     })
   });
 

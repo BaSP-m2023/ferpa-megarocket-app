@@ -20,21 +20,38 @@ const Form = () => {
   const [successModal, setSuccesModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
 
-  const RGXPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-  const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
   const schema = Joi.object({
-    firstName: Joi.string().min(3).max(15),
-    lastName: Joi.string().min(3).max(15),
-    dni: Joi.string().length(9),
-    phone: Joi.string().length(10),
-    email: Joi.string().regex(RGXEmail).required().messages({
-      'string.pattern.base': 'Email must be in a valid format'
-    }),
+    firstName: Joi.string()
+      .min(3)
+      .max(15)
+      .pattern(/^[a-zA-Z-]+$/)
+      .messages({
+        'string.pattern.base': 'First name must contain only letters'
+      }),
+    lastName: Joi.string()
+      .min(3)
+      .max(15)
+      .pattern(/^[a-zA-Z-]+$/)
+      .messages({
+        'string.pattern.base': 'Last name must contain only letters'
+      }),
+    dni: Joi.string()
+      .regex(/^[0-9]+$/)
+      .min(7)
+      .max(8)
+      .messages({
+        'string.pattern.base': 'DNI must contain only numbers'
+      }),
+    phone: Joi.string()
+      .regex(/^[0-9]+$/)
+      .min(6)
+      .max(20)
+      .messages({
+        'string.pattern.base': 'Phone number must contain only numbers'
+      }),
+    email: Joi.string().pattern(/^[^@]+@[^@]+.[a-zA-Z]{2,}$/),
     city: Joi.string(),
-    password: Joi.string().regex(RGXPassword).min(8).required().messages({
-      'string.pattern.base':
-        'Password must contain at least one uppercase letter, one lowercase letter, and one digit'
-    })
+    password: Joi.string().pattern(/^(?=.[a-z])(?=.[A-Z])(?=.*\d).{7,}$/)
   });
 
   const {
