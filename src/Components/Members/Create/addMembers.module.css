@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 .container {
   margin-top: 50px;
   flex: 1;
@@ -9,6 +11,7 @@
   background-image: url(../../../../public/assets/images/admins-background.jpg);
   background-size: cover;
   background-repeat: no-repeat;
+  font-family: 'Roboto', sans-serif;
 }
 
 .whiteLetters {
@@ -26,4 +29,9 @@
   display: flex;
   justify-content: space-around;
   margin-top: 35px;
+}
+
+.checkbox {
+  margin-top: 5px;
+  font-size: 20px;
 }

@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import styles from './members.module.css';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMembers, deleteMember } from '../../redux/members/thunks';
-import Button from '../Shared/Button/';
-import Modal from '../Shared/Modal/';
-import Loader from '../Shared/Loader';
+import { getMembers, deleteMember } from 'redux/members/thunks';
+import Button from 'Components/Shared/Button/';
+import Modal from 'Components/Shared/Modal/';
+import Loader from 'Components/Shared/Loader';
 
 function Members() {
   const [showModal, setShowModal] = useState(false);
@@ -17,7 +17,7 @@ function Members() {
 
   useEffect(() => {
     dispatch(getMembers());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (success) {
