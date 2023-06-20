@@ -18,9 +18,9 @@ const FormTrainers = lazy(() => import('./trainers/form'));
 const MembersHome = lazy(() => import('./membersHome'));
 const MembersProfile = lazy(() => import('./membersHome/profile'));
 const MembersActivities = lazy(() => import('./membersHome/activities'));
-const AdminsHome = lazy(() => import('./adminsHome'));
 const AdminsProfile = lazy(() => import('./adminsHome/profile'));
 const AdminsReports = lazy(() => import('./adminsHome/reports'));
+const AdminsEdit = lazy(() => import('./admins/form'));
 
 function Layout() {
   return (
@@ -29,7 +29,7 @@ function Layout() {
         {/* //Admins Routes */}
         <Route exact path="/admins/home/activities" component={Activities} />
         <Route path="/admins/home/activities/create" component={ActivitiesForm} />
-        <Route path="/activities/edit/:id" component={ActivitiesForm} />
+        <Route path="/admins/home/activities/edit/:id" component={ActivitiesForm} />
 
         <Route exact path="/admins/home/classes" component={Classes} />
         <Route path="/admins/home/classes/form/:id" component={Form} />
@@ -47,9 +47,10 @@ function Layout() {
         <Route exact path="/admins/home/trainers/Form" component={FormTrainers} />
         <Route path="/admins/home/trainers/Form/:id" component={FormTrainers} />
 
-        <Route exact path="/admins/home/landing" component={AdminsHome} />
         <Route exact path="/admins/home/profile" component={AdminsProfile} />
         <Route exact path="/admins/home/reports" component={AdminsReports} />
+
+        <Route exact path="/admins/home/edit/:id" component={AdminsEdit} />
 
         {/* //Members Routes */}
         <Route exact path="/members/home/landing" component={MembersHome} />

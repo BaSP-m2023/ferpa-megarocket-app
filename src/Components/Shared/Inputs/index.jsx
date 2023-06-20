@@ -26,7 +26,7 @@ export const Select = ({
         }
         value={value}
         onChange={onChangeSelect}
-        {...register(nameValue)}
+        // {...register(nameValue)}
         onFocus={onFocus}
         onBlur={onBlur}
       >
@@ -69,7 +69,7 @@ export const Input = ({
         placeholder={placeholder}
         value={value}
         name={nameValue}
-        {...register(nameValue)}
+        // {...register(nameValue)}
         onFocus={onFocus}
         onBlur={onBlur}
       />
@@ -98,7 +98,7 @@ export const DatePicker = ({
         name={nameValue}
         value={value}
         onChange={(e) => onChangeDate(e.target.value)}
-        {...register(nameValue)}
+        // {...register(nameValue)}
         onFocus={onFocus}
         onBlur={onBlur}
       />
@@ -133,7 +133,7 @@ export const TextArea = ({
         name={nameValue}
         placeholder={placeholder}
         onChange={(e) => onChangeArea(e.target.value)}
-        {...register(nameValue)}
+        // {...register(nameValue)}
         onFocus={onFocus}
         onBlur={onBlur}
       ></textarea>

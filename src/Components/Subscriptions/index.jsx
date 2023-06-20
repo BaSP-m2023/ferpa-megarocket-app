@@ -70,7 +70,7 @@ function Subscriptions() {
       <section className={styles.list}>
         <div className={styles.header}>
           <h2 className={styles.title}>Subscriptions</h2>
-          <Link to={'/subscriptions/form'}>
+          <Link to={'/admins/home/subscriptions/form'}>
             <Button text={'ADD Subs'} variant={'add'} />
           </Link>
         </div>
@@ -99,7 +99,7 @@ function Subscriptions() {
                     </td>
                     <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
                     <td className={styles.tdBtn}>
-                      <Link to={`/subscriptions/form/${subscription._id}`}>
+                      <Link to={`/admins/home/subscriptions/form/${subscription._id}`}>
                         <Button
                           variant={'edit'}
                           clickAction={() => selectId(dispatch, subscription._id)}

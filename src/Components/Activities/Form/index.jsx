@@ -28,7 +28,7 @@ const Form = () => {
 
   useEffect(() => {
     if (success) {
-      history.push('/activities');
+      history.push('/admins/home/activities');
     }
     if (error) {
       handleModal();
@@ -101,7 +101,7 @@ const Form = () => {
               />
             </div>
             <div className={styles.btns}>
-              <Link to="/activities">
+              <Link to="/admins/home/activities">
                 <Button text={'Cancel'} variant={'white'} />
               </Link>
               <Button

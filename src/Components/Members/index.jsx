@@ -17,6 +17,7 @@ function Members() {
 
   useEffect(() => {
     dispatch(getMembers());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -38,12 +39,7 @@ function Members() {
     return (
       <div className={`${styles.container} ${styles.whiteLetters}`}>
         <div className={styles.list}>
-          <div className={styles.header}>
-            <h2>Members</h2>
-            <Link to={'/members/create'}>
-              <Button text={'Create new member'} variant={'add'} />
-            </Link>
-          </div>
+          <div className={styles.header}></div>
           <Loader />
         </div>
       </div>
@@ -55,7 +51,7 @@ function Members() {
       <div className={styles.purpleBack}>
         <div className={styles.header}>
           <h2>Members</h2>
-          <Link to={'/members/create'}>
+          <Link to={'/admins/home/members/create'}>
             <Button text={'Create new member'} variant={'add'} />
           </Link>
         </div>
@@ -78,6 +74,7 @@ function Members() {
                 <th>DNI</th>
                 <th>Email</th>
                 <th>Phone</th>
+                <th>Membership status</th>
               </tr>
               {data.map((item) => {
                 return (
@@ -87,7 +84,7 @@ function Members() {
                     <td>{item.dni}</td>
                     <td>{item.email}</td>
                     <td>{item.phone}</td>
-                    <td></td>
+                    <td>{item.isMembershipActive ? 'Active' : 'Inactive'}</td>
                     <td>
                       <Link to={`members/edit/${item._id}`}>
                         <Button variant={'edit'} />

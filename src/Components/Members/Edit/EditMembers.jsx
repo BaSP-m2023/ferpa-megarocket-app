@@ -48,6 +48,18 @@ const MembersEdit = () => {
       value: false
     }
   ];
+  const status = [
+    {
+      _id: 1,
+      name: 'Active',
+      value: true
+    },
+    {
+      _id: 2,
+      name: 'Inactive',
+      value: false
+    }
+  ];
 
   useEffect(() => {
     const memberToUpdate = data.find((member) => member._id === id);
@@ -63,13 +75,14 @@ const MembersEdit = () => {
       isActive: memberToUpdate?.isActive ?? true,
       membership: memberToUpdate?.membership ?? ''
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (success) {
       setShowModal(true);
       setTimeout(() => {
-        history.push('/members');
+        history.push('/admins/home/members');
       }, 2000);
     }
     if (error) {
@@ -131,7 +144,7 @@ const MembersEdit = () => {
         title={message}
         error
       />
-      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
+      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />
       <div>
         <form onSubmit={(e) => handleSubmit(e)} className={styles.form}>
           <h3 className={styles.whiteLetters}>Edit current member</h3>
@@ -262,8 +275,24 @@ const MembersEdit = () => {
               <Loader />
             )}
           </div>
+          <div>
+            {member.length !== 0 ? (
+              <div>
+                <Select
+                  label={'Membership status'}
+                  value={status.value}
+                  placeholder={'Change status'}
+                  onChangeSelect={handleIsActiveChange}
+                  options={status}
+                  nameValue={'day'}
+                />
+              </div>
+            ) : (
+              <Loader />
+            )}
+          </div>
           <div className={styles.theButtons}>
-            <Link to="/members">
+            <Link to="/admins/home/members">
               <Button text={'Cancel'} variant={'white'} />
             </Link>
             <Button text={'Update'} variant={'add'} clickAction={handleSubmit} />

@@ -77,7 +77,7 @@ const Form = () => {
   };
 
   const redirectPath = () => {
-    const path = { pathname: '/admins' };
+    const path = { pathname: '/admins/home/profile' };
     history.push(path);
   };
 
@@ -183,7 +183,7 @@ const Form = () => {
           </p>
         </div>
         <div className={styles.modalBtns}>
-          <Link to="/admins">
+          <Link to="/admins/home/profile">
             <Button text={'Cancel'} variant={'white'} />
           </Link>
           {id ? (

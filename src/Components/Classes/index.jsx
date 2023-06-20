@@ -140,7 +140,7 @@ const Classes = () => {
                         <td className={styles.medium}>{theOne?.trainerId?.firstName}</td>
                         <td className={styles.small}>{theOne?.slots}</td>
                         <td className={styles.small}>
-                          <Link to={`/classes/form/${theOne?._id}`}>
+                          <Link to={`/admins/home/classes/form/${theOne?._id}`}>
                             <Button text={'Edit Item'} variant={'edit'} />
                           </Link>
                         </td>

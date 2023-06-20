@@ -1,12 +1,12 @@
 .container {
-  margin-top: 50px;
+  padding: 50px 0;
   flex: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
   min-height: 70vh;
-  background-image: url(../../../../public/assets/images/admins-background.jpg);
+  background-image: url('../../../../public/assets/images/admins-background.jpg');
   background-size: cover;
   background-repeat: no-repeat;
 }

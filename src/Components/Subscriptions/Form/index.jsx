@@ -24,7 +24,7 @@ const Form = () => {
   const history = useHistory();
 
   const onRedirect = {
-    pathname: '/subscriptions',
+    pathname: '/admins/home/subscriptions',
     state: { message: '' }
   };
 
@@ -138,7 +138,7 @@ const Form = () => {
               <DatePicker label={'Date'} value={currentSub.date} onChangeDate={handleDatePicker} />
             </div>
             <div className={styles.formBtns}>
-              <Link to={'/subscriptions'}>
+              <Link to={'/admins/home/subscriptions'}>
                 <Button variant={'white'} text={'Cancel'} />
               </Link>
               <Button

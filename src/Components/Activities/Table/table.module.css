@@ -1,4 +1,3 @@
-
 .tableContainer {
   width: 80%;
   height: 50vh;
@@ -26,11 +25,13 @@
   height: 380px;
 }
 
-.trHead, .trBody {
+.trHead,
+.trBody {
   height: 70px;
 }
 
-.trHead th, .trBody td {
+.trHead th,
+.trBody td {
   padding-right: 20px;
 }
 
@@ -66,4 +67,3 @@
 .tdIcon {
   text-align: center;
 }
-

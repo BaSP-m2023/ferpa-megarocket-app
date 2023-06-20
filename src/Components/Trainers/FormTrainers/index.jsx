@@ -27,7 +27,7 @@ const TrainerAddForm = () => {
   const history = useHistory();
   useEffect(() => {
     if (id) {
-      const trainer = trainers.find((trainer) => trainer._id === id);
+      const trainer = trainers?.find((trainer) => trainer?._id === id);
       setInputs(trainer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,7 +56,7 @@ const TrainerAddForm = () => {
 
   const handleModalSuccess = () => {
     setTimeout(() => {
-      history.push('/trainers');
+      history.push('/admins/home/trainers');
       setSuccessAddModal(!successAddModal);
     }, 2000);
   };
@@ -80,49 +80,49 @@ const TrainerAddForm = () => {
               labelText={'Name'}
               nameValue={'firstName'}
               placeholder={'First Name'}
-              value={inputs.firstName}
+              value={inputs?.firstName}
               onChangeInput={handleChange}
             />
             <Input
               labelText={'LastName'}
               nameValue={'lastName'}
               placeholder={'Last Name'}
-              value={inputs.lastName}
+              value={inputs?.lastName}
               onChangeInput={handleChange}
             />
             <Input
               labelText={'DNI'}
               nameValue={'dni'}
               placeholder={'DNI'}
-              value={inputs.dni}
+              value={inputs?.dni}
               onChangeInput={handleChange}
             />
             <Input
               labelText={'Phone'}
               nameValue={'phone'}
               placeholder={'Phone'}
-              value={inputs.phone}
+              value={inputs?.phone}
               onChangeInput={handleChange}
             />
             <Input
               labelText={'Email'}
               nameValue={'email'}
               placeholder={'Email'}
-              value={inputs.email}
+              value={inputs?.email}
               onChangeInput={handleChange}
             />
             <Input
               labelText={'City'}
               nameValue={'city'}
               placeholder={'City'}
-              value={inputs.city}
+              value={inputs?.city}
               onChangeInput={handleChange}
             />
             <Input
               labelText={'Salary'}
               nameValue={'salary'}
               placeholder={'Salary'}
-              value={inputs.salary}
+              value={inputs?.salary}
               onChangeInput={handleChange}
             />
             <Input
@@ -130,7 +130,7 @@ const TrainerAddForm = () => {
               nameValue={'password'}
               type={'password'}
               placeholder={'Password'}
-              value={inputs.password}
+              value={inputs?.password}
               onChangeInput={handleChange}
             />
             <p className={styles.passwordAlert}>
@@ -139,7 +139,7 @@ const TrainerAddForm = () => {
             </p>
           </div>
           <div className={styles.buttons}>
-            <Link to={'/trainers'}>
+            <Link to={'/admins/home/trainers'}>
               <Button text={'Cancel'} variant={'white'} />
             </Link>
             <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting />

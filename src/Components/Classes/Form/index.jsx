@@ -262,17 +262,17 @@ const Form = () => {
     id &&
       setNewClass({
         ...newClass,
-        day: singleClass.day,
-        hour: singleClass.hour,
-        activityId: singleClass.activityId._id,
-        trainerId: singleClass.trainerId._id,
-        slots: singleClass.slots
+        day: singleClass?.day,
+        hour: singleClass?.hour,
+        activityId: singleClass?.activityId?._id,
+        trainerId: singleClass?.trainerId?._id,
+        slots: singleClass?.slots
       });
   };
 
   useEffect(() => {
     if (success) {
-      history.push('/classes');
+      history.push('/admins/home/classes');
     }
     if (error) {
       setShowErrorModal(true);
@@ -378,7 +378,7 @@ const Form = () => {
               variant={'white'}
               text={'Cancel'}
               submitting
-              clickAction={() => history.push('/classes')}
+              clickAction={() => history.push('/admins/home/classes')}
             />
           </div>
         </form>

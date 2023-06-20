@@ -19,7 +19,8 @@ const MembersCreate = () => {
     birthDay: '',
     postalCode: '',
     isActive: true,
-    membership: 'Classic'
+    membership: 'Classic',
+    isMembershipActive: false
   });
 
   const memberships = [
@@ -50,7 +51,7 @@ const MembersCreate = () => {
   useEffect(() => {
     if (success) {
       setTimeout(() => {
-        history.push('/members');
+        history.push('/admins/home/members');
       }, 2000);
       setShowModal(true);
     }
@@ -84,7 +85,7 @@ const MembersCreate = () => {
         title={message}
         error
       />
-      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
+      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />
       <div>
         <form onSubmit={(e) => handleSubmit(e)} className={styles.form}>
           <h3 className={styles.whiteLetters}>Create new member</h3>
@@ -176,7 +177,7 @@ const MembersCreate = () => {
             />
           </div>
           <div className={styles.theButtons}>
-            <Link to="/members">
+            <Link to="/admins/home/members">
               <Button text={'Cancel'} variant={'white'} />
             </Link>
             <Button text={'Add new member'} variant={'add'} clickAction={handleSubmit} />

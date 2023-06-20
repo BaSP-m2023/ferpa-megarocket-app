@@ -8,18 +8,11 @@ import Button from '../Shared/Button';
 import Loader from '../Shared/Loader';
 
 const Trainers = () => {
-  const [visiblePasswords, setVisiblePasswords] = useState([]);
   const [currentId, setCurrentId] = useState('');
   const [successModal, setSuccessModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const dispatch = useDispatch();
   const { isLoading, trainers, error, formError } = useSelector((state) => state.trainers);
-
-  const togglePasswordVisibility = (index) => {
-    const updatedVisiblePasswords = [...visiblePasswords];
-    updatedVisiblePasswords[index] = !updatedVisiblePasswords[index];
-    setVisiblePasswords(updatedVisiblePasswords);
-  };
 
   useEffect(() => {
     getTrainers(dispatch);
@@ -91,11 +84,11 @@ const Trainers = () => {
       <div className={styles.header}>
         <div className={styles.inside}>
           <h2 className={styles.title}>Trainers</h2>
-          <Link to={'/trainers/Form'}>
+          <Link to={'/admins/home/trainers/Form'}>
             <Button text={'add trainer'} variant={'add'} />
           </Link>
         </div>
-        <table className={styles.hola}>
+        <table className={styles.collapse}>
           <thead>
             <tr>
               <th className={styles.titles}>Name</th>
@@ -104,13 +97,12 @@ const Trainers = () => {
               <th className={styles.titles}>Phone</th>
               <th className={styles.titles}>Email</th>
               <th className={styles.titles}>City</th>
-              <th className={styles.titles}>Password</th>
               <th className={styles.titles}>Salary</th>
-              <th></th>
+              <th className={styles.titles}>Activity</th>
             </tr>
           </thead>
           <tbody>
-            {trainers.map((item, index) => {
+            {trainers.map((item) => {
               return (
                 <tr key={item._id}>
                   <td className={styles.list}>{item.firstName}</td>
@@ -119,17 +111,10 @@ const Trainers = () => {
                   <td className={styles.list}>{item.phone}</td>
                   <td className={styles.list}>{item.email}</td>
                   <td className={styles.list}>{item.city}</td>
-                  <td className={styles.list}>
-                    {visiblePasswords[index] ? item?.password : '*'.repeat(item?.password.length)}
-                  </td>
                   <td className={styles.list}>{item.salary}</td>
                   <td>
                     <div className={styles.buttons}>
-                      <Button
-                        variant={'seePassword'}
-                        clickAction={() => togglePasswordVisibility(index)}
-                      />
-                      <Link to={`/trainers/Form/${item._id}`}>
+                      <Link to={`/admins/home/trainers/Form/:id${item._id}`}>
                         <Button variant={'edit'} />
                       </Link>
                       <Button
