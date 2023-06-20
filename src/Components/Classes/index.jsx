@@ -93,81 +93,79 @@ const Classes = () => {
             setShowSuccessModal(false);
           }}
         />
-        <div>
-          <Modal
-            isOpen={showDeleteSuccessModal}
-            title={'Class deleted successfully!'}
-            success
-            onClose={() => setShowDeleteSuccessModal(!showDeleteSuccessModal)}
+        <Modal
+          isOpen={showDeleteSuccessModal}
+          title={'Class deleted successfully!'}
+          success
+          onClose={() => setShowDeleteSuccessModal(!showDeleteSuccessModal)}
+        />
+        <Modal
+          isOpen={showDeleteModal}
+          title={'Delete'}
+          text={'Are you sure you want to delete?'}
+          warning
+          onClose={() => setShowDeleteModal(false)}
+        >
+          <Button
+            text={'Yes'}
+            type={'button'}
+            variant={'delete'}
+            clickAction={() => {
+              deleteSingleClass(currentId);
+            }}
           />
-          <Modal
-            isOpen={showDeleteModal}
-            title={'Delete'}
-            text={'Are you sure you want to delete?'}
-            warning
-            onClose={() => setShowDeleteModal(false)}
-          >
-            <Button
-              text={'Yes'}
-              type={'button'}
-              variant={'delete'}
-              clickAction={() => {
-                deleteSingleClass(currentId);
-              }}
-            />
-            <Button text={'Cancel'} type={'button'} clickAction={reDirect} />
-          </Modal>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th className={`${styles.large} ${styles.border}`}>Activity Name</th>
-                <th className={`${styles.medium} ${styles.border}`}>Day</th>
-                <th className={`${styles.small} ${styles.border}`}>Hour</th>
-                <th className={`${styles.medium} ${styles.border}`}>Trainer</th>
-                <th className={`${styles.small} ${styles.border}`}>Slots</th>
-                {location.pathname.includes('admins/home/classes') && (
-                  <>
-                    <th className={`${styles.small} ${styles.border}`}></th>
-                    <th className={`${styles.small} ${styles.border}`}></th>
-                  </>
-                )}
-              </tr>
-            </thead>
-            <tbody>
-              {classes &&
-                classes.map((theOne) => {
-                  return (
-                    <tr key={theOne?._id}>
-                      <td className={styles.large}>{theOne?.activityId?.name}</td>
-                      <td className={styles.medium}>{theOne?.day}</td>
-                      <td className={styles.small}>{theOne?.hour}</td>
-                      <td className={styles.medium}>{theOne?.trainerId?.firstName}</td>
-                      <td className={styles.small}>{theOne?.slots}</td>
-                      {location.pathname.includes('admins/home/classes') && (
-                        <td className={styles.small}>
-                          <Link to={`/admins/classes/form/${theOne?._id}`}>
-                            <Button text={'Edit Item'} variant={'edit'} />
-                          </Link>
-                        </td>
-                      )}
-                      {location.pathname.includes('admins/home/classes') && (
-                        <td className={styles.small}>
-                          <Button
-                            variant={'deleteIcon'}
-                            type={'button'}
-                            clickAction={() => {
-                              setCurrentId(theOne?._id);
-                              setShowDeleteModal(!showDeleteModal);
-                            }}
-                          />
-                        </td>
-                      )}
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
-        </div>
+          <Button text={'Cancel'} type={'button'} clickAction={reDirect} />
+        </Modal>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th className={`${styles.large} ${styles.border}`}>Activity Name</th>
+              <th className={`${styles.medium} ${styles.border}`}>Day</th>
+              <th className={`${styles.small} ${styles.border}`}>Hour</th>
+              <th className={`${styles.medium} ${styles.border}`}>Trainer</th>
+              <th className={`${styles.small} ${styles.border}`}>Slots</th>
+              {location.pathname.includes('admins/home/classes') && (
+                <>
+                  <th className={`${styles.small} ${styles.border}`}></th>
+                  <th className={`${styles.small} ${styles.border}`}></th>
+                </>
+              )}
+            </tr>
+          </thead>
+          <tbody>
+            {classes &&
+              classes.map((theOne) => {
+                return (
+                  <tr className={styles.tr} key={theOne?._id}>
+                    <td>{theOne?.activityId?.name}</td>
+                    <td>{theOne?.day}</td>
+                    <td>{theOne?.hour}</td>
+                    <td>{theOne?.trainerId?.firstName}</td>
+                    <td>{theOne?.slots}</td>
+                    {location.pathname.includes('admins/home/classes') && (
+                      <td>
+                        <Link to={`/admins/classes/form/${theOne?._id}`}>
+                          <Button text={'Edit Item'} variant={'edit'} />
+                        </Link>
+                      </td>
+                    )}
+                    {location.pathname.includes('admins/home/classes') && (
+                      <td>
+                        <Button
+                          variant={'deleteIcon'}
+                          type={'button'}
+                          clickAction={() => {
+                            setCurrentId(theOne?._id);
+                            setShowDeleteModal(!showDeleteModal);
+                          }}
+                        />
+                      </td>
+                    )}
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
       </div>
     </section>
   );

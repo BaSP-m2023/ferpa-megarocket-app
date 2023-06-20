@@ -18,6 +18,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 70vw;
 }
 
 .error {
@@ -34,8 +35,9 @@
   display: flex;
   flex-flow: column;
   justify-content: space-around;
+  align-items: center;
   margin: 0;
-  padding: 5vw;
+  padding: 1.5vw;
   width: 80vw;
   background-color: rgba(55, 56, 103, 0.8);
   border-radius: 1vw;
@@ -49,11 +51,15 @@
 }
 
 .table {
-  margin: 0 0 0 0;
-  padding: 0 0;
-  width: 100%;
+  margin: 0;
+  padding: 0;
+  width: 70vw;
+  margin-bottom: 20px;
   border-collapse: collapse;
-  height: 60%;
+}
+
+.tr {
+  height: 55px;
 }
 
 .border {
@@ -63,16 +69,19 @@
 .small {
   width: 10%;
   text-align: left;
+  padding-bottom: 1vw;
 }
 
 .medium {
   width: 20%;
   text-align: left;
+  padding-bottom: 1vw;
 }
 
 .large {
   width: 30%;
   text-align: left;
+  padding-bottom: 1vw;
 }
 
 .loading {
