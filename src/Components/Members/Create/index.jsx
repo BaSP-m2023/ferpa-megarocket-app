@@ -96,6 +96,7 @@ const MembersCreate = () => {
               value={member.firstName}
               onChangeInput={handleOnChange}
               nameValue={'firstName'}
+              register
             />
           </div>
           <div>
@@ -106,6 +107,7 @@ const MembersCreate = () => {
               value={member.lastName}
               onChangeInput={handleOnChange}
               nameValue={'lastName'}
+              register
             />
           </div>
           <div>
@@ -116,6 +118,7 @@ const MembersCreate = () => {
               value={member.dni}
               onChangeInput={handleOnChange}
               nameValue={'dni'}
+              register
             />
           </div>
           <div>
@@ -126,6 +129,7 @@ const MembersCreate = () => {
               value={member.phone}
               nameValue={'phone'}
               onChangeInput={handleOnChange}
+              register
             />
           </div>
           <div>
@@ -136,6 +140,7 @@ const MembersCreate = () => {
               value={member.email}
               nameValue={'email'}
               onChangeInput={handleOnChange}
+              register
             />
           </div>
           <div>
@@ -146,6 +151,7 @@ const MembersCreate = () => {
               value={member.city}
               nameValue={'city'}
               onChangeInput={handleOnChange}
+              register
             />
           </div>
           <div>
@@ -153,6 +159,7 @@ const MembersCreate = () => {
               label={'Birthday'}
               nameValue={'birthDay'}
               onChangeDate={handleBirthdayChange}
+              register
             />
           </div>
           <div>
@@ -163,6 +170,7 @@ const MembersCreate = () => {
               value={member.postalCode}
               nameValue={'postalCode'}
               onChangeInput={handleOnChange}
+              register
             />
           </div>
           <div>
@@ -173,6 +181,7 @@ const MembersCreate = () => {
               onChangeSelect={handleOnChange}
               options={memberships}
               nameValue={'membership'}
+              register
             />
           </div>
           <div className={styles.theButtons}>
