@@ -25,6 +25,7 @@ const Form = () => {
   const [modalError, setModalError] = useState(false);
   const history = useHistory();
   const location = useLocation();
+  const firstMember = members[0];
 
   const schema = Joi.object({
     memberId: Joi.string()
@@ -50,7 +51,7 @@ const Form = () => {
   } = useForm({
     mode: 'onChange',
     resolver: joiResolver(schema),
-    defaultValues: id ? currentSub : { memberId: '', classId: '', date: '' }
+    defaultValues: currentSub
   });
 
   useEffect(() => {
@@ -63,6 +64,9 @@ const Form = () => {
         classId: editSub?.classId?._id,
         date: editSub?.date.slice(0, 10)
       });
+    }
+    if (location.pathname.includes('/members/home/subscriptions/form')) {
+      setCurrentSub({ ...currentSub, memberId: firstMember._id });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
@@ -79,8 +83,12 @@ const Form = () => {
     reset(currentSub);
   }, [currentSub, reset]);
 
+  const pathname = location.pathname.includes('/members/home/subscriptions/form')
+    ? '/members/home/subscriptions'
+    : '/admins/home/subscriptions';
+
   const onRedirect = {
-    pathname: '/subscriptions',
+    pathname,
     state: { message: '' }
   };
 
@@ -114,7 +122,17 @@ const Form = () => {
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <h2 className={styles.formTitle}>{id ? 'EDIT SUBSCRIPTION' : 'ADD SUBSCRIPTION'}</h2>
         <div>
-          {location.pathname.includes('/admins/home/subscriptions/form') && (
+          {location.pathname.includes('/members/home/subscriptions/form') ? (
+            <div className={styles.hidden}>
+              <Select
+                nameValue={'memberId'}
+                register={register}
+                label={'Member'}
+                options={selectMembers}
+                error={errors.memberId?.message}
+              />
+            </div>
+          ) : (
             <div className={styles.inputBox}>
               <Select
                 nameValue={'memberId'}
@@ -131,7 +149,7 @@ const Form = () => {
               nameValue={'classId'}
               register={register}
               placeholder={'Select'}
-              label={'Activity'}
+              label={'Class'}
               options={selectActivities}
               error={errors.classId?.message}
             />
@@ -145,9 +163,15 @@ const Form = () => {
             />
           </div>
           <div className={styles.formBtns}>
-            <Link to={'/subscriptions'}>
-              <Button variant={'white'} text={'Cancel'} />
-            </Link>
+            {location.pathname.includes('/members/home/subscriptions/form') ? (
+              <Link to={'/members/home/subscriptions'}>
+                <Button variant={'white'} text={'Cancel'} />
+              </Link>
+            ) : (
+              <Link to={'/admins/home/subscriptions'}>
+                <Button variant={'white'} text={'Cancel'} />
+              </Link>
+            )}
             <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting />
           </div>
         </div>

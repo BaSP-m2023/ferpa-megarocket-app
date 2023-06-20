@@ -76,8 +76,15 @@ const Classes = () => {
 
   return (
     <section className={styles.container}>
-      <div className={styles.onTop}>
-        <h2>Classes</h2>
+      <div className={styles.transparetnBlue}>
+        <div className={styles.title}>
+          <h2>Classes</h2>
+          {location.pathname.includes('admins/home/classes') && (
+            <Link to="/admins/home/classes/form">
+              <Button variant={'add'} text={'Add'} />
+            </Link>
+          )}
+        </div>
         <Modal
           title={message}
           isOpen={showSuccessModal}
@@ -86,13 +93,6 @@ const Classes = () => {
             setShowSuccessModal(false);
           }}
         />
-        {location.pathname.includes('admins/home/classes') && (
-          <Link to="/admins/home/classes/form">
-            <Button variant={'add'} text={'Add'} />
-          </Link>
-        )}
-      </div>
-      <div className={styles.transparetnBlue}>
         <div>
           <Modal
             isOpen={showDeleteSuccessModal}

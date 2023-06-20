@@ -11,12 +11,12 @@ import Loader from '../Shared/Loader';
 function Subscriptions() {
   const location = useLocation();
   const { subs, isPending, error, id, message } = useSelector((state) => state.subscriptions);
-  const { data } = useSelector((state) => state.members);
+  const { data: members } = useSelector((state) => state.members);
   const dispatch = useDispatch();
   const history = useHistory();
   const [modalSuccess, setModalSuccess] = useState(false);
   const [modalConfirmDel, setModalConfirmDel] = useState(false);
-  const firstMember = data[0];
+  const firstMember = members[0];
   const subsToShow = location.pathname.includes('/members/home/subscriptions')
     ? subs.filter((subscription) => subscription.memberId?._id === firstMember?._id)
     : [...subs];
@@ -73,7 +73,6 @@ function Subscriptions() {
           variant={'white'}
         />
       </Modal>
-
       <section className={styles.list}>
         <div className={styles.header}>
           <h2 className={styles.title}>
@@ -119,7 +118,7 @@ function Subscriptions() {
                 <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
                 {location.pathname.includes('/admins/home/subscriptions') && (
                   <td className={styles.tdBtn}>
-                    <Link to={`/subscriptions/form/${subscription._id}`}>
+                    <Link to={`/admins/home/subscriptions/form/${subscription._id}`}>
                       <Button
                         variant={'edit'}
                         clickAction={() => selectId(dispatch, subscription._id)}

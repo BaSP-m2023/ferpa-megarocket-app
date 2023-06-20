@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from './home.module.css';
 
 const MembersHome = () => {
-  const { data } = useSelector((state) => state.members);
-  const firstMember = data[0];
+  const { data: members } = useSelector((state) => state.members);
+  const firstMember = members[0];
   const dispatch = useDispatch();
 
   useEffect(() => {
