@@ -24,7 +24,7 @@ const Form = () => {
   const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
   const schema = Joi.object({
     email: Joi.string().regex(RGXEmail).required().messages({
-      'string.pattern.base': 'Email must be in a valid format'
+      'string.pattern.base': 'Email must be in a valid format (example@example.com)'
     }),
     password: Joi.string().regex(RGXPassword).min(8).required().messages({
       'string.pattern.base':
