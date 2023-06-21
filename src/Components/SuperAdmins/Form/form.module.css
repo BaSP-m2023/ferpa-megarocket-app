@@ -16,6 +16,7 @@
     margin: 50px;
     padding: 50px 0;
     background-color: rgba(55, 56, 103, 0.8);
+    border-radius: 1vw;
 }
 
 .title {

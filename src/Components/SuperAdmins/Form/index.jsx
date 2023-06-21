@@ -37,7 +37,7 @@ const Form = () => {
     reset,
     handleSubmit,
     onChange,
-    formState: { errors }
+    formState: { errors, dirtyFields }
   } = useForm({
     mode: 'onChange',
     resolver: joiResolver(schema),
@@ -52,8 +52,14 @@ const Form = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, password, reset]);
 
+  const isFormEdited = Object.keys(dirtyFields).length > 0;
+
   const onSubmit = (data) => {
-    console.log('Data Form', data);
+    if (!isFormEdited) {
+      history.goBack(); // Redirige a la página anterior si no hay cambios en el formulario
+      return;
+    }
+
     if (location.pathname.includes('create')) {
       postSuperAdmins(dispatch, data);
     }

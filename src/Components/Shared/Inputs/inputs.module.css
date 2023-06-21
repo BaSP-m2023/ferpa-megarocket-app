@@ -10,10 +10,10 @@
   width: 100%;
   border: 2px solid #373867;
   border-radius: 4px;
-  background-color: rgba(165, 165, 165, 0.9);
+  background-color: #F3F3F5;
   height: 40px;
   padding: 20px;
-  color: white;
+  color: #131313;
   font-size: 16px;
 }
 .dark {

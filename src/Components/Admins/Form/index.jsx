@@ -61,7 +61,7 @@ const Form = () => {
     register,
     reset,
     handleSubmit,
-    formState: { errors }
+    formState: { errors, dirtyFields }
   } = useForm({
     mode: 'onChange',
     resolver: joiResolver(schema),
@@ -72,6 +72,8 @@ const Form = () => {
     reset(inputs);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputs, reset]);
+
+  const isFormEdited = Object.keys(dirtyFields).length > 0;
 
   useEffect(() => {
     getAdmins(dispatch);
@@ -125,7 +127,12 @@ const Form = () => {
   };
 
   const handleUpdate = (data) => {
-    updateAdmin(dispatch, id, data);
+    if (!isFormEdited) {
+      history.goBack(); // Redirige a la página anterior si no hay cambios en el formulario
+      return;
+    } else {
+      updateAdmin(dispatch, id, data);
+    }
   };
 
   const redirectPath = () => {

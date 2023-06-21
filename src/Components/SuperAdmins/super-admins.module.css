@@ -17,6 +17,7 @@
   align-items: center;
   height: 15%;
   width: 80%;
+  margin-bottom: 20px;
 }
 
 .list {
@@ -27,12 +28,14 @@
   margin: 50px;
   padding: 50px 0;
   background-color: rgba(55, 56, 103, 0.8);
+  border-radius: 1vw;
 }
 
 .title {
   color: white;
   font-size: 40px;
   line-height: 48px;
+  margin-bottom: 70px;
 }
 
 .table {
@@ -50,7 +53,7 @@
   color: white;
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 24px;
   line-height: 24px;
 }
 
