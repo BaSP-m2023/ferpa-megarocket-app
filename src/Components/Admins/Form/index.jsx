@@ -36,22 +36,25 @@ const Form = () => {
         'string.pattern.base': 'Last name must contain only letters'
       }),
     dni: Joi.string()
-      .regex(/^[0-9]+$/)
+      .pattern(/^[0-9]+$/)
       .min(7)
       .max(8)
       .messages({
         'string.pattern.base': 'DNI must contain only numbers'
       }),
-    phone: Joi.string()
-      .regex(/^[0-9]+$/)
-      .min(6)
-      .max(20)
+    phone: Joi.number().min(1000000000).max(9999999999),
+    email: Joi.string()
+      .pattern(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)
       .messages({
-        'string.pattern.base': 'Phone number must contain only numbers'
+        'string.pattern.base': 'Email must be in a valid format'
       }),
-    email: Joi.string().pattern(/^[^@]+@[^@]+.[a-zA-Z]{2,}$/),
     city: Joi.string(),
-    password: Joi.string().pattern(/^(?=.[a-z])(?=.[A-Z])(?=.*\d).{7,}$/)
+    password: Joi.string()
+      .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{7,}$/)
+      .messages({
+        'string.pattern.base':
+          'Password must contain at least one uppercase letter, one lowercase letter, and be at least 8 characters long'
+      })
   });
 
   const {
@@ -73,7 +76,11 @@ const Form = () => {
   useEffect(() => {
     getAdmins(dispatch);
     if (id) {
-      setInputs(data.find((admin) => admin._id === id));
+      const administrator = data.find((admin) => admin._id === id);
+      const copyAdmin = { ...administrator };
+      delete copyAdmin._id;
+      delete copyAdmin.__v;
+      setInputs(copyAdmin);
     } else {
       setInputs({});
     }
@@ -129,7 +136,8 @@ const Form = () => {
   return (
     <div className={styles.container}>
       <Modal
-        text={id ? 'Admin Successfully Updated' : 'Admin Successfully Created'}
+        title={id ? 'Admin Successfully Updated' : 'Admin Successfully Created'}
+        success
         isOpen={successModal}
         onClose={() => {
           setSuccesModal(!successModal);

@@ -72,9 +72,9 @@ const Admins = () => {
         />
       </Modal>
       <Modal
-        title={'Admin Deleted'}
+        title={'Admin has been succesfully deleted'}
         isOpen={successModal}
-        text={message}
+        success
         onClose={() => {
           setSuccesModal(!successModal);
         }}
