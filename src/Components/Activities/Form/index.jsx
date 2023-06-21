@@ -24,14 +24,14 @@ const Form = () => {
 
   const schema = Joi.object({
     name: Joi.string()
-      .pattern(/^[A-Za-z]+$/)
+      .pattern(/^[a-zA-Z]{3}[a-zA-Z\s]*$/)
       .min(3)
       .max(30)
       .messages({
         'string.pattern.base': 'Name must contain only letters'
       }),
     description: Joi.string()
-      .pattern(/^[A-Za-z]+$/)
+      .pattern(/^[a-zA-Z\s]+$/)
       .min(5)
       .max(250)
       .messages({
@@ -99,7 +99,7 @@ const Form = () => {
         <h3 className={styles.title}>
           {location.pathname.includes('create') ? 'Add New Activity' : 'Edit Activity'}
         </h3>
-        {!isPending ? (
+        {isPending ? (
           <Loader />
         ) : (
           <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
