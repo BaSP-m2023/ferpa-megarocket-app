@@ -56,7 +56,7 @@ const Form = () => {
 
   const onSubmit = (data) => {
     if (!isFormEdited) {
-      history.goBack(); // Redirige a la página anterior si no hay cambios en el formulario
+      history.goBack();
       return;
     }
 
