@@ -73,7 +73,12 @@ export const Input = ({
         onFocus={onFocus}
         onBlur={onBlur}
       />
-      {error && <p className={styles.error}>* {error}</p>}
+      {error && (
+        <p className={styles.error}>
+          {' '}
+          <img src="../../../assets/images/warning.svg" alt="warning" /> {error}
+        </p>
+      )}
     </>
   );
 };

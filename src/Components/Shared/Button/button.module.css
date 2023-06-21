@@ -28,6 +28,18 @@
   padding: 0;
 }
 
+.deleteIcon:hover {
+  background-image: url('../../../../public/assets/images/trash_hover.svg');
+}
+
+.edit:hover {
+  background-image: url('../../../../public/assets/images/hover_edit.svg');
+}
+
+.seePassword:hover {
+  background-image: url('../../../../public/assets/images/pass_hover.svg');
+}
+
 .edit {
   background-image: url('../../../../public/assets/images/edit-icon.svg');
   background-size: cover;
@@ -40,14 +52,14 @@
 }
 
 .seePassword {
-  background-image: url('../../../../public/assets/images/super-admin-pass-icon.png');
+  background-image: url('../../../../public/assets/images/pass_icon.svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-color: transparent;
   border: none;
   font-size: 0;
-  min-height: 35px;
-  min-width: 35px;
+  min-height: 30px;
+  min-width: 33px;
 }
 
 .add {

@@ -35,20 +35,20 @@ const Form = () => {
       .messages({
         'string.pattern.base': 'Last name must contain only letters'
       }),
-    dni: Joi.string()
-      .pattern(/^[0-9]+$/)
-      .min(7)
-      .max(8)
-      .messages({
-        'string.pattern.base': 'DNI must contain only numbers'
-      }),
-    phone: Joi.number().min(1000000000).max(9999999999),
+    dni: Joi.number().min(1000000).max(99999999).messages({
+      'number.min': 'DNI must have at least 7 numbers',
+      'number.max': 'DNI must have a maximum of 8 numbers'
+    }),
+    phone: Joi.number().min(1000000000).max(9999999999).messages({
+      'number.min': 'Phone must have 10 numbers',
+      'number.max': 'Phone must have 10 numbers'
+    }),
     email: Joi.string()
       .pattern(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)
       .messages({
-        'string.pattern.base': 'Email must be in a valid format'
+        'string.pattern.base': 'Email must be in a valid format (example@example.com)'
       }),
-    city: Joi.string(),
+    city: Joi.string().min(1).max(58),
     password: Joi.string()
       .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{7,}$/)
       .messages({
