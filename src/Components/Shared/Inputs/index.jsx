@@ -73,7 +73,7 @@ export const Input = ({
         onFocus={onFocus}
         onBlur={onBlur}
       />
-      {error && <p className={styles.error}>{error}</p>}
+      {error && <p className={styles.error}>* {error}</p>}
     </>
   );
 };
