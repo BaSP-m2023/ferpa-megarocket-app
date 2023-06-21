@@ -11,7 +11,7 @@
   background-position: center;
   background-size: cover;
   background-image: url('../../../public/assets/images/admins-background.jpg');
-  height: 70vh;
+  min-height: 700px;
 }
 
 .title {
