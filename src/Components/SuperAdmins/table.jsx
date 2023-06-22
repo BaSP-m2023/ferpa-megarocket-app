@@ -38,8 +38,8 @@ const Table = () => {
     <table className={styles.table}>
       <tbody className={styles.tbody}>
         <tr className={styles.tr}>
-          <th className={styles.th}>Email:</th>
-          <th className={styles.th}>Password:</th>
+          <th className={styles.th}>Email</th>
+          <th className={styles.th}>Password</th>
         </tr>
         {data.map((superadmin, index) => (
           <tr key={superadmin?._id} className={styles.trBody}>
@@ -70,8 +70,8 @@ const Table = () => {
         ))}
       </tbody>
       <Modal
-        warning
         isOpen={confirmModal}
+        warning
         title={'Delete SuperAdmin'}
         text={'Are you sure you want to delete this SuperAdmin?'}
         onClose={() => setConfirmModal(false)}

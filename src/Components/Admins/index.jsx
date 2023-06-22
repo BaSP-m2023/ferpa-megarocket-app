@@ -54,7 +54,8 @@ const Admins = () => {
     <section className={styles.container}>
       <Modal
         isOpen={deleteModal}
-        title={'Do you want to delete this Admin?'}
+        title={'Delete Admin'}
+        text={'Are you sure you want to delete this Admin?'}
         onClose={() => setDeleteModal(!deleteModal)}
       >
         <Button
@@ -72,9 +73,9 @@ const Admins = () => {
         />
       </Modal>
       <Modal
-        title={'Admin Deleted'}
+        title={'Admin has been succesfully deleted'}
         isOpen={successModal}
-        text={message}
+        success
         onClose={() => {
           setSuccesModal(!successModal);
         }}
@@ -94,7 +95,7 @@ const Admins = () => {
         <header className={styles.header}>
           <h1 className={styles.title}>Administrators</h1>
           <Link to="/admins/form">
-            <Button text={'Add Admin'} variant={'add'} />
+            <Button text={'Add'} variant={'add'} />
           </Link>
         </header>
         {data?.length > 0 ? (
