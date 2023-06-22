@@ -53,7 +53,7 @@ const Form = () => {
       .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{7,}$/)
       .messages({
         'string.pattern.base':
-          'Password must contain at least one uppercase letter, one lowercase letter, and be at least 8 characters long'
+          'Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 7 characters long'
       })
   });
 
