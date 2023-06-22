@@ -27,8 +27,6 @@ const MembersEdit = () => {
   });
   const [showModal, setShowModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
-  const [modalUpdate, setModalUpdate] = useState(false);
-  const [updateMessage, setUpdateMessage] = useState('');
   const dispatch = useDispatch();
   const { data, message, success, error } = useSelector((state) => state.members);
   const history = useHistory();
@@ -143,43 +141,19 @@ const MembersEdit = () => {
         setShowModalError(false);
       }, 4000);
     }
-    if (setModalUpdate) {
-      setTimeout(() => {
-        setModalUpdate(false);
-      }, 4000);
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error, success, modalUpdate]);
+  }, [error, success]);
 
   useEffect(() => {
     reset(member);
   }, [member, reset]);
 
   const onSubmit = (data) => {
-    let update = false;
-    Object.keys(data).forEach((key) => {
-      if (key !== 'birthDay') {
-        if (data.key !== member.key) {
-          update = true;
-        }
-      }
-    });
-    if (update) {
-      dispatch(updateMember(id, data));
-    } else {
-      setUpdateMessage('Please, make significant changes');
-      setModalUpdate(true);
-    }
+    dispatch(updateMember(id, data));
   };
 
   return (
     <div className={styles.container}>
-      <Modal
-        onClose={() => setModalUpdate(false)}
-        isOpen={modalUpdate}
-        title={updateMessage}
-        error
-      />
       <Modal
         onClose={() => setShowModalError(false)}
         isOpen={showModalError}

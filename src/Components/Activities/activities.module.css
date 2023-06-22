@@ -10,11 +10,14 @@
   background-size: cover;
   font-family: 'Roboto', sans-serif;
   font-size: 22px;
+  min-height: 700px;
 }
 
 .list {
   display: flex;
+  align-items: center;
   flex-direction: column;
+  min-height: 200px;
   width: 80vw;
   margin: 2vw;
   border-radius: 1vw;

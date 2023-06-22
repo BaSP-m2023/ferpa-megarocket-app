@@ -24,14 +24,14 @@ const Form = () => {
 
   const schema = Joi.object({
     name: Joi.string()
-      .pattern(/^[a-zA-Z]{3}[a-zA-Z\s]*$/)
+      .pattern(/^[a-zA-Z0-9.,\s]+$/)
       .min(3)
       .max(30)
       .messages({
         'string.pattern.base': 'Name must contain only letters'
       }),
     description: Joi.string()
-      .pattern(/^[a-zA-Z\s]+$/)
+      .pattern(/^[a-zA-Z0-9.,\s]+$/)
       .min(5)
       .max(250)
       .messages({
@@ -60,7 +60,7 @@ const Form = () => {
 
   useEffect(() => {
     if (success) {
-      history.push('/activities');
+      history.push('/admins/home/activities');
     }
     if (error) {
       handleModal();
