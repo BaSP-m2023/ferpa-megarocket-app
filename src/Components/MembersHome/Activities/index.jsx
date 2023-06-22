@@ -22,7 +22,8 @@ const Activities = () => {
               <div className={styles.activityImage}>
                 <img
                   src="https://st.depositphotos.com/1708346/1404/i/450/depositphotos_14043607-stock-photo-college-gym-49ers-football-team.jpg"
-                  alt="Gym Image"
+                  alt="Some activity"
+                  className={styles.image}
                 />
               </div>
               <div className={styles.activityData}>
