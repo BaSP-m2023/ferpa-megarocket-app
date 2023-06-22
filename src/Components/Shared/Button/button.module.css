@@ -16,6 +16,12 @@
   color: #ffffff;
 }
 
+.delete:hover {
+  background-color: #ffffff;
+  border: 1.5px solid #a30000;
+  color: #a30000;
+}
+
 .deleteIcon {
   background-image: url('../../../../public/assets/images/delete-icon.svg');
   background-size: cover;
@@ -68,8 +74,20 @@
   color: #ffffff;
 }
 
+.add:hover {
+  background-color: #ffffff;
+  border: 1.5px solid #46a37c;
+  color: #46a37c;
+}
+
 .white {
   background-color: #ffffff;
   border: 1.5px solid #000000;
   color: #000000;
+}
+
+.white:hover {
+  background-color: #000000;
+  border: 1.5px solid #ffffff;
+  color: #ffffff;
 }
