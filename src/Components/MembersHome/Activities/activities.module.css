@@ -32,21 +32,25 @@
   border-radius: 13px;
   box-shadow: 0px 14px 7px 1px rgb(0 0 0 / 75%);
   background-color: #474885;
-  width: 20vw;
+  width: 15vw;
   display: flex;
   flex-direction: column;
-  max-height: 65vh;
+  height: 400px;
+  margin-bottom: 80px;
 }
+
 .image {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   width: 100%;
 }
+
 .activityName {
   font-size: 22px;
   padding-left: 10px;
   color: #8ddeba;
 }
+
 .activityDescription {
   padding: 11px;
   font-weight: 500;
