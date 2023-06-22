@@ -51,12 +51,18 @@ function Members() {
   }
 
   return (
-    <section className={`${styles.container} ${styles.whiteLetters}`}>
-      <div className={styles.purpleBack}>
+    <section className={styles.container}>
+      <section className={styles.list}>
+        <Modal
+          onClose={() => setShowModalDeleteSuccess(false)}
+          isOpen={showModalDeleteSuccess}
+          title={theMessage}
+          success
+        ></Modal>
         <div className={styles.header}>
-          <h2>Members</h2>
-          <Link to={'/members/create'}>
-            <Button text={'Create new member'} variant={'add'} />
+          <h2 className={styles.title}>Members</h2>
+          <Link to={'/admins/home/members/create'}>
+            <Button text={'Add'} variant={'add'} />
           </Link>
         </div>
         {error ? (
@@ -64,37 +70,31 @@ function Members() {
             <p className={styles.whiteLetters}>{message}</p>
           </div>
         ) : (
-          <table className={styles.list}>
-            <Modal
-              onClose={() => setShowModalDeleteSuccess(false)}
-              isOpen={showModalDeleteSuccess}
-              title={theMessage}
-              success
-            ></Modal>
+          <table className={styles.table}>
             <tbody>
-              <tr>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>DNI</th>
-                <th>Email</th>
-                <th>Phone</th>
+              <tr className={styles.trHead}>
+                <th className={styles.thead}>Name</th>
+                <th className={styles.thead}>Surname</th>
+                <th className={styles.thead}>DNI</th>
+                <th className={styles.thead}>Email</th>
+                <th className={styles.thead}>Phone</th>
+                <th className={styles.tdBtn}></th>
+                <th className={styles.tdBtn}></th>
               </tr>
               {data.map((item) => {
                 return (
-                  <tr key={item._id}>
-                    <td>{item.firstName}</td>
-                    <td>{item.lastName}</td>
-                    <td>{item.dni}</td>
-                    <td>{item.email}</td>
-                    <td>{item.phone}</td>
-                    <td></td>
-                    <td>
+                  <tr key={item._id} className={styles.tr}>
+                    <td className={styles.td}>{item.firstName}</td>
+                    <td className={styles.td}>{item.lastName}</td>
+                    <td className={styles.td}>{item.dni}</td>
+                    <td className={styles.td}>{item.email}</td>
+                    <td className={styles.td}>{item.phone}</td>
+                    <td className={styles.tdBtn}>
                       <Link to={`members/edit/${item._id}`}>
                         <Button variant={'edit'} />
                       </Link>
                     </td>
-
-                    <td>
+                    <td className={styles.tdBtn}>
                       <Button
                         variant={'deleteIcon'}
                         clickAction={() => {
@@ -126,7 +126,7 @@ function Members() {
             </Modal>
           </table>
         )}
-      </div>
+      </section>
     </section>
   );
 }

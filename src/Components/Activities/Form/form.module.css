@@ -1,47 +1,38 @@
-.formContainer {
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 770px;
-  background-image: url('../../../../public/assets/images/admins-background.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
+  background-image: url('../../../../public/assets/images/subscriptions-background.jpg');
   background-size: cover;
-}
-
-.formBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80%;
-  margin: 50px;
-  padding: 50px 0;
-  background-color: rgba(55, 56, 103, 0.8);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 1vw;
-}
-
-.title {
-  text-align: center;
-  color: white;
-  font-size: 40px;
-  line-height: 48px;
-  width: 80%;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  width: 60%;
+  align-items: center;
+  width: 40vw;
+  margin: 2vw;
+  border-radius: 1vw;
+  padding: 1.5vw;
+  background-color: rgba(55, 56, 103, 0.8);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: 'Roboto', sans-serif;
 }
 
-.field {
-  margin-bottom: 20px;
+.formTitle {
+  color: white;
 }
 
-.checkboxField {
+.inputBox {
+  width: 20vw;
+}
+
+.formBtns {
   display: flex;
-  margin: 20px 0;
+  justify-content: space-between;
+  margin-top: 2vw;
 }
 
 .checkboxField label {
@@ -56,9 +47,4 @@
   accent-color: white;
   width: 18px;
   height: 18px;
-}
-
-.btns {
-  align-self: center;
-  margin: 20px 0;
 }

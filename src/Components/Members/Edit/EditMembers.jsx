@@ -27,6 +27,8 @@ const MembersEdit = () => {
   });
   const [showModal, setShowModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
+  const [modalUpdate, setModalUpdate] = useState(false);
+  const [updateMessage, setUpdateMessage] = useState('');
   const dispatch = useDispatch();
   const { data, message, success, error } = useSelector((state) => state.members);
   const history = useHistory();
@@ -47,19 +49,6 @@ const MembersEdit = () => {
       _id: 3,
       name: 'Black Membership',
       value: 'Black'
-    }
-  ];
-
-  const activeTypes = [
-    {
-      _id: 1,
-      name: 'Yes',
-      value: true
-    },
-    {
-      _id: 2,
-      name: 'No',
-      value: false
     }
   ];
 
@@ -133,7 +122,7 @@ const MembersEdit = () => {
       phone: memberToUpdate?.phone,
       email: memberToUpdate?.email,
       city: memberToUpdate?.city,
-      birthDay: memberToUpdate?.birthDay,
+      birthDay: memberToUpdate?.birthDay.slice(0, 10),
       postalCode: memberToUpdate?.postalCode,
       isActive: memberToUpdate?.isActive,
       membership: memberToUpdate?.membership
@@ -145,25 +134,52 @@ const MembersEdit = () => {
     if (success) {
       setShowModal(true);
       setTimeout(() => {
-        history.push('/members');
+        history.push('/admins/home/members');
       }, 2000);
     }
     if (error) {
       setShowModalError(true);
+      setTimeout(() => {
+        setShowModalError(false);
+      }, 4000);
+    }
+    if (setModalUpdate) {
+      setTimeout(() => {
+        setModalUpdate(false);
+      }, 4000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error, success]);
+  }, [error, success, modalUpdate]);
 
   useEffect(() => {
     reset(member);
   }, [member, reset]);
 
   const onSubmit = (data) => {
-    dispatch(updateMember(id, member));
+    let update = false;
+    Object.keys(data).forEach((key) => {
+      if (key !== 'birthDay') {
+        if (data.key !== member.key) {
+          update = true;
+        }
+      }
+    });
+    if (update) {
+      dispatch(updateMember(id, data));
+    } else {
+      setUpdateMessage('Please, make significant changes');
+      setModalUpdate(true);
+    }
   };
 
   return (
     <div className={styles.container}>
+      <Modal
+        onClose={() => setModalUpdate(false)}
+        isOpen={modalUpdate}
+        title={updateMessage}
+        error
+      />
       <Modal
         onClose={() => setShowModalError(false)}
         isOpen={showModalError}
@@ -171,64 +187,70 @@ const MembersEdit = () => {
         error
       />
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
-      <div>
+      <div className={styles.box}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-          <h3 className={styles.whiteLetters}>Edit current member</h3>
-          <div>
+          <h2 className={styles.formTitle}>EDIT MEMBER</h2>
+          <div className={styles.inputBox}>
             <Input
-              labelText={'Name'}
+              labelText={'First Name'}
               type={'text'}
+              placeholder={'First Name'}
               nameValue={'firstName'}
               register={register}
               error={errors.firstName?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
-              labelText={'Surname'}
+              labelText={'Last Name'}
               type={'text'}
+              placeholder={'Last Name'}
               nameValue={'lastName'}
               register={register}
               error={errors.lastName?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
               labelText={'DNI'}
               type={'text'}
+              placeholder={'DNI'}
               nameValue={'dni'}
               register={register}
               error={errors.dni?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
               labelText={'Phone'}
               type={'text'}
+              placeholder={'ex: 096513178'}
               nameValue={'phone'}
               register={register}
               error={errors.phone?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
               labelText={'Email'}
               type={'text'}
+              placeholder={'robertomariaoverdrive@soybostero.edu'}
               nameValue={'email'}
               register={register}
               error={errors.email?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
               labelText={'City'}
               type={'text'}
+              placeholder={'Your city'}
               nameValue={'city'}
               register={register}
               error={errors.city?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <DatePicker
               label={'Birthday'}
               nameValue={'birthDay'}
@@ -236,40 +258,40 @@ const MembersEdit = () => {
               error={errors.birthDay?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
               labelText={'Zip Code'}
               type={'text'}
+              placeholder={'Your postal code'}
               nameValue={'postalCode'}
               register={register}
               error={errors.postalCode?.message}
             />
           </div>
-          <div>
-            <div>
-              <Select
-                label={'Membership'}
-                options={memberships}
-                nameValue={'membership'}
-                register={register}
-                error={errors.membership?.message}
-              />
-            </div>
-            <div>
-              <Select
-                label={'Is active?'}
-                options={activeTypes}
-                nameValue={'isActive'}
-                register={register}
-                error={errors.isActive?.message}
-              />
-            </div>
+          <div className={styles.inputBox}>
+            <Select
+              label={'Membership'}
+              placeholder={'Classic'}
+              options={memberships}
+              nameValue={'membership'}
+              register={register}
+              error={errors.membership?.message}
+            />
           </div>
-          <div className={styles.theButtons}>
-            <Link to="/members">
+          <div className={styles.checkboxField}>
+            <label>Is Active?</label>
+            <input
+              className={styles.checkbox}
+              name={'isActive'}
+              type="checkbox"
+              {...register('isActive')}
+            />
+          </div>
+          <div className={styles.formBtns}>
+            <Link to="/admins/home/members">
               <Button text={'Cancel'} variant={'white'} />
             </Link>
-            <Button text={'Update'} variant={'add'} submitting />
+            <Button text={'Edit'} variant={'add'} submitting />
           </div>
         </form>
       </div>

@@ -48,7 +48,10 @@ const MembersCreate = () => {
         'string.pattern.base': 'Invalid email format'
       }),
     city: Joi.string().min(2).max(30),
-    birthDay: Joi.date().min('1930-01-01').max('2008-01-01'),
+    birthDay: Joi.date().min('1930-01-01').max('2008-01-01').messages({
+      'date.min': 'Birth day must be greater than "01/01/1930"',
+      'date.max': 'Birth day must be less than "01/01/2008"'
+    }),
     postalCode: Joi.string()
       .regex(/^[^\s]+$/)
       .min(4)
@@ -79,19 +82,6 @@ const MembersCreate = () => {
     }
   ];
 
-  const activeTypes = [
-    {
-      _id: 1,
-      name: 'Yes',
-      value: true
-    },
-    {
-      _id: 2,
-      name: 'No',
-      value: false
-    }
-  ];
-
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
@@ -105,13 +95,14 @@ const MembersCreate = () => {
     formState: { errors }
   } = useForm({
     mode: 'onChange',
-    resolver: joiResolver(schema)
+    resolver: joiResolver(schema),
+    defaultValues: { isActive: true }
   });
 
   useEffect(() => {
     if (success) {
       setTimeout(() => {
-        history.push('/members');
+        history.push('/admins/home/members');
       }, 2000);
       setShowModal(true);
     }
@@ -122,7 +113,6 @@ const MembersCreate = () => {
   }, [success, error]);
 
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(createMember(data));
   };
 
@@ -134,11 +124,11 @@ const MembersCreate = () => {
         title={message}
         error
       />
-      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
-      <div>
+      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />
+      <div className={styles.box}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-          <h3 className={styles.whiteLetters}>Create new member</h3>
-          <div>
+          <h2 className={styles.formTitle}>ADD MEMBER</h2>
+          <div className={styles.inputBox}>
             <Input
               labelText={'First Name'}
               type={'text'}
@@ -148,7 +138,7 @@ const MembersCreate = () => {
               error={errors.firstName?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
               labelText={'Last Name'}
               type={'text'}
@@ -158,7 +148,7 @@ const MembersCreate = () => {
               error={errors.lastName?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
               labelText={'DNI'}
               type={'text'}
@@ -168,7 +158,7 @@ const MembersCreate = () => {
               error={errors.dni?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
               labelText={'Phone'}
               type={'text'}
@@ -178,7 +168,7 @@ const MembersCreate = () => {
               error={errors.phone?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
               labelText={'Email'}
               type={'text'}
@@ -188,7 +178,7 @@ const MembersCreate = () => {
               error={errors.email?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
               labelText={'City'}
               type={'text'}
@@ -198,7 +188,7 @@ const MembersCreate = () => {
               error={errors.city?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <DatePicker
               label={'Birthday'}
               nameValue={'birthDay'}
@@ -206,7 +196,7 @@ const MembersCreate = () => {
               error={errors.birthDay?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
               labelText={'Zip Code'}
               type={'text'}
@@ -216,7 +206,7 @@ const MembersCreate = () => {
               error={errors.postalCode?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Select
               label={'Membership'}
               placeholder={'Classic'}
@@ -226,20 +216,20 @@ const MembersCreate = () => {
               error={errors.membership?.message}
             />
           </div>
-          <div>
-            <Select
-              label={'Is active?'}
-              options={activeTypes}
-              nameValue={'isActive'}
-              register={register}
-              error={errors.isActive?.message}
+          <div className={styles.checkboxField}>
+            <label>Is Active?</label>
+            <input
+              className={styles.checkbox}
+              name={'isActive'}
+              type="checkbox"
+              {...register('isActive')}
             />
           </div>
-          <div className={styles.theButtons}>
-            <Link to="/members">
+          <div className={styles.formBtns}>
+            <Link to="/admins/home/members">
               <Button text={'Cancel'} variant={'white'} />
             </Link>
-            <Button text={'Add new member'} variant={'add'} submitting />
+            <Button text={'Add'} variant={'add'} submitting />
           </div>
         </form>
       </div>

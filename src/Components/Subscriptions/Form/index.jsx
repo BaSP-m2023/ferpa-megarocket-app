@@ -81,7 +81,7 @@ const Form = () => {
   }, [currentSub, reset]);
 
   const onRedirect = {
-    pathname: '/subscriptions',
+    pathname: '/admins/home/subscriptions',
     state: { message: '' }
   };
 
@@ -154,7 +154,7 @@ const Form = () => {
               />
             </div>
             <div className={styles.formBtns}>
-              <Link to={'/subscriptions'}>
+              <Link to={'/admins/home/subscriptions'}>
                 <Button variant={'white'} text={'Cancel'} />
               </Link>
               <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting />

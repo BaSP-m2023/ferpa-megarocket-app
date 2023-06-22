@@ -91,19 +91,19 @@ const Form = () => {
       await putActivity(dispatch, id, data);
     }
   };
-  console.log(isActive);
+
   return (
-    <div className={styles.formContainer}>
+    <div className={styles.container}>
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} error />
-      <div className={styles.formBox}>
-        <h3 className={styles.title}>
-          {location.pathname.includes('create') ? 'Add New Activity' : 'Edit Activity'}
-        </h3>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <h2 className={styles.formTitle}>
+          {location.pathname.includes('create') ? 'ADD ACTIVITY' : 'EDIT ACTIVITY'}
+        </h2>
         {isPending ? (
           <Loader />
         ) : (
-          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles.field}>
+          <div>
+            <div className={styles.inputBox}>
               <Input
                 nameValue={'name'}
                 labelText={'Name'}
@@ -113,13 +113,15 @@ const Form = () => {
                 error={errors.name?.message}
               />
             </div>
-            <TextArea
-              nameValue={'description'}
-              label={'Description'}
-              placeholder={'Activity description'}
-              register={register}
-              error={errors.description?.message}
-            />
+            <div className={styles.inputBox}>
+              <TextArea
+                nameValue={'description'}
+                label={'Description'}
+                placeholder={'Activity description'}
+                register={register}
+                error={errors.description?.message}
+              />
+            </div>
             <div className={styles.checkboxField}>
               <label>Is Active?</label>
               <input
@@ -130,8 +132,8 @@ const Form = () => {
               />
               {errors.isActive && <span>{errors.isActive.message}</span>}
             </div>
-            <div className={styles.btns}>
-              <Link to="/activities">
+            <div className={styles.formBtns}>
+              <Link to="/admins/home/activities">
                 <Button text={'Cancel'} variant={'white'} />
               </Link>
               <Button
@@ -140,9 +142,9 @@ const Form = () => {
                 submitting
               />
             </div>
-          </form>
+          </div>
         )}
-      </div>
+      </form>
     </div>
   );
 };
