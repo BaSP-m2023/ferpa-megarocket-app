@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTrainers, deleteTrainer } from '../../redux/trainers/thunks';
+import { getTrainers, deleteTrainer } from 'redux/trainers/thunks';
 import styles from './trainers.module.css';
-import Modal from '../Shared/Modal';
-import Button from '../Shared/Button';
-import Loader from '../Shared/Loader';
+import Modal from 'Components/Shared/Modal';
+import Button from 'Components/Shared/Button';
+import Loader from 'Components/Shared/Loader';
 
 const Trainers = () => {
   const [currentId, setCurrentId] = useState('');
@@ -93,11 +93,8 @@ const Trainers = () => {
             <tr>
               <th className={styles.titles}>Name</th>
               <th className={styles.titles}>Last Name</th>
-              <th className={styles.titles}>Dni</th>
               <th className={styles.titles}>Phone</th>
               <th className={styles.titles}>Email</th>
-              <th className={styles.titles}>City</th>
-              <th className={styles.titles}>Salary</th>
               <th></th>
             </tr>
           </thead>
@@ -107,11 +104,8 @@ const Trainers = () => {
                 <tr key={item._id}>
                   <td className={styles.list}>{item.firstName}</td>
                   <td className={styles.list}>{item.lastName}</td>
-                  <td className={styles.list}>{item.dni}</td>
                   <td className={styles.list}>{item.phone}</td>
                   <td className={styles.list}>{item.email}</td>
-                  <td className={styles.list}>{item.city}</td>
-                  <td className={styles.list}>{item.salary}</td>
                   <td>
                     <div className={styles.buttons}>
                       <Link to={`/trainers/Form/${item._id}`}>

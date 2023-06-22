@@ -1,14 +1,14 @@
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Input } from '../../Shared/Inputs';
-import { sendTrainer, putTrainer } from '../../../redux/trainers/thunks';
+import { Input } from 'Components/Shared/Inputs';
+import { sendTrainer, putTrainer } from 'redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import React from 'react';
-import Button from '../../Shared/Button';
-import Modal from '../../Shared/Modal';
+import Button from 'Components/Shared/Button';
+import Modal from 'Components/Shared/Modal';
 import styles from './form.module.css';
 
 const TrainerAddForm = () => {
@@ -22,19 +22,25 @@ const TrainerAddForm = () => {
   const RGXEmail = /^[^@]+@[^@]+.[a-zA-Z]{2,}$/;
 
   const schema = Joi.object({
-    firstName: Joi.string().required().min(3).max(16),
-    lastName: Joi.string().required().min(3).max(16),
-    dni: Joi.number().min(1000000).max(99999999).required(),
-    phone: Joi.number().required().min(1000000000).max(9999999999),
+    firstName: Joi.string()
+      .min(3)
+      .max(15)
+      .pattern(/^[a-zA-Z-]+$/),
+    lastName: Joi.string()
+      .min(3)
+      .max(15)
+      .pattern(/^[a-zA-Z-]+$/),
+    dni: Joi.number().min(1000000).max(99999999),
+    phone: Joi.number().min(1000000000).max(9999999999),
     email: Joi.string().required().regex(RGXEmail).messages({
       'string.pattern.base': 'Email must be in a valid format'
     }),
-    city: Joi.string().required().min(3).max(20),
+    city: Joi.string().min(2).max(30),
     password: Joi.string().regex(RGXPassword).min(8).required().messages({
       'string.pattern.base':
-        'Password must contain at least one uppercase letter, one lowercase letter, and one digit'
+        'Password must contain at least one uppercase letter, one lowercase letter, and be at least 8 characters long'
     }),
-    salary: Joi.number().required().min(10).max(9999999999)
+    salary: Joi.number().min(10000)
   });
 
   const [inputs, setInputs] = useState({
@@ -53,8 +59,10 @@ const TrainerAddForm = () => {
     handleSubmit,
     reset,
     onChange,
-    formState: { errors }
+    formState: { errors, dirtyFields }
   } = useForm({ mode: 'onChange', resolver: joiResolver(schema), defaultValues: { inputs } });
+
+  const isFormEdited = Object.keys(dirtyFields).length > 0;
 
   useEffect(() => {
     if (id) {
@@ -95,6 +103,10 @@ const TrainerAddForm = () => {
   };
 
   const onSubmit = (data) => {
+    if (!isFormEdited) {
+      history.goBack();
+      return;
+    }
     if (id) {
       setSuccessModal(!successModal);
       putTrainer(dispatch, id, data);
@@ -179,12 +191,6 @@ const TrainerAddForm = () => {
             </Link>
             <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting />
           </div>
-          <Modal
-            error
-            isOpen={errorModal}
-            onClose={() => setErrorModal(!errorModal)}
-            title={error}
-          ></Modal>
           <Modal
             success
             isOpen={successModal}

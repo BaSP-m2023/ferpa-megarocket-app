@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import Modal from '../Shared/Modal';
+import Modal from 'Components/Shared/Modal';
 import styles from './classes.module.css';
-import Button from '../Shared/Button/index';
+import Button from 'Components/Shared/Button';
 import { Link, useHistory } from 'react-router-dom';
-import { getClasses, deleteClass } from '../../redux/classes/thunks';
+import { getClasses, deleteClass } from 'redux/classes/thunks';
 import { useSelector, useDispatch } from 'react-redux';
-import Loader from '../../Components/Shared/Loader';
+import Loader from 'Components/Shared/Loader';
 
 const Classes = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
