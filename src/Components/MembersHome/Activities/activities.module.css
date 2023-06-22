@@ -5,7 +5,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 60vh;
+  font-size: 25px;
+  color: white;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: url('../../../../public/assets/images/admins-background.jpg');
+  font-weight: bold;
 }
 
 .header {
@@ -15,9 +22,10 @@
 .body {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-evenly;
   width: 95vw;
+  margin-bottom: 75px;
 }
 
 .activity {
@@ -28,8 +36,10 @@
   display: flex;
   flex-direction: column;
   width: 20vw;
-  height: 44vh;
+  max-height: 65vh;
   background-color: #474885;
+  border-right: white solid 0.1px;
+  border-bottom: white solid 0.1px;
 }
 
 .activityImage img {
@@ -40,7 +50,7 @@
 }
 
 .activityData {
-  height: 50%;
+  max-height: 28vh;
   display: flex;
   flex-direction: column;
   color: white;
@@ -60,4 +70,5 @@
   padding: 10px 5px 10px 7px;
   overflow-y: scroll;
   height: 100%;
+  font-size: 18px;
 }
