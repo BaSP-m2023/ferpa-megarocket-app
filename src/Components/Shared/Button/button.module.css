@@ -16,6 +16,12 @@
   color: #ffffff;
 }
 
+.delete:hover {
+  background-color: #ffffff;
+  border: 1.5px solid #a30000;
+  color: #a30000;
+}
+
 .deleteIcon {
   background-image: url('../../../../public/assets/images/delete-icon.svg');
   background-size: cover;
@@ -23,9 +29,21 @@
   background-color: transparent;
   border: none;
   font-size: 0;
-  min-height: 45px;
-  min-width: 45px;
+  min-height: 30px;
+  min-width: 30px;
   padding: 0;
+}
+
+.deleteIcon:hover {
+  background-image: url('../../../../public/assets/images/trash_hover.svg');
+}
+
+.edit:hover {
+  background-image: url('../../../../public/assets/images/hover_edit.svg');
+}
+
+.seePassword:hover {
+  background-image: url('../../../../public/assets/images/pass_hover.svg');
 }
 
 .edit {
@@ -35,19 +53,19 @@
   background-color: transparent;
   border: none;
   font-size: 0;
-  min-height: 45px;
-  min-width: 45px;
+  min-height: 30px;
+  min-width: 30px;
 }
 
 .seePassword {
-  background-image: url('../../../../public/assets/images/super-admin-pass-icon.png');
+  background-image: url('../../../../public/assets/images/pass_icon.svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-color: transparent;
   border: none;
   font-size: 0;
-  min-height: 45px;
-  min-width: 45px;
+  min-height: 30px;
+  min-width: 33px;
 }
 
 .add {
@@ -56,8 +74,20 @@
   color: #ffffff;
 }
 
+.add:hover {
+  background-color: #ffffff;
+  border: 1.5px solid #46a37c;
+  color: #46a37c;
+}
+
 .white {
   background-color: #ffffff;
   border: 1.5px solid #000000;
   color: #000000;
+}
+
+.white:hover {
+  background-color: #000000;
+  border: 1.5px solid #ffffff;
+  color: #ffffff;
 }
