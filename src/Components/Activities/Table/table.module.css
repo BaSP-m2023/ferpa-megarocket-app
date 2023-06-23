@@ -1,17 +1,23 @@
 
 .tableContainer {
-  width: 80%;
-  height: 50vh;
+  display: flex;
+  justify-content: center;
+  width: 77vw;
 }
 
 .table {
-  margin-top: 20px;
+  text-align: left;
+  align-self: center;
+  width: 70vw;
   border-collapse: collapse;
+}
+
+.trHead {
+  border-bottom: 3px solid white;
 }
 
 .tHead {
   color: white;
-  font-size: 20px;
   line-height: 24px;
 }
 
@@ -21,49 +27,29 @@
   line-height: 24px;
 }
 
-.scroll {
-  overflow-y: scroll;
-  height: 380px;
-}
-
-.trHead, .trBody {
-  height: 70px;
-}
-
-.trHead th, .trBody td {
-  padding-right: 20px;
-}
-
-.trHead {
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 14px;
-  border-bottom: 3px solid white;
-}
-
 .trBody {
   font-size: 18px;
 }
 
 .thName {
   text-align: start;
-  width: 20%;
+  width: 15vw;
+  padding-bottom: 1vw;
 }
 
 .thDes {
   text-align: start;
-  width: 55%;
+  width: 45vw;
+  padding-bottom: 1vw;
 }
 
 .thStatus {
   text-align: start;
+  width: 10vw;
+  padding-bottom: 1vw;
 }
 
-.thIcon {
-  width: 10%;
+.tdBtn {
+  width: 4vw;
+  padding-bottom: 1vw;
 }
-
-.tdIcon {
-  text-align: center;
-}
-

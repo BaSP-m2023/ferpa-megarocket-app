@@ -7,6 +7,9 @@ import { postActivity, putActivity } from '../../../redux/activities/thunks';
 import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal';
 import Loader from '../../Shared/Loader';
+import { useForm } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const Form = () => {
   const { data, message, success, error, isPending } = useSelector((state) => state.activities);
@@ -19,6 +22,35 @@ const Form = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const schema = Joi.object({
+    name: Joi.string()
+      .pattern(/^[a-zA-Z0-9.,\s]+$/)
+      .min(3)
+      .max(30)
+      .messages({
+        'string.pattern.base': 'Name must contain only letters'
+      }),
+    description: Joi.string()
+      .pattern(/^[a-zA-Z0-9.,\s]+$/)
+      .min(5)
+      .max(250)
+      .messages({
+        'string.pattern.base': 'Description must contain only letters'
+      }),
+    isActive: Joi.boolean()
+  });
+
+  const {
+    reset,
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(schema),
+    defaultValues: { name, description, isActive }
+  });
+
   const handleModal = () => {
     setShowModal(!showModal);
     setTimeout(() => {
@@ -28,7 +60,7 @@ const Form = () => {
 
   useEffect(() => {
     if (success) {
-      history.push('/activities');
+      history.push('/admins/home/activities');
     }
     if (error) {
       handleModal();
@@ -46,73 +78,73 @@ const Form = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
+  useEffect(() => {
+    reset({ name, description, isActive });
+  }, [name, description, isActive, reset]);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-  };
-
-  const sendActivity = async () => {
+  const onSubmit = async (data) => {
     if (location.pathname.includes('create')) {
-      await postActivity(dispatch, { name, description, isActive });
+      await postActivity(dispatch, data);
     }
 
     if (location.pathname.includes('edit')) {
-      await putActivity(dispatch, id, { name, description, isActive });
+      await putActivity(dispatch, id, data);
     }
   };
 
   return (
-    <div className={styles.formContainer}>
+    <div className={styles.container}>
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} error />
-      <div className={styles.formBox}>
-        <h3 className={styles.title}>
-          {location.pathname.includes('create') ? 'Add New Activity' : 'Edit Activity'}
-        </h3>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <h2 className={styles.formTitle}>
+          {location.pathname.includes('create') ? 'ADD ACTIVITY' : 'EDIT ACTIVITY'}
+        </h2>
         {isPending ? (
           <Loader />
         ) : (
-          <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
-            <div className={styles.field}>
+          <div>
+            <div className={styles.inputBox}>
               <Input
+                nameValue={'name'}
                 labelText={'Name'}
                 type={'text'}
                 placeholder={'Activity name'}
-                value={name}
-                onChangeInput={handleNameChange}
+                register={register}
+                error={errors.name?.message}
               />
             </div>
-            <TextArea
-              label={'Description'}
-              placeholder={'Activity description'}
-              value={description}
-              onChangeArea={setDescription}
-            />
+            <div className={styles.inputBox}>
+              <TextArea
+                nameValue={'description'}
+                label={'Description'}
+                placeholder={'Activity description'}
+                register={register}
+                error={errors.description?.message}
+              />
+            </div>
             <div className={styles.checkboxField}>
               <label>Is Active?</label>
               <input
                 className={styles.checkbox}
+                name={'isActive'}
                 type="checkbox"
-                checked={isActive}
-                value={isActive}
-                onChange={(e) => setIsActive(e.currentTarget.checked)}
+                {...register('isActive')}
               />
+              {errors.isActive && <span>{errors.isActive.message}</span>}
             </div>
-            <div className={styles.btns}>
-              <Link to="/activities">
+            <div className={styles.formBtns}>
+              <Link to="/admins/home/activities">
                 <Button text={'Cancel'} variant={'white'} />
               </Link>
               <Button
                 text={location.pathname.includes('edit') ? 'Edit' : 'Add'}
                 variant={'add'}
-                clickAction={sendActivity}
+                submitting
               />
             </div>
-          </form>
+          </div>
         )}
-      </div>
+      </form>
     </div>
   );
 };

@@ -1,25 +1,67 @@
 import React from 'react';
 import styles from './addMembers.module.css';
-import { Input, Select, DatePicker } from '../../Shared/Inputs';
+import { Input, Select, DatePicker } from 'Components/Shared/Inputs';
 import { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import Button from '../../Shared/Button';
-import Modal from '../../Shared/Modal';
+import Button from 'Components/Shared/Button';
+import Modal from 'Components/Shared/Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { createMember } from '../../../redux/members/thunks';
+import { createMember } from 'redux/members/thunks';
+import { useForm } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const MembersCreate = () => {
-  const [member, setMember] = useState({
-    firstName: '',
-    lastName: '',
-    dni: '',
-    phone: '',
-    email: '',
-    city: '',
-    birthDay: '',
-    postalCode: '',
-    isActive: true,
-    membership: 'Classic'
+  const schema = Joi.object({
+    firstName: Joi.string()
+      .regex(/^[A-Za-z]+$/)
+      .min(3)
+      .max(15)
+      .messages({
+        'string.pattern.base': 'First name must contain only letters'
+      }),
+    lastName: Joi.string()
+      .regex(/^[A-Za-z]+$/)
+      .min(3)
+      .max(15)
+      .messages({
+        'string.pattern.base': 'Last name must contain only letters'
+      }),
+    dni: Joi.string()
+      .regex(/^[0-9]+$/)
+      .min(7)
+      .max(8)
+      .messages({
+        'string.pattern.base': 'DNI must contain only numbers'
+      }),
+    phone: Joi.string()
+      .regex(/^[0-9]+$/)
+      .min(10)
+      .max(10)
+      .messages({
+        'string.pattern.base': 'Phone number must contain only numbers'
+      }),
+    email: Joi.string()
+      .max(30)
+      .pattern(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)
+      .messages({
+        'string.pattern.base': 'Invalid email format'
+      }),
+    city: Joi.string().min(2).max(30),
+    birthDay: Joi.date().min('1930-01-01').max('2008-01-01').messages({
+      'date.min': 'Birth day must be greater than "01/01/1930"',
+      'date.max': 'Birth day must be less than "01/01/2008"'
+    }),
+    postalCode: Joi.string()
+      .regex(/^[^\s]+$/)
+      .min(4)
+      .max(6)
+      .messages({
+        'string.pattern.base': 'Zip must not contain empty spaces'
+      }),
+    isActive: Joi.boolean(),
+    membership: Joi.string().valid('Classic', 'Only Classes', 'Black').required(),
+    isMembershipActive: Joi.boolean()
   });
 
   const memberships = [
@@ -47,10 +89,20 @@ const MembersCreate = () => {
   const history = useHistory();
   const { error, success, message } = useSelector((state) => state.members);
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(schema),
+    defaultValues: { isActive: true }
+  });
+
   useEffect(() => {
     if (success) {
       setTimeout(() => {
-        history.push('/members');
+        history.push('/admins/home/members');
       }, 2000);
       setShowModal(true);
     }
@@ -60,20 +112,8 @@ const MembersCreate = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success, error]);
 
-  const handleOnChange = (event) => {
-    setMember({
-      ...member,
-      [event.target.name]: event.target.value
-    });
-  };
-
-  const handleBirthdayChange = (e) => {
-    setMember({ ...member, birthDay: e });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(createMember(member));
+  const onSubmit = (data) => {
+    dispatch(createMember(data));
   };
 
   return (
@@ -84,111 +124,112 @@ const MembersCreate = () => {
         title={message}
         error
       />
-      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
-      <div>
-        <form onSubmit={(e) => handleSubmit(e)} className={styles.form}>
-          <h3 className={styles.whiteLetters}>Create new member</h3>
-          <div>
+      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />
+      <div className={styles.box}>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+          <h2 className={styles.formTitle}>ADD MEMBER</h2>
+          <div className={styles.inputBox}>
             <Input
-              labelText={'Name'}
+              labelText={'First Name'}
               type={'text'}
-              placeholder={'Name'}
-              value={member.firstName}
-              onChangeInput={handleOnChange}
+              placeholder={'First Name'}
               nameValue={'firstName'}
-              register
+              register={register}
+              error={errors.firstName?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
-              labelText={'Surname'}
+              labelText={'Last Name'}
               type={'text'}
-              placeholder={'Surname'}
-              value={member.lastName}
-              onChangeInput={handleOnChange}
+              placeholder={'Last Name'}
               nameValue={'lastName'}
-              register
+              register={register}
+              error={errors.lastName?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
               labelText={'DNI'}
               type={'text'}
               placeholder={'DNI'}
-              value={member.dni}
-              onChangeInput={handleOnChange}
               nameValue={'dni'}
-              register
+              register={register}
+              error={errors.dni?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
               labelText={'Phone'}
               type={'text'}
               placeholder={'ex: 096513178'}
-              value={member.phone}
               nameValue={'phone'}
-              onChangeInput={handleOnChange}
-              register
+              register={register}
+              error={errors.phone?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
               labelText={'Email'}
               type={'text'}
               placeholder={'robertomariaoverdrive@soybostero.edu'}
-              value={member.email}
               nameValue={'email'}
-              onChangeInput={handleOnChange}
-              register
+              register={register}
+              error={errors.email?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
               labelText={'City'}
               type={'text'}
               placeholder={'Your city'}
-              value={member.city}
               nameValue={'city'}
-              onChangeInput={handleOnChange}
-              register
+              register={register}
+              error={errors.city?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <DatePicker
               label={'Birthday'}
               nameValue={'birthDay'}
-              onChangeDate={handleBirthdayChange}
-              register
+              register={register}
+              error={errors.birthDay?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Input
               labelText={'Zip Code'}
               type={'text'}
               placeholder={'Your postal code'}
-              value={member.postalCode}
               nameValue={'postalCode'}
-              onChangeInput={handleOnChange}
-              register
+              register={register}
+              error={errors.postalCode?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputBox}>
             <Select
               label={'Membership'}
-              value={memberships.value}
               placeholder={'Classic'}
-              onChangeSelect={handleOnChange}
               options={memberships}
               nameValue={'membership'}
-              register
+              register={register}
+              error={errors.membership?.message}
             />
           </div>
-          <div className={styles.theButtons}>
-            <Link to="/members">
+          <div className={styles.checkboxField}>
+            <label>Is Active?</label>
+            <input
+              className={styles.checkbox}
+              name={'isActive'}
+              type="checkbox"
+              {...register('isActive')}
+            />
+          </div>
+          <div className={styles.formBtns}>
+            <Link to="/admins/home/members">
               <Button text={'Cancel'} variant={'white'} />
             </Link>
-            <Button text={'Add new member'} variant={'add'} clickAction={handleSubmit} />
+            <Button text={'Add'} variant={'add'} submitting />
           </div>
         </form>
       </div>

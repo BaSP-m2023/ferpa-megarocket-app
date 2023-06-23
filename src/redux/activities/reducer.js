@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   data: [],
   message: '',
   error: false,
-  isPending: true,
+  isPending: false,
   success: false
 };
 
