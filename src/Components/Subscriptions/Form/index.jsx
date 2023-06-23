@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './form.module.css';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Select, DatePicker } from '../../Shared/Inputs';
 import Button from '../../Shared/Button';
@@ -24,6 +24,8 @@ const Form = () => {
   const [currentSub, setCurrentSub] = useState({ classId: '', memberId: '', date: '' });
   const [modalError, setModalError] = useState(false);
   const history = useHistory();
+  const location = useLocation();
+  const firstMember = members[0];
 
   const now = new Date().toISOString().split('T')[0];
 
@@ -51,7 +53,7 @@ const Form = () => {
   } = useForm({
     mode: 'onChange',
     resolver: joiResolver(schema),
-    defaultValues: id ? currentSub : { memberId: '', classId: '', date: '' }
+    defaultValues: currentSub
   });
 
   useEffect(() => {
@@ -64,6 +66,9 @@ const Form = () => {
         classId: editSub?.classId?._id,
         date: editSub?.date.slice(0, 10)
       });
+    }
+    if (location.pathname.includes('/members/home/subscriptions/form')) {
+      setCurrentSub({ ...currentSub, memberId: firstMember._id });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
@@ -80,8 +85,12 @@ const Form = () => {
     reset(currentSub);
   }, [currentSub, reset]);
 
+  const pathname = location.pathname.includes('/members/home/subscriptions/form')
+    ? '/members/home/subscriptions'
+    : '/admins/home/subscriptions';
+
   const onRedirect = {
-    pathname: '/admins/home/subscriptions',
+    pathname,
     state: { message: '' }
   };
 
@@ -111,20 +120,21 @@ const Form = () => {
 
   return (
     <section className={styles.container}>
-      {
-        <Modal
-          isOpen={modalError}
-          error
-          title={message}
-          onClose={() => setModalError(!modalError)}
-        />
-      }
+      <Modal isOpen={modalError} error title={message} onClose={() => setModalError(!modalError)} />
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <h2 className={styles.formTitle}>{id ? 'EDIT SUBSCRIPTION' : 'ADD SUBSCRIPTION'}</h2>
-        {isPending ? (
-          ''
-        ) : (
-          <div>
+        <div>
+          {location.pathname.includes('/members/home/subscriptions/form') ? (
+            <div className={styles.hidden}>
+              <Select
+                nameValue={'memberId'}
+                register={register}
+                label={'Member'}
+                options={selectMembers}
+                error={errors.memberId?.message}
+              />
+            </div>
+          ) : (
             <div className={styles.inputBox}>
               <Select
                 nameValue={'memberId'}
@@ -135,32 +145,38 @@ const Form = () => {
                 error={errors.memberId?.message}
               />
             </div>
-            <div className={styles.inputBox}>
-              <Select
-                nameValue={'classId'}
-                register={register}
-                placeholder={'Select'}
-                label={'Activity'}
-                options={selectActivities}
-                error={errors.classId?.message}
-              />
-            </div>
-            <div className={styles.inputBox}>
-              <DatePicker
-                nameValue={'date'}
-                register={register}
-                label={'Date'}
-                error={errors.date?.message}
-              />
-            </div>
-            <div className={styles.formBtns}>
+          )}
+          <div className={styles.inputBox}>
+            <Select
+              nameValue={'classId'}
+              register={register}
+              placeholder={'Select'}
+              label={'Class'}
+              options={selectActivities}
+              error={errors.classId?.message}
+            />
+          </div>
+          <div className={styles.inputBox}>
+            <DatePicker
+              nameValue={'date'}
+              register={register}
+              label={'Date'}
+              error={errors.date?.message}
+            />
+          </div>
+          <div className={styles.formBtns}>
+            {location.pathname.includes('/members/home/subscriptions/form') ? (
+              <Link to={'/members/home/subscriptions'}>
+                <Button variant={'white'} text={'Cancel'} />
+              </Link>
+            ) : (
               <Link to={'/admins/home/subscriptions'}>
                 <Button variant={'white'} text={'Cancel'} />
               </Link>
-              <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting />
-            </div>{' '}
+            )}
+            <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting />
           </div>
-        )}
+        </div>
         {isPending ? (
           <div className={styles.loading}>
             <Loader />

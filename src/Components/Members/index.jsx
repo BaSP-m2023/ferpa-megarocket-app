@@ -17,7 +17,8 @@ function Members() {
 
   useEffect(() => {
     dispatch(getMembers());
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (success) {
