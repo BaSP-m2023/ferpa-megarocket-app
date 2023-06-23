@@ -10,7 +10,13 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-image: url('../../../public/assets/images/admins-background.jpg');
-  height: 787px;
+  min-height: 787px;
+}
+
+.containerTable {
+  min-height: 500px;
+  padding-top: 20px;
+  padding-bottom: 20px
 }
 
 .error {
@@ -19,6 +25,7 @@
 
 .buttons {
   display: flex;
+  align-self: center;
   margin-top: 20px;
   width: 30%;
 }
@@ -27,8 +34,7 @@
   display: flex;
   flex-flow: column;
   justify-content: space-around;
-  margin: 0;
-  padding: 100px 7% 200px 7%;
+  padding: 1px 7% 1px 7%;
   width: 70%;
   min-width: 600px;
   background-color: rgba(55, 56, 103, 0.8);
@@ -45,7 +51,7 @@
   padding: 10% 4%;
   width: 70%;
   min-width: 600px;
-  max-height: 100px;
+  min-height: 750px;
   background-color: rgba(55, 56, 103, 0.8);
   border-radius: 20px;
   box-shadow: 10px 10px 20px -6px rgba(0, 0, 0, 0.59);

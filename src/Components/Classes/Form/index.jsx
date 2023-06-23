@@ -1,18 +1,22 @@
 import { useState, useEffect } from 'react';
-import styles from '../classes.module.css';
-import { Select } from '../../Shared/Inputs/index';
-import Button from '../../Shared/Button/index';
+import { Select } from 'Components/Shared/Inputs';
 import { useParams, useHistory } from 'react-router-dom';
-import Modal from '../../Shared/Modal';
-import { postClass, putClass } from '../../../redux/classes/thunks';
+import { postClass, putClass } from 'redux/classes/thunks';
 import { useSelector, useDispatch } from 'react-redux';
-import Loader from '../../Shared/Loader/';
-import { getActivities } from '../../../redux/activities/thunks';
-import { getTrainers } from '../../../redux/trainers/thunks';
+import { getActivities } from 'redux/activities/thunks';
+import { getTrainers } from 'redux/trainers/thunks';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
+import styles from '../classes.module.css';
+import Button from 'Components/Shared/Button';
+import Modal from 'Components/Shared/Modal';
+import Loader from 'Components/Shared/Loader';
 
 const Form = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const { isLoading, serverMessage, success, error } = useSelector((state) => state.classes);
+  const { trainers } = useSelector((state) => state.trainers);
+  const { data } = useSelector((state) => state.activities);
   const { id } = useParams();
   const [singleClass, setSingleClass] = useState({});
   const [showErrorModal, setShowErrorModal] = useState(false);
@@ -23,6 +27,36 @@ const Form = () => {
     trainerId: '',
     slots: ''
   });
+  const schema = Joi.object({
+    day: Joi.string().valid(
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ),
+    hour: Joi.string()
+      .pattern(/^((0[9]|1[0-9]|2[01]):00)$/)
+      .messages({
+        'string.pattern.base': "The schedule must be from 9:00  to 21:00  o'clock."
+      }),
+    trainerId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/),
+    activityId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/),
+    slots: Joi.number().min(1).max(25).integer()
+  });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, dirtyFields }
+  } = useForm({ mode: 'onChange', resolver: joiResolver(schema), defaultValues: { newClass } });
+
+  const isFormEdited = Object.keys(dirtyFields).length > 0;
+
+  const dispatch = useDispatch();
+  const history = useHistory();
   const weekDays = [
     {
       _id: 1,
@@ -64,67 +98,67 @@ const Form = () => {
     {
       _id: 1,
       name: '9hs',
-      value: 9
+      value: '09:00'
     },
     {
       _id: 2,
       name: '10hs',
-      value: 10
+      value: '10:00'
     },
     {
       _id: 3,
       name: '11hs',
-      value: 11
+      value: '11:00'
     },
     {
       _id: 4,
       name: '12hs',
-      value: 12
+      value: '12:00'
     },
     {
       _id: 5,
       name: '13hs',
-      value: 13
+      value: '13:00'
     },
     {
       _id: 6,
       name: '14hs',
-      value: 14
+      value: '14:00'
     },
     {
       _id: 7,
       name: '15hs',
-      value: 15
+      value: '15:00'
     },
     {
       _id: 8,
       name: '16hs',
-      value: 16
+      value: '16:00'
     },
     {
       _id: 9,
       name: '17hs',
-      value: 17
+      value: '17:00'
     },
     {
       _id: 10,
       name: '18hs',
-      value: 18
+      value: '18:00'
     },
     {
       _id: 11,
       name: '19hs',
-      value: 19
+      value: '19:00'
     },
     {
       _id: 12,
       name: '20hs',
-      value: 20
+      value: '20:00'
     },
     {
       _id: 13,
       name: '21hs',
-      value: 21
+      value: '21:00'
     }
   ];
   const slots = [
@@ -230,10 +264,6 @@ const Form = () => {
     }
   ];
 
-  const { isLoading, serverMessage, success, error } = useSelector((state) => state.classes);
-  const { trainers } = useSelector((state) => state.trainers);
-  const { data } = useSelector((state) => state.activities);
-
   const updatedTrainers = trainers.map((trainer) => {
     return { ...trainer, name: trainer.firstName, value: trainer._id };
   });
@@ -246,16 +276,10 @@ const Form = () => {
       const data = await res.json();
       setSingleClass(data.data);
       previousClass(singleClass);
+      console.log(singleClass);
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const onChangeInput = (e) => {
-    setNewClass({
-      ...newClass,
-      [e.target.name]: e.target.value
-    });
   };
 
   const previousClass = (singleClass) => {
@@ -264,11 +288,15 @@ const Form = () => {
         ...newClass,
         day: singleClass.day,
         hour: singleClass.hour,
-        activityId: singleClass.activityId._id,
-        trainerId: singleClass.trainerId._id,
+        activityId: singleClass.activityId?._id,
+        trainerId: singleClass.trainerId?._id,
         slots: singleClass.slots
       });
   };
+
+  useEffect(() => {
+    reset(newClass);
+  }, [newClass, reset]);
 
   useEffect(() => {
     if (success) {
@@ -278,21 +306,22 @@ const Form = () => {
       setShowErrorModal(true);
       setTimeout(() => {
         setShowErrorModal(false);
-      }, 4000);
+      }, 2000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success, error]);
 
-  const sendClass = () => {
-    if (id) {
-      dispatch(putClass(id, newClass));
-    } else {
-      dispatch(postClass(newClass));
+  const onSubmit = (data) => {
+    if (!isFormEdited) {
+      history.goBack();
+      return;
     }
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
+    if (id) {
+      dispatch(putClass(id, data));
+    } else {
+      dispatch(postClass(data));
+    }
+    console.log(data);
   };
   useEffect(() => {
     getActivities(dispatch);
@@ -320,7 +349,7 @@ const Form = () => {
   return (
     <div className={styles.container}>
       <div className={styles.transparetnBlueForm}>
-        <form className={styles.form} onSubmit={(e) => onSubmit(e)}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <h2>{id ? 'Edit' : 'Add'}</h2>
           {showErrorModal && (
             <Modal
@@ -331,49 +360,47 @@ const Form = () => {
             />
           )}
           <Select
-            value={weekDays.day}
+            register={register}
             placeholder={id ? singleClass.day : 'Day'}
-            onChangeSelect={(e) => onChangeInput(e)}
             options={weekDays}
             nameValue={'day'}
+            error={errors.day?.message}
+            label={'Day'}
           />
           <Select
-            value={hours.hour}
-            placeholder={id ? singleClass.hour : 'Hour'}
-            onChangeSelect={(e) => onChangeInput(e)}
+            register={register}
+            placeholder={id ? singleClass?.hour : 'Hour'}
             options={hours}
             nameValue={'hour'}
+            error={errors.hour?.message}
+            label={'Hour'}
           />
           <Select
-            value={newClass.activityId}
+            register={register}
             placeholder={id ? singleClass.activityId?.name : 'Activity'}
-            onChangeSelect={(e) => onChangeInput(e)}
             options={updatedActivity}
             nameValue={'activityId'}
+            error={errors.activityId?.message}
+            label={'Activity'}
           />
           <Select
-            value={newClass.trainerId}
+            register={register}
             placeholder={id ? singleClass.trainerId?.firstName : 'Trainer'}
-            onChangeSelect={(e) => onChangeInput(e)}
             options={updatedTrainers}
             nameValue={'trainerId'}
+            error={errors.trainerId?.message}
+            label={'Trainer'}
           />
           <Select
-            value={slots.slot}
+            register={register}
             placeholder={id ? singleClass.slots : 'Slots'}
-            onChangeSelect={(e) => onChangeInput(e)}
             options={slots}
             nameValue={'slots'}
+            error={errors.slots?.message}
+            label={'Slots'}
           />
           <div className={styles.buttons}>
-            <Button
-              variant={'add'}
-              text={id ? 'Edit' : 'Add'}
-              submitting
-              clickAction={() => {
-                sendClass();
-              }}
-            />
+            <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting />
             <Button
               variant={'white'}
               text={'Cancel'}
