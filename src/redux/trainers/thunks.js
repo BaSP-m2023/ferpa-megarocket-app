@@ -32,11 +32,21 @@ export const deleteTrainer = async (dispatch, id) => {
   }
 };
 export const sendTrainer = async (dispatch, item) => {
+  const trainer = {
+    firstName: item.firstName,
+    lastName: item.lastName,
+    dni: item.dni.toString(),
+    phone: item.phone.toString(),
+    email: item.email,
+    city: item.city,
+    password: item.password,
+    salary: item.salary.toString()
+  };
   try {
     dispatch(trainersActions.addTrainersPending());
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`, {
       method: 'POST',
-      body: JSON.stringify(item),
+      body: JSON.stringify(trainer),
       headers: {
         'Content-Type': 'application/json'
       }

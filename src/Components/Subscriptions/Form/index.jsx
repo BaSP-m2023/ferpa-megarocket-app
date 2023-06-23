@@ -27,6 +27,8 @@ const Form = () => {
   const location = useLocation();
   const firstMember = members[0];
 
+  const now = new Date().toISOString().split('T')[0];
+
   const schema = Joi.object({
     memberId: Joi.string()
       .pattern(/^[0-9a-fA-F]{24}$/)
@@ -38,7 +40,7 @@ const Form = () => {
       .message({
         'string.pattern.base': 'Invalid format ID'
       }),
-    date: Joi.date().min('now').message({
+    date: Joi.date().min(now).message({
       'date.min': 'You cannot subscribe to classes that have already occurred.'
     })
   });
@@ -88,7 +90,11 @@ const Form = () => {
     : '/admins/home/subscriptions';
 
   const onRedirect = {
+<<<<<<< HEAD
     pathname,
+=======
+    pathname: '/admins/home/subscriptions',
+>>>>>>> master
     state: { message: '' }
   };
 
@@ -143,6 +149,7 @@ const Form = () => {
                 error={errors.memberId?.message}
               />
             </div>
+<<<<<<< HEAD
           )}
           <div className={styles.inputBox}>
             <Select
@@ -165,6 +172,28 @@ const Form = () => {
           <div className={styles.formBtns}>
             {location.pathname.includes('/members/home/subscriptions/form') ? (
               <Link to={'/members/home/subscriptions'}>
+=======
+            <div className={styles.inputBox}>
+              <Select
+                nameValue={'classId'}
+                register={register}
+                placeholder={'Select'}
+                label={'Activity'}
+                options={selectActivities}
+                error={errors.classId?.message}
+              />
+            </div>
+            <div className={styles.inputBox}>
+              <DatePicker
+                nameValue={'date'}
+                register={register}
+                label={'Date'}
+                error={errors.date?.message}
+              />
+            </div>
+            <div className={styles.formBtns}>
+              <Link to={'/admins/home/subscriptions'}>
+>>>>>>> master
                 <Button variant={'white'} text={'Cancel'} />
               </Link>
             ) : (

@@ -10,10 +10,10 @@
   width: 100%;
   border: 2px solid #373867;
   border-radius: 4px;
-  background-color: rgba(165, 165, 165, 0.9);
+  background-color: #F3F3F5;
   height: 40px;
   padding: 20px;
-  color: white;
+  color: #131313;
   font-size: 16px;
 }
 .dark {
@@ -32,7 +32,13 @@
 }
 
 .error {
-  color: #ff0000;
-  font-size: 20px;
+  color: rgb(255, 255, 255);
+  background-color: #F23F42;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  min-height: 25px;
+  font-size: 15px;
+  font-style: italic;
   padding-left: 5px;
 }
