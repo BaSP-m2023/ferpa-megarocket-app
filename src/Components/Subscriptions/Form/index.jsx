@@ -90,11 +90,7 @@ const Form = () => {
     : '/admins/home/subscriptions';
 
   const onRedirect = {
-<<<<<<< HEAD
     pathname,
-=======
-    pathname: '/admins/home/subscriptions',
->>>>>>> master
     state: { message: '' }
   };
 
@@ -149,7 +145,6 @@ const Form = () => {
                 error={errors.memberId?.message}
               />
             </div>
-<<<<<<< HEAD
           )}
           <div className={styles.inputBox}>
             <Select
@@ -172,28 +167,6 @@ const Form = () => {
           <div className={styles.formBtns}>
             {location.pathname.includes('/members/home/subscriptions/form') ? (
               <Link to={'/members/home/subscriptions'}>
-=======
-            <div className={styles.inputBox}>
-              <Select
-                nameValue={'classId'}
-                register={register}
-                placeholder={'Select'}
-                label={'Activity'}
-                options={selectActivities}
-                error={errors.classId?.message}
-              />
-            </div>
-            <div className={styles.inputBox}>
-              <DatePicker
-                nameValue={'date'}
-                register={register}
-                label={'Date'}
-                error={errors.date?.message}
-              />
-            </div>
-            <div className={styles.formBtns}>
-              <Link to={'/admins/home/subscriptions'}>
->>>>>>> master
                 <Button variant={'white'} text={'Cancel'} />
               </Link>
             ) : (

@@ -17,12 +17,8 @@ function Members() {
 
   useEffect(() => {
     dispatch(getMembers());
-<<<<<<< HEAD
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-=======
-  }, [dispatch]);
->>>>>>> master
 
   useEffect(() => {
     if (success) {
