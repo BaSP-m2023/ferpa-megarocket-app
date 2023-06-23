@@ -74,7 +74,7 @@ const Classes = () => {
   }
 
   return (
-    <section className={styles.container}>
+    <section className={`${styles.container} ${styles.containerTable}`}>
       <div className={styles.onTop}>
         <h2>Classes</h2>
         <Modal
