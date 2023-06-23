@@ -8,7 +8,7 @@ export const getSubscriptions = async (dispatch) => {
   dispatch(actions.resetState());
   dispatch(actions.subscriptionsPending());
   try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/all`);
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`);
     const data = await res.json();
     dispatch(actions.getSubscriptionsSuccess(data.data));
   } catch (error) {

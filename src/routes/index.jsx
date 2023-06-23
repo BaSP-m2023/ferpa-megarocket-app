@@ -15,7 +15,6 @@ const Subscriptions = lazy(() => import('./subscriptions'));
 const SubscriptionForm = lazy(() => import('./subscriptions/form'));
 const Trainers = lazy(() => import('./trainers'));
 const FormTrainers = lazy(() => import('./trainers/form'));
-const MembersHome = lazy(() => import('./membersHome'));
 const MembersProfile = lazy(() => import('./membersHome/profile'));
 const MembersActivities = lazy(() => import('./membersHome/activities'));
 const AdminsHome = lazy(() => import('./adminsHome'));
@@ -52,7 +51,6 @@ function Layout() {
         <Route exact path="/admins/home/reports" component={AdminsReports} />
 
         {/* //Members Routes */}
-        <Route exact path="/members/home/landing" component={MembersHome} />
         <Route exact path="/members/home/profile" component={MembersProfile} />
         <Route path="/members/home/edit/:id" component={MembersEdit} />
         <Route exact path="/members/home/classes" component={Classes} />

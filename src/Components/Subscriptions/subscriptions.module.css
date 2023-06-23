@@ -4,10 +4,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 700px;
   background-image: url('../../../public/assets/images/subscriptions-background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
   background-size: cover;
   font-family: 'Roboto', sans-serif;
   font-size: 22px;
+  min-height: 700px;
 }
 
 .list {
@@ -45,7 +49,6 @@
   padding-bottom: 1vw;
   width: 14.8w;
   color: white;
-  
 }
 
 .loading {

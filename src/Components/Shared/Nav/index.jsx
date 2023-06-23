@@ -13,13 +13,6 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              to="/members/home/landing"
-            >
-              <li>Home</li>
-            </NavLink>
-            <NavLink
-              activeClassName={styles.linkFocused}
-              className={styles.link}
               to="/members/home/profile"
             >
               <li>Profile</li>

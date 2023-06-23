@@ -1,16 +1,48 @@
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Input } from '../../Shared/Inputs';
-import { sendTrainer, putTrainer } from '../../../redux/trainers/thunks';
+import { Input } from 'Components/Shared/Inputs';
+import { sendTrainer, putTrainer } from 'redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React from 'react';
-import Button from '../../Shared/Button';
-import Modal from '../../Shared/Modal';
+import Button from 'Components/Shared/Button';
+import Modal from 'Components/Shared/Modal';
 import styles from './form.module.css';
 
 const TrainerAddForm = () => {
-  const [successAddModal, setSuccessAddModal] = useState(false);
-  const [successEditModal, setSuccessEditModal] = useState(false);
+  const [errorModal, setErrorModal] = useState(false);
+  const [successModal, setSuccessModal] = useState(false);
+  const { id } = useParams();
+  const { trainers, success, error, formError } = useSelector((state) => state.trainers);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const RGXPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+  const RGXEmail = /^[^@]+@[^@]+.[a-zA-Z]{2,}$/;
+
+  const schema = Joi.object({
+    firstName: Joi.string()
+      .min(3)
+      .max(15)
+      .pattern(/^[a-zA-Z-]+$/),
+    lastName: Joi.string()
+      .min(3)
+      .max(15)
+      .pattern(/^[a-zA-Z-]+$/),
+    dni: Joi.number().min(1000000).max(99999999),
+    phone: Joi.number().min(1000000000).max(9999999999),
+    email: Joi.string().required().regex(RGXEmail).messages({
+      'string.pattern.base': 'Email must be in a valid format'
+    }),
+    city: Joi.string().min(2).max(30),
+    password: Joi.string().regex(RGXPassword).min(8).required().messages({
+      'string.pattern.base':
+        'Password must contain at least one uppercase letter, one lowercase letter, and be at least 8 characters long'
+    }),
+    salary: Joi.number().min(10000)
+  });
+
   const [inputs, setInputs] = useState({
     firstName: '',
     lastName: '',
@@ -21,14 +53,25 @@ const TrainerAddForm = () => {
     password: '',
     salary: ''
   });
-  const { id } = useParams();
-  const { trainers, success, error, formError } = useSelector((state) => state.trainers);
-  const dispatch = useDispatch();
-  const history = useHistory();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    onChange,
+    formState: { errors, dirtyFields }
+  } = useForm({ mode: 'onChange', resolver: joiResolver(schema), defaultValues: { inputs } });
+
+  const isFormEdited = Object.keys(dirtyFields).length > 0;
+
   useEffect(() => {
     if (id) {
       const trainer = trainers.find((trainer) => trainer._id === id);
-      setInputs(trainer);
+      const copyTrainer = { ...trainer };
+      delete copyTrainer.isActive;
+      delete copyTrainer.__v;
+      delete copyTrainer._id;
+      setInputs(copyTrainer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -42,101 +85,105 @@ const TrainerAddForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success, formError]);
 
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
+  useEffect(() => {
+    reset(inputs);
+  }, [inputs, reset]);
 
   const handleModalError = () => {
     setTimeout(() => {
-      setSuccessEditModal(!successEditModal);
+      setErrorModal(!errorModal);
     }, 2000);
   };
 
   const handleModalSuccess = () => {
     setTimeout(() => {
       history.push('/trainers');
-      setSuccessAddModal(!successAddModal);
+      setSuccessModal(!successModal);
     }, 2000);
   };
 
-  const onSubmitAdd = (e) => {
-    e.preventDefault();
-    setSuccessAddModal(!successAddModal);
-    sendTrainer(dispatch, inputs);
-  };
-  const onSubmitEdit = (e) => {
-    e.preventDefault();
-    setSuccessEditModal(!successEditModal);
-    putTrainer(dispatch, id, inputs);
+  const onSubmit = (data) => {
+    if (!isFormEdited) {
+      history.goBack();
+      return;
+    }
+    if (id) {
+      setSuccessModal(!successModal);
+      putTrainer(dispatch, id, data);
+    } else {
+      setSuccessModal(!successModal);
+      sendTrainer(dispatch, data);
+    }
   };
   return (
     <div className={styles.formContainer}>
       <div className={styles.fromBackground}>
-        <form className={styles.form} onSubmit={id ? onSubmitEdit : onSubmitAdd}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.field}>
             <Input
+              register={register}
+              onChangeInput={onChange}
               labelText={'Name'}
               nameValue={'firstName'}
               placeholder={'First Name'}
-              value={inputs.firstName}
-              onChangeInput={handleChange}
+              error={errors.firstName?.message}
             />
             <Input
+              register={register}
+              onChangeInput={onChange}
               labelText={'LastName'}
               nameValue={'lastName'}
               placeholder={'Last Name'}
-              value={inputs.lastName}
-              onChangeInput={handleChange}
+              error={errors.lastName?.message}
             />
             <Input
+              register={register}
+              onChangeInput={onChange}
               labelText={'DNI'}
               nameValue={'dni'}
               placeholder={'DNI'}
-              value={inputs.dni}
-              onChangeInput={handleChange}
+              error={errors.dni?.message}
             />
             <Input
+              register={register}
+              onChangeInput={onChange}
               labelText={'Phone'}
               nameValue={'phone'}
               placeholder={'Phone'}
-              value={inputs.phone}
-              onChangeInput={handleChange}
+              error={errors.phone?.message}
             />
             <Input
+              register={register}
+              onChangeInput={onChange}
               labelText={'Email'}
               nameValue={'email'}
               placeholder={'Email'}
-              value={inputs.email}
-              onChangeInput={handleChange}
+              error={errors.email?.message}
             />
             <Input
+              register={register}
+              onChangeInput={onChange}
               labelText={'City'}
               nameValue={'city'}
               placeholder={'City'}
-              value={inputs.city}
-              onChangeInput={handleChange}
+              error={errors.city?.message}
             />
             <Input
+              register={register}
+              onChangeInput={onChange}
               labelText={'Salary'}
               nameValue={'salary'}
               placeholder={'Salary'}
-              value={inputs.salary}
-              onChangeInput={handleChange}
+              error={errors.salary?.message}
             />
             <Input
+              register={register}
+              onChangeInput={onChange}
               labelText={'Password'}
               nameValue={'password'}
-              type={'password'}
               placeholder={'Password'}
-              value={inputs.password}
-              onChangeInput={handleChange}
+              error={errors.password?.message}
             />
-            <p className={styles.passwordAlert}>
-              * The password must have uppercase letters, lowercase letters, number and at least 8
-              characters
-            </p>
           </div>
           <div className={styles.buttons}>
             <Link to={'/trainers'}>
@@ -146,14 +193,8 @@ const TrainerAddForm = () => {
           </div>
           <Modal
             success
-            isOpen={successAddModal}
-            onClose={() => setSuccessAddModal(!successAddModal)}
-            title={error}
-          ></Modal>
-          <Modal
-            success
-            isOpen={successEditModal}
-            onClose={() => setSuccessEditModal(!successEditModal)}
+            isOpen={successModal}
+            onClose={() => setSuccessModal(!successModal)}
             title={error}
           ></Modal>
         </form>

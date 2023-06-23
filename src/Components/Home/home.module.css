@@ -1,6 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 .container {
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.member, .admin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 76vh;
+}
+
+.member {
+  background-image: url('../../../public/assets/images/admin-background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.admin {
+  background-image: url('../../../public/assets/images/members-background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.button {
+  width: 400px;
+  height: 150px;
+  background-color: #373867;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 1vw;
+  color: #47BA8A;
+  font-family: 'Roboto', sans-serif;
+  font-size: 40px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
 }

@@ -6,8 +6,7 @@
 }
 
 .td {
-  border-bottom: 3px solid white;
-  padding: 20px 0;
+  border-bottom: 1px solid white;
 }
 
 .container {
@@ -30,6 +29,7 @@
   padding: 50px 0;
   background-color: rgba(55, 56, 103, 0.8);
   font-family: 'Roboto', sans-serif;
+  border-radius: 1vw;
 }
 
 .header {
@@ -68,7 +68,7 @@
 }
 
 .tr {
-  border-bottom: 3px solid white;
+  border-bottom: 1px solid white;
   height: 50px;
   margin-bottom: 20px;
 }

@@ -1,39 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 .container {
-  margin-top: 50px;
-  flex: 1;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  flex-direction: column;
-  height: 1000px;
-  background-image: url(../../../public/assets/images/admins-background.jpg);
-  background-size: cover;
+  background-image: url('../../../public/assets/images/subscriptions-background.jpg');
   background-repeat: no-repeat;
-}
-
-.purpleBack {
-  background-color: rgba(55, 56, 103, 0.8);
+  background-position: center;
+  background-size: cover;
   font-family: 'Roboto', sans-serif;
-}
-
-.whiteLetters {
-  color: white;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  width: 95%;
-  padding: 0 0 50px 0;
-  font-family: 'Roboto', sans-serif;
+  font-size: 22px;
+  min-height: 700px;
 }
 
 .list {
   display: flex;
   flex-direction: column;
+  width: 80vw;
+  margin: 2vw;
+  border-radius: 1vw;
+  padding: 1.5vw;
+  background-color: rgba(55, 56, 103, 0.8);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  width: 95%;
-  margin: 50px;
-  padding: 50px 0;
+  align-self: center;
+  width: 70vw;
+}
+
+.title {
+  color: white;
+  font-size: 40px;
+}
+
+.table {
+  text-align: left;
+  align-self: center;
+  width: 70vw;
+  border-collapse: collapse;
+}
+
+.thead {
+  padding-bottom: 1vw;
+  width: 14.8w;
+  color: white;
+  
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vw;
+}
+
+.trHead {
+  border-bottom: 3px solid white;
+}
+
+.tr {
+  color: white;
+}
+
+.td {
+  width: 8vw;
+}
+
+.tdBtn {
+  width: 3vw;
 }
