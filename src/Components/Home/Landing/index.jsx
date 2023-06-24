@@ -1,9 +1,10 @@
 import React from 'react';
+import styles from './landing.module.css';
 
 const Landing = () => {
   return (
-    <section>
-      <div>Landing</div>
+    <section className={styles.container}>
+      <div>Landing :)</div>
     </section>
   );
 };
