@@ -21,7 +21,6 @@ const AdminsProfile = lazy(() => import('./adminsHome/profile'));
 const AdminsReports = lazy(() => import('./adminsHome/reports'));
 const AdminsForm = lazy(() => import('./admins/form'));
 const Login = lazy(() => import('./auth/login'));
-const Landing = lazy(() => import('./home/landing'));
 
 function Layout() {
   return (
@@ -62,7 +61,6 @@ function Layout() {
 
         <Route exact path="/home/login" component={Login} />
         <Route exact path="/home/signup" component={MembersCreate} />
-        <Route exact path="/home/landing" component={Landing} />
         <Route path="/home" component={Home} />
         <Route exact path="/">
           <Redirect to="/home" />

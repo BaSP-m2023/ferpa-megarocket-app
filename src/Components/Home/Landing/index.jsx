@@ -1,7 +1,11 @@
 import React from 'react';
 
 const Landing = () => {
-  return <div>Landing</div>;
+  return (
+    <section>
+      <div>Landing</div>
+    </section>
+  );
 };
 
 export default Landing;

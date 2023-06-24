@@ -5,7 +5,7 @@ const Aside = () => {
   return (
     <aside>
       <div>
-        <Link to="/home/landing">
+        <Link to="/home">
           <h3>Home</h3>
         </Link>
         <Link to="/home/login">
