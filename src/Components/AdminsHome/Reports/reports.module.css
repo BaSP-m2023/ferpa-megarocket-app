@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-.container {
+.main {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,7 +11,7 @@
   width: 100%;
   min-height: 80vh;
 }
-.reports {
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,10 +20,25 @@
   margin: 20px;
   padding: 20px 0;
   background-color: rgba(55, 56, 103, 0.8);
+  border-radius: 10px;
+}
+.repcontainer {
+  width: 70%;
+  margin: auto;
+}
+.reports {
+  display: flex;
+  justify-content: space-between;
+  width: 85%;
 }
 
 .title {
   color: white;
   font-size: 40px;
   line-height: 48px;
+}
+
+.subtitle {
+  align-self: flex-start;
+  color: white;
 }
