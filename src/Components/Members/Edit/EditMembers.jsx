@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './editMembers.module.css';
 import { Input, Select, DatePicker } from 'Components/Shared/Inputs';
 import { useState, useEffect } from 'react';
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
 import { updateMember } from 'redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMembers } from 'redux/members/thunks';
@@ -31,6 +31,7 @@ const MembersEdit = () => {
   const { data, message, success, error } = useSelector((state) => state.members);
   const history = useHistory();
   const { id } = useParams();
+  const location = useLocation();
 
   const memberships = [
     {
@@ -132,7 +133,11 @@ const MembersEdit = () => {
     if (success) {
       setShowModal(true);
       setTimeout(() => {
-        history.push('/admins/home/members');
+        if (location.pathname.includes('admin/home/members')) {
+          history.push('/admins/home/members');
+        } else if (location.pathname.includes('members/home/edit')) {
+          history.push('/members/home/profile');
+        }
       }, 2000);
     }
     if (error) {
@@ -252,19 +257,29 @@ const MembersEdit = () => {
               error={errors.membership?.message}
             />
           </div>
-          <div className={styles.checkboxField}>
-            <label>Is Active?</label>
-            <input
-              className={styles.checkbox}
-              name={'isActive'}
-              type="checkbox"
-              {...register('isActive')}
-            />
-          </div>
+          {location.pathname.includes('admins/home/members') ? (
+            <div className={styles.checkboxField}>
+              <label>Is Active?</label>
+              <input
+                className={styles.checkbox}
+                name={'isActive'}
+                type="checkbox"
+                {...register('isActive')}
+              />
+            </div>
+          ) : (
+            ''
+          )}
           <div className={styles.formBtns}>
-            <Link to="/admins/home/members">
-              <Button text={'Cancel'} variant={'white'} />
-            </Link>
+            {location.pathname.includes('members/home/edit') ? (
+              <Link to="/members/home/profile">
+                <Button text={'Cancel'} variant={'white'} />
+              </Link>
+            ) : (
+              <Link to="/admins/home/members">
+                <Button text={'Cancel'} variant={'white'} />
+              </Link>
+            )}
             <Button text={'Edit'} variant={'add'} submitting />
           </div>
         </form>

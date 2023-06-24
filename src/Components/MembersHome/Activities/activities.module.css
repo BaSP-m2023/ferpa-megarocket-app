@@ -1,0 +1,66 @@
+* {
+  margin: 0;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 25px;
+  color: white;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: url('../../../../public/assets/images/admins-background.jpg');
+  font-weight: bold;
+}
+
+.header {
+  margin: 25px 0;
+}
+
+.body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  width: 95vw;
+  margin-bottom: 75px;
+}
+
+.activity {
+  border-radius: 13px;
+  box-shadow: 0px 14px 7px 1px rgb(0 0 0 / 75%);
+  background-color: #474885;
+  width: 15vw;
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  margin-bottom: 80px;
+}
+
+.image {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 100%;
+}
+
+.activityName {
+  font-size: 22px;
+  padding-left: 10px;
+  color: #8ddeba;
+}
+
+.activityDescription {
+  padding: 11px;
+  font-weight: 500;
+  font-size: 13px;
+  height: 100%;
+}
+
+.activityData {
+  max-height: 28vh;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
