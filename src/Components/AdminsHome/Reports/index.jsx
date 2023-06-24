@@ -12,16 +12,9 @@ const Reports = () => {
   const { subs } = useSelector((state) => state.subscriptions);
   const members = useSelector((state) => state.members.data);
   const membersActive = members.filter((member) => member.isActive === true).length;
+  const trainersActive = trainers.filter((trainer) => trainer.isActive === true).length;
   const trainersSalary = trainers.reduce((acc, trainer) => acc + trainer.salary, 0);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    getTrainers(dispatch);
-    dispatch(getMembers());
-    dispatch(getClasses());
-    getSubscriptions(dispatch);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const countMemberships = (members, membership) => {
     const count = {};
@@ -53,7 +46,15 @@ const Reports = () => {
   };
   const mostPopularClass = mostPopular(subs);
   const totalMembership = countMemberships(members, 'membership');
-  console.log(mostPopularClass);
+
+  useEffect(() => {
+    getTrainers(dispatch);
+    dispatch(getMembers());
+    dispatch(getClasses());
+    getSubscriptions(dispatch);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  console.log(classes.find((clas) => clas._id === mostPopularClass[0].value));
   return (
     <div className={styles.main}>
       <div className={styles.container}>
@@ -62,13 +63,13 @@ const Reports = () => {
           <h2 className={styles.subtitle}>Trainers</h2>
           <div className={styles.reports}>
             <p>
-              Trainers: <span>{trainers.length}</span>
+              Active trainers: <span>{trainersActive}</span>
             </p>
             <p>
-              Total of Salaries <span>$ {trainersSalary}</span>
+              Total salaries of the trainers: <span>$ {trainersSalary}</span>
             </p>
             <p>
-              Average salary <span>$ {(trainersSalary / trainers.length).toFixed(2)}</span>
+              Average trainer salary <span>$ {(trainersSalary / trainers.length).toFixed(2)}</span>
             </p>
           </div>
         </section>
@@ -88,23 +89,27 @@ const Reports = () => {
           <h3>Black = {totalMembership['Black'] || 0}</h3>
         </section>
         <section className={styles.repcontainer}>
-          <h2 className={styles.subtitle}>Clases Reports {classes.length}</h2>
-          {subs.length > 1 && classes ? (
-            mostPopularClass.map((item) => (
-              <div key={item.value}>
-                <p>Activity: {classes.find((clas) => clas._id === item.value).activityId?.name}</p>
-                <p>
-                  Trainer: {classes.find((clas) => clas._id === item.value).trainerId?.firstName}
-                </p>
-                <p>Day: {classes.find((clas) => clas._id === item.value).day}</p>
-                <p>Hour: {classes.find((clas) => clas._id === item.value).hour}</p>
-                <p>Members subscribed: {item.reps}</p>
-              </div>
-            ))
-          ) : (
-            <p></p>
-          )}
-          <div></div>
+          <h2 className={styles.subtitle}>Popular Classes</h2>
+          <div className={styles.popularContainer}>
+            {subs.length > 1 && classes ? (
+              mostPopularClass.map((item, index) => (
+                <div key={item.value} className={styles.popular}>
+                  <p className={styles.index}>{index + 1}</p>
+                  <p>
+                    Activity: {classes.find((clas) => clas._id === item.value).activityId?.name}
+                  </p>
+                  <p>
+                    Trainer: {classes.find((clas) => clas._id === item.value).trainerId?.firstName}
+                  </p>
+                  <p>Day: {classes.find((clas) => clas._id === item.value).day}</p>
+                  <p>Hour: {classes.find((clas) => clas._id === item.value).hour}</p>
+                  <p>Members subscribed: {item.reps}</p>
+                </div>
+              ))
+            ) : (
+              <p></p>
+            )}
+          </div>
         </section>
       </div>
     </div>
