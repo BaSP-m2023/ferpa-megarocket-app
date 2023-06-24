@@ -74,7 +74,7 @@ const Table = () => {
                 <td className={styles.thDes}>{activity?.description}</td>
                 <td className={styles.thStatus}>{activity?.isActive ? 'Active' : 'Inactive'}</td>
                 <td className={styles.tdBtn}>
-                  <Link to={`/activities/edit/${activity._id}`}>
+                  <Link to={`/admins/activities/edit/${activity._id}`}>
                     <Button variant={'edit'} />
                   </Link>
                 </td>

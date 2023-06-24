@@ -10,7 +10,7 @@ function Home() {
         </Link>
       </div>
       <div className={styles.admin}>
-        <Link to="admins/home/landing">
+        <Link to="admins/home/profile">
           <button className={styles.button}>Admins</button>
         </Link>
       </div>
