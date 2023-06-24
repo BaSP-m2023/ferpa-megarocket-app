@@ -19,7 +19,6 @@
   height: 90%;
   margin: 20px;
   padding: 20px 0;
-  background-color: rgba(55, 56, 103, 0.8);
   border-radius: 10px;
 }
 .repcontainer {
@@ -34,13 +33,13 @@
   justify-content: space-between;
   width: 85%;
   margin: auto;
+  font-size: 20px;
   color: white;
 }
 
 .title {
   color: white;
-  font-size: 40px;
-  line-height: 48px;
+  font-size: 45px;
 }
 
 .subtitle {
@@ -49,6 +48,7 @@
   margin-left: 30px;
 }
 .popular {
+  font-size: 18px;
   color: white;
 }
 .popularContainer {
@@ -57,5 +57,9 @@
   justify-content: space-evenly;
 }
 .index {
+  padding: 5px 0;
   text-align: center;
+  font-weight: bold;
+  background-color: #46a37cbb;
+  border-radius: 3px;
 }
