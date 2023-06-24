@@ -300,7 +300,7 @@ const Form = () => {
 
   useEffect(() => {
     if (success) {
-      history.push('/classes');
+      history.push('/admins/home/classes');
     }
     if (error) {
       setShowErrorModal(true);
@@ -405,7 +405,7 @@ const Form = () => {
               variant={'white'}
               text={'Cancel'}
               submitting
-              clickAction={() => history.push('/classes')}
+              clickAction={() => history.push('/admins/home/classes')}
             />
           </div>
         </form>

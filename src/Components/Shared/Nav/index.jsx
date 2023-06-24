@@ -45,13 +45,6 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              to="/admins/home/landing"
-            >
-              <li>Home</li>
-            </NavLink>
-            <NavLink
-              activeClassName={styles.linkFocused}
-              className={styles.link}
               to="/admins/home/profile"
             >
               <li>Profile</li>

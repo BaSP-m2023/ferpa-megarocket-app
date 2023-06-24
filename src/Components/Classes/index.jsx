@@ -45,7 +45,7 @@ const Classes = () => {
   }, [success]);
 
   const reDirect = () => {
-    history.push('/classes');
+    history.push('/admins/home/classes');
     setShowDeleteModal(!showDeleteModal);
   };
 
@@ -144,7 +144,7 @@ const Classes = () => {
                     <td>{theOne?.slots}</td>
                     {location.pathname.includes('admins/home/classes') && (
                       <td>
-                        <Link to={`/admins/classes/form/${theOne?._id}`}>
+                        <Link to={`/admins/home/classes/form/${theOne?._id}`}>
                           <Button text={'Edit Item'} variant={'edit'} />
                         </Link>
                       </td>
