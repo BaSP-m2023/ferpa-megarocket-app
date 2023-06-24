@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
 import { Input } from 'Components/Shared/Inputs';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAdmins, updateAdmin, addAdmin } from 'redux/admins/thunks';
@@ -19,6 +19,7 @@ const Form = () => {
   const [inputs, setInputs] = useState({});
   const [successModal, setSuccesModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
+  const location = useLocation();
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -136,7 +137,12 @@ const Form = () => {
   };
 
   const redirectPath = () => {
-    const path = { pathname: '/admins/home/profile' };
+    let path;
+    if (location.pathname.includes('/admins/home')) {
+      path = '/admins/home/profile';
+    } else if (location.pathname.includes('/superadmins/home')) {
+      path = '/superadmins/home/admins';
+    }
     history.push(path);
   };
 
@@ -242,9 +248,17 @@ const Form = () => {
           />
         </div>
         <div className={styles.modalBtns}>
-          <Link to="/admins/home/profile">
-            <Button text={'Cancel'} variant={'white'} />
-          </Link>
+          {location.pathname.includes('admins/home/form') ? (
+            <Link to="/admins/home/profile">
+              <Button text={'Cancel'} variant={'white'} />
+            </Link>
+          ) : location.pathname.includes('superadmins/home/edit') ? (
+            <Link to="/superadmins/home/admins">
+              <Button text={'Cancel'} variant={'white'} />
+            </Link>
+          ) : (
+            ''
+          )}
           {id ? (
             <Button variant={'add'} text={'Update Admin'} submitting />
           ) : (

@@ -14,6 +14,11 @@ function Home() {
           <button className={styles.button}>Admins</button>
         </Link>
       </div>
+      <div>
+        <Link to="superadmins/home/admins">
+          <button>Super Admin</button>
+        </Link>
+      </div>
     </section>
   );
 }

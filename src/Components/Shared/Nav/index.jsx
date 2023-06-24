@@ -93,6 +93,17 @@ const Nav = () => {
             </NavLink>
           </>
         )}
+        {location.pathname.includes('/superadmins/home') && (
+          <>
+            <NavLink
+              activeClassName={styles.linkFocused}
+              className={styles.link}
+              to="/superadmins/home/admins"
+            >
+              <li>Admins</li>
+            </NavLink>
+          </>
+        )}
       </ul>
     </nav>
   );
