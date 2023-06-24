@@ -10,6 +10,22 @@
   background-size: cover;
   min-height: 700px;
 }
+
+.signupContainer {
+  display: flex;
+  background-image: url('../../../../public/assets/images/subscriptions-background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.signup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
 .box {
   display: flex;
   justify-content: center;
@@ -60,4 +76,8 @@
   width: 20vw;
   justify-content: space-between;
   margin-top: 2vw;
+}
+
+.signupButton {
+  margin-top: 30px;
 }

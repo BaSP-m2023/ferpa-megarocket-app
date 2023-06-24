@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './addMembers.module.css';
 import { Input, Select, DatePicker } from 'Components/Shared/Inputs';
 import { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import Button from 'Components/Shared/Button';
 import Modal from 'Components/Shared/Modal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,8 +10,11 @@ import { createMember } from 'redux/members/thunks';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
+import Aside from 'Components/Shared/Aside';
 
 const MembersCreate = () => {
+  const location = useLocation();
+
   const schema = Joi.object({
     firstName: Joi.string()
       .regex(/^[A-Za-z]+$/)
@@ -96,16 +99,21 @@ const MembersCreate = () => {
   } = useForm({
     mode: 'onChange',
     resolver: joiResolver(schema),
-    defaultValues: { isActive: true }
+    defaultValues: { isActive: false }
   });
 
   useEffect(() => {
-    if (success) {
+    if (success && location.pathname.includes('/admins/home/members/create')) {
       setTimeout(() => {
         history.push('/admins/home/members');
       }, 2000);
       setShowModal(true);
     }
+
+    if (success && location.pathname.includes('/home/signup')) {
+      history.push('/home/login');
+    }
+
     if (error) {
       setShowModalError(true);
     }
@@ -115,6 +123,112 @@ const MembersCreate = () => {
   const onSubmit = (data) => {
     dispatch(createMember(data));
   };
+
+  if (location.pathname.includes('/home/signup')) {
+    return (
+      <section className={styles.signupContainer}>
+        <Aside />
+        <div className={styles.signup}>
+          <div className={styles.box}>
+            <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+              <h2 className={styles.formTitle}>SUBSCRIBE</h2>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'First Name'}
+                  type={'text'}
+                  placeholder={'First Name'}
+                  nameValue={'firstName'}
+                  register={register}
+                  error={errors.firstName?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'Last Name'}
+                  type={'text'}
+                  placeholder={'Last Name'}
+                  nameValue={'lastName'}
+                  register={register}
+                  error={errors.lastName?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'DNI'}
+                  type={'text'}
+                  placeholder={'DNI'}
+                  nameValue={'dni'}
+                  register={register}
+                  error={errors.dni?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'Phone'}
+                  type={'text'}
+                  placeholder={'ex: 096513178'}
+                  nameValue={'phone'}
+                  register={register}
+                  error={errors.phone?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'Email'}
+                  type={'text'}
+                  placeholder={'robertomariaoverdrive@soybostero.edu'}
+                  nameValue={'email'}
+                  register={register}
+                  error={errors.email?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'City'}
+                  type={'text'}
+                  placeholder={'Your city'}
+                  nameValue={'city'}
+                  register={register}
+                  error={errors.city?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <DatePicker
+                  label={'Birthday'}
+                  nameValue={'birthDay'}
+                  register={register}
+                  error={errors.birthDay?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'Zip Code'}
+                  type={'text'}
+                  placeholder={'Your postal code'}
+                  nameValue={'postalCode'}
+                  register={register}
+                  error={errors.postalCode?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Select
+                  label={'Membership'}
+                  placeholder={'Classic'}
+                  options={memberships}
+                  nameValue={'membership'}
+                  register={register}
+                  error={errors.membership?.message}
+                />
+              </div>
+              <div className={styles.signupButton}>
+                <Button text={'Add'} variant={'add'} submitting />
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <div className={styles.container}>
@@ -225,6 +339,7 @@ const MembersCreate = () => {
               {...register('isActive')}
             />
           </div>
+
           <div className={styles.formBtns}>
             <Link to="/admins/home/members">
               <Button text={'Cancel'} variant={'white'} />
