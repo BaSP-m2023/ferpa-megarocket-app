@@ -133,7 +133,11 @@ const MembersEdit = () => {
     if (success) {
       setShowModal(true);
       setTimeout(() => {
-        history.push('/admins/home/members');
+        if (location.pathname.includes('admin/home/members')) {
+          history.push('/admins/home/members');
+        } else if (location.pathname.includes('members/home/edit')) {
+          history.push('/members/home/profile');
+        }
       }, 2000);
     }
     if (error) {
