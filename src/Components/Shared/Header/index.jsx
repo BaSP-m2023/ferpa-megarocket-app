@@ -42,6 +42,18 @@ function Header() {
             </Link>
           </div>
         )}
+        {location.pathname.includes('/superadmins/home') && (
+          <div className={styles.rightSide}>
+            <span className={styles.title}>Super Admins</span>
+            <Link to="/home">
+              <img
+                className={styles.logout}
+                src="../../assets/images/logout-icon.svg"
+                alt="log out icon"
+              ></img>
+            </Link>
+          </div>
+        )}
       </div>
       {currentPath === desiredPath ? '' : <Nav />}
     </header>
