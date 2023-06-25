@@ -9,8 +9,8 @@ function Header() {
 
   return (
     <header>
-      <div className={styles.container}>
-        <div>
+      <div className={styles.container} data-testid={'header-container'}>
+        <div data-testid={'header-logo'}>
           <img className={styles.logo} src="../../assets/images/LOGO-RR-1.svg" alt="logo"></img>
           <img
             className={styles.isologo}

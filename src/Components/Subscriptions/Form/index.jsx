@@ -121,7 +121,11 @@ const Form = () => {
   return (
     <section className={styles.container}>
       <Modal isOpen={modalError} error title={message} onClose={() => setModalError(!modalError)} />
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit(onSubmit)}
+        data-testid={'subs-add-container'}
+      >
         <h2 className={styles.formTitle}>{id ? 'EDIT SUBSCRIPTION' : 'ADD SUBSCRIPTION'}</h2>
         <div>
           {location.pathname.includes('/members/home/subscriptions/form') ? (
@@ -167,14 +171,14 @@ const Form = () => {
           <div className={styles.formBtns}>
             {location.pathname.includes('/members/home/subscriptions/form') ? (
               <Link to={'/members/home/subscriptions'}>
-                <Button variant={'white'} text={'Cancel'} />
+                <Button variant={'white'} text={'Cancel'} testid={'cancel-btn'} />
               </Link>
             ) : (
               <Link to={'/admins/home/subscriptions'}>
-                <Button variant={'white'} text={'Cancel'} />
+                <Button variant={'white'} text={'Cancel'} testid={'cancel-btn'} />
               </Link>
             )}
-            <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting />
+            <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting testid={'add-btn'} />
           </div>
         </div>
         {isPending ? (
