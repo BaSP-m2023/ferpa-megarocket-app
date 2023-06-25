@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 20vw;
+  background-color: #373867;
+}
+
+.buttons, .contact {
+  width: 80%;
+}
+
+.link {
+  padding-bottom: 20px;
+  color: #C4C4C4;
+  font-family: 'Roboto', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  border-bottom: 2px solid #C4C4C4;
+}
+
+.contact {
+  color: #C4C4C4;
+  font-family: 'Roboto', sans-serif;
+}
+
+.contactTitle {
+  color: #46A37C;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.contactItem {
+  display: flex;
+  border-bottom: 2px solid #C4C4C4;
+}
+
+.contactItem h4 {
+  font-size: 14px;
+}
+
+.contactItem img {
+  margin-right: 10px;
+}
