@@ -175,6 +175,7 @@ const Form = () => {
       <form
         className={`${styles.form} ${styles.list}`}
         onSubmit={handleSubmit(id ? handleUpdate : handleSubmiting)}
+        data-testid={'admin-editform'}
       >
         <h2 className={styles.title}>{id ? 'Edit Admin' : 'Add Admin'}</h2>
         <div className={styles.inputGroup}>
@@ -243,10 +244,10 @@ const Form = () => {
         </div>
         <div className={styles.modalBtns}>
           <Link to="/admins/home/profile">
-            <Button text={'Cancel'} variant={'white'} />
+            <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
           </Link>
           {id ? (
-            <Button variant={'add'} text={'Update Admin'} submitting />
+            <Button variant={'add'} text={'Update Admin'} submitting testid={'confirm-edit-btn'} />
           ) : (
             <Button variant={'add'} text={'Add Admin'} submitting />
           )}

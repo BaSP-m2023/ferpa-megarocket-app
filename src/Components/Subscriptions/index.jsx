@@ -73,7 +73,7 @@ function Subscriptions() {
           variant={'white'}
         />
       </Modal>
-      <section className={styles.list}>
+      <section className={styles.list} data-testid={'subs-table-container'}>
         <div className={styles.header}>
           <h2 className={styles.title}>
             {location.pathname.includes('/members/home/subscriptions')

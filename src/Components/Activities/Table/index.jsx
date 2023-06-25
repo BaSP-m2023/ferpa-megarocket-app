@@ -75,7 +75,7 @@ const Table = () => {
                 <td className={styles.thStatus}>{activity?.isActive ? 'Active' : 'Inactive'}</td>
                 <td className={styles.tdBtn}>
                   <Link to={`/admins/activities/edit/${activity._id}`}>
-                    <Button variant={'edit'} />
+                    <Button variant={'edit'} testid={'edit-btn'} />
                   </Link>
                 </td>
                 <td className={styles.tdBtn}>
@@ -85,6 +85,7 @@ const Table = () => {
                       setConfirmModal(!confirmModal);
                       setCurrentID(activity._id);
                     }}
+                    testid={'delete-btn'}
                   />
                 </td>
               </tr>

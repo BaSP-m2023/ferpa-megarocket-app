@@ -81,11 +81,11 @@ const Trainers = () => {
         onClose={() => setSuccessModal(!successModal)}
         title={error}
       ></Modal>
-      <div className={styles.header}>
+      <div className={styles.header} data-testid={'trainer-table-container'}>
         <div className={styles.inside}>
           <h2 className={styles.title}>Trainers</h2>
           <Link to={'/admins/home/trainers/form'}>
-            <Button text={'add trainer'} variant={'add'} />
+            <Button text={'add trainer'} variant={'add'} testid={'add-btn'} />
           </Link>
         </div>
         <table className={styles.hola}>
@@ -109,7 +109,7 @@ const Trainers = () => {
                   <td>
                     <div className={styles.buttons}>
                       <Link to={`/admins/home/trainers/form/${item._id}`}>
-                        <Button variant={'edit'} />
+                        <Button variant={'edit'} testid={'edit-btn'} />
                       </Link>
                       <Button
                         variant={'deleteIcon'}
@@ -117,6 +117,7 @@ const Trainers = () => {
                           setDeleteModal(!deleteModal);
                           setCurrentId(item._id);
                         }}
+                        testid={'delete-btn'}
                       />
                     </div>
                   </td>

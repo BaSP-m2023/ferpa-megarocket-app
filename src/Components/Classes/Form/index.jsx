@@ -349,7 +349,11 @@ const Form = () => {
   return (
     <div className={styles.container}>
       <div className={styles.transparetnBlueForm}>
-        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className={styles.form}
+          onSubmit={handleSubmit(onSubmit)}
+          data-testid={'class-add-edit-container'}
+        >
           <h2>{id ? 'Edit' : 'Add'}</h2>
           {showErrorModal && (
             <Modal
@@ -400,12 +404,13 @@ const Form = () => {
             label={'Slots'}
           />
           <div className={styles.buttons}>
-            <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting />
+            <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting testid={'add-edit-btn'} />
             <Button
               variant={'white'}
               text={'Cancel'}
               submitting
               clickAction={() => history.push('/admins/home/classes')}
+              testid={'cancel-btn'}
             />
           </div>
         </form>
