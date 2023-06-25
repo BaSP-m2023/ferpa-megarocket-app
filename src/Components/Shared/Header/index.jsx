@@ -5,7 +5,9 @@ import { useLocation, Link } from 'react-router-dom';
 function Header() {
   const location = useLocation();
   const currentPath = location.pathname;
-  const desiredPath = '/home';
+  const homePath = '/home';
+  const loginPath = '/home/login';
+  const signupPath = '/home/signup';
 
   return (
     <header>
@@ -43,7 +45,11 @@ function Header() {
           </div>
         )}
       </div>
-      {currentPath === desiredPath ? '' : <Nav />}
+      {currentPath === homePath || currentPath === loginPath || currentPath === signupPath ? (
+        ''
+      ) : (
+        <Nav />
+      )}
     </header>
   );
 }

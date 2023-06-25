@@ -20,6 +20,7 @@ const MembersActivities = lazy(() => import('./membersHome/activities'));
 const AdminsProfile = lazy(() => import('./adminsHome/profile'));
 const AdminsReports = lazy(() => import('./adminsHome/reports'));
 const AdminsForm = lazy(() => import('./admins/form'));
+const Login = lazy(() => import('./auth/login'));
 
 function Layout() {
   return (
@@ -58,6 +59,8 @@ function Layout() {
         <Route exact path="/members/home/subscriptions/form" component={SubscriptionForm} />
         <Route exact path="/members/home/activities" component={MembersActivities} />
 
+        <Route exact path="/home/login" component={Login} />
+        <Route exact path="/home/signup" component={MembersCreate} />
         <Route path="/home" component={Home} />
         <Route exact path="/">
           <Redirect to="/home" />
