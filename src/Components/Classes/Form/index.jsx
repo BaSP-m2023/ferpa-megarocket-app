@@ -361,6 +361,7 @@ const Form = () => {
               isOpen={showErrorModal}
               warning
               onClose={() => setShowErrorModal(false)}
+              data-testid={'confirm-modal'}
             />
           )}
           <Select

@@ -56,7 +56,13 @@ function Activities() {
             <div className={styles.header}>
               <h2 className={styles.title}>Activities</h2>
             </div>
-            <Modal onClose={() => setErrorModal(false)} isOpen={errorModal} title={message} error />
+            <Modal
+              onClose={() => setErrorModal(false)}
+              isOpen={errorModal}
+              title={message}
+              error
+              data-testid={'error-modal'}
+            />
           </>
         ) : (
           <>
@@ -71,6 +77,7 @@ function Activities() {
               isOpen={showModal}
               title={modalMessage}
               success
+              data-testid={'success-modal'}
             />
             <Table />
           </>

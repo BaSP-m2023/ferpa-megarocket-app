@@ -120,7 +120,13 @@ const Form = () => {
 
   return (
     <section className={styles.container}>
-      <Modal isOpen={modalError} error title={message} onClose={() => setModalError(!modalError)} />
+      <Modal
+        isOpen={modalError}
+        error
+        title={message}
+        onClose={() => setModalError(!modalError)}
+        data-testid={'error-modal'}
+      />
       <form
         className={styles.form}
         onSubmit={handleSubmit(onSubmit)}

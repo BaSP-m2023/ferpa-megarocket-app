@@ -59,6 +59,7 @@ function Members() {
           isOpen={showModalDeleteSuccess}
           title={theMessage}
           success
+          data-testid={'success-modal'}
         ></Modal>
         <div className={styles.header}>
           <h2 className={styles.title}>Members</h2>
@@ -115,6 +116,7 @@ function Members() {
               title={`Confirm Delete`}
               text={'Are you sure that you want to delete this member?'}
               warning={true}
+              data-testid={'confirm-modal'}
             >
               <Button
                 text={'Delete'}
@@ -123,8 +125,14 @@ function Members() {
                   delMember(memberId);
                   setShowModal(false);
                 }}
+                testid={'delete-btn'}
               />
-              <Button text={'Cancel'} variant={'white'} clickAction={() => setShowModal(false)} />
+              <Button
+                text={'Cancel'}
+                variant={'white'}
+                clickAction={() => setShowModal(false)}
+                testid={'cancel-btn'}
+              />
             </Modal>
           </table>
         )}

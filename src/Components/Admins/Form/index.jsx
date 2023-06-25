@@ -150,6 +150,7 @@ const Form = () => {
           setSuccesModal(!successModal);
           redirectPath();
         }}
+        data-testid={'success-modal'}
       />
       <Modal
         title={'ERROR'}
@@ -161,6 +162,7 @@ const Form = () => {
           addPending();
         }}
         warning
+        data-testid={'error-modal'}
       >
         <Button
           text={'Close'}
@@ -170,6 +172,7 @@ const Form = () => {
             putPending();
             addPending();
           }}
+          testid={'close-btn'}
         />
       </Modal>
       <form

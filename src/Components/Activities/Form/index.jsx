@@ -94,7 +94,13 @@ const Form = () => {
 
   return (
     <div className={styles.container}>
-      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} error />
+      <Modal
+        onClose={() => setShowModal(false)}
+        isOpen={showModal}
+        title={message}
+        error
+        data-testid={'error-modal'}
+      />
       <form
         className={styles.form}
         onSubmit={handleSubmit(onSubmit)}

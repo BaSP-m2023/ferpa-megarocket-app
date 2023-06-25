@@ -57,6 +57,7 @@ function Subscriptions() {
           setModalConfirmDel(!modalConfirmDel);
         }}
         text={'Are you sure that you want to delete this subscription?'}
+        data-testid={'confirm-modal'}
       >
         <Button
           text={'Confirm'}
@@ -66,11 +67,13 @@ function Subscriptions() {
             setModalSuccess(true);
           }}
           variant={'delete'}
+          testid={'delete-btn'}
         />
         <Button
           text={'Cancel'}
           clickAction={() => setModalConfirmDel(!modalConfirmDel)}
           variant={'white'}
+          testid={'cancel-btn'}
         />
       </Modal>
       <section className={styles.list} data-testid={'subs-table-container'}>

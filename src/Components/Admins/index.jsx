@@ -57,6 +57,7 @@ const Admins = () => {
         title={'Delete Admin'}
         text={'Are you sure you want to delete this Admin?'}
         onClose={() => setDeleteModal(!deleteModal)}
+        data-testid={'confirm-modal'}
       >
         <Button
           variant={'delete'}
@@ -65,11 +66,13 @@ const Admins = () => {
             handleDelete(deleteId);
             setDeleteModal(!deleteModal);
           }}
+          testid={'delete-btn'}
         />
         <Button
           variant={'white'}
           text={'Cancel'}
           clickAction={() => setDeleteModal(!deleteModal)}
+          testid={'cancel-btn'}
         />
       </Modal>
       <Modal
@@ -79,6 +82,7 @@ const Admins = () => {
         onClose={() => {
           setSuccesModal(!successModal);
         }}
+        data-testid={'success-modal'}
       />
       <Modal
         isOpen={errorModal}
@@ -88,8 +92,14 @@ const Admins = () => {
         onClose={() => {
           setErrorModal(!errorModal);
         }}
+        data-testid={'error-modal'}
       >
-        <Button variant={'delete'} text={'Close'} clickAction={() => setErrorModal(!errorModal)} />
+        <Button
+          variant={'delete'}
+          text={'Close'}
+          clickAction={() => setErrorModal(!errorModal)}
+          testid={'delete-btn'}
+        />
       </Modal>
       <section className={styles.list}>
         <header className={styles.header}>

@@ -200,6 +200,7 @@ const TrainerAddForm = () => {
             isOpen={successModal}
             onClose={() => setSuccessModal(!successModal)}
             title={error}
+            data-testid={'succes-modal'}
           ></Modal>
         </form>
       </div>
