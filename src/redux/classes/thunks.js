@@ -1,10 +1,15 @@
 import * as classActions from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getClasses = () => {
   return async (dispatch) => {
     dispatch(classActions.getClassesPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
+        method: 'GET',
+        headers: { token: token }
+      });
       const { data, message } = await response.json();
       dispatch(classActions.resetState());
       if (response.status === 200) {
@@ -27,7 +32,8 @@ export const postClass = (newClass) => {
         method: 'POST',
         body: JSON.stringify(newClass),
         headers: {
-          'Content-type': 'application/json'
+          'Content-type': 'application/json',
+          token: token
         }
       });
       const { message } = await response.json();
@@ -48,7 +54,8 @@ export const deleteClass = (id) => {
     dispatch(classActions.deleteClassPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { token: token }
       });
       const { message } = await response.json();
       dispatch(classActions.resetState());
@@ -71,7 +78,8 @@ export const putClass = (id, newClass) => {
         method: 'PUT',
         body: JSON.stringify(newClass),
         headers: {
-          'Content-type': 'application/json'
+          'Content-type': 'application/json',
+          token: token
         }
       });
       const { message } = await response.json();

@@ -1,9 +1,14 @@
 import * as trainersActions from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getTrainers = async (dispatch) => {
   try {
     dispatch(trainersActions.getTrainersPending());
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`, {
+      method: 'GET',
+      headers: { token: token }
+    });
     const data = await response.json();
     if (!data.error) {
       dispatch(trainersActions.getTrainersSuccess(data.data));
@@ -19,7 +24,8 @@ export const deleteTrainer = async (dispatch, id) => {
   dispatch(trainersActions.deleteTrainersPending());
   try {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token: token }
     });
     const { message, error } = await response.json();
     if (!error) {
@@ -48,7 +54,8 @@ export const sendTrainer = async (dispatch, item) => {
       method: 'POST',
       body: JSON.stringify(trainer),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token: token
       }
     });
     const { data, message, error } = await response.json();
@@ -79,7 +86,8 @@ export const putTrainer = async (dispatch, id, updatedTrainer) => {
       method: 'PUT',
       body: JSON.stringify(trainer),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token: token
       }
     });
     const { data, message, error } = await response.json();

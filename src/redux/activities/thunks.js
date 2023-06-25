@@ -1,9 +1,14 @@
 import * as actions from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getActivities = async (dispatch) => {
   dispatch(actions.getActivitiesPending());
   try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`);
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`, {
+      method: 'GET',
+      headers: { token: token }
+    });
     const { data, message } = await res.json();
     dispatch(actions.resetInitialState());
 
@@ -26,7 +31,8 @@ export const postActivity = async (dispatch, newActivity) => {
       method: 'POST',
       body: JSON.stringify(newActivity),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token: token
       }
     });
     const { data, message } = await res.json();
@@ -48,7 +54,8 @@ export const deleteActivity = async (dispatch, id) => {
   dispatch(actions.deleteActivitiesPending());
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token: token }
     });
     const { message } = await res.json();
     dispatch(actions.resetInitialState());
@@ -73,7 +80,8 @@ export const putActivity = async (dispatch, id, activtyUpdated) => {
       method: 'PUT',
       body: JSON.stringify(activtyUpdated),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token: token
       }
     });
     const { data, message } = await res.json();

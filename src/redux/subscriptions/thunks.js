@@ -1,5 +1,7 @@
 import * as actions from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const selectId = (dispatch, id) => {
   dispatch(actions.selectIdAction(id));
 };
@@ -8,7 +10,10 @@ export const getSubscriptions = async (dispatch) => {
   dispatch(actions.resetState());
   dispatch(actions.subscriptionsPending());
   try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`);
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
+      method: 'GET',
+      headers: { token: token }
+    });
     const data = await res.json();
     dispatch(actions.getSubscriptionsSuccess(data.data));
   } catch (error) {
@@ -21,7 +26,8 @@ export const deleteSubscriptions = async (dispatch, id) => {
   dispatch(actions.subscriptionsPending());
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token: token }
     });
     const data = await res.json();
     data.error
@@ -40,7 +46,8 @@ export const postSubscriptions = async (dispatch, newSub) => {
       method: 'POST',
       body: JSON.stringify(newSub),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token: token
       }
     });
     const data = await res.json();
@@ -60,7 +67,8 @@ export const updateSubscription = async (dispatch, update, id) => {
       method: 'PUT',
       body: JSON.stringify(update),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token: token
       }
     });
     const data = await res.json();
