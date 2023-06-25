@@ -37,7 +37,7 @@ const Table = () => {
         title={'Delete Activity'}
         text={'Are you sure you want to delete this activity?'}
         onClose={() => setConfirmModal(!confirmModal)}
-        data-testid={'confirm-modal'}
+        testid={'confirm-modal'}
       >
         <Button
           text={'Delete'}
@@ -57,7 +57,7 @@ const Table = () => {
         title={modalMessage}
         success
         onClose={() => setDeleteModal(!deleteModal)}
-        data-testid={'success-modal'}
+        testid={'success-modal'}
       />
       <table className={styles.table}>
         <thead className={styles.tHead}>

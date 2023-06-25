@@ -164,14 +164,14 @@ const MembersEdit = () => {
         isOpen={showModalError}
         title={message}
         error
-        data-testid={'error-modal'}
+        testid={'error-modal'}
       />
       <Modal
         onClose={() => setShowModal(false)}
         isOpen={showModal}
         title={message}
         success
-        data-testid={'success-modal'}
+        testid={'success-modal'}
       />
       ;
       <div className={styles.box} data-testid={'member-editform'}>

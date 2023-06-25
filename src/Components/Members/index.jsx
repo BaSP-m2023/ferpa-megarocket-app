@@ -59,7 +59,7 @@ function Members() {
           isOpen={showModalDeleteSuccess}
           title={theMessage}
           success
-          data-testid={'success-modal'}
+          testid={'success-modal'}
         ></Modal>
         <div className={styles.header}>
           <h2 className={styles.title}>Members</h2>
@@ -116,7 +116,7 @@ function Members() {
               title={`Confirm Delete`}
               text={'Are you sure that you want to delete this member?'}
               warning={true}
-              data-testid={'confirm-modal'}
+              testid={'confirm-modal'}
             >
               <Button
                 text={'Delete'}

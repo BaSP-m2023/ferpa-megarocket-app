@@ -57,7 +57,7 @@ const Admins = () => {
         title={'Delete Admin'}
         text={'Are you sure you want to delete this Admin?'}
         onClose={() => setDeleteModal(!deleteModal)}
-        data-testid={'confirm-modal'}
+        testid={'confirm-modal'}
       >
         <Button
           variant={'delete'}
@@ -82,7 +82,7 @@ const Admins = () => {
         onClose={() => {
           setSuccesModal(!successModal);
         }}
-        data-testid={'success-modal'}
+        testid={'success-modal'}
       />
       <Modal
         isOpen={errorModal}
@@ -92,7 +92,7 @@ const Admins = () => {
         onClose={() => {
           setErrorModal(!errorModal);
         }}
-        data-testid={'error-modal'}
+        testid={'error-modal'}
       >
         <Button
           variant={'delete'}
@@ -127,7 +127,7 @@ const Admins = () => {
                     <td className={styles.td}></td>
                     <td className={styles.icons}>
                       <Link to={`/admins/form/${admin._id}`}>
-                        <Button variant={'edit'} />
+                        <Button variant={'edit'} testid={'edit-btn'} />
                       </Link>
                     </td>
                     <td className={styles.icons}>
@@ -137,6 +137,7 @@ const Admins = () => {
                           setDeleteModal(!deleteModal);
                           setDeleteId(admin._id);
                         }}
+                        testid={'delete-btn'}
                       />
                     </td>
                   </tr>

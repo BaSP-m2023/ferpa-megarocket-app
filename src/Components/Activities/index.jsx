@@ -61,7 +61,7 @@ function Activities() {
               isOpen={errorModal}
               title={message}
               error
-              data-testid={'error-modal'}
+              testid={'error-modal'}
             />
           </>
         ) : (
@@ -77,7 +77,7 @@ function Activities() {
               isOpen={showModal}
               title={modalMessage}
               success
-              data-testid={'success-modal'}
+              testid={'success-modal'}
             />
             <Table />
           </>

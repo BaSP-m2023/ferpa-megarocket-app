@@ -92,14 +92,14 @@ const Classes = () => {
           onClose={() => {
             setShowSuccessModal(false);
           }}
-          data-testid={'success-modal'}
+          testid={'success-modal'}
         />
         <Modal
           isOpen={showDeleteSuccessModal}
           title={'Class deleted successfully!'}
           success
           onClose={() => setShowDeleteSuccessModal(!showDeleteSuccessModal)}
-          data-testid={'success-delete-modal'}
+          testid={'success-delete-modal'}
         />
         <Modal
           isOpen={showDeleteModal}
@@ -107,7 +107,7 @@ const Classes = () => {
           text={'Are you sure you want to delete?'}
           warning
           onClose={() => setShowDeleteModal(false)}
-          data-testid={'confirm-modal'}
+          testid={'confirm-modal'}
         >
           <Button
             text={'Yes'}

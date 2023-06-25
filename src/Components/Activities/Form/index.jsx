@@ -99,7 +99,7 @@ const Form = () => {
         isOpen={showModal}
         title={message}
         error
-        data-testid={'error-modal'}
+        testid={'error-modal'}
       />
       <form
         className={styles.form}
