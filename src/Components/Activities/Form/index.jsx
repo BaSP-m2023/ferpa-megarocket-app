@@ -60,7 +60,7 @@ const Form = () => {
 
   useEffect(() => {
     if (success) {
-      history.push('/admins/home/activities');
+      history.push('/admin/activities');
     }
     if (error) {
       handleModal();
@@ -96,9 +96,7 @@ const Form = () => {
     <div className={styles.container}>
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} error />
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <h2 className={styles.formTitle}>
-          {location.pathname.includes('create') ? 'ADD ACTIVITY' : 'EDIT ACTIVITY'}
-        </h2>
+        <h2 className={styles.formTitle}>{!id ? 'ADD ACTIVITY' : 'EDIT ACTIVITY'}</h2>
         {isPending ? (
           <Loader />
         ) : (
@@ -133,14 +131,10 @@ const Form = () => {
               {errors.isActive && <span>{errors.isActive.message}</span>}
             </div>
             <div className={styles.formBtns}>
-              <Link to="/admins/home/activities">
+              <Link to="/admin/activities">
                 <Button text={'Cancel'} variant={'white'} />
               </Link>
-              <Button
-                text={location.pathname.includes('edit') ? 'Edit' : 'Add'}
-                variant={'add'}
-                submitting
-              />
+              <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting />
             </div>
           </div>
         )}

@@ -48,7 +48,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <Link to={`/admins/home/form/${fistItem?._id}`}>
+        <Link to={`/admin/form/${fistItem?._id}`}>
           <Button variant={'add'} text={'Edit Profile'} />
         </Link>
       </div>

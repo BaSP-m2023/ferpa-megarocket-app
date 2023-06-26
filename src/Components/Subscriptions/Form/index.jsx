@@ -67,7 +67,7 @@ const Form = () => {
         date: editSub?.date.slice(0, 10)
       });
     }
-    if (location.pathname.includes('/members/home/subscriptions/form')) {
+    if (location.pathname.includes('/member/subscriptions/form')) {
       setCurrentSub({ ...currentSub, memberId: firstMember._id });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,9 +85,9 @@ const Form = () => {
     reset(currentSub);
   }, [currentSub, reset]);
 
-  const pathname = location.pathname.includes('/members/home/subscriptions/form')
-    ? '/members/home/subscriptions'
-    : '/admins/home/subscriptions';
+  const pathname = location.pathname.includes('/member/subscriptions/form')
+    ? '/member/subscriptions'
+    : '/admin/subscriptions';
 
   const onRedirect = {
     pathname,
@@ -124,7 +124,7 @@ const Form = () => {
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <h2 className={styles.formTitle}>{id ? 'EDIT SUBSCRIPTION' : 'ADD SUBSCRIPTION'}</h2>
         <div>
-          {location.pathname.includes('/members/home/subscriptions/form') ? (
+          {location.pathname.includes('/member/subscriptions/form') ? (
             <div className={styles.hidden}>
               <Select
                 nameValue={'memberId'}
@@ -165,12 +165,12 @@ const Form = () => {
             />
           </div>
           <div className={styles.formBtns}>
-            {location.pathname.includes('/members/home/subscriptions/form') ? (
-              <Link to={'/members/home/subscriptions'}>
+            {location.pathname.includes('/member/subscriptions/form') ? (
+              <Link to={'/member/subscriptions'}>
                 <Button variant={'white'} text={'Cancel'} />
               </Link>
             ) : (
-              <Link to={'/admins/home/subscriptions'}>
+              <Link to={'/admin/subscriptions'}>
                 <Button variant={'white'} text={'Cancel'} />
               </Link>
             )}

@@ -84,7 +84,7 @@ const Trainers = () => {
       <div className={styles.header}>
         <div className={styles.inside}>
           <h2 className={styles.title}>Trainers</h2>
-          <Link to={'/admins/home/trainers/form'}>
+          <Link to={'/admin/trainers/form'}>
             <Button text={'add trainer'} variant={'add'} />
           </Link>
         </div>
@@ -108,7 +108,7 @@ const Trainers = () => {
                   <td className={styles.list}>{item.email}</td>
                   <td>
                     <div className={styles.buttons}>
-                      <Link to={`/admins/home/trainers/form/${item._id}`}>
+                      <Link to={`/admin/trainers/form/${item._id}`}>
                         <Button variant={'edit'} />
                       </Link>
                       <Button

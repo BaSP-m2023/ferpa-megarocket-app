@@ -19,28 +19,28 @@ const AdminRoutes = () => {
   return (
     <Switch>
       <Route exact path={`${url}/profile`} component={AdminsProfile} />
-      <Route exact path="/reports" component={AdminsReports} />
-      <Route exact path="/form/:id" component={AdminsForm} />
+      <Route exact path={`${url}/reports`} component={AdminsReports} />
+      <Route exact path={`${url}/form/:id`} component={AdminsForm} />
 
-      <Route exact path="/activities" component={Activities} />
-      <Route exact path="/activities/form" component={ActivitiesForm} />
-      <Route exact path="/activities/form/:id" component={ActivitiesForm} />
+      <Route exact path={`${url}/activities`} component={Activities} />
+      <Route exact path={`${url}/activities/form`} component={ActivitiesForm} />
+      <Route exact path={`${url}/activities/form/:id`} component={ActivitiesForm} />
 
-      <Route exact path="/classes" component={Classes} />
-      <Route exact path="/classes/form/:id" component={Form} />
-      <Route exact path="/classes/form" component={Form} />
+      <Route exact path={`${url}/classes`} component={Classes} />
+      <Route exact path={`${url}/classes/form/:id`} component={Form} />
+      <Route exact path={`${url}/classes/form`} component={Form} />
 
-      <Route exact path="/members" component={Members} />
-      <Route exact path="/members/form" component={MembersCreate} />
-      <Route exact path="/members/form/:id" component={MembersEdit} />
+      <Route exact path={`${url}/members`} component={Members} />
+      <Route exact path={`${url}/members/form`} component={MembersCreate} />
+      <Route exact path={`${url}/members/form/:id`} component={MembersEdit} />
 
-      <Route exact path="/subscriptions" component={Subscriptions} />
-      <Route exact path="/subscriptions/form" component={SubscriptionForm} />
-      <Route exact path="/subscriptions/form/:id" component={SubscriptionForm} />
+      <Route exact path={`${url}/subscriptions`} component={Subscriptions} />
+      <Route exact path={`${url}/subscriptions/form`} component={SubscriptionForm} />
+      <Route exact path={`${url}/subscriptions/form/:id`} component={SubscriptionForm} />
 
-      <Route exact path="/trainers" component={Trainers} />
-      <Route exact path="/trainers/form" component={FormTrainers} />
-      <Route exact path="/trainers/form/:id" component={FormTrainers} />
+      <Route exact path={`${url}/trainers`} component={Trainers} />
+      <Route exact path={`${url}/trainers/form`} component={FormTrainers} />
+      <Route exact path={`${url}/trainers/form/:id`} component={FormTrainers} />
     </Switch>
   );
 };

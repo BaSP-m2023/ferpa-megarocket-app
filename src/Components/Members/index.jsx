@@ -41,7 +41,7 @@ function Members() {
         <div className={styles.list}>
           <div className={styles.header}>
             <h2>Members</h2>
-            <Link to={'/members/create'}>
+            <Link to={'admin/members/form'}>
               <Button text={'Create new member'} variant={'add'} />
             </Link>
           </div>
@@ -62,7 +62,7 @@ function Members() {
         ></Modal>
         <div className={styles.header}>
           <h2 className={styles.title}>Members</h2>
-          <Link to={'/admins/home/members/create'}>
+          <Link to={'/admin/members/form'}>
             <Button text={'Add'} variant={'add'} />
           </Link>
         </div>
@@ -91,7 +91,7 @@ function Members() {
                     <td className={styles.td}>{item.email}</td>
                     <td className={styles.td}>{item.phone}</td>
                     <td className={styles.tdBtn}>
-                      <Link to={`members/edit/${item._id}`}>
+                      <Link to={`admin/members/form/${item._id}`}>
                         <Button variant={'edit'} />
                       </Link>
                     </td>

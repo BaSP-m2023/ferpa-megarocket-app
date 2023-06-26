@@ -30,9 +30,9 @@ const Routes = () => {
     <BrowserRouter>
       <Suspense fallback={<Loader />}>
         <Switch>
-          <PrivateRoute path="/admins" role="ADMIN" component={AdminsRoutes} />
+          <PrivateRoute path="/admin" role="ADMIN" component={AdminsRoutes} />
           <PrivateRoute path="/member" role="MEMBER" component={MembersRoutes} />
-          <PrivateRoute path="/super-admins" role="SUPER_ADMIN" component={SuperAdminsRoutes} />
+          <PrivateRoute path="/super-admin" role="SUPER_ADMIN" component={SuperAdminsRoutes} />
           <Route path="/home" component={HomeRoutes} />
           <Redirect to="/home" />
         </Switch>

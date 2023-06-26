@@ -13,6 +13,7 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(getMembers());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isPending) {
@@ -77,7 +78,7 @@ const Profile = () => {
         </div>
       </div>
       <div className={styles.editButton}>
-        <Link to={`/members/home/edit/${data[0]._id}`}>
+        <Link to={`/member/form/${data[0]._id}`}>
           <Button text={'Edit your profile!'} variant={'add'} />
         </Link>
       </div>

@@ -33,10 +33,10 @@ function Login() {
           </form>
           <Button text={'Continue'} variant={'add'} submitting />
         </div>
-        <Link to="/members/home/profile">
+        <Link to="/member/profile">
           <button>Members</button>
         </Link>
-        <Link to="/admins/profile">
+        <Link to="/admin/profile">
           <button>Admins</button>
         </Link>
       </div>

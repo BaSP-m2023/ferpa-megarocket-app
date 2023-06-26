@@ -8,86 +8,86 @@ const Nav = () => {
   return (
     <nav className={styles.navbar}>
       <ul className={styles.links}>
-        {location.pathname.includes('/members/home') && (
+        {location.pathname.includes('/member') && (
           <>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              to="/members/home/profile"
+              to="/member/profile"
             >
               <li>Profile</li>
             </NavLink>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              to="/members/home/classes"
+              to="/member/classes"
             >
               <li>Classes</li>
             </NavLink>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              to="/members/home/subscriptions"
+              to="/member/subscriptions"
             >
               <li>My Subscriptions</li>
             </NavLink>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              to="/members/home/activities"
+              to="/member/activities"
             >
               <li>Activities</li>
             </NavLink>
           </>
         )}
-        {location.pathname.includes('/admins/home') && (
+        {location.pathname.includes('/admin') && (
           <>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              to="/admins/home/profile"
+              to="/admin/profile"
             >
               <li>Profile</li>
             </NavLink>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              to="/admins/home/reports"
+              to="/admin/reports"
             >
               <li>Reports</li>
             </NavLink>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              to="/admins/home/activities"
+              to="/admin/activities"
             >
               <li>Activities</li>
             </NavLink>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              to="/admins/home/classes"
+              to="/admin/classes"
             >
               <li>Classes</li>
             </NavLink>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              to="/admins/home/members"
+              to="/admin/members"
             >
               <li>Members</li>
             </NavLink>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              to="/admins/home/subscriptions"
+              to="/admin/subscriptions"
             >
               <li>Subscriptions</li>
             </NavLink>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              to="/admins/home/trainers"
+              to="/admin/trainers"
             >
               <li>Trainers</li>
             </NavLink>

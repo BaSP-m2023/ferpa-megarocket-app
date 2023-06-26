@@ -5,7 +5,7 @@ import { useLocation, Link } from 'react-router-dom';
 function Header() {
   const location = useLocation();
   const currentPath = location.pathname;
-  const homePath = '/home/landing';
+  const homePath = '/home';
   const loginPath = '/home/login';
   const signupPath = '/home/signup';
 
