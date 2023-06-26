@@ -146,6 +146,18 @@ const Form = () => {
     history.push(path);
   };
 
+  const cancelButtonDestination = location.pathname.startsWith('admins/')
+    ? '/admins/home/profile'
+    : location.pathname.startsWith('superadmins/')
+    ? '/superadmins/home/admins'
+    : null;
+
+  if (cancelButtonDestination === null) {
+    throw new Error(
+      'This form should only be used on routes starting with "Admins" or "Superadmins"'
+    );
+  }
+
   return (
     <div className={styles.container}>
       <Modal
@@ -248,17 +260,9 @@ const Form = () => {
           />
         </div>
         <div className={styles.modalBtns}>
-          {location.pathname.includes('admins/home/form') ? (
-            <Link to="/admins/home/profile">
-              <Button text={'Cancel'} variant={'white'} />
-            </Link>
-          ) : location.pathname.includes('superadmins/home/edit') ? (
-            <Link to="/superadmins/home/admins">
-              <Button text={'Cancel'} variant={'white'} />
-            </Link>
-          ) : (
-            ''
-          )}
+          <Link to={cancelButtonDestination}>
+            <Button text={'Cancel'} variant={'white'} />
+          </Link>
           {id ? (
             <Button variant={'add'} text={'Update Admin'} submitting />
           ) : (

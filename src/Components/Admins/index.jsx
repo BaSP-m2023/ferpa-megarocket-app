@@ -30,7 +30,7 @@ const Admins = () => {
       dispatch(actionsConstants.deleteAdminsPending());
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [message]);
+  }, []);
 
   useEffect(() => {
     if (errorSwitch) {
