@@ -58,6 +58,7 @@ const Classes = () => {
     return (
       <div className={styles.container}>
         <div className={`${styles.transparetnBlue} ${styles.loading}`}>
+          <h2 className={styles.h2}>Classes</h2>
           <div className={styles.loading}>{<Loader />}</div>
         </div>
       </div>
@@ -68,6 +69,7 @@ const Classes = () => {
     return (
       <div className={styles.container}>
         <div className={styles.transparetnBlue}>
+          <h2 className={styles.h2}>Classes</h2>
           <p className={styles.error}>{serverMessage}</p>
         </div>
       </div>
@@ -78,7 +80,7 @@ const Classes = () => {
     <section className={styles.container}>
       <div className={styles.transparetnBlue}>
         <div className={styles.title}>
-          <h2>Classes</h2>
+          <h2 className={styles.h2}>Classes</h2>
           {location.pathname.includes('admins/home/classes') && (
             <Link to="/admins/home/classes/form">
               <Button variant={'add'} text={'Add'} testid={'add-btn'} />

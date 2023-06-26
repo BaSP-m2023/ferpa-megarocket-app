@@ -12,6 +12,7 @@
   background-size: cover;
   background-image: url('../../../public/assets/images/admins-background.jpg');
   min-height: 700px;
+  min-height: 73.1vh;
 }
 
 .title {
@@ -22,7 +23,8 @@
 }
 
 .error {
-  font-size: 60px;
+  font-size: 40px;
+  text-align: center;
 }
 
 .buttons {
@@ -32,17 +34,15 @@
   width: 30%;
 }
 
-.transparetnBlue, .transparetnBlueForm {
-  display: flex;
-  flex-flow: column;
-  justify-content: space-around;
-  align-items: center;
+.transparetnBlue,
+.transparetnBlueForm {
   margin: 0;
-  padding: 1.5vw;
+  padding: 60px 100px;
   width: 80vw;
   background-color: rgba(55, 56, 103, 0.8);
   border-radius: 1vw;
   box-shadow: 10px 10px 20px -6px rgba(0, 0, 0, 0.59);
+  min-height: 600px;
 }
 
 .form {
@@ -98,4 +98,11 @@
 .loading {
   border-radius: 20px;
   box-shadow: 10px 10px 20px -6px rgba(0, 0, 0, 0.59);
+}
+
+.h2 {
+  display: flex;
+  align-self: flex-start;
+  margin: 0 0 30px 0;
+  padding: 0;
 }

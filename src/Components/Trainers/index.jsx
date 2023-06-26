@@ -34,7 +34,7 @@ const Trainers = () => {
           <div className={styles.inside}>
             <h2 className={styles.title}>Trainers</h2>
           </div>
-          <p className={styles.fetchError}>{error}</p>
+          <p className={`${styles.title} ${styles.centered}`}>{error}</p>
         </div>
       </section>
     );
@@ -46,7 +46,9 @@ const Trainers = () => {
           <div className={styles.inside}>
             <h2 className={styles.title}>Trainers</h2>
           </div>
-          <Loader />
+          <div className={styles.loading}>
+            <Loader />
+          </div>
         </div>
       </section>
     );
@@ -92,7 +94,7 @@ const Trainers = () => {
             <Button text={'add trainer'} variant={'add'} testid={'add-btn'} />
           </Link>
         </div>
-        <table className={styles.hola}>
+        <table className={styles.table}>
           <thead>
             <tr>
               <th className={styles.titles}>Name</th>

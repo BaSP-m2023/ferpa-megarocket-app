@@ -10,24 +10,67 @@
   background-size: cover;
   width: 100%;
   min-height: 80vh;
+  min-height: 73.1vh;
 }
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 90%;
   height: 90%;
-  margin: 20px;
+  margin: 0 20px;
   padding: 20px 0;
   border-radius: 10px;
 }
+
 .repcontainer {
   width: 70%;
+  height: 100px;
+  margin: 25px auto;
+  background-color: rgba(55, 56, 103);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 1vw;
+}
+
+.repcontainerBottom {
+  width: 70%;
+  margin: 30px auto;
+  min-height: 130px;
+  background-color: rgba(55, 56, 103);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 1vw;
+}
+
+.repcontainerLoading {
+  width: 70%;
+  height: 100px;
   margin: 30px auto;
   background-color: rgba(55, 56, 103);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 1vw;
 }
+
+.repcontainerLoadingMiddle {
+  width: 70%;
+  height: 100px;
+  margin: 30px auto;
+  background-color: rgba(55, 56, 103);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 1vw;
+}
+
+.centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 60px 0;
+}
+
+.margin {
+  margin-bottom: 20px;
+}
+
 .reports {
   display: flex;
   justify-content: space-between;
@@ -40,26 +83,51 @@
 .title {
   color: white;
   font-size: 45px;
+  margin: 0;
+  padding: 10px 0;
 }
 
 .subtitle {
   align-self: flex-start;
   color: #46a37c;
-  margin-left: 30px;
+  margin: 10px 0 0 30px;
 }
+
 .popular {
-  font-size: 18px;
+  font-size: 25px;
   color: white;
+  width: 80%;
+  padding: 0 50px;
+  text-align: center;
 }
+
 .popularContainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
+
 .index {
-  padding: 5px 0;
+  padding: 5px auto;
   text-align: center;
   font-weight: bold;
   background-color: #46a37cbb;
   border-radius: 3px;
+  width: 40%;
+  margin: 0 auto;
+
+}
+
+.largerTop {
+  width: 21%;
+  text-align: center;
+}
+
+.smallerBottom {
+  width: 18%;
+  text-align: center;
+}
+
+.reportText {
+  margin: 10px;
 }

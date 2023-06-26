@@ -4,12 +4,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 74vh;
   font-family: 'Roboto', sans-serif;
   background-image: url('../../../../public/assets/images/admins-background.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  min-height: 73.1vh;
 }
 
 .list {
@@ -66,6 +66,7 @@
   justify-items: center;
   width: 90%;
   padding: 0 3vh;
+  height: 550px;
 }
 
 .onTop {
@@ -78,6 +79,7 @@
 }
 
 .h2 {
+  margin: 50px 0 0 0;
   font-size: 40px;
   font-weight: 600;
   color: white;
