@@ -1,24 +1,15 @@
-import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
-import Routes from 'routes';
-import Home from 'Components/Home';
+// import { Switch, Route, Redirect } from 'react-router-dom';
+// import Routes from 'routes';
 
-const routes = [
-  {
-    name: 'Home',
-    path: '/members'
-  }
-];
+// const MemberRoutes = () => {
+//   return (
+//     <Routes>
+//       <Switch>
+//         <Route exact path={`${url}/`} component={Home} />
+//         <Redirect to={`${url}/`} />
+//       </Switch>
+//     </Routes>
+//   );
+// };
 
-const MemberRoutes = () => {
-  const { url } = useRouteMatch();
-  return (
-    <Routes routes={routes}>
-      <Switch>
-        <Route exact path={`${url}/`} component={Home} />
-        <Redirect to={`${url}/`} />
-      </Switch>
-    </Routes>
-  );
-};
-
-export default MemberRoutes;
+// export default MemberRoutes;

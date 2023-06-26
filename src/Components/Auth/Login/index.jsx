@@ -36,7 +36,7 @@ function Login() {
         <Link to="/members/home/profile">
           <button>Members</button>
         </Link>
-        <Link to="/admins/home/profile">
+        <Link to="/admins/profile">
           <button>Admins</button>
         </Link>
       </div>

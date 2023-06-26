@@ -5,17 +5,14 @@ import { useDispatch } from 'react-redux';
 import { tokenListener } from '../helper/firebase';
 import { getAuth } from '../redux/auth/thunks';
 import Loader from 'Components/Shared/Loader';
-import Home from 'Components/Home';
 
 const AdminsRoutes = lazy(() => import('./admins'));
-const SuperAdminsRoutes = lazy(() => import('./superAdmins'));
+const SuperAdminsRoutes = lazy(() => import('./superAdmin'));
 const MembersRoutes = lazy(() => import('./members'));
-// const Home = lazy(() => import('./home'));
-// const AuthRoutes = lazy(() => import('./auth'));
+const HomeRoutes = lazy(() => import('./home'));
 
 const Routes = () => {
   const dispatch = useDispatch();
-
   const token = sessionStorage.getItem('token');
 
   useEffect(() => {
@@ -36,7 +33,7 @@ const Routes = () => {
           <PrivateRoute path="/admins" role="ADMIN" component={AdminsRoutes} />
           <PrivateRoute path="/member" role="MEMBER" component={MembersRoutes} />
           <PrivateRoute path="/super-admins" role="SUPER_ADMIN" component={SuperAdminsRoutes} />
-          <Route path="/home" component={Home} />
+          <Route path="/home" component={HomeRoutes} />
           <Redirect to="/home" />
         </Switch>
       </Suspense>

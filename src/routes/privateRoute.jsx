@@ -5,7 +5,7 @@ import { Route, Redirect } from 'react-router-dom';
 const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
   const role = sessionStorage.getItem('role');
   const token = sessionStorage.getItem('token');
-  const error = useSelector((state) => state.auth?.error);
+  const { error } = useSelector((state) => state.auth);
 
   return (
     <Route
@@ -15,9 +15,9 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
           return <RouteComponent {...routeProps} />;
         }
         if ((!role || role !== rest.role || !token) && !error) {
-          return <Redirect to={'/auth/not-allowed'} />;
+          return <Redirect to={'/home/login'} />;
         }
-        return <Redirect to={'/auth/login'} />;
+        return <Redirect to={'/home/login'} />;
       }}
     />
   );

@@ -1,5 +1,4 @@
-import { Switch, Route } from 'react-router-dom';
-import Routes from 'routes';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import Activities from 'Components/Activities';
 import ActivitiesForm from 'Components/Activities/Form';
 import Classes from 'Components/Classes';
@@ -16,34 +15,33 @@ import AdminsReports from 'Components/AdminsHome/Reports';
 import AdminsForm from 'Components/Admins/Form';
 
 const AdminRoutes = () => {
+  const { url } = useRouteMatch();
   return (
-    <Routes>
-      <Switch>
-        <Route exact path="/activities" component={Activities} />
-        <Route path="/activities/create" component={ActivitiesForm} />
-        <Route path="/activities/edit/:id" component={ActivitiesForm} />
+    <Switch>
+      <Route exact path={`${url}/profile`} component={AdminsProfile} />
+      <Route exact path="/reports" component={AdminsReports} />
+      <Route exact path="/form/:id" component={AdminsForm} />
 
-        <Route exact path="/classes" component={Classes} />
-        <Route path="/classes/form/:id" component={Form} />
-        <Route exact path="/classes/form" component={Form} />
+      <Route exact path="/activities" component={Activities} />
+      <Route exact path="/activities/form" component={ActivitiesForm} />
+      <Route exact path="/activities/form/:id" component={ActivitiesForm} />
 
-        <Route exact path="/members" component={Members} />
-        <Route exact path="/members/create" component={MembersCreate} />
-        <Route path="/members/edit/:id" component={MembersEdit} />
+      <Route exact path="/classes" component={Classes} />
+      <Route exact path="/classes/form/:id" component={Form} />
+      <Route exact path="/classes/form" component={Form} />
 
-        <Route exact path="/subscriptions" component={Subscriptions} />
-        <Route exact path="/subscriptions/form" component={SubscriptionForm} />
-        <Route path="/subscriptions/form/:id" component={SubscriptionForm} />
+      <Route exact path="/members" component={Members} />
+      <Route exact path="/members/form" component={MembersCreate} />
+      <Route exact path="/members/form/:id" component={MembersEdit} />
 
-        <Route exact path="/trainers" component={Trainers} />
-        <Route exact path="/trainers/form" component={FormTrainers} />
-        <Route path="/trainers/form/:id" component={FormTrainers} />
+      <Route exact path="/subscriptions" component={Subscriptions} />
+      <Route exact path="/subscriptions/form" component={SubscriptionForm} />
+      <Route exact path="/subscriptions/form/:id" component={SubscriptionForm} />
 
-        <Route exact path="/profile" component={AdminsProfile} />
-        <Route exact path="/reports" component={AdminsReports} />
-        <Route exact path="/form/:id" component={AdminsForm} />
-      </Switch>
-    </Routes>
+      <Route exact path="/trainers" component={Trainers} />
+      <Route exact path="/trainers/form" component={FormTrainers} />
+      <Route exact path="/trainers/form/:id" component={FormTrainers} />
+    </Switch>
   );
 };
 
