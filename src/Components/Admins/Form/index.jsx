@@ -146,9 +146,9 @@ const Form = () => {
     history.push(path);
   };
 
-  const cancelButtonDestination = location.pathname.startsWith('admins/')
+  const cancelButtonDestination = location.pathname.startsWith('/admins')
     ? '/admins/home/profile'
-    : location.pathname.startsWith('superadmins/')
+    : location.pathname.startsWith('/superadmins')
     ? '/superadmins/home/admins'
     : null;
 
