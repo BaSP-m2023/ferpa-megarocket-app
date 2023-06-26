@@ -1,9 +1,14 @@
 import * as actionsConstants from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getAdmins = async (dispatch) => {
   dispatch(actionsConstants.getAdminsPending());
   try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
+      method: 'GET',
+      headers: { token: token }
+    });
     if (res.status === 200) {
       const { data } = await res.json();
       dispatch(actionsConstants.getAdminsSuccess(data));
@@ -19,7 +24,8 @@ export const deleteAdmin = async (dispatch, id) => {
   dispatch(actionsConstants.deleteAdminsPending());
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token: token }
     });
     if (res.status === 200) {
       const message = 'Admin deleted';
@@ -42,7 +48,8 @@ export const updateAdmin = async (dispatch, id, updatedAdmin) => {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token: token
       },
       body: JSON.stringify(adminToSend)
     });
@@ -65,7 +72,8 @@ export const addAdmin = async (dispatch, admin) => {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token: token
       },
       body: JSON.stringify(admin)
     });
