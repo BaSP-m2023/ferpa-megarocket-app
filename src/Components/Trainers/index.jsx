@@ -59,6 +59,7 @@ const Trainers = () => {
         onClose={() => setDeleteModal(!deleteModal)}
         title={'Delete Trainer'}
         text={'Are you sure you want to delete this Trainer?'}
+        data-testid={'confirm-modal'}
       >
         <Button
           text={'Delete'}
@@ -68,11 +69,13 @@ const Trainers = () => {
             setDeleteModal(!deleteModal);
             setSuccessModal(!successModal);
           }}
+          testid={'confirm-btn'}
         />
         <Button
           text={'Cancel'}
           variant={'white'}
           clickAction={() => setDeleteModal(!deleteModal)}
+          testid={'cancel-btn'}
         />
       </Modal>
       <Modal
@@ -80,12 +83,13 @@ const Trainers = () => {
         isOpen={successModal}
         onClose={() => setSuccessModal(!successModal)}
         title={error}
+        data-testid={'success-modal'}
       ></Modal>
-      <div className={styles.header}>
+      <div className={styles.header} data-testid={'trainer-table-container'}>
         <div className={styles.inside}>
           <h2 className={styles.title}>Trainers</h2>
           <Link to={'/admins/home/trainers/form'}>
-            <Button text={'add trainer'} variant={'add'} />
+            <Button text={'add trainer'} variant={'add'} testid={'add-btn'} />
           </Link>
         </div>
         <table className={styles.hola}>
@@ -109,7 +113,7 @@ const Trainers = () => {
                   <td>
                     <div className={styles.buttons}>
                       <Link to={`/admins/home/trainers/form/${item._id}`}>
-                        <Button variant={'edit'} />
+                        <Button variant={'edit'} testid={'edit-btn'} />
                       </Link>
                       <Button
                         variant={'deleteIcon'}
@@ -117,6 +121,7 @@ const Trainers = () => {
                           setDeleteModal(!deleteModal);
                           setCurrentId(item._id);
                         }}
+                        testid={'delete-btn'}
                       />
                     </div>
                   </td>

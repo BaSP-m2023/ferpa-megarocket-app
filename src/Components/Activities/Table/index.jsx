@@ -37,16 +37,19 @@ const Table = () => {
         title={'Delete Activity'}
         text={'Are you sure you want to delete this activity?'}
         onClose={() => setConfirmModal(!confirmModal)}
+        testid={'confirm-modal'}
       >
         <Button
           text={'Delete'}
           variant={'delete'}
           clickAction={() => deleteActivity(dispatch, currentID)}
+          testid={'delete-btn'}
         />
         <Button
           text={'Cancel'}
           variant={'white'}
           clickAction={() => setConfirmModal(!confirmModal)}
+          testid={'cancel-btn'}
         />
       </Modal>
       <Modal
@@ -54,6 +57,7 @@ const Table = () => {
         title={modalMessage}
         success
         onClose={() => setDeleteModal(!deleteModal)}
+        testid={'success-modal'}
       />
       <table className={styles.table}>
         <thead className={styles.tHead}>
@@ -75,7 +79,7 @@ const Table = () => {
                 <td className={styles.thStatus}>{activity?.isActive ? 'Active' : 'Inactive'}</td>
                 <td className={styles.tdBtn}>
                   <Link to={`/admins/activities/edit/${activity._id}`}>
-                    <Button variant={'edit'} />
+                    <Button variant={'edit'} testid={'edit-btn'} />
                   </Link>
                 </td>
                 <td className={styles.tdBtn}>
@@ -85,6 +89,7 @@ const Table = () => {
                       setConfirmModal(!confirmModal);
                       setCurrentID(activity._id);
                     }}
+                    testid={'delete-btn'}
                   />
                 </td>
               </tr>

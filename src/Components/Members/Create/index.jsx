@@ -243,10 +243,21 @@ const MembersCreate = () => {
         isOpen={showModalError}
         title={message}
         error
+        testid={'error-modal'}
       />
-      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />
+      <Modal
+        onClose={() => setShowModal(false)}
+        isOpen={showModal}
+        title={message}
+        success
+        testid={'success-modal'}
+      />
       <div className={styles.box}>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className={styles.form}
+          data-testid={'member-add-form'}
+        >
           <h2 className={styles.formTitle}>ADD MEMBER</h2>
           <div className={styles.inputBox}>
             <Input
@@ -348,9 +359,9 @@ const MembersCreate = () => {
 
           <div className={styles.formBtns}>
             <Link to="/admins/home/members">
-              <Button text={'Cancel'} variant={'white'} />
+              <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
             </Link>
-            <Button text={'Add'} variant={'add'} submitting />
+            <Button text={'Add'} variant={'add'} submitting testid={'confirm-add-btn'} />
           </div>
         </form>
       </div>

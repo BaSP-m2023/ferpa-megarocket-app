@@ -78,7 +78,7 @@ const Profile = () => {
       </div>
       <div className={styles.editButton}>
         <Link to={`/members/home/edit/${data[0]._id}`}>
-          <Button text={'Edit your profile!'} variant={'add'} />
+          <Button text={'Edit your profile!'} variant={'add'} testid={'edit-btn'} />
         </Link>
       </div>
     </section>

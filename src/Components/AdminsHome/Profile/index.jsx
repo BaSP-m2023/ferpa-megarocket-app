@@ -16,7 +16,7 @@ const Profile = () => {
 
   return (
     <section className={styles.container}>
-      <div className={styles.onTop}>
+      <div className={styles.onTop} data-testid={'admins-profile-container'}>
         <h2 className={styles.h2}>Account information</h2>
         <div className={styles.nextToEachOther}>
           <div className={styles.big}>
@@ -49,7 +49,7 @@ const Profile = () => {
           </div>
         </div>
         <Link to={`/admins/home/form/${fistItem?._id}`}>
-          <Button variant={'add'} text={'Edit Profile'} />
+          <Button variant={'add'} text={'Edit Profile'} testid={'edit-btn'} />
         </Link>
       </div>
     </section>
