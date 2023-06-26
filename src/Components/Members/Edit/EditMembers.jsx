@@ -174,7 +174,7 @@ const MembersEdit = () => {
         testid={'success-modal'}
       />
       ;
-      <div className={styles.box} data-testid={'member-editform'}>
+      <div className={styles.box} data-testid={'member-editform-container'}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
           <h2 className={styles.formTitle}>EDIT MEMBER</h2>
           <div className={styles.inputBox}>
