@@ -154,7 +154,7 @@ const Form = () => {
 
   if (cancelButtonDestination === null) {
     throw new Error(
-      'This form should only be used on routes starting with "Admins" or "Superadmins"'
+      'This form should only be used on routes starting with "/admins" or "/superadmins"'
     );
   }
 
