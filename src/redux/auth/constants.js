@@ -9,3 +9,6 @@ export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const GET_AUTH_PENDING = 'GET_AUTH_PENDING';
 export const GET_AUTH_SUCCESS = 'GET_AUTH_SUCCESS';
 export const GET_AUTH_ERROR = 'GET_AUTH_ERROR';
+export const SIGN_UP_PENDING = 'SIGN_UP_PENDING';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+export const SIGN_UP_ERROR = 'SIGN_UP_ERROR';
