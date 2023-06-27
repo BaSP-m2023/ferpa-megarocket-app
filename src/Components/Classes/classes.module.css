@@ -36,9 +36,10 @@
 
 .buttons {
   display: flex;
-  align-self: center;
+  justify-content: space-between;
   margin-top: 20px;
-  width: 30%;
+  width: 80%;
+  margin: 2vh auto;
 }
 
 .transparetnBlue {
@@ -59,20 +60,19 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 80vw;
-  min-width: 380px;
+  width: 40vw;
+  height: 52vh;
   margin: 2%;
   border-radius: 1.5vh;
-  padding: 4%;
   background-color: rgba(55, 56, 103, 0.8);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  min-height: 480px;
 }
 
 .form {
   display: flex;
   flex-flow: column;
   justify-content: space-between;
+  width: 60%;
 }
 
 .table {
@@ -123,4 +123,8 @@
 .loading {
   border-radius: 20px;
   box-shadow: 10px 10px 20px -6px rgba(0, 0, 0, 0.59);
+}
+
+.tdBtn {
+  width: 100px;
 }

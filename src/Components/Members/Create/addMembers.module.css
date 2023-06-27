@@ -29,7 +29,7 @@
 .box {
   display: flex;
   justify-content: center;
-  width: 50vw;
+  width: 40vw;
   border-radius: 1vw;
   margin: 2vw;
   background-color: rgba(55, 56, 103, 0.8);
@@ -38,9 +38,11 @@
 
 .form {
   display: flex;
-  flex-direction: column;
+  flex-flow: column;
   align-items: center;
-  padding: 1.5vw;
+  justify-content: space-between;
+  width: 60%;
+  height: 80vh;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -57,9 +59,10 @@
 }
 
 .inputBox {
-  width: 20vw;
+  width: 100%;
 }
-.checkboxField{
+
+.checkboxField {
   align-self: flex-start;
   margin-top: 0.5vw;
 }
@@ -82,7 +85,7 @@
   display: flex;
   width: 20vw;
   justify-content: space-between;
-  margin-top: 2vw;
+  margin: 2vw 0;
 }
 
 .signupButton {

@@ -153,14 +153,14 @@ const Classes = () => {
                     <td>{theOne?.trainerId?.firstName}</td>
                     <td>{theOne?.slots}</td>
                     {location.pathname.includes('admins/home/classes') && (
-                      <td>
+                      <td className={styles.tdBtn}>
                         <Link to={`/admins/home/classes/form/${theOne?._id}`}>
                           <Button text={'Edit Item'} variant={'edit'} testid={'edit-btn'} />
                         </Link>
                       </td>
                     )}
                     {location.pathname.includes('admins/home/classes') && (
-                      <td>
+                      <td className={styles.tdBtn}>
                         <Button
                           variant={'deleteIcon'}
                           type={'button'}

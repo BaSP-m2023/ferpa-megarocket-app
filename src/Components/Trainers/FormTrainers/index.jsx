@@ -118,6 +118,7 @@ const TrainerAddForm = () => {
   return (
     <div className={styles.formContainer}>
       <div className={styles.fromBackground}>
+        <h2 className={styles.title}>{id ? 'Edit Trainer' : 'Add Trainer'}</h2>
         <form
           className={styles.form}
           onSubmit={handleSubmit(onSubmit)}
