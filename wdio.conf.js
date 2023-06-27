@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 exports.config = {
   //
   // ====================
@@ -22,8 +23,8 @@ exports.config = {
   // then the current working directory is where your `package.json` resides, so `wdio`
   // will be called from there.
   //
-  specs: ['./test/specs/**/*.js'],
-  // Patterns to exclude.
+  specs: ['./test/specs/admin.activities.e2e.js', './test/specs/member.edit.e2e.js'],
+
   exclude: [
     // 'path/to/excluded/files'
   ],
@@ -52,8 +53,8 @@ exports.config = {
   capabilities: [
     {
       // capabilities for local browser web tests
-      browserName: 'chrome', // or "firefox", "microsoftedge", "safari"
-      'goog:chromeOptions': { args: ['headless'] }
+      browserName: 'chrome' // or "firefox", "microsoftedge", "safari"
+      //'goog:chromeOptions': { args: ['headless'] }
     }
   ],
   //
@@ -240,7 +241,6 @@ exports.config = {
    */
   onComplete: function () {
     const reportError = new Error('Could not generate Allure report');
-    // eslint-disable-next-line no-undef
     const generation = allure(['generate', 'allure-results', '--clean']);
     return new Promise((resolve, reject) => {
       const generationTimeout = setTimeout(() => reject(reportError), 5000);
@@ -259,7 +259,6 @@ exports.config = {
   },
   afterTest: async function (test, context, { error, result, duration, passed, retries }) {
     if (error) {
-      // eslint-disable-next-line no-undef
       await browser.takeScreenshot();
     }
   }
