@@ -1,14 +1,14 @@
 import React from 'react';
 import styles from './nav.module.css';
 import { NavLink } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
 
 const Nav = () => {
-  const location = useLocation();
+  const role = sessionStorage.getItem('role');
+  console.log(role);
   return (
     <nav className={styles.navbar}>
       <ul className={styles.links}>
-        {location.pathname.includes('/member') && (
+        {role === 'MEMBER' && (
           <>
             <NavLink
               activeClassName={styles.linkFocused}
@@ -40,7 +40,7 @@ const Nav = () => {
             </NavLink>
           </>
         )}
-        {location.pathname.includes('/admin') && (
+        {role === 'ADMIN' && (
           <>
             <NavLink
               activeClassName={styles.linkFocused}

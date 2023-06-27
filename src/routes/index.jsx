@@ -24,7 +24,7 @@ const Routes = () => {
       dispatch(getAuth(token));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+  }, []);
 
   return (
     <BrowserRouter>
@@ -32,7 +32,7 @@ const Routes = () => {
         <Switch>
           <PrivateRoute path="/admin" role="ADMIN" component={AdminsRoutes} />
           <PrivateRoute path="/member" role="MEMBER" component={MembersRoutes} />
-          <PrivateRoute path="/super-admin" role="SUPER_ADMIN" component={SuperAdminsRoutes} />
+          <PrivateRoute path="/super-admin" role="SUPER-ADMIN" component={SuperAdminsRoutes} />
           <Route path="/home" component={HomeRoutes} />
           <Redirect to="/home" />
         </Switch>
