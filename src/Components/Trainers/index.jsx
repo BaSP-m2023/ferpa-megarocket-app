@@ -101,7 +101,8 @@ const Trainers = () => {
               <th className={styles.titles}>Last Name</th>
               <th className={styles.titles}>Phone</th>
               <th className={styles.titles}>Email</th>
-              <th></th>
+              <th className={styles.titles}></th>
+              <th className={styles.titles}></th>
             </tr>
           </thead>
           <tbody>

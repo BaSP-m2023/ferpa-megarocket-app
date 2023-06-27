@@ -117,7 +117,7 @@ function Members() {
           <Modal
             onClose={() => setShowModal(false)}
             isOpen={showModal}
-            title={`Confirm Delete`}
+            title={`Delete Member`}
             text={'Are you sure that you want to delete this member?'}
             warning={true}
             testid={'confirm-modal'}

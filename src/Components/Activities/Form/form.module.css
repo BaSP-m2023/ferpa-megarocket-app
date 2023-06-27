@@ -6,7 +6,7 @@
   align-items: center;
   background-image: url('../../../../public/assets/images/subscriptions-background.jpg');
   background-size: cover;
-  min-height: 700px;
+  min-height: 71vh;
 }
 
 .form {

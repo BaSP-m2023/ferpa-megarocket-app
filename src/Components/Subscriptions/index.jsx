@@ -85,7 +85,8 @@ function Subscriptions() {
         ></Modal>
         <Modal
           isOpen={modalConfirmDel}
-          title={'Warning'}
+          title={'Delete Subscription'}
+          warning={true}
           onClose={() => {
             setModalConfirmDel(!modalConfirmDel);
           }}
@@ -93,7 +94,7 @@ function Subscriptions() {
           data-testid={'confirm-modal'}
         >
           <Button
-            text={'Confirm'}
+            text={'Delete'}
             clickAction={() => {
               deleteSubscriptions(dispatch, id);
               setModalConfirmDel(!modalConfirmDel);

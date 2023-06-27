@@ -109,14 +109,14 @@ const Classes = () => {
         />
         <Modal
           isOpen={showDeleteModal}
-          title={'Delete'}
-          text={'Are you sure you want to delete?'}
+          title={'Delete Class'}
+          text={'Are you sure you want to delete this class?'}
           warning
           onClose={() => setShowDeleteModal(false)}
           testid={'confirm-modal'}
         >
           <Button
-            text={'Yes'}
+            text={'Delete'}
             type={'button'}
             variant={'delete'}
             clickAction={() => {

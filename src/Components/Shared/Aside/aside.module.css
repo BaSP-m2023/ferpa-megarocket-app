@@ -4,15 +4,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
   min-width: 20vw;
+  min-height: 77vh;
+  height: 100%;
   background-color: #373867;
+  border-top: solid 1px rgba(211, 208, 208, 0.829);
+  border-bottom: solid 1px rgba(211, 208, 208, 0.829);
+  text-align: center;
 }
 
-.buttons, .contact {
+.buttons,
+.contact {
   width: 80%;
 }
 
 .link {
+  min-height: 70px;
   padding-bottom: 20px;
   color: #C4C4C4;
   font-family: 'Roboto', sans-serif;
@@ -24,20 +32,30 @@
 .contact {
   color: #C4C4C4;
   font-family: 'Roboto', sans-serif;
+  height: 40%;
+  min-height: 300px;
 }
 
 .contactTitle {
   color: #46A37C;
   font-size: 30px;
   font-weight: 700;
+  height: 10%;
+  min-height: 50px;
 }
 
 .contactItem {
+  min-height: 70px;
+  height: 10%;
   display: flex;
+  width: 100%;
+  padding: 20px 0;
   border-bottom: 2px solid #C4C4C4;
+  text-align: center;
 }
 
 .contactItem h4 {
+  width: 100%;
   font-size: 14px;
 }
 

@@ -1,14 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 .container {
+  flex: 1;
   display: flex;
+  flex-flow: column;
   justify-content: center;
+  width: 100%;
   align-items: center;
-  background-image: url('../../../../public/assets/images/subscriptions-background.jpg');
+  font-size: 25px;
+  color: white;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  min-height: 700px;
+  background-image: url('../../../../public/assets/images/subscriptions-background.jpg');
+  min-height: 71vh;
 }
 
 .signupContainer {
@@ -42,7 +47,7 @@
   align-items: center;
   justify-content: space-between;
   width: 60%;
-  height: 80vh;
+  height: 20%;
   font-family: 'Roboto', sans-serif;
 }
 

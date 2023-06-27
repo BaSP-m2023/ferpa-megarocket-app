@@ -405,7 +405,6 @@ const Form = () => {
             label={'Slots'}
           />
           <div className={styles.buttons}>
-            <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting testid={'add-edit-btn'} />
             <Button
               variant={'white'}
               text={'Cancel'}
@@ -413,6 +412,7 @@ const Form = () => {
               clickAction={() => history.push('/admins/home/classes')}
               testid={'cancel-btn'}
             />
+            <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting testid={'add-edit-btn'} />
           </div>
         </form>
       </div>

@@ -5,7 +5,8 @@
   align-items: center;
 }
 
-.member, .admin {
+.member,
+.admin {
   display: flex;
   align-items: center;
   justify-content: center;
