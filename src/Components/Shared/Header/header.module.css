@@ -1,14 +1,14 @@
 .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-right: auto;
-    height: 130px;
-    background: #373867;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: auto;
+  height: 13vh;
+  background: #373867;
 }
 
-.logo{
-    padding-right: 10px;
+.logo {
+  padding-right: 10px;
 }
 
 .title {
@@ -29,12 +29,12 @@
   align-items: center;
 }
 
-.isologo{
-    padding-bottom: 6px;
+.isologo {
+  padding-bottom: 6px;
 }
 
 @media screen and (min-width: 750px) {
-    .container {
-        padding: 0 5%;
-    }
+  .container {
+    padding: 0 5%;
+  }
 }
