@@ -37,14 +37,12 @@ function Members() {
 
   if (isPending) {
     return (
-      <div className={`${styles.container} ${styles.tr}`}>
+      <div className={`${styles.container}`}>
         <div className={styles.list}>
           <div className={styles.header}>
             <h2 className={styles.title}>Members</h2>
           </div>
-          <div className={styles.loading}>
-            <Loader />
-          </div>
+          <div className={styles.loading}>{<Loader />}</div>
         </div>
       </div>
     );

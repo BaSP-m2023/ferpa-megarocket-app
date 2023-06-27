@@ -45,15 +45,15 @@ function Subscriptions() {
   if (isPending) {
     return (
       <section className={styles.container}>
-        <section className={styles.list}>
-          <h2 className={styles.h2}>
-            {location.pathname.includes('/members/home/subscriptions')
-              ? 'My Subscriptions'
-              : 'Subscriptions'}
-          </h2>
-          <div className={styles.loading}>
-            <Loader />
+        <section className={styles.listLoading}>
+          <div className={styles.headerLoading}>
+            <h2 className={styles.h2}>
+              {location.pathname.includes('/members/home/subscriptions')
+                ? 'My Subscriptions'
+                : 'Subscriptions'}
+            </h2>
           </div>
+          <div className={styles.loading}>{<Loader />}</div>
         </section>
       </section>
     );
@@ -62,11 +62,13 @@ function Subscriptions() {
     return (
       <section className={styles.container}>
         <section className={styles.list}>
-          <h2 className={styles.h2}>
-            {location.pathname.includes('/members/home/subscriptions')
-              ? 'My Subscriptions'
-              : 'Subscriptions'}
-          </h2>
+          <div className={styles.headerLoading}>
+            <h2 className={styles.h2}>
+              {location.pathname.includes('/members/home/subscriptions')
+                ? 'My Subscriptions'
+                : 'Subscriptions'}
+            </h2>
+          </div>
           <p className={styles.centered}>{message}</p>
         </section>
       </section>

@@ -48,37 +48,39 @@ function Activities() {
       </section>
     );
   }
-  return (
-    <section className={styles.container}>
-      <div className={styles.list}>
-        {error ? (
-          <>
-            <div className={styles.header}>
-              <h2 className={styles.title}>Activities</h2>
-            </div>
-            <p className={styles.dataError}>{message}</p>
-          </>
-        ) : (
-          <>
-            <div className={styles.header}>
-              <h2 className={styles.title}>Activities</h2>
-              <Link to="/admins/home/activities/create">
-                <Button text={'Add'} variant={'add'} testid={'add-btn'} />
-              </Link>
-            </div>
-            <Modal
-              onClose={() => setShowModal(false)}
-              isOpen={showModal}
-              title={modalMessage}
-              success
-              testid={'success-modal'}
-            />
-            <Table />
-          </>
-        )}
-      </div>
-    </section>
-  );
+  if (!isPending) {
+    return (
+      <section className={styles.container}>
+        <div className={styles.list}>
+          {error ? (
+            <>
+              <div className={styles.header}>
+                <h2 className={styles.title}>Activities</h2>
+              </div>
+              <p className={styles.dataError}>{message}</p>
+            </>
+          ) : (
+            <>
+              <div className={styles.header}>
+                <h2 className={styles.title}>Activities</h2>
+                <Link to="/admins/home/activities/create">
+                  <Button text={'Add'} variant={'add'} testid={'add-btn'} />
+                </Link>
+              </div>
+              <Modal
+                onClose={() => setShowModal(false)}
+                isOpen={showModal}
+                title={modalMessage}
+                success
+                testid={'success-modal'}
+              />
+              <Table />
+            </>
+          )}
+        </div>
+      </section>
+    );
+  }
 }
 
 export default Activities;

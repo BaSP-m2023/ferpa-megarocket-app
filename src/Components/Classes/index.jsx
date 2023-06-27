@@ -71,7 +71,9 @@ const Classes = () => {
     return (
       <div className={styles.container}>
         <div className={styles.transparetnBlue}>
-          <h2 className={styles.h2}>Classes</h2>
+          <div className={styles.title}>
+            <h2 className={styles.h2}>Classes</h2>
+          </div>
           <p className={styles.error}>{serverMessage}</p>
         </div>
       </div>
