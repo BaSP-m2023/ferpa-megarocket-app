@@ -14,7 +14,7 @@ function Header() {
   const signupPath = '/home/signup';
   const role = sessionStorage.getItem('role');
   const handleLogout = async () => {
-    await dispatch(logout);
+    await dispatch(logout());
     history.push('/home');
   };
 
