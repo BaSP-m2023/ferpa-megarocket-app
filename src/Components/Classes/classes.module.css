@@ -11,15 +11,22 @@
   background-position: center;
   background-size: cover;
   background-image: url('../../../public/assets/images/admins-background.jpg');
-  min-height: 700px;
-  min-height: 73.1vh;
+  min-height: 71vh;
 }
 
 .title {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  width: 70vw;
+  align-items: center;
+  align-self: center;
+  width: 99%;
+  margin-bottom: 4%;
+}
+
+.h2 {
+  font-size: 40px;
+  margin: 0;
+  padding: 0;
 }
 
 .error {
@@ -34,15 +41,32 @@
   width: 30%;
 }
 
-.transparetnBlue,
-.transparetnBlueForm {
-  margin: 0;
-  padding: 60px 100px;
+.transparetnBlue {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   width: 80vw;
+  min-width: 380px;
+  margin: 2%;
+  border-radius: 1.5vh;
+  padding: 4%;
   background-color: rgba(55, 56, 103, 0.8);
-  border-radius: 1vw;
-  box-shadow: 10px 10px 20px -6px rgba(0, 0, 0, 0.59);
-  min-height: 600px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  min-height: 400px;
+}
+
+.transparetnBlueForm {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 80vw;
+  min-width: 380px;
+  margin: 2%;
+  border-radius: 1.5vh;
+  padding: 4%;
+  background-color: rgba(55, 56, 103, 0.8);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  min-height: 400px;
 }
 
 .form {
@@ -54,9 +78,10 @@
 .table {
   margin: 0;
   padding: 0;
-  width: 70vw;
+  width: 99%;
   margin-bottom: 20px;
   border-collapse: collapse;
+  font-size: 22px;
 }
 
 .tr {
@@ -98,11 +123,4 @@
 .loading {
   border-radius: 20px;
   box-shadow: 10px 10px 20px -6px rgba(0, 0, 0, 0.59);
-}
-
-.h2 {
-  display: flex;
-  align-self: flex-start;
-  margin: 0 0 30px 0;
-  padding: 0;
 }

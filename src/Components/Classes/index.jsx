@@ -58,7 +58,9 @@ const Classes = () => {
     return (
       <div className={styles.container}>
         <div className={`${styles.transparetnBlue} ${styles.loading}`}>
-          <h2 className={styles.h2}>Classes</h2>
+          <div className={styles.title}>
+            <h2 className={styles.h2}>Classes</h2>
+          </div>
           <div className={styles.loading}>{<Loader />}</div>
         </div>
       </div>

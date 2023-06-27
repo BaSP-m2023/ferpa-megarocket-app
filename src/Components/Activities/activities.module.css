@@ -10,7 +10,8 @@
   background-size: cover;
   font-family: 'Roboto', sans-serif;
   font-size: 22px;
-  min-height: 73.1vh;
+  align-self: center;
+  min-height: 71vh;
 }
 
 .list {
