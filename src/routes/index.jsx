@@ -20,6 +20,7 @@ const MembersActivities = lazy(() => import('./membersHome/activities'));
 const AdminsProfile = lazy(() => import('./adminsHome/profile'));
 const AdminsReports = lazy(() => import('./adminsHome/reports'));
 const AdminsForm = lazy(() => import('./admins/form'));
+const Admins = lazy(() => import('./admins'));
 const Login = lazy(() => import('./auth/login'));
 
 function Layout() {
@@ -58,6 +59,11 @@ function Layout() {
         <Route exact path="/members/home/subscriptions" component={Subscriptions} />
         <Route exact path="/members/home/subscriptions/form" component={SubscriptionForm} />
         <Route exact path="/members/home/activities" component={MembersActivities} />
+
+        {/* //SuperAdmin Routes */}
+        <Route exact path="/superadmins/home/admins" component={Admins} />
+        <Route exact path="/superadmins/home/edit/:id" component={AdminsForm} />
+        <Route exact path="/superadmins/home/admins/add" component={AdminsForm} />
 
         <Route exact path="/home/login" component={Login} />
         <Route exact path="/home/signup" component={MembersCreate} />
