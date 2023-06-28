@@ -42,7 +42,7 @@ function Members() {
           <div className={styles.header}>
             <h2>Members</h2>
             <Link to={'/members/create'}>
-              <Button text={'Create new member'} variant={'add'} />
+              <Button text={'Create new member'} variant={'add'} testid={'add-btn'} />
             </Link>
           </div>
           <Loader />
@@ -59,11 +59,12 @@ function Members() {
           isOpen={showModalDeleteSuccess}
           title={theMessage}
           success
+          testid={'success-modal'}
         ></Modal>
         <div className={styles.header}>
           <h2 className={styles.title}>Members</h2>
           <Link to={'/admins/home/members/create'}>
-            <Button text={'Add'} variant={'add'} />
+            <Button text={'Add'} variant={'add'} testid={'add-btn'} />
           </Link>
         </div>
         {error ? (
@@ -92,7 +93,7 @@ function Members() {
                     <td className={styles.td}>{item.phone}</td>
                     <td className={styles.tdBtn}>
                       <Link to={`members/edit/${item._id}`}>
-                        <Button variant={'edit'} />
+                        <Button variant={'edit'} testid={'edit-btn'} />
                       </Link>
                     </td>
                     <td className={styles.tdBtn}>
@@ -102,6 +103,7 @@ function Members() {
                           setShowModal(true);
                           setMemberId(item._id);
                         }}
+                        testid={'delete-btn'}
                       />
                     </td>
                   </tr>
@@ -114,6 +116,7 @@ function Members() {
               title={`Confirm Delete`}
               text={'Are you sure that you want to delete this member?'}
               warning={true}
+              testid={'confirm-modal'}
             >
               <Button
                 text={'Delete'}
@@ -122,8 +125,14 @@ function Members() {
                   delMember(memberId);
                   setShowModal(false);
                 }}
+                testid={'delete-btn'}
               />
-              <Button text={'Cancel'} variant={'white'} clickAction={() => setShowModal(false)} />
+              <Button
+                text={'Cancel'}
+                variant={'white'}
+                clickAction={() => setShowModal(false)}
+                testid={'cancel-btn'}
+              />
             </Modal>
           </table>
         )}

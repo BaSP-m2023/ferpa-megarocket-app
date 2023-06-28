@@ -81,7 +81,7 @@ const Classes = () => {
           <h2>Classes</h2>
           {location.pathname.includes('admins/home/classes') && (
             <Link to="/admins/home/classes/form">
-              <Button variant={'add'} text={'Add'} />
+              <Button variant={'add'} text={'Add'} testid={'add-btn'} />
             </Link>
           )}
         </div>
@@ -92,12 +92,14 @@ const Classes = () => {
           onClose={() => {
             setShowSuccessModal(false);
           }}
+          testid={'success-modal'}
         />
         <Modal
           isOpen={showDeleteSuccessModal}
           title={'Class deleted successfully!'}
           success
           onClose={() => setShowDeleteSuccessModal(!showDeleteSuccessModal)}
+          testid={'success-delete-modal'}
         />
         <Modal
           isOpen={showDeleteModal}
@@ -105,6 +107,7 @@ const Classes = () => {
           text={'Are you sure you want to delete?'}
           warning
           onClose={() => setShowDeleteModal(false)}
+          testid={'confirm-modal'}
         >
           <Button
             text={'Yes'}
@@ -113,8 +116,9 @@ const Classes = () => {
             clickAction={() => {
               deleteSingleClass(currentId);
             }}
+            testid={'delete-btn'}
           />
-          <Button text={'Cancel'} type={'button'} clickAction={reDirect} />
+          <Button text={'Cancel'} type={'button'} clickAction={reDirect} testid={'cancel-btn'} />
         </Modal>
         <table className={styles.table}>
           <thead>
@@ -145,7 +149,7 @@ const Classes = () => {
                     {location.pathname.includes('admins/home/classes') && (
                       <td>
                         <Link to={`/admins/home/classes/form/${theOne?._id}`}>
-                          <Button text={'Edit Item'} variant={'edit'} />
+                          <Button text={'Edit Item'} variant={'edit'} testid={'edit-btn'} />
                         </Link>
                       </td>
                     )}
@@ -158,6 +162,7 @@ const Classes = () => {
                             setCurrentId(theOne?._id);
                             setShowDeleteModal(!showDeleteModal);
                           }}
+                          testid={'delete-btn'}
                         />
                       </td>
                     )}

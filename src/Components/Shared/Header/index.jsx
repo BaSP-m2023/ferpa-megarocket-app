@@ -5,12 +5,14 @@ import { useLocation, Link } from 'react-router-dom';
 function Header() {
   const location = useLocation();
   const currentPath = location.pathname;
-  const desiredPath = '/home';
+  const homePath = '/home';
+  const loginPath = '/home/login';
+  const signupPath = '/home/signup';
 
   return (
     <header>
-      <div className={styles.container}>
-        <div>
+      <div className={styles.container} data-testid={'header-container'}>
+        <div data-testid={'header-logo'}>
           <img className={styles.logo} src="../../assets/images/LOGO-RR-1.svg" alt="logo"></img>
           <img
             className={styles.isologo}
@@ -55,7 +57,11 @@ function Header() {
           </div>
         )}
       </div>
-      {currentPath === desiredPath ? '' : <Nav />}
+      {currentPath === homePath || currentPath === loginPath || currentPath === signupPath ? (
+        ''
+      ) : (
+        <Nav />
+      )}
     </header>
   );
 }

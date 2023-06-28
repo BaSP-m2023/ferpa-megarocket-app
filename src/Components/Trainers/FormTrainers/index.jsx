@@ -118,7 +118,11 @@ const TrainerAddForm = () => {
   return (
     <div className={styles.formContainer}>
       <div className={styles.fromBackground}>
-        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className={styles.form}
+          onSubmit={handleSubmit(onSubmit)}
+          data-testid={'trainer-form-container'}
+        >
           <div className={styles.field}>
             <Input
               register={register}
@@ -187,15 +191,16 @@ const TrainerAddForm = () => {
           </div>
           <div className={styles.buttons}>
             <Link to={'/admins/home/trainers'}>
-              <Button text={'Cancel'} variant={'white'} />
+              <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
             </Link>
-            <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting />
+            <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting testid={'add-edit-btn'} />
           </div>
           <Modal
             success
             isOpen={successModal}
             onClose={() => setSuccessModal(!successModal)}
             title={error}
+            data-testid={'succes-modal'}
           ></Modal>
         </form>
       </div>

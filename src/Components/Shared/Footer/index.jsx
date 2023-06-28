@@ -3,7 +3,7 @@ import React from 'react';
 
 function Footer() {
   return (
-    <footer className={styles.container}>
+    <footer className={styles.container} data-testid={'footer-container'}>
       <div className={styles.license}>
         <div>
           <a href={'https://twitter.com/radiumrocket'} target={'_blank'} rel="noreferrer">

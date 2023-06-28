@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './modal.module.css';
 
-const Modal = ({ isOpen, onClose, title, text, children, success, warning, error }) => {
+const Modal = ({ isOpen, onClose, title, text, children, success, warning, error, testid }) => {
   if (!isOpen && !(success || error)) {
     return null;
   }
@@ -11,6 +11,7 @@ const Modal = ({ isOpen, onClose, title, text, children, success, warning, error
       className={`${success || error ? styles.modalOverlayPop : styles.modalOverlay} ${
         isOpen ? styles.open : ''
       }`}
+      data-testid={testid}
     >
       <div
         className={`${styles.modalContent} ${success ? styles.modalSuccess : ''} ${

@@ -94,8 +94,18 @@ const Form = () => {
 
   return (
     <div className={styles.container}>
-      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} error />
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <Modal
+        onClose={() => setShowModal(false)}
+        isOpen={showModal}
+        title={message}
+        error
+        testid={'error-modal'}
+      />
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit(onSubmit)}
+        data-testid={'activity-add-edit-container'}
+      >
         <h2 className={styles.formTitle}>
           {location.pathname.includes('create') ? 'ADD ACTIVITY' : 'EDIT ACTIVITY'}
         </h2>
@@ -134,11 +144,12 @@ const Form = () => {
             </div>
             <div className={styles.formBtns}>
               <Link to="/admins/home/activities">
-                <Button text={'Cancel'} variant={'white'} />
+                <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
               </Link>
               <Button
                 text={location.pathname.includes('edit') ? 'Edit' : 'Add'}
                 variant={'add'}
+                testid={'add-edit-btn'}
                 submitting
               />
             </div>

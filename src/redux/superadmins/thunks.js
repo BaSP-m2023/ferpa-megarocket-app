@@ -1,9 +1,14 @@
 import * as actions from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getSuperAdmins = async (dispatch) => {
   dispatch(actions.getSuperadminsPending());
   try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/`);
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
+      method: 'GET',
+      headers: { token: token }
+    });
     const data = await res.json();
     dispatch(actions.resetInitialState());
 
@@ -26,7 +31,8 @@ export const postSuperAdmins = async (dispatch, newSuperadmin) => {
       method: 'POST',
       body: JSON.stringify(newSuperadmin),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token: token
       }
     });
     const data = await res.json();
@@ -48,7 +54,8 @@ export const deleteSuperAdmin = async (dispatch, id) => {
   dispatch(actions.deleteSuperadminsPending());
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token: token }
     });
     const data = await res.json();
     dispatch(actions.resetInitialState());
@@ -73,7 +80,8 @@ export const putSuperAdmin = async (dispatch, id, superadminUpdated) => {
       method: 'PUT',
       body: JSON.stringify(superadminUpdated),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token: token
       }
     });
     const data = await res.json();

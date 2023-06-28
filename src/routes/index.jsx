@@ -21,6 +21,7 @@ const AdminsProfile = lazy(() => import('./adminsHome/profile'));
 const AdminsReports = lazy(() => import('./adminsHome/reports'));
 const AdminsForm = lazy(() => import('./admins/form'));
 const Admins = lazy(() => import('./admins'));
+const Login = lazy(() => import('./auth/login'));
 
 function Layout() {
   return (
@@ -64,6 +65,8 @@ function Layout() {
         <Route exact path="/superadmins/home/edit/:id" component={AdminsForm} />
         <Route exact path="/superadmins/home/admins/add" component={AdminsForm} />
 
+        <Route exact path="/home/login" component={Login} />
+        <Route exact path="/home/signup" component={MembersCreate} />
         <Route path="/home" component={Home} />
         <Route exact path="/">
           <Redirect to="/home" />

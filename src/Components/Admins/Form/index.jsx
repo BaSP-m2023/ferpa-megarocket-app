@@ -168,6 +168,7 @@ const Form = () => {
           setSuccesModal(!successModal);
           redirectPath();
         }}
+        testid={'success-modal'}
       />
       <Modal
         title={'ERROR'}
@@ -179,6 +180,7 @@ const Form = () => {
           addPending();
         }}
         warning
+        testid={'error-modal'}
       >
         <Button
           text={'Close'}
@@ -188,11 +190,13 @@ const Form = () => {
             putPending();
             addPending();
           }}
+          testid={'close-btn'}
         />
       </Modal>
       <form
         className={`${styles.form} ${styles.list}`}
         onSubmit={handleSubmit(id ? handleUpdate : handleSubmiting)}
+        data-testid={'admin-editform'}
       >
         <h2 className={styles.title}>{id ? 'Edit Admin' : 'Add Admin'}</h2>
         <div className={styles.inputGroup}>
@@ -264,7 +268,7 @@ const Form = () => {
             <Button text={'Cancel'} variant={'white'} />
           </Link>
           {id ? (
-            <Button variant={'add'} text={'Update Admin'} submitting />
+            <Button variant={'add'} text={'Update Admin'} submitting testid={'confirm-edit-btn'} />
           ) : (
             <Button variant={'add'} text={'Add Admin'} submitting />
           )}

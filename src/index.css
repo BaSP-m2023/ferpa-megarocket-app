@@ -15,3 +15,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+tbody tr:hover {
+  background-color: rgba(78, 78, 108, 0.7)
+}
