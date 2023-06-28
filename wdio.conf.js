@@ -53,8 +53,8 @@ exports.config = {
   capabilities: [
     {
       // capabilities for local browser web tests
-      browserName: 'chrome' // or "firefox", "microsoftedge", "safari"
-      //'goog:chromeOptions': { args: ['headless'] }
+      browserName: 'chrome', // or "firefox", "microsoftedge", "safari"
+      'goog:chromeOptions': { args: ['headless'] }
     }
   ],
   //
