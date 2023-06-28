@@ -57,6 +57,7 @@ function Subscriptions() {
           setModalConfirmDel(!modalConfirmDel);
         }}
         text={'Are you sure that you want to delete this subscription?'}
+        data-testid={'confirm-modal'}
       >
         <Button
           text={'Confirm'}
@@ -66,14 +67,16 @@ function Subscriptions() {
             setModalSuccess(true);
           }}
           variant={'delete'}
+          testid={'delete-btn'}
         />
         <Button
           text={'Cancel'}
           clickAction={() => setModalConfirmDel(!modalConfirmDel)}
           variant={'white'}
+          testid={'cancel-btn'}
         />
       </Modal>
-      <section className={styles.list}>
+      <section className={styles.list} data-testid={'subs-table-container'}>
         <div className={styles.header}>
           <h2 className={styles.title}>
             {location.pathname.includes('/member/subscriptions')
@@ -121,6 +124,7 @@ function Subscriptions() {
                     <Link to={`/admin/subscriptions/form/${subscription._id}`}>
                       <Button
                         variant={'edit'}
+                        testid={'edit-btn'}
                         clickAction={() => selectId(dispatch, subscription._id)}
                       />
                     </Link>
@@ -129,6 +133,7 @@ function Subscriptions() {
                 <td className={styles.tdBtn}>
                   <Button
                     variant={'deleteIcon'}
+                    testid={'delete-btn'}
                     clickAction={() => {
                       selectId(dispatch, subscription._id);
                       setModalConfirmDel(!modalConfirmDel);

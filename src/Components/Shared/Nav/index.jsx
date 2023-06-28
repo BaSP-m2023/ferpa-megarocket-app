@@ -6,7 +6,7 @@ const Nav = () => {
   const role = sessionStorage.getItem('role');
   console.log(role);
   return (
-    <nav className={styles.navbar}>
+    <nav className={styles.navbar} data-testid={'nav-container'}>
       <ul className={styles.links}>
         {role === 'MEMBER' && (
           <>

@@ -16,7 +16,7 @@ const Profile = () => {
 
   return (
     <section className={styles.container}>
-      <div className={styles.onTop}>
+      <div className={styles.onTop} data-testid={'admins-profile-container'}>
         <h2 className={styles.h2}>Account information</h2>
         <div className={styles.nextToEachOther}>
           <div className={styles.big}>

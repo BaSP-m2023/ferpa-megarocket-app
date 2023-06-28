@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
 import { Input } from 'Components/Shared/Inputs';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAdmins, updateAdmin, addAdmin } from 'redux/admins/thunks';
@@ -19,6 +19,7 @@ const Form = () => {
   const [inputs, setInputs] = useState({});
   const [successModal, setSuccesModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
+  const location = useLocation();
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -136,9 +137,20 @@ const Form = () => {
   };
 
   const redirectPath = () => {
-    const path = { pathname: '/admin/profile' };
+    let path;
+    if (location.pathname.includes('/admin/form')) {
+      path = '/admin/profile';
+    } else if (location.pathname.includes('/super-admin/admins/form')) {
+      path = '/super-admin/admins';
+    }
     history.push(path);
   };
+
+  const cancelButtonDestination = location.pathname.startsWith('/admin/form')
+    ? '/admin/profile'
+    : location.pathname.startsWith('/super-admin/admins/form')
+    ? '/super-admin/admins'
+    : null;
 
   return (
     <div className={styles.container}>
@@ -150,6 +162,7 @@ const Form = () => {
           setSuccesModal(!successModal);
           redirectPath();
         }}
+        testid={'success-modal'}
       />
       <Modal
         title={'ERROR'}
@@ -161,6 +174,7 @@ const Form = () => {
           addPending();
         }}
         warning
+        testid={'error-modal'}
       >
         <Button
           text={'Close'}
@@ -170,11 +184,13 @@ const Form = () => {
             putPending();
             addPending();
           }}
+          testid={'close-btn'}
         />
       </Modal>
       <form
         className={`${styles.form} ${styles.list}`}
         onSubmit={handleSubmit(id ? handleUpdate : handleSubmiting)}
+        data-testid={'admin-editform'}
       >
         <h2 className={styles.title}>{id ? 'Edit Admin' : 'Add Admin'}</h2>
         <div className={styles.inputGroup}>
@@ -242,11 +258,11 @@ const Form = () => {
           />
         </div>
         <div className={styles.modalBtns}>
-          <Link to="/admin/profile">
+          <Link to={cancelButtonDestination}>
             <Button text={'Cancel'} variant={'white'} />
           </Link>
           {id ? (
-            <Button variant={'add'} text={'Update Admin'} submitting />
+            <Button variant={'add'} text={'Update Admin'} submitting testid={'confirm-edit-btn'} />
           ) : (
             <Button variant={'add'} text={'Add Admin'} submitting />
           )}

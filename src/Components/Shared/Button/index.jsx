@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './button.module.css';
 
-const Button = ({ text, clickAction, variant, disabled, submitting }) => {
+const Button = ({ text, clickAction, variant, disabled, submitting, testid }) => {
   let classNameStyle = styles[variant];
   return (
     <button
@@ -9,6 +9,7 @@ const Button = ({ text, clickAction, variant, disabled, submitting }) => {
       onClick={clickAction}
       className={`${styles.btn} ${classNameStyle}`}
       disabled={disabled}
+      data-testid={testid}
     >
       {text}
     </button>

@@ -164,9 +164,17 @@ const MembersEdit = () => {
         isOpen={showModalError}
         title={message}
         error
+        testid={'error-modal'}
       />
-      <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} success />;
-      <div className={styles.box}>
+      <Modal
+        onClose={() => setShowModal(false)}
+        isOpen={showModal}
+        title={message}
+        success
+        testid={'success-modal'}
+      />
+      ;
+      <div className={styles.box} data-testid={'member-editform-container'}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
           <h2 className={styles.formTitle}>EDIT MEMBER</h2>
           <div className={styles.inputBox}>
@@ -280,7 +288,7 @@ const MembersEdit = () => {
                 <Button text={'Cancel'} variant={'white'} />
               </Link>
             )}
-            <Button text={'Edit'} variant={'add'} submitting />
+            <Button text={'Edit'} variant={'add'} submitting testid={'confirm-edit-btn'} />
           </div>
         </form>
       </div>
