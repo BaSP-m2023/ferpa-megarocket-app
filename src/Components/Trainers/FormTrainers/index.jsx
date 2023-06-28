@@ -97,7 +97,7 @@ const TrainerAddForm = () => {
 
   const handleModalSuccess = () => {
     setTimeout(() => {
-      history.push('/admins/home/trainers');
+      history.push('/admin/trainers');
       setSuccessModal(!successModal);
     }, 2000);
   };
@@ -190,8 +190,8 @@ const TrainerAddForm = () => {
             />
           </div>
           <div className={styles.buttons}>
-            <Link to={'/admins/home/trainers'}>
-              <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
+            <Link to={'/admin/trainers'}>
+              <Button text={'Cancel'} variant={'white'} />
             </Link>
             <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting testid={'add-edit-btn'} />
           </div>

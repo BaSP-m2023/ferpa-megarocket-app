@@ -138,25 +138,19 @@ const Form = () => {
 
   const redirectPath = () => {
     let path;
-    if (location.pathname.includes('/admins/home')) {
-      path = '/admins/home/profile';
-    } else if (location.pathname.includes('/superadmins/home')) {
-      path = '/superadmins/home/admins';
+    if (location.pathname.includes('/admin/form')) {
+      path = '/admin/profile';
+    } else if (location.pathname.includes('/super-admin/admins/form')) {
+      path = '/super-admin/admins';
     }
     history.push(path);
   };
 
-  const cancelButtonDestination = location.pathname.startsWith('/admins')
-    ? '/admins/home/profile'
-    : location.pathname.startsWith('/superadmins')
-    ? '/superadmins/home/admins'
+  const cancelButtonDestination = location.pathname.startsWith('/admin/form')
+    ? '/admin/profile'
+    : location.pathname.startsWith('/super-admin/admins/form')
+    ? '/super-admin/admins'
     : null;
-
-  if (cancelButtonDestination === null) {
-    throw new Error(
-      'This form should only be used on routes starting with "/admins" or "/superadmins"'
-    );
-  }
 
   return (
     <div className={styles.container}>

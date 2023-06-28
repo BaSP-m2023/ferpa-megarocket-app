@@ -45,7 +45,7 @@ const Classes = () => {
   }, [success]);
 
   const reDirect = () => {
-    history.push('/admins/home/classes');
+    history.push('/admin/classes');
     setShowDeleteModal(!showDeleteModal);
   };
 
@@ -79,9 +79,9 @@ const Classes = () => {
       <div className={styles.transparetnBlue}>
         <div className={styles.title}>
           <h2>Classes</h2>
-          {location.pathname.includes('admins/home/classes') && (
-            <Link to="/admins/home/classes/form">
-              <Button variant={'add'} text={'Add'} testid={'add-btn'} />
+          {location.pathname.includes('admin/classes') && (
+            <Link to="/admin/classes/form">
+              <Button variant={'add'} text={'Add'} />
             </Link>
           )}
         </div>
@@ -146,14 +146,14 @@ const Classes = () => {
                     <td>{theOne?.hour}</td>
                     <td>{theOne?.trainerId?.firstName}</td>
                     <td>{theOne?.slots}</td>
-                    {location.pathname.includes('admins/home/classes') && (
+                    {location.pathname.includes('admin/classes') && (
                       <td>
-                        <Link to={`/admins/home/classes/form/${theOne?._id}`}>
-                          <Button text={'Edit Item'} variant={'edit'} testid={'edit-btn'} />
+                        <Link to={`/admin/classes/form/${theOne?._id}`}>
+                          <Button text={'Edit Item'} variant={'edit'} />
                         </Link>
                       </td>
                     )}
-                    {location.pathname.includes('admins/home/classes') && (
+                    {location.pathname.includes('admin/classes') && (
                       <td>
                         <Button
                           variant={'deleteIcon'}

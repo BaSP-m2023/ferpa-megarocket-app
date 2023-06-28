@@ -15,6 +15,11 @@ const authReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isPending: true
       };
+    case actionConstants.LOGOUT_PENDING:
+      return {
+        ...state,
+        isPending: true
+      };
     case actionConstants.LOGIN_SUCCESS:
       return {
         ...state,
