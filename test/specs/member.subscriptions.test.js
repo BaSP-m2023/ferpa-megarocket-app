@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
 const MemberSubscriptions = require('../pageobjects/member.subscriptions');
 

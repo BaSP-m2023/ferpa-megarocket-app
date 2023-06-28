@@ -23,7 +23,12 @@ exports.config = {
   // then the current working directory is where your `package.json` resides, so `wdio`
   // will be called from there.
   //
-  specs: ['./test/specs/admin.classes.js'],
+  specs: [
+    './test/specs/member.navbar.test.js',
+    './test/specs/member.subscriptions.test.js',
+    './test/specs/admin.classes.test.js',
+    './test/specs/admin.subscriptions.test.js'
+  ],
 
   exclude: [
     // 'path/to/excluded/files'
