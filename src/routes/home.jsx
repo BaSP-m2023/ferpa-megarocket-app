@@ -1,5 +1,5 @@
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
-import Login from 'Components/Auth/Login';
+import Login from 'Components/Home/Login';
 import Signup from 'Components/Members/Create';
 import Home from 'Components/Home';
 
