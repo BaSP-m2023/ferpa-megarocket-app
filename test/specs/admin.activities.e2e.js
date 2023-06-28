@@ -100,15 +100,16 @@ describe('Happy path Admin entity.', () => {
 
     await expect(ActivitiesPage.formActivities).toBeDisplayed();
     await browser.pause(1000);
-    //await ActivitiesPage.addFormActivitiesFirst.waitForDisplayed();
-    // await expect(ActivitiesPage.formActivitieFirstLabel).toHaveTextContaining('Name');
-    // await ActivitiesPage.addFormActivitiesFirst.setValue('Contemporaneo');
+    await ActivitiesPage.addFormActivitiesFirst.waitForDisplayed();
+    await expect(ActivitiesPage.formActivitieFirstLabel).toHaveTextContaining('Name');
+    await browser.pause(1000);
+    await ActivitiesPage.addFormActivitiesFirst.setValue('Contemporaneo');
 
-    //await ActivitiesPage.addFormActivitiesSecond.waitForDisplayed();
-    // await expect(ActivitiesPage.formActivitieSecondLabel).toHaveTextContaining('Description');
-    // await ActivitiesPage.addFormActivitiesSecond.setValue(
-    //   'The Contemporary Age is the name by which the historical period'
-    // );
+    await ActivitiesPage.addFormActivitiesSecond.waitForDisplayed();
+    await expect(ActivitiesPage.formActivitieSecondLabel).toHaveTextContaining('Description');
+    await ActivitiesPage.addFormActivitiesSecond.setValue(
+      'The Contemporary Age is the name by which the historical period'
+    );
 
     await ActivitiesPage.addFormActivitiesThird.waitForDisplayed();
     await expect(ActivitiesPage.formActivitieThirdLabel).toHaveTextContaining('Is Active?');
@@ -118,23 +119,37 @@ describe('Happy path Admin entity.', () => {
     await ActivitiesPage.successModal.waitForDisplayed();
   });
 
-  // it('Verify edit activity from the form.', async () => {
-  //   await expect(ActivitiesPage.formActivities).toBeDisplayed();
-  //   await browser.pause(1000);
-  //   await expect(ActivitiesPage.formActivitieFirstLabel).toHaveTextContaining('Name');
-  //   await expect(ActivitiesPage.formActivitieSecondLabel).toHaveTextContaining('Description');
-  //   await expect(ActivitiesPage.formActivitieThirdLabel).toHaveTextContaining('Is Active?');
-  //   await ActivitiesPage.addAndEditBtnClick();
-  //   await ActivitiesPage.successModal.waitForDisplayed();
-  // });
+  it('Verify edit activity from the form.', async () => {
+    await expect(ActivitiesPage.formActivities).toBeDisplayed();
+    await browser.pause(1000);
+    await ActivitiesPage.pencilEditBtn.click();
 
-  // it('Verify delete activity from the form.', async () => {
-  //   await expect(ActivitiesPage.formActivities).toBeDisplayed();
-  //   await browser.pause(1000);
-  //   await expect(ActivitiesPage.formActivitieFirstLabel).toHaveTextContaining('Name');
-  //   await expect(ActivitiesPage.formActivitieSecondLabel).toHaveTextContaining('Description');
-  //   await expect(ActivitiesPage.formActivitieThirdLabel).toHaveTextContaining('Is Active?');
-  //   await ActivitiesPage.deleteActivitiesBtnClick();
-  //   await ActivitiesPage.successModal.waitForDisplayed();
-  // });
+    await browser.pause(1000);
+    await ActivitiesPage.addFormActivitiesFirst.waitForDisplayed();
+    await expect(ActivitiesPage.formActivitieFirstLabel).toHaveTextContaining('Name');
+    await browser.pause(1000);
+    await ActivitiesPage.addFormActivitiesFirst.setValue('Boxeo');
+
+    await ActivitiesPage.addFormActivitiesSecond.waitForDisplayed();
+    await ActivitiesPage.addFormActivitiesSecond.setValue(
+      'Its an activity where you get punched in the face.'
+    );
+
+    await ActivitiesPage.addFormActivitiesThird.waitForDisplayed();
+    await expect(ActivitiesPage.formActivitieThirdLabel).toHaveTextContaining('Is Active?');
+    await ActivitiesPage.addFormActivitiesThird.click();
+
+    await ActivitiesPage.addAndEditBtnClick();
+    await ActivitiesPage.successModal.waitForDisplayed();
+  });
+
+  it('Verify delete activity from the form.', async () => {
+    await ActivitiesPage.deleteActivitiesBtnClick();
+    await ActivitiesPage.confirmModal.waitForDisplayed();
+    await ActivitiesPage.cancelBtn.click();
+
+    await ActivitiesPage.deleteActivitiesBtnClick();
+    await ActivitiesPage.confirmModal.waitForDisplayed();
+    await ActivitiesPage.deleteBtn.click();
+  });
 });

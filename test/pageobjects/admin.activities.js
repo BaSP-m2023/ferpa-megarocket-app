@@ -13,6 +13,9 @@ class ActivitiesPage {
   get successModal() {
     return $("[data-testid='success-modal']");
   }
+  get confirmModal() {
+    return $("[data-testid='confirm-modal']");
+  }
 
   //sheared component
   get header() {
@@ -108,28 +111,25 @@ class ActivitiesPage {
     return $("[data-testid='delete-btn']");
   }
   get addAndEditBtn() {
-    return $("[data-testid='delete-btn']");
+    return $("[data-testid='add-edit-btn']");
   }
   get formActivities() {
     return $("[data-testid='activity-add-edit-container']");
   }
   get addFormActivitiesFirst() {
-    return $("[data-testid='activity-add-edit-container'] div:nth-child(2) imput");
+    return $("[data-testid='activity-add-edit-container'] div:nth-child(1) input");
   }
   get formActivitieFirstLabel() {
-    return $("[data-testid='activity-add-edit-container'] div:nth-child(2) label");
+    return $("[data-testid='activity-add-edit-container'] div:nth-child(1) label");
   }
   get addFormActivitiesSecond() {
-    return $("[data-testid='activity-add-edit-container'] div:nth-child(3) imput");
-  }
-  get formActivitieSecondLabel() {
-    return $("[data-testid='activity-add-edit-container'] div:nth-child(3) label");
+    return $("[data-testid='activity-add-edit-container'] div:nth-child(2) textarea");
   }
   get addFormActivitiesThird() {
-    return $("[data-testid='activity-add-edit-container'] div:nth-child(4) imput");
+    return $("[data-testid='activity-add-edit-container'] div:nth-child(3) input");
   }
   get formActivitieThirdLabel() {
-    return $("[data-testid='activity-add-edit-container'] div:nth-child(4) label");
+    return $("[data-testid='activity-add-edit-container'] div:nth-child(3) label");
   }
 
   async editAdminBtnClick() {
@@ -142,9 +142,6 @@ class ActivitiesPage {
     await this.cancelBtn.click();
   }
   async editActivitiesBtn() {
-    await this.addBtn.click();
-  }
-  async AddActivitiesBtn() {
     await this.addBtn.click();
   }
   async addAndEditBtnClick() {
