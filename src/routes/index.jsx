@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
+import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import PrivateRoute from './privateRoute';
 import { useDispatch } from 'react-redux';
 import { tokenListener } from '../helper/firebase';
@@ -24,10 +24,10 @@ const Routes = () => {
       dispatch(getAuth(token));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [token]);
 
   return (
-    <BrowserRouter>
+    <Router>
       <Suspense fallback={<Loader />}>
         <Switch>
           <PrivateRoute path="/admin" role="ADMIN" component={AdminsRoutes} />
@@ -37,7 +37,7 @@ const Routes = () => {
           <Redirect to="/home" />
         </Switch>
       </Suspense>
-    </BrowserRouter>
+    </Router>
   );
 };
 

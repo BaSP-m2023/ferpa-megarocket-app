@@ -1,10 +1,9 @@
 import React from 'react';
 import styles from './nav.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 const Nav = () => {
   const role = sessionStorage.getItem('role');
-  console.log(role);
   return (
     <nav className={styles.navbar} data-testid={'nav-container'}>
       <ul className={styles.links}>
@@ -24,13 +23,13 @@ const Nav = () => {
             >
               <li>Classes</li>
             </NavLink>
-            <NavLink
+            <Link
               activeClassName={styles.linkFocused}
               className={styles.link}
               to="/member/subscriptions"
             >
               <li>My Subscriptions</li>
-            </NavLink>
+            </Link>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
