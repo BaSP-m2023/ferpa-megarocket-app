@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import styles from './login.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Input } from 'Components/Shared/Inputs';
 import { useForm } from 'react-hook-form';
 import Button from 'Components/Shared/Button';
@@ -11,11 +12,20 @@ import Joi from 'joi';
 
 function Login() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { isPending, user, error, message, isAuthPending } = useSelector((state) => state.auth);
   const schema = Joi.object({
     email: Joi.string(),
     password: Joi.string()
   });
+
+  useEffect(() => {
+    if (user?.role === 'ADMIN') {
+      history.push('/admin/profile');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
   const {
     register,
     handleSubmit,
@@ -28,6 +38,7 @@ function Login() {
     console.log(data);
     dispatch(login(data));
   };
+
   console.log(isPending);
   console.log(user);
   console.log(error);

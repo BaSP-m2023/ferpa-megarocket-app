@@ -30,15 +30,39 @@ function Header() {
           ></img>
         </div>
         <div className={styles.rightSide}>
-          {role === 'ADMIN' && <span className={styles.title}>Admin</span>}
-          {role === 'MEMBER' && <span className={styles.title}>Member</span>}
-          {role === 'SUPER-ADMIN' && <span className={styles.title}>Super Admin</span>}
-          <img
-            onClick={handleLogout}
-            className={styles.logout}
-            src="../../assets/images/logout-icon.svg"
-            alt="log out icon"
-          ></img>
+          {role === 'ADMIN' && (
+            <>
+              <span className={styles.title}>Admin</span>
+              <img
+                onClick={handleLogout}
+                className={styles.logout}
+                src="../../assets/images/logout-icon.svg"
+                alt="log out icon"
+              ></img>
+            </>
+          )}
+          {role === 'MEMBER' && (
+            <>
+              <span className={styles.title}>Member</span>
+              <img
+                onClick={handleLogout}
+                className={styles.logout}
+                src="../../assets/images/logout-icon.svg"
+                alt="log out icon"
+              ></img>
+            </>
+          )}
+          {role === 'SUPER-ADMIN' && (
+            <>
+              <span className={styles.title}>Super Admin</span>
+              <img
+                onClick={handleLogout}
+                className={styles.logout}
+                src="../../assets/images/logout-icon.svg"
+                alt="log out icon"
+              ></img>
+            </>
+          )}
         </div>
       </div>
       {currentPath === homePath || currentPath === loginPath || currentPath === signupPath ? (

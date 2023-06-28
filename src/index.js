@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
+import { BrowserRouter as Router } from 'react-router-dom/cjs/react-router-dom.min';
 import Routes from 'routes';
 import './index.css';
 import Header from 'Components/Shared/Header';
@@ -11,11 +11,11 @@ import { store } from 'redux/store';
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-      <BrowserRouter>
+      <Router>
         <Header />
         <Routes />
         <Footer />
-      </BrowserRouter>
+      </Router>
     </React.StrictMode>
   </Provider>,
   document.getElementById('root')
