@@ -104,7 +104,7 @@ const Admins = () => {
       <section className={styles.list}>
         <header className={styles.header}>
           <h1 className={styles.title}>Administrators</h1>
-          <Link to="super-admin/admins/form">
+          <Link to="/super-admin/admins/form">
             <Button text={'Add'} variant={'add'} />
           </Link>
         </header>
@@ -126,7 +126,7 @@ const Admins = () => {
                     <td className={styles.td}>{admin.email}</td>
                     <td className={styles.td}></td>
                     <td className={styles.icons}>
-                      <Link to={`super-admin/admins/form/${admin._id}`}>
+                      <Link to={`/super-admin/admins/form/${admin._id}`}>
                         <Button variant={'edit'} />
                       </Link>
                     </td>

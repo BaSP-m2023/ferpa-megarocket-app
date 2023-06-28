@@ -23,6 +23,12 @@ function Login() {
     if (user?.role === 'ADMIN') {
       history.push('/admin/profile');
     }
+    if (user?.role === 'MEMBER') {
+      history.push('/member/profile');
+    }
+    if (user?.role === 'SUPER-ADMIN') {
+      history.push('/super-admin/admins');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
