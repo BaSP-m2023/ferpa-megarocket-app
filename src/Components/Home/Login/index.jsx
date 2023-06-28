@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import styles from './login.module.css';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Input } from 'Components/Shared/Inputs';
 import { useForm } from 'react-hook-form';
 import Button from 'Components/Shared/Button';
@@ -13,7 +13,7 @@ import Joi from 'joi';
 function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isPending, user, error, message, isAuthPending } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const schema = Joi.object({
     email: Joi.string(),
     password: Joi.string()
@@ -35,15 +35,8 @@ function Login() {
     resolver: joiResolver(schema)
   });
   const handleLogin = (data) => {
-    console.log(data);
     dispatch(login(data));
   };
-
-  console.log(isPending);
-  console.log(user);
-  console.log(error);
-  console.log(message);
-  console.log(isAuthPending);
 
   return (
     <section className={styles.container}>
@@ -54,35 +47,31 @@ function Login() {
             <h2 className={styles.title}>Login</h2>
           </div>
           <form onSubmit={handleSubmit(handleLogin)} className={styles.form}>
-            <div className={styles.fieldset}>
-              <img src="../../assets/images/mail.svg" alt="email icon"></img>
-              <Input
-                register={register}
-                nameValue={'email'}
-                type={'text'}
-                placeholder={'Email:'}
-                error={errors.email?.message}
-              />
-            </div>
-            <div className={styles.fieldset}>
-              <img src="../../assets/images/lock.svg" alt="password icon"></img>
-              <Input
-                register={register}
-                nameValue={'password'}
-                type={'password'}
-                placeholder={'Password:'}
-                error={errors.password?.message}
-              />
+            <div className={styles.inputs}>
+              <div className={styles.fieldset}>
+                <img src="../../assets/images/mail.svg" alt="email icon"></img>
+                <Input
+                  register={register}
+                  nameValue={'email'}
+                  type={'text'}
+                  placeholder={'Email:'}
+                  error={errors.email?.message}
+                />
+              </div>
+              <div className={styles.fieldset}>
+                <img src="../../assets/images/lock.svg" alt="password icon"></img>
+                <Input
+                  register={register}
+                  nameValue={'password'}
+                  type={'password'}
+                  placeholder={'Password:'}
+                  error={errors.password?.message}
+                />
+              </div>
             </div>
             <Button text={'Continue'} variant={'add'} submitting />
           </form>
         </div>
-        <Link to="/member/profile">
-          <button>Members</button>
-        </Link>
-        <Link to="/admin/profile">
-          <button>Admins</button>
-        </Link>
       </div>
     </section>
   );

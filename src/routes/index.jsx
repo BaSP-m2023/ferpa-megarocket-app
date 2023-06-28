@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 import { tokenListener } from '../helper/firebase';
 import { getAuth } from '../redux/auth/thunks';
 import Loader from 'Components/Shared/Loader';
+import Header from 'Components/Shared/Header';
+import Footer from 'Components/Shared/Footer';
 
 const AdminsRoutes = lazy(() => import('./admins'));
 const SuperAdminsRoutes = lazy(() => import('./superAdmin'));
@@ -28,6 +30,7 @@ const Routes = () => {
 
   return (
     <Router>
+      <Header />
       <Suspense fallback={<Loader />}>
         <Switch>
           <PrivateRoute path="/admin" role="ADMIN" component={AdminsRoutes} />
@@ -37,6 +40,7 @@ const Routes = () => {
           <Redirect to="/home" />
         </Switch>
       </Suspense>
+      <Footer />
     </Router>
   );
 };
