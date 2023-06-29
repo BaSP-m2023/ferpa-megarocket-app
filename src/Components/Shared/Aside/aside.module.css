@@ -5,35 +5,40 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  min-width: 20vw;
+  min-width: 300px;
   min-height: 77vh;
   height: 100%;
   background-color: #373867;
-  border-top: solid 1px rgba(211, 208, 208, 0.829);
-  border-bottom: solid 1px rgba(211, 208, 208, 0.829);
-  text-align: center;
+  text-align: left;
 }
 
 .buttons,
 .contact {
-  width: 80%;
+  width: 95%;
+  margin: 0;
+}
+
+.buttons {
+  padding-top: 40px;
 }
 
 .link {
   min-height: 70px;
-  padding-bottom: 20px;
   color: #C4C4C4;
   font-family: 'Roboto', sans-serif;
   font-size: 30px;
-  font-weight: 700;
+  font-weight: 600;
   border-bottom: 2px solid #C4C4C4;
+  text-decoration: none;
+  height: 5vh;
+  margin: 0;
 }
 
 .contact {
   color: #C4C4C4;
   font-family: 'Roboto', sans-serif;
-  height: 40%;
   min-height: 300px;
+  margin: 0;
 }
 
 .contactTitle {
@@ -42,14 +47,16 @@
   font-weight: 700;
   height: 10%;
   min-height: 50px;
+  margin: 0;
+  padding: 30px 0;
 }
 
 .contactItem {
   min-height: 70px;
-  height: 10%;
+  height: 5vh;
   display: flex;
   width: 100%;
-  padding: 20px 0;
+  padding: 10px 0;
   border-bottom: 2px solid #C4C4C4;
   text-align: center;
 }
@@ -57,8 +64,17 @@
 .contactItem h4 {
   width: 100%;
   font-size: 14px;
+  display: flex;
+  align-self: center;
+  justify-self: flex-start;
+  padding-left: 10px;
 }
 
 .contactItem img {
-  margin-right: 10px;
+  margin-right: 20px;
+  width: 70px;
+}
+
+.div {
+  height: 77vh;
 }
