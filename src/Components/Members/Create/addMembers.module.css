@@ -18,10 +18,12 @@
 
 .signupContainer {
   display: flex;
-  background-image: url('../../../../public/assets/images/subscriptions-background.jpg');
+  background-image: url('../../../../public/assets/images/gym-landing.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  height: 77vh;
+  box-shadow: 0px 0px 41px 4px rgba(0, 0, 0, 0.71) inset;
 }
 
 .signup {
@@ -37,7 +39,7 @@
   width: 40vw;
   border-radius: 1vw;
   margin: 2vw;
-  background-color: rgba(55, 56, 103, 0.8);
+  background-color: rgba(55, 56, 103, 0.9);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 

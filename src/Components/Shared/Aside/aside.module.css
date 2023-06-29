@@ -24,13 +24,13 @@
 
 .link {
   min-height: 70px;
-  color: #C4C4C4;
   font-family: 'Roboto', sans-serif;
   font-size: 30px;
   font-weight: 600;
   border-bottom: 2px solid #C4C4C4;
   text-decoration: none;
   height: 5vh;
+  padding: 10px 0;
   margin: 0;
 }
 
@@ -77,4 +77,13 @@
 
 .div {
   height: 77vh;
+}
+
+.customLink {
+  text-decoration: none;
+  color: #C4C4C4;
+}
+
+.customLink:hover {
+  color: #46a37c;
 }

@@ -7,13 +7,13 @@ const Aside = () => {
     <aside className={styles.aside}>
       <div className={styles.div}>
         <div className={styles.buttons}>
-          <Link to="/home">
+          <Link to="/home" className={styles.customLink}>
             <h3 className={styles.link}>Home</h3>
           </Link>
-          <Link to="/home/login">
+          <Link to="/home/login" className={styles.customLink}>
             <h3 className={styles.link}>Login</h3>
           </Link>
-          <Link to="/home/signup">
+          <Link to="/home/signup" className={styles.customLink}>
             <h3 className={styles.link}>Signup</h3>
           </Link>
         </div>
