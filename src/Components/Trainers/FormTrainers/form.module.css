@@ -28,12 +28,14 @@
 .form {
   display: flex;
   flex-direction: column;
-  width: 70%;
+  align-items: center;
+  width: 95%;
   margin-top: 30px;
 }
 
 .field {
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .buttons {
@@ -48,4 +50,15 @@
 
 .title {
   color: white;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-flow: column;
 }

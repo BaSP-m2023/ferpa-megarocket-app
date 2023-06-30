@@ -224,10 +224,10 @@ const MembersCreate = () => {
                       error={errors.membership?.message}
                     />
                   </div>
+                  <div className={styles.signupButton}>
+                    <Button text={'Add'} variant={'add'} submitting />
+                  </div>
                 </div>
-              </div>
-              <div className={styles.signupButton}>
-                <Button text={'Add'} variant={'add'} submitting />
               </div>
             </form>
           </div>
@@ -252,111 +252,116 @@ const MembersCreate = () => {
         success
         testid={'success-modal'}
       />
-      <div className={styles.box}>
+      <div className={styles.inAdminBox}>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className={styles.form}
           data-testid={'member-add-form'}
         >
           <h2 className={styles.formTitle}>ADD MEMBER</h2>
-          <div className={styles.inputBox}>
-            <Input
-              labelText={'First Name'}
-              type={'text'}
-              placeholder={'First Name'}
-              nameValue={'firstName'}
-              register={register}
-              error={errors.firstName?.message}
-            />
+          <div className={styles.row}>
+            <div className={styles.column}>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'First Name'}
+                  type={'text'}
+                  placeholder={'First Name'}
+                  nameValue={'firstName'}
+                  register={register}
+                  error={errors.firstName?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'Last Name'}
+                  type={'text'}
+                  placeholder={'Last Name'}
+                  nameValue={'lastName'}
+                  register={register}
+                  error={errors.lastName?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'DNI'}
+                  type={'text'}
+                  placeholder={'DNI'}
+                  nameValue={'dni'}
+                  register={register}
+                  error={errors.dni?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'Phone'}
+                  type={'text'}
+                  placeholder={'ex: 096513178'}
+                  nameValue={'phone'}
+                  register={register}
+                  error={errors.phone?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'Email'}
+                  type={'text'}
+                  placeholder={'robertomariaoverdrive@soybostero.edu'}
+                  nameValue={'email'}
+                  register={register}
+                  error={errors.email?.message}
+                />
+              </div>
+            </div>
+            <div className={styles.column}>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'City'}
+                  type={'text'}
+                  placeholder={'Your city'}
+                  nameValue={'city'}
+                  register={register}
+                  error={errors.city?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <DatePicker
+                  label={'Birthday'}
+                  nameValue={'birthDay'}
+                  register={register}
+                  error={errors.birthDay?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'Zip Code'}
+                  type={'text'}
+                  placeholder={'Your postal code'}
+                  nameValue={'postalCode'}
+                  register={register}
+                  error={errors.postalCode?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Select
+                  label={'Membership'}
+                  placeholder={'Classic'}
+                  options={memberships}
+                  nameValue={'membership'}
+                  register={register}
+                  error={errors.membership?.message}
+                />
+              </div>
+              <div className={styles.checkboxField}>
+                <label>Is Active?</label>
+                <input
+                  className={styles.checkbox}
+                  name={'isActive'}
+                  type="checkbox"
+                  {...register('isActive')}
+                />
+              </div>
+            </div>
           </div>
-          <div className={styles.inputBox}>
-            <Input
-              labelText={'Last Name'}
-              type={'text'}
-              placeholder={'Last Name'}
-              nameValue={'lastName'}
-              register={register}
-              error={errors.lastName?.message}
-            />
-          </div>
-          <div className={styles.inputBox}>
-            <Input
-              labelText={'DNI'}
-              type={'text'}
-              placeholder={'DNI'}
-              nameValue={'dni'}
-              register={register}
-              error={errors.dni?.message}
-            />
-          </div>
-          <div className={styles.inputBox}>
-            <Input
-              labelText={'Phone'}
-              type={'text'}
-              placeholder={'ex: 096513178'}
-              nameValue={'phone'}
-              register={register}
-              error={errors.phone?.message}
-            />
-          </div>
-          <div className={styles.inputBox}>
-            <Input
-              labelText={'Email'}
-              type={'text'}
-              placeholder={'robertomariaoverdrive@soybostero.edu'}
-              nameValue={'email'}
-              register={register}
-              error={errors.email?.message}
-            />
-          </div>
-          <div className={styles.inputBox}>
-            <Input
-              labelText={'City'}
-              type={'text'}
-              placeholder={'Your city'}
-              nameValue={'city'}
-              register={register}
-              error={errors.city?.message}
-            />
-          </div>
-          <div className={styles.inputBox}>
-            <DatePicker
-              label={'Birthday'}
-              nameValue={'birthDay'}
-              register={register}
-              error={errors.birthDay?.message}
-            />
-          </div>
-          <div className={styles.inputBox}>
-            <Input
-              labelText={'Zip Code'}
-              type={'text'}
-              placeholder={'Your postal code'}
-              nameValue={'postalCode'}
-              register={register}
-              error={errors.postalCode?.message}
-            />
-          </div>
-          <div className={styles.inputBox}>
-            <Select
-              label={'Membership'}
-              placeholder={'Classic'}
-              options={memberships}
-              nameValue={'membership'}
-              register={register}
-              error={errors.membership?.message}
-            />
-          </div>
-          <div className={styles.checkboxField}>
-            <label>Is Active?</label>
-            <input
-              className={styles.checkbox}
-              name={'isActive'}
-              type="checkbox"
-              {...register('isActive')}
-            />
-          </div>
-
           <div className={styles.formBtns}>
             <Link to="/admins/home/members">
               <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
