@@ -224,10 +224,10 @@ const MembersCreate = () => {
                       error={errors.membership?.message}
                     />
                   </div>
-                  <div className={styles.signupButton}>
-                    <Button text={'Add'} variant={'add'} submitting />
-                  </div>
                 </div>
+              </div>
+              <div className={styles.signupButton}>
+                <Button text={'Add'} variant={'add'} submitting />
               </div>
             </form>
           </div>
