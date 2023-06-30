@@ -64,7 +64,13 @@ const MembersCreate = () => {
       }),
     isActive: Joi.boolean(),
     membership: Joi.string().valid('Classic', 'Only Classes', 'Black').required(),
-    isMembershipActive: Joi.boolean()
+    isMembershipActive: Joi.boolean(),
+    password: Joi.string()
+      .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{7,}$/)
+      .messages({
+        'string.pattern.base':
+          'Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 7 characters long'
+      })
   });
 
   const memberships = [
@@ -224,6 +230,16 @@ const MembersCreate = () => {
                       error={errors.membership?.message}
                     />
                   </div>
+                  <div className={styles.inputBox}>
+                    <Input
+                      register={register}
+                      type={'password'}
+                      labelText={'Password'}
+                      placeholder={'Password'}
+                      nameValue={'password'}
+                      error={errors.password?.message}
+                    />
+                  </div>
                 </div>
               </div>
               <div className={styles.signupButton}>
@@ -356,9 +372,18 @@ const MembersCreate = () => {
               {...register('isActive')}
             />
           </div>
-
+          <div className={styles.inputBox}>
+            <Input
+              register={register}
+              type={'password'}
+              labelText={'Password'}
+              placeholder={'Password'}
+              nameValue={'password'}
+              error={errors.password?.message}
+            />
+          </div>
           <div className={styles.formBtns}>
-            <Link to="/admins/home/members">
+            <Link to="/admin/members">
               <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
             </Link>
             <Button text={'Add'} variant={'add'} submitting testid={'confirm-add-btn'} />

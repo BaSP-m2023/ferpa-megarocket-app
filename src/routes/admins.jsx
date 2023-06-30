@@ -16,7 +16,6 @@ import AdminsForm from 'Components/Admins/Form';
 
 const AdminsRoutes = () => {
   const { url } = useRouteMatch();
-  console.log(url);
   return (
     <Switch>
       <Route exact path={`${url}/profile`} component={AdminsProfile} />

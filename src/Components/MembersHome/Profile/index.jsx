@@ -1,20 +1,12 @@
 import React from 'react';
 import styles from './profile.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { getMembers } from '../../../redux/members/thunks';
+import { useSelector } from 'react-redux';
 import Loader from '../../Shared/Loader';
 import Button from '../../Shared/Button';
 import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const { data, isPending } = useSelector((state) => state.members);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getMembers());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   if (isPending) {
     return <Loader />;
