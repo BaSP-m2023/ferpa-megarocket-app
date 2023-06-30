@@ -7,6 +7,7 @@ import Button from 'Components/Shared/Button';
 import Modal from 'Components/Shared/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { createMember } from 'redux/members/thunks';
+import { signUpMember } from 'redux/auth/thunks';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -116,10 +117,6 @@ const MembersCreate = () => {
       setShowModal(true);
     }
 
-    if (success && location.pathname.includes('/home/signup')) {
-      history.push('/home/login');
-    }
-
     if (error) {
       setShowModalError(true);
     }
@@ -127,7 +124,12 @@ const MembersCreate = () => {
   }, [success, error]);
 
   const onSubmit = (data) => {
-    dispatch(createMember(data));
+    if (location.pathname.includes('/home/signup')) {
+      dispatch(signUpMember(data));
+      history.push('/home/login');
+    } else {
+      dispatch(createMember(data));
+    }
   };
 
   if (location.pathname.includes('/home/signup')) {

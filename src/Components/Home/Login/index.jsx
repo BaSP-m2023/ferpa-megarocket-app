@@ -27,6 +27,7 @@ function Login() {
   }, [user]);
 
   const { register, handleSubmit } = useForm({});
+
   const handleLogin = (data) => {
     dispatch(login(data));
   };

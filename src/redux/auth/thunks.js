@@ -25,9 +25,9 @@ export const login = (credentials) => {
       const {
         claims: { role }
       } = await firebaseResponse.user.getIdTokenResult();
-      return dispatch(loginSuccess({ role, token }));
+      dispatch(loginSuccess({ role, token }));
     } catch (error) {
-      return dispatch(loginError(error.toString()));
+      dispatch(loginError(error.toString()));
     }
   };
 };
@@ -38,9 +38,9 @@ export const getAuth = (token) => {
     try {
       const response = fetch(`${process.env.REACT_APP_API_URL}/api/auth/`, { headers: { token } });
       const res = await response.json();
-      return dispatch(getAuthSuccess(res.data));
+      dispatch(getAuthSuccess(res.data));
     } catch (error) {
-      return dispatch(getAuthError(error.toString()));
+      dispatch(getAuthError(error.toString()));
     }
   };
 };
@@ -52,9 +52,9 @@ export const logout = () => {
       await firebaseApp.auth().signOut();
       sessionStorage.removeItem('role', '');
       sessionStorage.removeItem('token', '');
-      return dispatch(logoutSuccess());
+      dispatch(logoutSuccess());
     } catch (error) {
-      return dispatch(logoutError(error.toString()));
+      dispatch(logoutError(error.toString()));
     }
   };
 };

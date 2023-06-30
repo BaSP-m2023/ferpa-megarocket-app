@@ -1,9 +1,9 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import PrivateRoute from './privateRoute';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { tokenListener } from '../helper/firebase';
-import { getAuth } from '../redux/auth/thunks';
+// import { getAuth } from '../redux/auth/thunks';
 import Loader from 'Components/Shared/Loader';
 import Header from 'Components/Shared/Header';
 import Footer from 'Components/Shared/Footer';
@@ -14,7 +14,7 @@ const MembersRoutes = lazy(() => import('./members'));
 const HomeRoutes = lazy(() => import('./home'));
 
 const Routes = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const token = sessionStorage.getItem('token');
 
   useEffect(() => {
@@ -22,9 +22,10 @@ const Routes = () => {
   }, []);
 
   useEffect(() => {
-    if (token) {
-      dispatch(getAuth(token));
-    }
+    // if (token) {
+    //   dispatch(getAuth(token));
+    // }
+    console.log('Get auth');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
