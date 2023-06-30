@@ -65,7 +65,6 @@ const MembersCreate = () => {
       }),
     isActive: Joi.boolean(),
     membership: Joi.string().valid('Classic', 'Only Classes', 'Black').required(),
-    isMembershipActive: Joi.boolean(),
     password: Joi.string()
       .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{7,}$/)
       .messages({

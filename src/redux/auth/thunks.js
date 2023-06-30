@@ -32,11 +32,13 @@ export const login = (credentials) => {
   };
 };
 
-export const getAuth = (token) => {
+export const getAuth = (token, firebaseUid) => {
   return async (dispatch) => {
     dispatch(getAuthPending());
     try {
-      const response = fetch(`${process.env.REACT_APP_API_URL}/api/auth/`, { headers: { token } });
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/`, {
+        headers: { token, firebaseUid }
+      });
       const res = await response.json();
       dispatch(getAuthSuccess(res.data));
     } catch (error) {

@@ -17,10 +17,11 @@ export const tokenListener = () => {
     if (user) {
       const token = await user.getIdToken();
       const {
-        claims: { role }
+        claims: { role, sub: firebaseUid }
       } = await user.getIdTokenResult();
       sessionStorage.setItem('role', role);
       sessionStorage.setItem('token', token);
+      sessionStorage.setItem('firebaseUid', firebaseUid);
     }
   });
 };

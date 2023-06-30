@@ -10,9 +10,10 @@ import { useDispatch } from 'react-redux';
 const Profile = () => {
   const { user, isPending } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const firebaseId = sessionStorage.getItem('firebaseUid');
 
   useEffect(() => {
-    dispatch(getAuth(user.token));
+    dispatch(getAuth(user.token, firebaseId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
