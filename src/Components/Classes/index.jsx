@@ -85,8 +85,8 @@ const Classes = () => {
       <div className={styles.transparetnBlue}>
         <div className={styles.title}>
           <h2 className={styles.h2}>Classes</h2>
-          {location.pathname.includes('admins/home/classes') && (
-            <Link to="/admins/home/classes/form">
+          {location.pathname.includes('admin/classes') && (
+            <Link to="/admin/classes/form">
               <Button variant={'add'} text={'Add'} testid={'add-btn'} />
             </Link>
           )}
@@ -134,7 +134,7 @@ const Classes = () => {
               <th className={`${styles.small} ${styles.border}`}>Hour</th>
               <th className={`${styles.medium} ${styles.border}`}>Trainer</th>
               <th className={`${styles.small} ${styles.border}`}>Slots</th>
-              {location.pathname.includes('admins/home/classes') && (
+              {location.pathname.includes('admin/classes') && (
                 <>
                   <th className={`${styles.small} ${styles.border}`}></th>
                   <th className={`${styles.small} ${styles.border}`}></th>
@@ -152,14 +152,14 @@ const Classes = () => {
                     <td>{theOne?.hour}</td>
                     <td>{theOne?.trainerId?.firstName}</td>
                     <td>{theOne?.slots}</td>
-                    {location.pathname.includes('admins/home/classes') && (
+                    {location.pathname.includes('admin/classes') && (
                       <td className={styles.tdBtn}>
-                        <Link to={`/admins/home/classes/form/${theOne?._id}`}>
+                        <Link to={`/admin/classes/form/${theOne?._id}`}>
                           <Button text={'Edit Item'} variant={'edit'} testid={'edit-btn'} />
                         </Link>
                       </td>
                     )}
-                    {location.pathname.includes('admins/home/classes') && (
+                    {location.pathname.includes('admin/classes') && (
                       <td className={styles.tdBtn}>
                         <Button
                           variant={'deleteIcon'}

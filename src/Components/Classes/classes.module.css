@@ -94,6 +94,11 @@
   height: 55px;
 }
 
+.tr td {
+  padding-bottom: 1vh;
+  padding-top: 1vh;
+}
+
 .border {
   border-bottom: solid 4px white;
 }

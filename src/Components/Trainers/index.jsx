@@ -91,7 +91,7 @@ const Trainers = () => {
         <div className={styles.inside}>
           <h2 className={styles.title}>Trainers</h2>
           <Link to={'/admin/trainers/form'}>
-            <Button text={'add trainer'} variant={'add'} />
+            <Button text={'Add'} variant={'add'} />
           </Link>
         </div>
         <table className={styles.table}>

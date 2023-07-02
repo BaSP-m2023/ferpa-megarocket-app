@@ -94,7 +94,10 @@
 }
 
 .td {
+  font-size: 22px;
   width: 15vw;
+  padding-bottom: 1vh;
+  padding-top: 1vh;
 }
 
 .tdBtn {

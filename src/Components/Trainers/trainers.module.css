@@ -63,9 +63,11 @@
 }
 
 .list {
-  padding-top: 1vh;
+  font-size: 22px;
   padding-right: 5vh;
   color: white;
+  padding-bottom: 1vh;
+  padding-top: 1vh;
 }
 
 .fetchError {

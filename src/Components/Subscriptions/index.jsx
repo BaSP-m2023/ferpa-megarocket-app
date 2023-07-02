@@ -17,7 +17,7 @@ function Subscriptions() {
   const [modalSuccess, setModalSuccess] = useState(false);
   const [modalConfirmDel, setModalConfirmDel] = useState(false);
   const firstMember = members[0];
-  const subsToShow = location.pathname.includes('/members/home/subscriptions')
+  const subsToShow = location.pathname.includes('/member/subscriptions')
     ? subs.filter((subscription) => subscription.memberId?._id === firstMember?._id)
     : [...subs];
 
@@ -48,7 +48,7 @@ function Subscriptions() {
         <section className={styles.listLoading}>
           <div className={styles.headerLoading}>
             <h2 className={styles.h2}>
-              {location.pathname.includes('/members/home/subscriptions')
+              {location.pathname.includes('/member/subscriptions')
                 ? 'My Subscriptions'
                 : 'Subscriptions'}
             </h2>
@@ -64,7 +64,7 @@ function Subscriptions() {
         <section className={styles.list}>
           <div className={styles.headerLoading}>
             <h2 className={styles.h2}>
-              {location.pathname.includes('/members/home/subscriptions')
+              {location.pathname.includes('/member/subscriptions')
                 ? 'My Subscriptions'
                 : 'Subscriptions'}
             </h2>
@@ -113,17 +113,17 @@ function Subscriptions() {
         <section className={styles.list} data-testid={'subs-table-container'}>
           <div className={styles.header}>
             <h2 className={styles.title}>
-              {location.pathname.includes('/members/home/subscriptions')
+              {location.pathname.includes('/member/subscriptions')
                 ? 'My Subscriptions'
                 : 'Subscriptions'}
             </h2>
-            {location.pathname.includes('/members/home/subscriptions') ? (
-              <Link to="/members/home/subscriptions/form">
+            {location.pathname.includes('/member/subscriptions') ? (
+              <Link to="/member/subscriptions/form">
                 <Button text={'Subscribe to class'} variant={'add'} testid={'subs-btn'} />
               </Link>
             ) : (
-              <Link to="/admins/home/subscriptions/form">
-                <Button text={'Add Sub'} variant={'add'} testid={'add-btn'} />
+              <Link to="/admin/subscriptions/form">
+                <Button text={'Add'} variant={'add'} testid={'add-btn'} />
               </Link>
             )}
           </div>
@@ -132,11 +132,11 @@ function Subscriptions() {
               <tr className={styles.trHead}>
                 <th className={styles.thead}>Activity</th>
                 <th className={styles.thead}>Trainer</th>
-                {location.pathname.includes('/admins/home/subscriptions') && (
+                {location.pathname.includes('/admin/subscriptions') && (
                   <th className={styles.thead}>Member</th>
                 )}
                 <th className={styles.thead}>Date</th>
-                {location.pathname.includes('/admins/home/subscriptions') && (
+                {location.pathname.includes('/admin/subscriptions') && (
                   <th className={styles.tdBtn}></th>
                 )}
                 <th className={styles.tdBtn}></th>
@@ -147,15 +147,15 @@ function Subscriptions() {
                 <tr key={subscription._id} className={styles.tr}>
                   <td className={styles.td}>{subscription.classId?.activityId?.name}</td>
                   <td className={styles.td}>{subscription.classId?.trainerId?.lastName}</td>
-                  {location.pathname.includes('/admins/home/subscriptions') && (
+                  {location.pathname.includes('/admin/subscriptions') && (
                     <td className={styles.td}>
                       {subscription.memberId?.lastName}, {subscription.memberId?.firstName}
                     </td>
                   )}
                   <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
-                  {location.pathname.includes('/admins/home/subscriptions') && (
+                  {location.pathname.includes('/admin/subscriptions') && (
                     <td className={styles.tdBtn}>
-                      <Link to={`/admins/home/subscriptions/form/${subscription._id}`}>
+                      <Link to={`/admin/subscriptions/form/${subscription._id}`}>
                         <Button
                           variant={'edit'}
                           testid={'edit-btn'}

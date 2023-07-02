@@ -74,6 +74,8 @@
 }
 
 .td {
+  height: 2vh;
+  font-size: 22px;
   width: 8vw;
   padding-bottom: 1vh;
   padding-top: 1vh;
