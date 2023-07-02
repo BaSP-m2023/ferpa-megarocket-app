@@ -45,7 +45,7 @@ const Classes = () => {
   }, [success]);
 
   const reDirect = () => {
-    history.push('/admins/home/classes');
+    history.push('/admin/classes');
     setShowDeleteModal(!showDeleteModal);
   };
 

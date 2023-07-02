@@ -133,10 +133,10 @@ const MembersEdit = () => {
     if (success) {
       setShowModal(true);
       setTimeout(() => {
-        if (location.pathname.includes('admin/home/members')) {
-          history.push('/admins/home/members');
-        } else if (location.pathname.includes('members/home/edit')) {
-          history.push('/members/home/profile');
+        if (location.pathname.includes('admin/members/form')) {
+          history.push('/admin/members');
+        } else if (location.pathname.includes('member/form')) {
+          history.push('/member/profile');
         }
       }, 2000);
     }
@@ -284,13 +284,13 @@ const MembersEdit = () => {
             </div>
           </div>
           <div className={styles.formBtns}>
-            {location.pathname.includes('members/home/edit') ? (
-              <Link to="/members/home/profile">
-                <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
+            {location.pathname.includes('member/form') ? (
+              <Link to="/member/profile">
+                <Button text={'Cancel'} variant={'white'} />
               </Link>
             ) : (
-              <Link to="/admins/home/members">
-                <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
+              <Link to="/admin/members">
+                <Button text={'Cancel'} variant={'white'} />
               </Link>
             )}
             <Button text={'Edit'} variant={'add'} submitting testid={'confirm-edit-btn'} />

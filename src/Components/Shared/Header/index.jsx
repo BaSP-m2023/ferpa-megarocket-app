@@ -1,13 +1,22 @@
 import styles from './header.module.css';
 import Nav from '../Nav';
-import { useLocation, Link } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { logout } from 'redux/auth/thunks';
+import { useDispatch } from 'react-redux';
 
 function Header() {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const location = useLocation();
   const currentPath = location.pathname;
   const homePath = '/home';
   const loginPath = '/home/login';
   const signupPath = '/home/signup';
+  const role = sessionStorage.getItem('role');
+  const handleLogout = async () => {
+    await dispatch(logout());
+    history.push('/home');
+  };
 
   return (
     <header>
@@ -20,30 +29,41 @@ function Header() {
             alt="IsoLogo"
           ></img>
         </div>
-        {location.pathname.includes('/admins/home') && (
-          <div className={styles.rightSide}>
-            <span className={styles.title}>Admins</span>
-            <Link to="/home">
+        <div className={styles.rightSide}>
+          {role === 'ADMIN' && (
+            <>
+              <span className={styles.title}>Admin</span>
               <img
+                onClick={handleLogout}
                 className={styles.logout}
                 src="../../assets/images/logout-icon.svg"
                 alt="log out icon"
               ></img>
-            </Link>
-          </div>
-        )}
-        {location.pathname.includes('/members/home') && (
-          <div className={styles.rightSide}>
-            <span className={styles.title}>Members</span>
-            <Link to="/home">
+            </>
+          )}
+          {role === 'MEMBER' && (
+            <>
+              <span className={styles.title}>Member</span>
               <img
+                onClick={handleLogout}
                 className={styles.logout}
                 src="../../assets/images/logout-icon.svg"
                 alt="log out icon"
               ></img>
-            </Link>
-          </div>
-        )}
+            </>
+          )}
+          {role === 'SUPER-ADMIN' && (
+            <>
+              <span className={styles.title}>Super Admin</span>
+              <img
+                onClick={handleLogout}
+                className={styles.logout}
+                src="../../assets/images/logout-icon.svg"
+                alt="log out icon"
+              ></img>
+            </>
+          )}
+        </div>
       </div>
       {currentPath === homePath || currentPath === loginPath || currentPath === signupPath ? (
         ''

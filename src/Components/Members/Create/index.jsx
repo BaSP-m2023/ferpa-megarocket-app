@@ -103,9 +103,9 @@ const MembersCreate = () => {
   });
 
   useEffect(() => {
-    if (success && location.pathname.includes('/admins/home/members/create')) {
+    if (success && location.pathname.includes('/admin/members/form')) {
       setTimeout(() => {
-        history.push('/admins/home/members');
+        history.push('/admin/members');
       }, 2000);
       setShowModal(true);
     }

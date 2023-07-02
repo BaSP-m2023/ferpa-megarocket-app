@@ -299,7 +299,7 @@ const Form = () => {
 
   useEffect(() => {
     if (success) {
-      history.push('/admins/home/classes');
+      history.push('/admin/classes');
     }
     if (error) {
       setShowErrorModal(true);

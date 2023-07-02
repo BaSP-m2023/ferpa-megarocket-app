@@ -40,7 +40,7 @@ function Members() {
       <div className={`${styles.container}`}>
         <div className={styles.list}>
           <div className={styles.header}>
-            <h2 className={styles.title}>Members</h2>
+            <h2 className={styles.title}>Members</h2>W
           </div>
           <div className={styles.loading}>{<Loader />}</div>
         </div>
@@ -72,8 +72,8 @@ function Members() {
         ></Modal>
         <div className={styles.header}>
           <h2 className={styles.title}>Members</h2>
-          <Link to={'/admins/home/members/create'}>
-            <Button text={'Add'} variant={'add'} testid={'add-btn'} />
+          <Link to={'/admin/members/form'}>
+            <Button text={'Add'} variant={'add'} />
           </Link>
         </div>
         <table className={styles.table}>

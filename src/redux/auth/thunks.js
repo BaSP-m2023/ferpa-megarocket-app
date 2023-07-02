@@ -7,7 +7,10 @@ import {
   getAuthSuccess,
   logoutPending,
   logoutError,
-  logoutSuccess
+  logoutSuccess,
+  signUpPending,
+  signUpSuccess,
+  signUpError
 } from './action';
 import { firebaseApp } from 'helper/firebase';
 
@@ -47,9 +50,35 @@ export const logout = () => {
     dispatch(logoutPending());
     try {
       await firebaseApp.auth().signOut();
+      sessionStorage.removeItem('role', '');
+      sessionStorage.removeItem('token', '');
       return dispatch(logoutSuccess());
     } catch (error) {
       return dispatch(logoutError(error.toString()));
+    }
+  };
+};
+
+export const signUpMember = (data) => {
+  return async (dispatch) => {
+    dispatch(signUpPending());
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      const res = await response.json();
+      if (response.error) {
+        throw new Error(response.message);
+      }
+      await dispatch(signUpSuccess(data));
+      return res;
+    } catch (error) {
+      dispatch(signUpError(error.toString()));
     }
   };
 };

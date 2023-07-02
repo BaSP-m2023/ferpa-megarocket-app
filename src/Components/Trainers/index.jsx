@@ -90,8 +90,8 @@ const Trainers = () => {
       <div className={styles.header} data-testid={'trainer-table-container'}>
         <div className={styles.inside}>
           <h2 className={styles.title}>Trainers</h2>
-          <Link to={'/admins/home/trainers/form'}>
-            <Button text={'add trainer'} variant={'add'} testid={'add-btn'} />
+          <Link to={'/admin/trainers/form'}>
+            <Button text={'add trainer'} variant={'add'} />
           </Link>
         </div>
         <table className={styles.table}>
@@ -115,8 +115,8 @@ const Trainers = () => {
                   <td className={styles.list}>{item.email}</td>
                   <td>
                     <div className={styles.buttons}>
-                      <Link to={`/admins/home/trainers/form/${item._id}`}>
-                        <Button variant={'edit'} testid={'edit-btn'} />
+                      <Link to={`/admin/trainers/form/${item._id}`}>
+                        <Button variant={'edit'} />
                       </Link>
                       <Button
                         variant={'deleteIcon'}

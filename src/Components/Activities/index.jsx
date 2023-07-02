@@ -12,6 +12,7 @@ function Activities() {
   const { isPending, message, success, error } = useSelector((state) => state.activities);
   const [modalMessage, setModalMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [errorModal, setErrorModal] = useState(false);
   const dispatch = useDispatch();
 
   const handleModal = () => {
@@ -81,6 +82,44 @@ function Activities() {
       </section>
     );
   }
+
+  return (
+    <section className={styles.container}>
+      <div className={styles.list}>
+        {error ? (
+          <>
+            <div className={styles.header}>
+              <h2 className={styles.title}>Activities</h2>
+            </div>
+            <Modal
+              onClose={() => setErrorModal(false)}
+              isOpen={errorModal}
+              title={message}
+              error
+              testid={'error-modal'}
+            />
+          </>
+        ) : (
+          <>
+            <div className={styles.header}>
+              <h2 className={styles.title}>Activities</h2>
+              <Link to="/admin/activities/form">
+                <Button text={'Add'} variant={'add'} />
+              </Link>
+            </div>
+            <Modal
+              onClose={() => setShowModal(false)}
+              isOpen={showModal}
+              title={modalMessage}
+              success
+              testid={'success-modal'}
+            />
+            <Table />
+          </>
+        )}
+      </div>
+    </section>
+  );
 }
 
 export default Activities;
