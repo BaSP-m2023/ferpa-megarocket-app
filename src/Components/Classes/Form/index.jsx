@@ -276,7 +276,6 @@ const Form = () => {
       const data = await res.json();
       setSingleClass(data.data);
       previousClass(singleClass);
-      console.log(singleClass);
     } catch (error) {
       console.error(error);
     }
@@ -321,7 +320,6 @@ const Form = () => {
     } else {
       dispatch(postClass(data));
     }
-    console.log(data);
   };
   useEffect(() => {
     getActivities(dispatch);

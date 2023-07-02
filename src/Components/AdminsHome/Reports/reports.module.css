@@ -105,6 +105,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  margin: 0 auto;
+  width: 50%;
 }
 
 .index {
@@ -113,7 +115,7 @@
   font-weight: bold;
   background-color: #46a37cbb;
   border-radius: 3px;
-  width: 40%;
+  width: 100%;
   margin: 0 auto;
 
 }
@@ -121,6 +123,7 @@
 .largerTop {
   width: 21%;
   text-align: center;
+  min-width: 200px;
 }
 
 .smallerBottom {

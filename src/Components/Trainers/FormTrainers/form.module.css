@@ -39,8 +39,11 @@
 }
 
 .buttons {
+  display: flex;
   align-self: center;
   margin: 20px 0px 40px;
+  width: 80%;
+  justify-content: space-around;
 }
 
 .passwordAlert {
