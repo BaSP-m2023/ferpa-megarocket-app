@@ -69,7 +69,6 @@ const Table = () => {
             <th className={styles.tdBtn}></th>
           </tr>
         </thead>
-
         <tbody className={styles.tbody}>
           {data.map((activity) => {
             return (

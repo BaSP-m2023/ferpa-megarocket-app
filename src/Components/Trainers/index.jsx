@@ -34,7 +34,7 @@ const Trainers = () => {
           <div className={styles.inside}>
             <h2 className={styles.title}>Trainers</h2>
           </div>
-          <p className={styles.fetchError}>{error}</p>
+          <p className={`${styles.title} ${styles.centered}`}>{error}</p>
         </div>
       </section>
     );
@@ -46,7 +46,9 @@ const Trainers = () => {
           <div className={styles.inside}>
             <h2 className={styles.title}>Trainers</h2>
           </div>
-          <Loader />
+          <div className={styles.loading}>
+            <Loader />
+          </div>
         </div>
       </section>
     );
@@ -89,17 +91,18 @@ const Trainers = () => {
         <div className={styles.inside}>
           <h2 className={styles.title}>Trainers</h2>
           <Link to={'/admin/trainers/form'}>
-            <Button text={'add trainer'} variant={'add'} />
+            <Button text={'Add'} variant={'add'} />
           </Link>
         </div>
-        <table className={styles.hola}>
+        <table className={styles.table}>
           <thead>
             <tr>
               <th className={styles.titles}>Name</th>
               <th className={styles.titles}>Last Name</th>
               <th className={styles.titles}>Phone</th>
               <th className={styles.titles}>Email</th>
-              <th></th>
+              <th className={styles.titles}></th>
+              <th className={styles.titles}></th>
             </tr>
           </thead>
           <tbody>

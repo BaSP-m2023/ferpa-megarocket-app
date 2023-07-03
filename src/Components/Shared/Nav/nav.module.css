@@ -3,7 +3,7 @@
 .navbar {
   background: #474885;
   width: 100%;
-  height: 60px;
+  height: 6vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,4 +40,3 @@
   color: #373867;
   box-shadow: 4px 4px 0px #6464a1;
 }
-

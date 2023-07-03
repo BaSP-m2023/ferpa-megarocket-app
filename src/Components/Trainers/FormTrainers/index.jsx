@@ -118,76 +118,83 @@ const TrainerAddForm = () => {
   return (
     <div className={styles.formContainer}>
       <div className={styles.fromBackground}>
+        <h2 className={styles.title}>{id ? 'Edit Trainer' : 'Add Trainer'}</h2>
         <form
           className={styles.form}
           onSubmit={handleSubmit(onSubmit)}
           data-testid={'trainer-form-container'}
         >
           <div className={styles.field}>
-            <Input
-              register={register}
-              onChangeInput={onChange}
-              labelText={'Name'}
-              nameValue={'firstName'}
-              placeholder={'First Name'}
-              error={errors.firstName?.message}
-            />
-            <Input
-              register={register}
-              onChangeInput={onChange}
-              labelText={'LastName'}
-              nameValue={'lastName'}
-              placeholder={'Last Name'}
-              error={errors.lastName?.message}
-            />
-            <Input
-              register={register}
-              onChangeInput={onChange}
-              labelText={'DNI'}
-              nameValue={'dni'}
-              placeholder={'DNI'}
-              error={errors.dni?.message}
-            />
-            <Input
-              register={register}
-              onChangeInput={onChange}
-              labelText={'Phone'}
-              nameValue={'phone'}
-              placeholder={'Phone'}
-              error={errors.phone?.message}
-            />
-            <Input
-              register={register}
-              onChangeInput={onChange}
-              labelText={'Email'}
-              nameValue={'email'}
-              placeholder={'Email'}
-              error={errors.email?.message}
-            />
-            <Input
-              register={register}
-              onChangeInput={onChange}
-              labelText={'City'}
-              nameValue={'city'}
-              placeholder={'City'}
-              error={errors.city?.message}
-            />
-            <Input
-              register={register}
-              onChangeInput={onChange}
-              labelText={'Salary'}
-              nameValue={'salary'}
-              placeholder={'Salary'}
-              error={errors.salary?.message}
-            />
-            <Input
-              register={register}
-              onChangeInput={onChange}
-              labelText={'Password'}
-              nameValue={'password'}
-              placeholder={'Password'}
-              error={errors.password?.message}
-            />
+            <div className={styles.row}>
+              <div className={styles.column}>
+                <Input
+                  register={register}
+                  onChangeInput={onChange}
+                  labelText={'Name'}
+                  nameValue={'firstName'}
+                  placeholder={'First Name'}
+                  error={errors.firstName?.message}
+                />
+                <Input
+                  register={register}
+                  onChangeInput={onChange}
+                  labelText={'LastName'}
+                  nameValue={'lastName'}
+                  placeholder={'Last Name'}
+                  error={errors.lastName?.message}
+                />
+                <Input
+                  register={register}
+                  onChangeInput={onChange}
+                  labelText={'DNI'}
+                  nameValue={'dni'}
+                  placeholder={'DNI'}
+                  error={errors.dni?.message}
+                />
+                <Input
+                  register={register}
+                  onChangeInput={onChange}
+                  labelText={'Phone'}
+                  nameValue={'phone'}
+                  placeholder={'Phone'}
+                  error={errors.phone?.message}
+                />
+              </div>
+              <div className={styles.column}>
+                <Input
+                  register={register}
+                  onChangeInput={onChange}
+                  labelText={'Email'}
+                  nameValue={'email'}
+                  placeholder={'Email'}
+                  error={errors.email?.message}
+                />
+                <Input
+                  register={register}
+                  onChangeInput={onChange}
+                  labelText={'City'}
+                  nameValue={'city'}
+                  placeholder={'City'}
+                  error={errors.city?.message}
+                />
+                <Input
+                  register={register}
+                  onChangeInput={onChange}
+                  labelText={'Salary'}
+                  nameValue={'salary'}
+                  placeholder={'Salary'}
+                  error={errors.salary?.message}
+                />
+                <Input
+                  register={register}
+                  onChangeInput={onChange}
+                  labelText={'Password'}
+                  nameValue={'password'}
+                  placeholder={'Password'}
+                  error={errors.password?.message}
+                />
+              </div>
+            </div>
           </div>
           <div className={styles.buttons}>
             <Link to={'/admin/trainers'}>

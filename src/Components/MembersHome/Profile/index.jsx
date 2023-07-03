@@ -21,11 +21,6 @@ const Profile = () => {
     return <Loader />;
   }
 
-  // const year = user.birthDay.slice(0, 4);
-  // const month = user.birthDay.slice(5, 7);
-  // const day = user.birthDay.slice(8, 10);
-  // const fixedBirthday = day + '/' + month + '/' + year;
-
   return (
     <section className={styles.container}>
       <h2 className={styles.header}>Your profile</h2>
@@ -45,7 +40,7 @@ const Profile = () => {
           </div>
           <div className={styles.inputDuo}>
             <p className={styles.infoTag}>Birthday:</p>
-            <p className={styles.userInfo}>{user?.birthday}</p>
+            <p className={styles.userInfo}>{user.birthday}</p>
           </div>
           <div className={styles.inputDuo}>
             <p className={styles.infoTag}>Current membership:</p>
