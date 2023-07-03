@@ -276,7 +276,6 @@ const Form = () => {
       const data = await res.json();
       setSingleClass(data.data);
       previousClass(singleClass);
-      console.log(singleClass);
     } catch (error) {
       console.error(error);
     }
@@ -321,7 +320,6 @@ const Form = () => {
     } else {
       dispatch(postClass(data));
     }
-    console.log(data);
   };
   useEffect(() => {
     getActivities(dispatch);
@@ -364,54 +362,68 @@ const Form = () => {
               testid={'confirm-modal'}
             />
           )}
-          <Select
-            register={register}
-            placeholder={id ? singleClass.day : 'Day'}
-            options={weekDays}
-            nameValue={'day'}
-            error={errors.day?.message}
-            label={'Day'}
-          />
-          <Select
-            register={register}
-            placeholder={id ? singleClass?.hour : 'Hour'}
-            options={hours}
-            nameValue={'hour'}
-            error={errors.hour?.message}
-            label={'Hour'}
-          />
-          <Select
-            register={register}
-            placeholder={id ? singleClass.activityId?.name : 'Activity'}
-            options={updatedActivity}
-            nameValue={'activityId'}
-            error={errors.activityId?.message}
-            label={'Activity'}
-          />
-          <Select
-            register={register}
-            placeholder={id ? singleClass.trainerId?.firstName : 'Trainer'}
-            options={updatedTrainers}
-            nameValue={'trainerId'}
-            error={errors.trainerId?.message}
-            label={'Trainer'}
-          />
-          <Select
-            register={register}
-            placeholder={id ? singleClass.slots : 'Slots'}
-            options={slots}
-            nameValue={'slots'}
-            error={errors.slots?.message}
-            label={'Slots'}
-          />
-          <div className={styles.buttons}>
-            <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting testid={'add-edit-btn'} />
-            <Button
-              variant={'white'}
-              text={'Cancel'}
-              submitting
-              clickAction={() => history.push('/admin/classes')}
+          <div className={styles.sideBySideContainer}>
+            <div className={styles.selectContainer}>
+              <Select
+                register={register}
+                placeholder={id ? singleClass.day : 'Day'}
+                options={weekDays}
+                nameValue={'day'}
+                error={errors.day?.message}
+                label={'Day'}
+              />
+              <Select
+                register={register}
+                placeholder={id ? singleClass?.hour : 'Hour'}
+                options={hours}
+                nameValue={'hour'}
+                error={errors.hour?.message}
+                label={'Hour'}
+              />
+            </div>
+            <div className={styles.selectContainer}>
+              <Select
+                register={register}
+                placeholder={id ? singleClass.slots : 'Slots'}
+                options={slots}
+                nameValue={'slots'}
+                error={errors.slots?.message}
+                label={'Slots'}
+              />
+              <Select
+                register={register}
+                placeholder={id ? singleClass.trainerId?.firstName : 'Trainer'}
+                options={updatedTrainers}
+                nameValue={'trainerId'}
+                error={errors.trainerId?.message}
+                label={'Trainer'}
+              />
+            </div>
+          </div>
+          <div className={styles.selectContainer}>
+            <Select
+              register={register}
+              placeholder={id ? singleClass.activityId?.name : 'Activity'}
+              options={updatedActivity}
+              nameValue={'activityId'}
+              error={errors.activityId?.message}
+              label={'Activity'}
             />
+            <div className={styles.buttons}>
+              <Button
+                variant={'white'}
+                text={'Cancel'}
+                submitting
+                clickAction={() => history.push('/admins/home/classes')}
+                testid={'cancel-btn'}
+              />
+              <Button
+                variant={'add'}
+                text={id ? 'Edit' : 'Add'}
+                submitting
+                testid={'add-edit-btn'}
+              />
+            </div>
           </div>
         </form>
       </div>

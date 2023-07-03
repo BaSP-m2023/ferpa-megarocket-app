@@ -37,15 +37,24 @@ function Members() {
 
   if (isPending) {
     return (
-      <div className={`${styles.container} ${styles.whiteLetters}`}>
+      <div className={`${styles.container}`}>
         <div className={styles.list}>
           <div className={styles.header}>
-            <h2>Members</h2>
-            <Link to={'admin/members/form'}>
-              <Button text={'Create new member'} variant={'add'} />
-            </Link>
+            <h2 className={styles.title}>Members</h2>W
           </div>
-          <Loader />
+          <div className={styles.loading}>{<Loader />}</div>
+        </div>
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className={`${styles.container} ${styles.tr}`}>
+        <div className={styles.list}>
+          <div className={styles.header}>
+            <h2 className={styles.title}>Members</h2>
+          </div>
+          <p className={styles.centered}>{message}</p>
         </div>
       </div>
     );
@@ -67,75 +76,69 @@ function Members() {
             <Button text={'Add'} variant={'add'} />
           </Link>
         </div>
-        {error ? (
-          <div>
-            <p className={styles.whiteLetters}>{message}</p>
-          </div>
-        ) : (
-          <table className={styles.table}>
-            <tbody>
-              <tr className={styles.trHead}>
-                <th className={styles.thead}>Name</th>
-                <th className={styles.thead}>Surname</th>
-                <th className={styles.thead}>DNI</th>
-                <th className={styles.thead}>Email</th>
-                <th className={styles.thead}>Phone</th>
-                <th className={styles.tdBtn}></th>
-                <th className={styles.tdBtn}></th>
-              </tr>
-              {data.map((item) => {
-                return (
-                  <tr key={item._id} className={styles.tr}>
-                    <td className={styles.td}>{item.firstName}</td>
-                    <td className={styles.td}>{item.lastName}</td>
-                    <td className={styles.td}>{item.dni}</td>
-                    <td className={styles.td}>{item.email}</td>
-                    <td className={styles.td}>{item.phone}</td>
-                    <td className={styles.tdBtn}>
-                      <Link to={`admin/members/form/${item._id}`}>
-                        <Button variant={'edit'} />
-                      </Link>
-                    </td>
-                    <td className={styles.tdBtn}>
-                      <Button
-                        variant={'deleteIcon'}
-                        clickAction={() => {
-                          setShowModal(true);
-                          setMemberId(item._id);
-                        }}
-                        testid={'delete-btn'}
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-            <Modal
-              onClose={() => setShowModal(false)}
-              isOpen={showModal}
-              title={`Confirm Delete`}
-              text={'Are you sure that you want to delete this member?'}
-              warning={true}
-              testid={'confirm-modal'}
-            >
-              <Button
-                text={'Delete'}
-                variant={'delete'}
-                clickAction={() => {
-                  delMember(memberId);
-                  setShowModal(false);
-                }}
-                testid={'delete-btn'}
-              />
-              <Button
-                text={'Cancel'}
-                variant={'white'}
-                clickAction={() => setShowModal(false)}
-                testid={'cancel-btn'}
-              />
-            </Modal>
-          </table>
-        )}
+        <table className={styles.table}>
+          <tbody>
+            <tr className={styles.trHead}>
+              <th className={styles.thead}>Name</th>
+              <th className={styles.thead}>Surname</th>
+              <th className={styles.thead}>DNI</th>
+              <th className={styles.thead}>Email</th>
+              <th className={styles.thead}>Phone</th>
+              <th className={styles.tdBtn}></th>
+              <th className={styles.tdBtn}></th>
+            </tr>
+            {data.map((item) => {
+              return (
+                <tr key={item._id} className={styles.tr}>
+                  <td className={styles.td}>{item.firstName}</td>
+                  <td className={styles.td}>{item.lastName}</td>
+                  <td className={styles.td}>{item.dni}</td>
+                  <td className={styles.td}>{item.email}</td>
+                  <td className={styles.td}>{item.phone}</td>
+                  <td className={styles.tdBtn}>
+                    <Link to={`members/edit/${item._id}`}>
+                      <Button variant={'edit'} testid={'edit-btn'} />
+                    </Link>
+                  </td>
+                  <td className={styles.tdBtn}>
+                    <Button
+                      variant={'deleteIcon'}
+                      clickAction={() => {
+                        setShowModal(true);
+                        setMemberId(item._id);
+                      }}
+                      testid={'delete-btn'}
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+          <Modal
+            onClose={() => setShowModal(false)}
+            isOpen={showModal}
+            title={`Delete Member`}
+            text={'Are you sure that you want to delete this member?'}
+            warning={true}
+            testid={'confirm-modal'}
+          >
+            <Button
+              text={'Delete'}
+              variant={'delete'}
+              clickAction={() => {
+                delMember(memberId);
+                setShowModal(false);
+              }}
+              testid={'delete-btn'}
+            />
+            <Button
+              text={'Cancel'}
+              variant={'white'}
+              clickAction={() => setShowModal(false)}
+              testid={'cancel-btn'}
+            />
+          </Modal>
+        </table>
       </section>
     </section>
   );

@@ -59,7 +59,21 @@ const Reports = () => {
     return (
       <div className={styles.main}>
         <div className={styles.container}>
-          <Loader />
+          <h1 className={styles.title}>Reports</h1>
+          <section className={styles.repcontainerLoading}>
+            <h2 className={styles.subtitle}>Members</h2>
+          </section>
+          <section className={styles.repcontainerLoadingMiddle}>
+            <div className={styles.margin}>
+              <h2 className={styles.subtitle}>Memberships</h2>
+              <div className={styles.centered}>
+                <Loader />
+              </div>
+            </div>
+          </section>
+          <section className={styles.repcontainerBottom}>
+            <h2 className={styles.subtitle}>Popular classes</h2>
+          </section>
         </div>
       </div>
     );
@@ -67,38 +81,42 @@ const Reports = () => {
   return (
     <div className={styles.main}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Reports</h1>
+        <div className={styles.titleContainer}>
+          <h1 className={styles.title}>Reports</h1>
+        </div>
         <section className={styles.repcontainer}>
           <h2 className={styles.subtitle}>Members</h2>
           {members.length > 0 ? (
             <div className={styles.reports}>
-              <p>
+              <p className={styles.largerTop}>
                 Total members: <span>{members.length}</span>
               </p>
-              <p>
+              <p className={styles.largerTop}>
                 Members active: <span>{membersActive}</span>
               </p>
-              <p>
+              <p className={styles.largerTop}>
                 Memberships active: <span>{membershipsActive}</span>
               </p>
             </div>
           ) : (
-            <p className={styles.subtitle}>There are no registered members</p>
+            <p className={styles.subtitle}>No members found</p>
           )}
         </section>
         <section className={styles.repcontainer}>
           <h2 className={styles.subtitle}>Memberships</h2>
           {members.length > 0 ? (
             <div className={styles.reports}>
-              <p>Only Classes: {totalMembership['Only Classes'] || 0}</p>
-              <p>Classic: {totalMembership['Classic'] || 0}</p>
-              <p>Black: {totalMembership['Black'] || 0}</p>
+              <p className={styles.smallerBottom}>
+                Only Classes: {totalMembership['Only Classes'] || 0}
+              </p>
+              <p className={styles.smallerBottom}>Classic: {totalMembership['Classic'] || 0}</p>
+              <p className={styles.smallerBottom}>Black: {totalMembership['Black'] || 0}</p>
             </div>
           ) : (
-            <p className={styles.subtitle}>There are no registered memberships</p>
+            <p className={styles.subtitle}>No memberships found</p>
           )}
         </section>
-        <section className={styles.repcontainer}>
+        <section className={styles.repcontainerBottom}>
           <h2 className={styles.subtitle}>
             {mostPopularClass.length === 1 ? 'Popular class' : 'Popular classes'}
           </h2>
@@ -107,19 +125,23 @@ const Reports = () => {
               mostPopularClass.map((item, index) => (
                 <div key={item.value} className={styles.popular}>
                   <p className={styles.index}>{index + 1}</p>
-                  <p>
+                  <p className={styles.reportText}>
                     Activity: {classes.find((clas) => clas._id === item.value).activityId?.name}
                   </p>
-                  <p>
+                  <p className={styles.reportText}>
                     Trainer: {classes.find((clas) => clas._id === item.value).trainerId?.firstName}
                   </p>
-                  <p>Day: {classes.find((clas) => clas._id === item.value).day}</p>
-                  <p>Hour: {classes.find((clas) => clas._id === item.value).hour}</p>
-                  <p>Members subscribed: {item.reps}</p>
+                  <p className={styles.reportText}>
+                    Day: {classes.find((clas) => clas._id === item.value).day}
+                  </p>
+                  <p className={styles.reportText}>
+                    Hour: {classes.find((clas) => clas._id === item.value).hour}
+                  </p>
+                  <p className={styles.reportText}>Members subscribed: {item.reps}</p>
                 </div>
               ))
             ) : (
-              <p className={styles.subtitle}>There are no classes with subscribed members</p>
+              <p className={styles.subtitle}>No classes found</p>
             )}
           </div>
         </section>

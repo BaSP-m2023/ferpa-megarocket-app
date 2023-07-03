@@ -1,31 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 .container {
+  flex: 1;
   display: flex;
+  flex-flow: column;
   justify-content: center;
+  width: 100%;
   align-items: center;
-  background-image: url('../../../../public/assets/images/subscriptions-background.jpg');
+  font-size: 25px;
+  color: white;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  min-height: 700px;
+  background-image: url('../../../../public/assets/images/subscriptions-background.jpg');
+  min-height: 71vh;
 }
+
 .box {
   display: flex;
   justify-content: center;
   width: 40vw;
   border-radius: 1vw;
   margin: 2vw;
-  background-color: rgba(55, 56, 103, 0.8);
+  background-color: rgba(55, 56, 103, 0.9);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  height: 100vh;
 }
 
 .form {
   display: flex;
-  flex-direction: column;
+  flex-flow: column;
   align-items: center;
-  width: 22.6vw;
-  padding: 1.5vw;
+  justify-content: space-between;
+  width: 95%;
+  height: 20%;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -34,9 +42,10 @@
 }
 
 .inputBox {
-  width: 20vw;
+  width: 100%;
 }
-.checkboxField{
+
+.checkboxField {
   align-self: flex-start;
   margin-top: 0.5vw;
 }
@@ -59,5 +68,15 @@
   display: flex;
   width: 20vw;
   justify-content: space-between;
-  margin-top: 2vw;
+  margin: 2vw 0;
+}
+
+.column {
+  padding: 20px;
+  display: flex;
+  flex-flow: column;
+}
+
+.row {
+  display: flex;
 }
