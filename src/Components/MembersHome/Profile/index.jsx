@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import styles from './profile.module.css';
-import { useSelector } from 'react-redux';
 import Loader from '../../Shared/Loader';
 import Button from '../../Shared/Button';
 import { Link } from 'react-router-dom';
 import { getAuth } from 'redux/auth/thunks';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Profile = () => {
   const { user, isPending } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const token = sessionStorage.getItem('token');
   const firebaseId = sessionStorage.getItem('firebaseUid');
 
   useEffect(() => {
-    dispatch(getAuth(user.token, firebaseId));
+    dispatch(getAuth(token, firebaseId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -79,6 +79,9 @@ const Profile = () => {
         </div>
       </div>
       <div className={styles.editButton}>
+        <Link to={'/change_pass'}>
+          <Button text={'Change Password'} />
+        </Link>
         <Link to={`/member/form/${user?._id}`}>
           <Button text={'Edit your profile!'} variant={'add'} />
         </Link>

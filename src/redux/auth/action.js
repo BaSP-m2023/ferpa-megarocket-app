@@ -78,3 +78,22 @@ export const signUpError = (error) => {
     payload: error
   };
 };
+
+export const checkClean = () => {
+  return {
+    type: actionConstants.CHECK_CLEAN
+  };
+};
+
+export const checkSuccess = () => {
+  return {
+    type: actionConstants.CHECK_SUCCESS
+  };
+};
+
+export const checkError = (error) => {
+  return {
+    type: actionConstants.CHECK_ERROR,
+    payload: error
+  };
+};

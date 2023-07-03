@@ -10,9 +10,13 @@ import {
   logoutSuccess,
   signUpPending,
   signUpSuccess,
-  signUpError
+  signUpError,
+  checkClean,
+  checkSuccess,
+  checkError
 } from './action';
 import { firebaseApp } from 'helper/firebase';
+import { EmailAuthProvider } from 'firebase/auth';
 
 export const login = (credentials) => {
   return async (dispatch) => {
@@ -81,6 +85,21 @@ export const signUpMember = (data) => {
       return res;
     } catch (error) {
       dispatch(signUpError(error.toString()));
+    }
+  };
+};
+
+export const checkPass = (pass) => {
+  return async (dispatch) => {
+    dispatch(checkClean());
+    const user = firebaseApp.auth().currentUser;
+    const email = user.email;
+    try {
+      const credential = EmailAuthProvider.credential(email, pass);
+      await user.reauthenticateWithCredential(credential);
+      dispatch(checkSuccess());
+    } catch (error) {
+      dispatch(checkError(error.toString()));
     }
   };
 };
