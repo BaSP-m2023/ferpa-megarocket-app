@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 exports.config = {
   //
   // ====================
@@ -87,7 +88,7 @@ exports.config = {
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
   // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
   // gets prepended directly.
-  baseUrl: 'http://localhost',
+  baseUrl: '(http://localhost)',
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 10000,
@@ -240,7 +241,6 @@ exports.config = {
    */
   onComplete: function () {
     const reportError = new Error('Could not generate Allure report');
-    // eslint-disable-next-line no-undef
     const generation = allure(['generate', 'allure-results', '--clean']);
     return new Promise((resolve, reject) => {
       const generationTimeout = setTimeout(() => reject(reportError), 5000);
@@ -258,8 +258,7 @@ exports.config = {
     });
   },
   afterTest: async function (test, context, { error, result, duration, passed, retries }) {
-    if (error) {
-      // eslint-disable-next-line no-undef
+    if (!error) {
       await browser.takeScreenshot();
     }
   }
