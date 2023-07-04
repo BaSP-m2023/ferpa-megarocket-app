@@ -15,7 +15,7 @@ function Subscriptions() {
   const history = useHistory();
   const [modalSuccess, setModalSuccess] = useState(false);
   const [modalConfirmDel, setModalConfirmDel] = useState(false);
-  const subsToShow = location.pathname.includes('/members/home/subscriptions')
+  const subsToShow = location.pathname.includes('/member/subscriptions')
     ? subs.filter((subscription) => subscription.memberId?._id === user?._id)
     : [...subs];
 
