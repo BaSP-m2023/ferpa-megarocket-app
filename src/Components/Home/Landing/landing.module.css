@@ -1,4 +1,50 @@
 .container {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.introduction{
+  display: flex;
+  flex-direction: row;
+  margin-top: 50px;
+  padding-bottom: 50px;
+  border-bottom: 2px solid black;
+}
+
+.introductionBox{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+box-sizing: border-box;
+}
+
+.introductionImg {
+  display: flex;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.meetUs{
+  display: flex;
+  flex-direction: row;
+}
+
+.meetUsTitle{
+  display: flex;
+}
+
+.topBox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bottomBox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.box {
+  
 }
