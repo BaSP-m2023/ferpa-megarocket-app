@@ -5,20 +5,18 @@ import Button from '../Shared/Button';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSubscriptions, selectId, deleteSubscriptions } from '../../redux/subscriptions/thunks';
-import { getMembers } from '../../redux/members/thunks';
 import Loader from '../Shared/Loader';
 
 function Subscriptions() {
   const location = useLocation();
   const { subs, isPending, error, id, message } = useSelector((state) => state.subscriptions);
-  const { data: members } = useSelector((state) => state.members);
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
   const [modalSuccess, setModalSuccess] = useState(false);
   const [modalConfirmDel, setModalConfirmDel] = useState(false);
-  const firstMember = members[0];
   const subsToShow = location.pathname.includes('/member/subscriptions')
-    ? subs.filter((subscription) => subscription.memberId?._id === firstMember?._id)
+    ? subs.filter((subscription) => subscription.memberId?._id === user?._id)
     : [...subs];
 
   useEffect(() => {
@@ -38,7 +36,6 @@ function Subscriptions() {
   }, [modalSuccess]);
 
   useEffect(() => {
-    dispatch(getMembers());
     getSubscriptions(dispatch);
   }, [dispatch]);
 

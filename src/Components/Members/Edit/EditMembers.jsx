@@ -28,6 +28,7 @@ const MembersEdit = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   const { data, message, success, error } = useSelector((state) => state.members);
   const history = useHistory();
   const { id } = useParams();
@@ -113,7 +114,7 @@ const MembersEdit = () => {
 
   useEffect(() => {
     dispatch(getMembers());
-    const memberToUpdate = data.find((member) => member._id === id);
+    const memberToUpdate = data.find((member) => member._id === user._id);
     setMember({
       firstName: memberToUpdate?.firstName,
       lastName: memberToUpdate?.lastName,

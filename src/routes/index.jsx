@@ -12,6 +12,7 @@ const AdminsRoutes = lazy(() => import('./admins'));
 const SuperAdminsRoutes = lazy(() => import('./superAdmin'));
 const MembersRoutes = lazy(() => import('./members'));
 const HomeRoutes = lazy(() => import('./home'));
+const ChangePass = lazy(() => import('Components/Home/ChangePass'));
 
 const Routes = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const Routes = () => {
     if (token) {
       dispatch(getAuth(token));
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
@@ -37,6 +39,7 @@ const Routes = () => {
           <PrivateRoute path="/member" role="MEMBER" component={MembersRoutes} />
           <PrivateRoute path="/super-admin" role="SUPER-ADMIN" component={SuperAdminsRoutes} />
           <Route path="/home" component={HomeRoutes} />
+          <Route path="/change_pass" component={ChangePass} />
           <Redirect to="/home" />
         </Switch>
       </Suspense>

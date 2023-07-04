@@ -41,7 +41,6 @@ export const getMembers = () => {
 export const updateMember = (id, member) => {
   return async (dispatch) => {
     dispatch(updateMemberPending());
-
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
         method: 'PUT',
@@ -59,13 +58,13 @@ export const updateMember = (id, member) => {
           birthDay: member.birthDay,
           postalCode: member.postalCode,
           isActive: member.isActive,
-          membership: member.membership
+          membership: member.membership,
+          password: member.password
         })
       });
 
       const { data, message } = await res.json();
       dispatch(resetInitialState());
-
       if (res.ok) {
         dispatch(updateMemberSuccess(id, data, message));
       }

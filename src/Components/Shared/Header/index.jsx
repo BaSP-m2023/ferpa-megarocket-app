@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { asideOnThunk, asideOffThunk } from 'redux/aside/thunks';
 
 function Header() {
+  const { user } = useSelector((state) => state.auth);
   const { isOn } = useSelector((state) => state.aside);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -48,41 +49,19 @@ function Header() {
             alt="IsoLogo"
           ></img>
         </div>
-        <div className={styles.rightSide}>
-          {role === 'ADMIN' && (
-            <>
-              <span className={styles.title}>Admin</span>
-              <img
-                onClick={handleLogout}
-                className={styles.logout}
-                src="../../assets/images/logout-icon.svg"
-                alt="log out icon"
-              ></img>
-            </>
-          )}
-          {role === 'MEMBER' && (
-            <>
-              <span className={styles.title}>Member</span>
-              <img
-                onClick={handleLogout}
-                className={styles.logout}
-                src="../../assets/images/logout-icon.svg"
-                alt="log out icon"
-              ></img>
-            </>
-          )}
-          {role === 'SUPER-ADMIN' && (
-            <>
-              <span className={styles.title}>Super Admin</span>
-              <img
-                onClick={handleLogout}
-                className={styles.logout}
-                src="../../assets/images/logout-icon.svg"
-                alt="log out icon"
-              ></img>
-            </>
-          )}
-        </div>
+        {role ? (
+          <div className={styles.rightSide}>
+            <span className={styles.title}>Hi, {user?.firstName}</span>
+            <img
+              onClick={handleLogout}
+              className={styles.logout}
+              src="../../assets/images/logout-icon.svg"
+              alt="log out icon"
+            ></img>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
       {currentPath === homePath || currentPath === loginPath || currentPath === signupPath ? (
         ''
