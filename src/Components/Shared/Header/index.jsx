@@ -1,10 +1,13 @@
 import styles from './header.module.css';
 import Nav from '../Nav';
+import Button from '../Button';
 import { useHistory, useLocation } from 'react-router-dom';
 import { logout } from 'redux/auth/thunks';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { asideOnThunk, asideOffThunk } from 'redux/aside/thunks';
 
 function Header() {
+  const { isOn } = useSelector((state) => state.aside);
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
@@ -18,10 +21,26 @@ function Header() {
     history.push('/home');
   };
 
+  const handleSandwichClick = () => {
+    if (isOn) {
+      dispatch(asideOffThunk());
+    } else {
+      dispatch(asideOnThunk());
+    }
+  };
+
   return (
     <header>
       <div className={styles.container} data-testid={'header-container'}>
-        <div data-testid={'header-logo'}>
+        <div className={styles.sandwichBlock} data-testid={'header-logo'}>
+          <span className={styles.sandwich}>
+            <Button
+              variant={'sandwichIcon'}
+              className={styles.sandwich}
+              testid={'delete-btn'}
+              clickAction={handleSandwichClick}
+            />
+          </span>
           <img className={styles.logo} src="../../assets/images/LOGO-RR-1.svg" alt="logo"></img>
           <img
             className={styles.isologo}

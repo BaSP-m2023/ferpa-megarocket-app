@@ -57,6 +57,21 @@
   min-width: 30px;
 }
 
+.sandwichIcon {
+  background-image: url('../../../../public/assets/images/Icono-menu.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  font-size: 0;
+  min-height: 40px;
+  min-width: 40px;
+}
+
+.sandwichIcon:hover {
+  background-image: url('../../../../public/assets/images/Icono-menu-hover.svg');
+}
+
 .seePassword {
   background-image: url('../../../../public/assets/images/pass_icon.svg');
   background-size: cover;
@@ -91,3 +106,4 @@
   border: 1.5px solid #ffffff;
   color: #ffffff;
 }
+

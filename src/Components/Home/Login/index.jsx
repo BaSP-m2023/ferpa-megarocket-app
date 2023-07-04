@@ -14,6 +14,7 @@ function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { user } = useSelector((state) => state.auth);
+  const { isOn } = useSelector((state) => state.aside);
   const schema = Joi.object({
     email: Joi.string(),
     password: Joi.string()
@@ -46,7 +47,7 @@ function Login() {
 
   return (
     <section className={styles.container}>
-      <Aside />
+      {isOn && <Aside />}
       <div className={styles.login}>
         <div className={styles.loginBox}>
           <div>

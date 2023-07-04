@@ -91,6 +91,7 @@ const MembersCreate = () => {
 
   const history = useHistory();
   const { error, success, message } = useSelector((state) => state.members);
+  const { isOn } = useSelector((state) => state.aside);
 
   const {
     register,
@@ -127,7 +128,7 @@ const MembersCreate = () => {
   if (location.pathname.includes('/home/signup')) {
     return (
       <section className={styles.signupContainer}>
-        <Aside />
+        {isOn && <Aside />}
         <div className={styles.signup}>
           <div className={styles.box}>
             <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
