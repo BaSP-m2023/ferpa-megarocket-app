@@ -1,7 +1,48 @@
 import React from 'react';
 import styles from './landing.module.css';
+import { Input, TextArea } from 'Components/Shared/Inputs';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 
 const Landing = () => {
+  const schema = Joi.object({
+    firstName: Joi.string()
+      .min(3)
+      .max(15)
+      .pattern(/^[a-zA-Z-]+$/)
+      .messages({
+        'string.pattern.base': 'First name must contain only letters'
+      }),
+    lastName: Joi.string()
+      .min(3)
+      .max(15)
+      .pattern(/^[a-zA-Z-]+$/)
+      .messages({
+        'string.pattern.base': 'Last name must contain only letters'
+      }),
+    email: Joi.string()
+      .pattern(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)
+      .messages({
+        'string.pattern.base': 'Email must be in a valid format (example@example.com)'
+      }),
+    description: Joi.string()
+      .pattern(/^[a-zA-Z0-9.,\s]+$/)
+      .min(5)
+      .max(250)
+      .messages({
+        'string.pattern.base': 'Description must contain only letters'
+      })
+  });
+
+  const {
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(schema)
+  });
+
   return (
     <div className={styles.container}>
       <section className={styles.introduction}>
@@ -29,21 +70,81 @@ const Landing = () => {
         </div>
       </section>
       <section className={styles.meetUs}>
-        <div className={styles.meetUsTitle}>
-          <h2>Meet Us</h2>
-        </div>
-        <div className={styles.meetUpBox}>
-          <div className={styles.topBox}>
-            <div className={styles.box}></div>
-            <div className={styles.box}></div>
+        <h2>Meet Us</h2>
+        <div className={styles.meetUsBox}>
+          <div className={styles.box}>
+            <img src="../../assets/images/appointment.svg" alt="appointment"></img>
+            <div className={styles.boxRight}>
+              <h3>Book an appointment</h3>
+              <p>Book your turn for a visit, come and meet us!</p>
+            </div>
           </div>
-          <div className={styles.bottomBox}>
-            <div className={styles.box}></div>
-            <div className={styles.box}></div>
+          <div className={styles.box}>
+            <img src="../../assets/images/schedule.svg" alt="schedule"></img>
+            <div className={styles.boxRight}>
+              <h3>Attention schedule</h3>
+              <p>You will find all our schedules, adapted to your needs.</p>
+            </div>
+          </div>
+          <div className={styles.box}>
+            <img src="../../assets/images/management.svg" alt="management"></img>
+            <div className={styles.boxRight}>
+              <h3>Membership management</h3>
+              <p>
+                Here you can manage your membership, we have a variety of them, take a look in the
+                GYM section below.
+              </p>
+            </div>
+          </div>
+          <div className={styles.box}>
+            <img src="../../assets/images/contact.svg" alt="contact"></img>
+            <div className={styles.boxRight}>
+              <h3>Contact form & suggestions</h3>
+              <p>Write to us, our team will always be willing to listen to you!</p>
+            </div>
           </div>
         </div>
       </section>
-      <section className={styles.contactUs}></section>
+      <section className={styles.contactUs}>
+        <h2>Contact Us</h2>
+        <div className={styles.inputGroup}>
+          <Input
+            register={register}
+            labelText={'First Name'}
+            placeholder={'First Name'}
+            nameValue={'firstName'}
+            error={errors.firstName?.message}
+          />
+        </div>
+        <div className={styles.inputGroup}>
+          <Input
+            register={register}
+            labelText={'Last Name'}
+            placeholder={'Last Name'}
+            nameValue={'lastName'}
+            error={errors.lastName?.message}
+          />
+        </div>
+        <div className={styles.inputGroup}>
+          <Input
+            register={register}
+            labelText={'Email'}
+            placeholder={'Email'}
+            nameValue={'email'}
+            error={errors.email?.message}
+          />
+          <div className={styles.inputGroup}>
+            <TextArea
+              register={register}
+              labelText={'Email'}
+              nameValue={'description'}
+              label={'Description'}
+              placeholder={'Activity description'}
+              error={errors.description?.message}
+            />
+          </div>
+        </div>
+      </section>
       <section className={styles.aboutUs}></section>
       <section className={styles.membership}></section>
     </div>

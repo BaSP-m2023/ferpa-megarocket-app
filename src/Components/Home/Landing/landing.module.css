@@ -8,7 +8,7 @@
 .introduction{
   display: flex;
   flex-direction: row;
-  margin-top: 50px;
+  padding-top: 50px;
   padding-bottom: 50px;
   border-bottom: 2px solid black;
 }
@@ -17,7 +17,7 @@
   display: flex;
   flex-direction: column;
   width: 50%;
-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .introductionImg {
@@ -26,25 +26,22 @@ box-sizing: border-box;
   box-sizing: border-box;
 }
 
-.meetUs{
+.meetUsBox {
   display: flex;
-  flex-direction: row;
-}
-
-.meetUsTitle{
-  display: flex;
-}
-
-.topBox {
-  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   justify-content: space-between;
-}
-
-.bottomBox {
-  display: flex;
-  justify-content: space-between;
+  padding-bottom: 50px;
+  border-bottom: 2px solid black;
 }
 
 .box {
-  
+  display: flex;
+  align-items: center;
+  width: calc(50% - 10px);
+  margin-bottom: 50px;
+}
+
+.box img {
+  margin-right: 20px;
 }
