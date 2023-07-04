@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  background-image: url('../../../../public/assets/images/subscriptions-background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  min-height: 700px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40vw;
+  margin: 2vw;
+  border-radius: 1vw;
+  padding: 1.5vw;
+  background-color: rgba(55, 56, 103, 0.8);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: 'Roboto', sans-serif;
+}
+
+.formTitle {
+  color: white;
+}
+
+.inputBox {
+  width: 20vw;
+  margin: 0.5vw;
+}
+
+.formBtns {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2vw;
+}
+
+.hidden {
+  display: none;
+}

@@ -7,17 +7,11 @@ import Button from 'Components/Shared/Button';
 import Aside from '../../Shared/Aside';
 import { login } from 'redux/auth/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
 
 function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { user } = useSelector((state) => state.auth);
-  const schema = Joi.object({
-    email: Joi.string(),
-    password: Joi.string()
-  });
 
   useEffect(() => {
     if (user?.role === 'ADMIN') {
@@ -32,14 +26,8 @@ function Login() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm({
-    mode: 'onBlur',
-    resolver: joiResolver(schema)
-  });
+  const { register, handleSubmit } = useForm({});
+
   const handleLogin = (data) => {
     dispatch(login(data));
   };
@@ -61,7 +49,6 @@ function Login() {
                   nameValue={'email'}
                   type={'text'}
                   placeholder={'Email:'}
-                  error={errors.email?.message}
                 />
               </div>
               <div className={styles.fieldset}>
@@ -71,7 +58,6 @@ function Login() {
                   nameValue={'password'}
                   type={'password'}
                   placeholder={'Password:'}
-                  error={errors.password?.message}
                 />
               </div>
             </div>

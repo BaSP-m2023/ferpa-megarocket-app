@@ -10,9 +10,13 @@ import {
   logoutSuccess,
   signUpPending,
   signUpSuccess,
-  signUpError
+  signUpError,
+  checkClean,
+  checkSuccess,
+  checkError
 } from './action';
 import { firebaseApp } from 'helper/firebase';
+import { EmailAuthProvider } from 'firebase/auth';
 
 export const login = (credentials) => {
   return async (dispatch) => {
@@ -25,22 +29,24 @@ export const login = (credentials) => {
       const {
         claims: { role }
       } = await firebaseResponse.user.getIdTokenResult();
-      return dispatch(loginSuccess({ role, token }));
+      dispatch(loginSuccess({ role, token }));
     } catch (error) {
-      return dispatch(loginError(error.toString()));
+      dispatch(loginError(error.toString()));
     }
   };
 };
 
-export const getAuth = (token) => {
+export const getAuth = (token, firebaseUid) => {
   return async (dispatch) => {
     dispatch(getAuthPending());
     try {
-      const response = fetch(`${process.env.REACT_APP_API_URL}/api/auth/`, { headers: { token } });
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/`, {
+        headers: { token, firebaseUid }
+      });
       const res = await response.json();
-      return dispatch(getAuthSuccess(res.data));
+      dispatch(getAuthSuccess(res.data));
     } catch (error) {
-      return dispatch(getAuthError(error.toString()));
+      dispatch(getAuthError(error.toString()));
     }
   };
 };
@@ -52,9 +58,9 @@ export const logout = () => {
       await firebaseApp.auth().signOut();
       sessionStorage.removeItem('role', '');
       sessionStorage.removeItem('token', '');
-      return dispatch(logoutSuccess());
+      dispatch(logoutSuccess());
     } catch (error) {
-      return dispatch(logoutError(error.toString()));
+      dispatch(logoutError(error.toString()));
     }
   };
 };
@@ -79,6 +85,21 @@ export const signUpMember = (data) => {
       return res;
     } catch (error) {
       dispatch(signUpError(error.toString()));
+    }
+  };
+};
+
+export const checkPass = (pass) => {
+  return async (dispatch) => {
+    dispatch(checkClean());
+    const user = firebaseApp.auth().currentUser;
+    const email = user.email;
+    try {
+      const credential = EmailAuthProvider.credential(email, pass);
+      await user.reauthenticateWithCredential(credential);
+      dispatch(checkSuccess());
+    } catch (error) {
+      dispatch(checkError(error.toString()));
     }
   };
 };

@@ -2,9 +2,10 @@ import styles from './header.module.css';
 import Nav from '../Nav';
 import { useHistory, useLocation } from 'react-router-dom';
 import { logout } from 'redux/auth/thunks';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Header() {
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
@@ -29,41 +30,19 @@ function Header() {
             alt="IsoLogo"
           ></img>
         </div>
-        <div className={styles.rightSide}>
-          {role === 'ADMIN' && (
-            <>
-              <span className={styles.title}>Admin</span>
-              <img
-                onClick={handleLogout}
-                className={styles.logout}
-                src="../../assets/images/logout-icon.svg"
-                alt="log out icon"
-              ></img>
-            </>
-          )}
-          {role === 'MEMBER' && (
-            <>
-              <span className={styles.title}>Member</span>
-              <img
-                onClick={handleLogout}
-                className={styles.logout}
-                src="../../assets/images/logout-icon.svg"
-                alt="log out icon"
-              ></img>
-            </>
-          )}
-          {role === 'SUPER-ADMIN' && (
-            <>
-              <span className={styles.title}>Super Admin</span>
-              <img
-                onClick={handleLogout}
-                className={styles.logout}
-                src="../../assets/images/logout-icon.svg"
-                alt="log out icon"
-              ></img>
-            </>
-          )}
-        </div>
+        {role ? (
+          <div className={styles.rightSide}>
+            <span className={styles.title}>Hi, {user?.firstName}</span>
+            <img
+              onClick={handleLogout}
+              className={styles.logout}
+              src="../../assets/images/logout-icon.svg"
+              alt="log out icon"
+            ></img>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
       {currentPath === homePath || currentPath === loginPath || currentPath === signupPath ? (
         ''

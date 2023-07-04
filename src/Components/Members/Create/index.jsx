@@ -7,6 +7,7 @@ import Button from 'Components/Shared/Button';
 import Modal from 'Components/Shared/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { createMember } from 'redux/members/thunks';
+import { signUpMember } from 'redux/auth/thunks';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -64,7 +65,12 @@ const MembersCreate = () => {
       }),
     isActive: Joi.boolean(),
     membership: Joi.string().valid('Classic', 'Only Classes', 'Black').required(),
-    isMembershipActive: Joi.boolean()
+    password: Joi.string()
+      .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{7,}$/)
+      .messages({
+        'string.pattern.base':
+          'Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 7 characters long'
+      })
   });
 
   const memberships = [
@@ -110,10 +116,6 @@ const MembersCreate = () => {
       setShowModal(true);
     }
 
-    if (success && location.pathname.includes('/home/signup')) {
-      history.push('/home/login');
-    }
-
     if (error) {
       setShowModalError(true);
     }
@@ -121,7 +123,12 @@ const MembersCreate = () => {
   }, [success, error]);
 
   const onSubmit = (data) => {
-    dispatch(createMember(data));
+    if (location.pathname.includes('/home/signup')) {
+      dispatch(signUpMember(data));
+      history.push('/home/login');
+    } else {
+      dispatch(createMember(data));
+    }
   };
 
   if (location.pathname.includes('/home/signup')) {
@@ -222,6 +229,16 @@ const MembersCreate = () => {
                       nameValue={'membership'}
                       register={register}
                       error={errors.membership?.message}
+                    />
+                  </div>
+                  <div className={styles.inputBox}>
+                    <Input
+                      register={register}
+                      type={'password'}
+                      labelText={'Password'}
+                      placeholder={'Password'}
+                      nameValue={'password'}
+                      error={errors.password?.message}
                     />
                   </div>
                 </div>
@@ -363,7 +380,7 @@ const MembersCreate = () => {
             </div>
           </div>
           <div className={styles.formBtns}>
-            <Link to="/admins/home/members">
+            <Link to="/admin/members">
               <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
             </Link>
             <Button text={'Add'} variant={'add'} submitting testid={'confirm-add-btn'} />

@@ -21,7 +21,7 @@ const Form = () => {
   const [errorModal, setErrorModal] = useState(false);
   const location = useLocation();
 
-  const schema = Joi.object({
+  const createSchema = Joi.object({
     firstName: Joi.string()
       .min(3)
       .max(15)
@@ -58,6 +58,37 @@ const Form = () => {
       })
   });
 
+  const editSchema = Joi.object({
+    firstName: Joi.string()
+      .min(3)
+      .max(15)
+      .pattern(/^[a-zA-Z-]+$/)
+      .messages({
+        'string.pattern.base': 'First name must contain only letters'
+      }),
+    lastName: Joi.string()
+      .min(3)
+      .max(15)
+      .pattern(/^[a-zA-Z-]+$/)
+      .messages({
+        'string.pattern.base': 'Last name must contain only letters'
+      }),
+    dni: Joi.number().min(1000000).max(99999999).messages({
+      'number.min': 'DNI must have at least 7 numbers',
+      'number.max': 'DNI must have a maximum of 8 numbers'
+    }),
+    phone: Joi.number().min(1000000000).max(9999999999).messages({
+      'number.min': 'Phone must have 10 numbers',
+      'number.max': 'Phone must have 10 numbers'
+    }),
+    email: Joi.string()
+      .pattern(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)
+      .messages({
+        'string.pattern.base': 'Email must be in a valid format (example@example.com)'
+      }),
+    city: Joi.string().min(1).max(58)
+  });
+
   const {
     register,
     reset,
@@ -65,7 +96,7 @@ const Form = () => {
     formState: { errors, dirtyFields }
   } = useForm({
     mode: 'onChange',
-    resolver: joiResolver(schema),
+    resolver: joiResolver(id ? editSchema : createSchema),
     defaultValues: inputs
   });
 
@@ -83,6 +114,7 @@ const Form = () => {
       const copyAdmin = { ...administrator };
       delete copyAdmin._id;
       delete copyAdmin.__v;
+      delete copyAdmin.firebaseUid;
       setInputs(copyAdmin);
     } else {
       setInputs({});
@@ -247,16 +279,20 @@ const Form = () => {
             error={errors.city?.message}
           />
         </div>
-        <div className={styles.inputGroup}>
-          <Input
-            register={register}
-            type={'password'}
-            labelText={'Password'}
-            placeholder={'Password'}
-            nameValue={'password'}
-            error={errors.password?.message}
-          />
-        </div>
+        {id ? (
+          ''
+        ) : (
+          <div className={styles.inputGroup}>
+            <Input
+              register={register}
+              type={'password'}
+              labelText={'Password'}
+              placeholder={'Password'}
+              nameValue={'password'}
+              error={errors.password?.message}
+            />
+          </div>
+        )}
         <div className={styles.modalBtns}>
           <Link to={cancelButtonDestination}>
             <Button text={'Cancel'} variant={'white'} />
