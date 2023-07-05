@@ -1,104 +1,92 @@
 import React from 'react';
 import styles from './nav.module.css';
-import { NavLink } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 const Nav = () => {
-  const location = useLocation();
+  const role = sessionStorage.getItem('role');
   return (
     <nav className={styles.navbar} data-testid={'nav-container'}>
       <ul className={styles.links}>
-        {location.pathname.includes('/members/home') && (
+        {role === 'MEMBER' && (
           <>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              data-testid={'member-profile'}
-              to="/members/home/profile"
+              to="/member/profile"
             >
               <li>Profile</li>
             </NavLink>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              data-testid={'member-classes'}
-              to="/members/home/classes"
+              to="/member/classes"
             >
               <li>Classes</li>
             </NavLink>
-            <NavLink
+            <Link
               activeClassName={styles.linkFocused}
               className={styles.link}
-              data-testid={'member-subs'}
-              to="/members/home/subscriptions"
+              to="/member/subscriptions"
             >
               <li>My Subscriptions</li>
-            </NavLink>
+            </Link>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              data-testid={'member-activities'}
-              to="/members/home/activities"
+              to="/member/activities"
             >
               <li>Activities</li>
             </NavLink>
           </>
         )}
-        {location.pathname.includes('/admins/home') && (
+        {role === 'ADMIN' && (
           <>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              data-testid={'admins-profile'}
-              to="/admins/home/profile"
+              to="/admin/profile"
             >
               <li>Profile</li>
             </NavLink>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              data-testid={'admins-reports'}
-              to="/admins/home/reports"
+              to="/admin/reports"
             >
               <li>Reports</li>
             </NavLink>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              data-testid={'admins-activities'}
-              to="/admins/home/activities"
+              to="/admin/activities"
             >
               <li>Activities</li>
             </NavLink>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              data-testid={'admins-classes'}
-              to="/admins/home/classes"
+              to="/admin/classes"
             >
               <li>Classes</li>
             </NavLink>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              data-testid={'admins-members'}
-              to="/admins/home/members"
+              to="/admin/members"
             >
               <li>Members</li>
             </NavLink>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              data-testid={'admins-subs'}
-              to="/admins/home/subscriptions"
+              to="/admin/subscriptions"
             >
               <li>Subscriptions</li>
             </NavLink>
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              data-testid={'admins-trainers'}
-              to="/admins/home/trainers"
+              to="/admin/trainers"
             >
               <li>Trainers</li>
             </NavLink>

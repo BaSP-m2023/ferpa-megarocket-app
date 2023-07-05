@@ -5,12 +5,18 @@ const INITIAL_STATE = {
   user: null,
   error: false,
   message: '',
-  isAuthPending: true
+  isAuthPending: true,
+  passChecked: false
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actionConstants.LOGIN_PENDING:
+      return {
+        ...state,
+        isPending: true
+      };
+    case actionConstants.LOGOUT_PENDING:
       return {
         ...state,
         isPending: true
@@ -63,6 +69,21 @@ const authReducer = (state = INITIAL_STATE, action) => {
         error: true,
         message: action.payload,
         isAuthPending: false
+      };
+    case actionConstants.CHECK_CLEAN:
+      return {
+        ...state,
+        passChecked: false
+      };
+    case actionConstants.CHECK_SUCCESS:
+      return {
+        ...state,
+        passChecked: true
+      };
+    case actionConstants.CHECK_ERROR:
+      return {
+        ...state,
+        error: true
       };
     default:
       return state;

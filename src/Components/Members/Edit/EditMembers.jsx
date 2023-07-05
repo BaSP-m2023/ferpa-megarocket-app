@@ -28,6 +28,7 @@ const MembersEdit = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   const { data, message, success, error } = useSelector((state) => state.members);
   const history = useHistory();
   const { id } = useParams();
@@ -113,7 +114,7 @@ const MembersEdit = () => {
 
   useEffect(() => {
     dispatch(getMembers());
-    const memberToUpdate = data.find((member) => member._id === id);
+    const memberToUpdate = data.find((member) => member._id === user._id);
     setMember({
       firstName: memberToUpdate?.firstName,
       lastName: memberToUpdate?.lastName,
@@ -133,10 +134,10 @@ const MembersEdit = () => {
     if (success) {
       setShowModal(true);
       setTimeout(() => {
-        if (location.pathname.includes('admin/home/members')) {
-          history.push('/admins/home/members');
-        } else if (location.pathname.includes('members/home/edit')) {
-          history.push('/members/home/profile');
+        if (location.pathname.includes('admin/members/form')) {
+          history.push('/admin/members');
+        } else if (location.pathname.includes('member/form')) {
+          history.push('/member/profile');
         }
       }, 2000);
     }
@@ -173,119 +174,124 @@ const MembersEdit = () => {
         success
         testid={'success-modal'}
       />
-      ;
       <div className={styles.box} data-testid={'member-editform-container'}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
           <h2 className={styles.formTitle}>EDIT MEMBER</h2>
-          <div className={styles.inputBox}>
-            <Input
-              labelText={'First Name'}
-              type={'text'}
-              placeholder={'First Name'}
-              nameValue={'firstName'}
-              register={register}
-              error={errors.firstName?.message}
-            />
-          </div>
-          <div className={styles.inputBox}>
-            <Input
-              labelText={'Last Name'}
-              type={'text'}
-              placeholder={'Last Name'}
-              nameValue={'lastName'}
-              register={register}
-              error={errors.lastName?.message}
-            />
-          </div>
-          <div className={styles.inputBox}>
-            <Input
-              labelText={'DNI'}
-              type={'text'}
-              placeholder={'DNI'}
-              nameValue={'dni'}
-              register={register}
-              error={errors.dni?.message}
-            />
-          </div>
-          <div className={styles.inputBox}>
-            <Input
-              labelText={'Phone'}
-              type={'text'}
-              placeholder={'ex: 096513178'}
-              nameValue={'phone'}
-              register={register}
-              error={errors.phone?.message}
-            />
-          </div>
-          <div className={styles.inputBox}>
-            <Input
-              labelText={'Email'}
-              type={'text'}
-              placeholder={'robertomariaoverdrive@soybostero.edu'}
-              nameValue={'email'}
-              register={register}
-              error={errors.email?.message}
-            />
-          </div>
-          <div className={styles.inputBox}>
-            <Input
-              labelText={'City'}
-              type={'text'}
-              placeholder={'Your city'}
-              nameValue={'city'}
-              register={register}
-              error={errors.city?.message}
-            />
-          </div>
-          <div className={styles.inputBox}>
-            <DatePicker
-              label={'Birthday'}
-              nameValue={'birthDay'}
-              register={register}
-              error={errors.birthDay?.message}
-            />
-          </div>
-          <div className={styles.inputBox}>
-            <Input
-              labelText={'Zip Code'}
-              type={'text'}
-              placeholder={'Your postal code'}
-              nameValue={'postalCode'}
-              register={register}
-              error={errors.postalCode?.message}
-            />
-          </div>
-          <div className={styles.inputBox}>
-            <Select
-              label={'Membership'}
-              placeholder={'Classic'}
-              options={memberships}
-              nameValue={'membership'}
-              register={register}
-              error={errors.membership?.message}
-            />
-          </div>
-          {location.pathname.includes('admins/home/members') ? (
-            <div className={styles.checkboxField}>
-              <label>Is Active?</label>
-              <input
-                className={styles.checkbox}
-                name={'isActive'}
-                type="checkbox"
-                {...register('isActive')}
-              />
+          <div className={styles.row}>
+            <div className={styles.column}>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'First Name'}
+                  type={'text'}
+                  placeholder={'First Name'}
+                  nameValue={'firstName'}
+                  register={register}
+                  error={errors.firstName?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'Last Name'}
+                  type={'text'}
+                  placeholder={'Last Name'}
+                  nameValue={'lastName'}
+                  register={register}
+                  error={errors.lastName?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'DNI'}
+                  type={'text'}
+                  placeholder={'DNI'}
+                  nameValue={'dni'}
+                  register={register}
+                  error={errors.dni?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'Phone'}
+                  type={'text'}
+                  placeholder={'ex: 096513178'}
+                  nameValue={'phone'}
+                  register={register}
+                  error={errors.phone?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'Email'}
+                  type={'text'}
+                  placeholder={'robertomariaoverdrive@soybostero.edu'}
+                  nameValue={'email'}
+                  register={register}
+                  error={errors.email?.message}
+                />
+              </div>
             </div>
-          ) : (
-            ''
-          )}
+            <div className={styles.column}>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'City'}
+                  type={'text'}
+                  placeholder={'Your city'}
+                  nameValue={'city'}
+                  register={register}
+                  error={errors.city?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <DatePicker
+                  label={'Birthday'}
+                  nameValue={'birthDay'}
+                  register={register}
+                  error={errors.birthDay?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Input
+                  labelText={'Zip Code'}
+                  type={'text'}
+                  placeholder={'Your postal code'}
+                  nameValue={'postalCode'}
+                  register={register}
+                  error={errors.postalCode?.message}
+                />
+              </div>
+              <div className={styles.inputBox}>
+                <Select
+                  label={'Membership'}
+                  placeholder={'Classic'}
+                  options={memberships}
+                  nameValue={'membership'}
+                  register={register}
+                  error={errors.membership?.message}
+                />
+              </div>
+              {location.pathname.includes('admins/home/members') ? (
+                <div className={styles.checkboxField}>
+                  <label>Is Active?</label>
+                  <input
+                    className={styles.checkbox}
+                    name={'isActive'}
+                    type="checkbox"
+                    {...register('isActive')}
+                  />
+                </div>
+              ) : (
+                ''
+              )}
+            </div>
+          </div>
           <div className={styles.formBtns}>
-            {location.pathname.includes('members/home/edit') ? (
-              <Link to="/members/home/profile">
-                <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
+            {location.pathname.includes('member/form') ? (
+              <Link to="/member/profile">
+                <Button text={'Cancel'} variant={'white'} />
               </Link>
             ) : (
-              <Link to="/admins/home/members">
-                <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
+              <Link to="/admin/members">
+                <Button text={'Cancel'} variant={'white'} />
               </Link>
             )}
             <Button text={'Edit'} variant={'add'} submitting testid={'confirm-edit-btn'} />

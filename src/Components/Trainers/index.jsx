@@ -34,7 +34,7 @@ const Trainers = () => {
           <div className={styles.inside}>
             <h2 className={styles.title}>Trainers</h2>
           </div>
-          <p className={styles.fetchError}>{error}</p>
+          <p className={`${styles.title} ${styles.centered}`}>{error}</p>
         </div>
       </section>
     );
@@ -46,7 +46,9 @@ const Trainers = () => {
           <div className={styles.inside}>
             <h2 className={styles.title}>Trainers</h2>
           </div>
-          <Loader />
+          <div className={styles.loading}>
+            <Loader />
+          </div>
         </div>
       </section>
     );
@@ -88,18 +90,19 @@ const Trainers = () => {
       <div className={styles.header} data-testid={'trainer-table-container'}>
         <div className={styles.inside}>
           <h2 className={styles.title}>Trainers</h2>
-          <Link to={'/admins/home/trainers/form'}>
-            <Button text={'add trainer'} variant={'add'} testid={'add-btn'} />
+          <Link to={'/admin/trainers/form'}>
+            <Button text={'Add'} variant={'add'} />
           </Link>
         </div>
-        <table className={styles.hola}>
+        <table className={styles.table}>
           <thead>
             <tr>
               <th className={styles.titles}>Name</th>
               <th className={styles.titles}>Last Name</th>
               <th className={styles.titles}>Phone</th>
               <th className={styles.titles}>Email</th>
-              <th></th>
+              <th className={styles.titles}></th>
+              <th className={styles.titles}></th>
             </tr>
           </thead>
           <tbody>
@@ -112,8 +115,8 @@ const Trainers = () => {
                   <td className={styles.list}>{item.email}</td>
                   <td>
                     <div className={styles.buttons}>
-                      <Link to={`/admins/home/trainers/form/${item._id}`}>
-                        <Button variant={'edit'} testid={'edit-btn'} />
+                      <Link to={`/admin/trainers/form/${item._id}`}>
+                        <Button variant={'edit'} />
                       </Link>
                       <Button
                         variant={'deleteIcon'}

@@ -7,64 +7,90 @@
   justify-content: center;
   font-family: 'Roboto', sans-serif;
   align-items: center;
+  font-size: 22px;
   background-image: url('../../../public/assets/images/subscriptions-background.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  min-height: 80vh;
+  min-height: 71vh;
 }
+
 .header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  width: 80%;
-  margin: 50px;
-  padding: 50px 0;
+  flex-direction: column;
+  width: 80vw;
+  min-width: 380px;
+  margin: 2%;
+  border-radius: 1.5vh;
+  padding: 4%;
   background-color: rgba(55, 56, 103, 0.8);
-  border-radius: 5px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  min-height: 480px;
 }
+
 .buttons {
   display: flex;
   justify-content: space-evenly;
 }
+
 .inside {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 15%;
-  width: 80%;
+  align-self: center;
+  width: 99%;
+  margin-bottom: 4%;
 }
+
 .title {
-  font-size: 40px;
   color: white;
+  font-size: 40px;
+  margin: 0;
+  padding: 0;
 }
+
 .titlesUp {
   display: flex;
   justify-content: center;
 }
+
 .titles {
   text-align: start;
   border-bottom: 1px solid white;
   color: white;
   font-size: 25px;
 }
+
 .list {
-  border-bottom: 1px solid white;
-  padding-top: 1vh;
+  font-size: 22px;
   padding-right: 5vh;
   color: white;
+  padding-bottom: 1vh;
+  padding-top: 1vh;
 }
+
 .fetchError {
   color: white;
 }
+
 .show {
   display: block;
 }
+
 .hide {
   display: none;
 }
-.hola {
+
+.table {
   border-collapse: collapse;
-  width: 80%;
+  width: 70vw;
+}
+
+.centered {
+  margin: 0 auto;
+}
+
+.loading {
+  margin: 50px;
 }

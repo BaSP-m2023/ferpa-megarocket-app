@@ -4,43 +4,85 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 20vw;
+  justify-content: flex-start;
+  min-width: 300px;
+  min-height: 77vh;
   background-color: #373867;
+  text-align: left;
 }
 
-.buttons, .contact {
-  width: 80%;
+.buttons,
+.contact {
+  width: 95%;
+  margin: 0;
+}
+
+.buttons {
+  padding-top: 40px;
 }
 
 .link {
-  padding-bottom: 20px;
-  color: #C4C4C4;
+  min-height: 70px;
   font-family: 'Roboto', sans-serif;
   font-size: 30px;
-  font-weight: 700;
+  font-weight: 600;
   border-bottom: 2px solid #C4C4C4;
+  text-decoration: none;
+  height: 5vh;
+  padding: 10px 0;
+  margin: 0;
 }
 
 .contact {
   color: #C4C4C4;
   font-family: 'Roboto', sans-serif;
+  min-height: 300px;
+  margin: 0;
 }
 
 .contactTitle {
   color: #46A37C;
   font-size: 30px;
   font-weight: 700;
+  height: 10%;
+  min-height: 50px;
+  margin: 0;
+  padding: 30px 0;
 }
 
 .contactItem {
+  min-height: 70px;
+  height: 5vh;
   display: flex;
+  width: 100%;
+  padding: 10px 0;
   border-bottom: 2px solid #C4C4C4;
+  text-align: center;
 }
 
 .contactItem h4 {
+  width: 100%;
   font-size: 14px;
+  display: flex;
+  align-self: center;
+  justify-self: flex-start;
+  padding-left: 10px;
 }
 
 .contactItem img {
-  margin-right: 10px;
+  margin-right: 20px;
+  width: 40px;
+}
+
+.div {
+  height: 77vh;
+}
+
+.customLink {
+  text-decoration: none;
+  color: #C4C4C4;
+}
+
+.customLink:hover {
+  color: #46a37c;
 }

@@ -9,6 +9,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  min-height: 71vh;
 }
 
 .header {
@@ -41,7 +42,7 @@
 .table {
   text-align: left;
   align-self: center;
-  width: 80%;
+  width: 70vw;
   border-collapse: collapse;
 }
 

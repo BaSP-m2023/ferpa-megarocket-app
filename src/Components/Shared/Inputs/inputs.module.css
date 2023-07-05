@@ -6,25 +6,31 @@
   font-size: 20px;
   line-height: 29px;
 }
+
 .input {
   width: 100%;
   border: 2px solid #373867;
   border-radius: 4px;
   background-color: #F3F3F5;
-  height: 40px;
+  height: 50px;
   padding: 20px;
   color: #131313;
   font-size: 16px;
 }
+
 .dark {
   color: #373867;
 }
+
 .select {
   padding: 0;
+  height: 50px;
 }
+
 .input::placeholder {
   color: rgba(55, 56, 103, 0.8);
 }
+
 .textarea {
   font-family: 'Roboto', sans-serif;
   height: 100px;
@@ -41,4 +47,9 @@
   font-size: 15px;
   font-style: italic;
   padding-left: 5px;
+}
+
+.placeholder {
+  height: 2.35vh;
+  margin: 15px 0;
 }

@@ -10,7 +10,7 @@ export const getSubscriptions = async (dispatch) => {
   dispatch(actions.resetState());
   dispatch(actions.subscriptionsPending());
   try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/all`, {
       method: 'GET',
       headers: { token: token }
     });

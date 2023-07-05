@@ -45,7 +45,7 @@ const Classes = () => {
   }, [success]);
 
   const reDirect = () => {
-    history.push('/admins/home/classes');
+    history.push('/admin/classes');
     setShowDeleteModal(!showDeleteModal);
   };
 
@@ -58,6 +58,9 @@ const Classes = () => {
     return (
       <div className={styles.container}>
         <div className={`${styles.transparetnBlue} ${styles.loading}`}>
+          <div className={styles.title}>
+            <h2 className={styles.h2}>Classes</h2>
+          </div>
           <div className={styles.loading}>{<Loader />}</div>
         </div>
       </div>
@@ -68,6 +71,9 @@ const Classes = () => {
     return (
       <div className={styles.container}>
         <div className={styles.transparetnBlue}>
+          <div className={styles.title}>
+            <h2 className={styles.h2}>Classes</h2>
+          </div>
           <p className={styles.error}>{serverMessage}</p>
         </div>
       </div>
@@ -78,9 +84,9 @@ const Classes = () => {
     <section className={styles.container}>
       <div className={styles.transparetnBlue}>
         <div className={styles.title}>
-          <h2>Classes</h2>
-          {location.pathname.includes('admins/home/classes') && (
-            <Link to="/admins/home/classes/form">
+          <h2 className={styles.h2}>Classes</h2>
+          {location.pathname.includes('admin/classes') && (
+            <Link to="/admin/classes/form">
               <Button variant={'add'} text={'Add'} testid={'add-btn'} />
             </Link>
           )}
@@ -103,14 +109,14 @@ const Classes = () => {
         />
         <Modal
           isOpen={showDeleteModal}
-          title={'Delete'}
-          text={'Are you sure you want to delete?'}
+          title={'Delete Class'}
+          text={'Are you sure you want to delete this class?'}
           warning
           onClose={() => setShowDeleteModal(false)}
           testid={'confirm-modal'}
         >
           <Button
-            text={'Yes'}
+            text={'Delete'}
             type={'button'}
             variant={'delete'}
             clickAction={() => {
@@ -128,7 +134,7 @@ const Classes = () => {
               <th className={`${styles.small} ${styles.border}`}>Hour</th>
               <th className={`${styles.medium} ${styles.border}`}>Trainer</th>
               <th className={`${styles.small} ${styles.border}`}>Slots</th>
-              {location.pathname.includes('admins/home/classes') && (
+              {location.pathname.includes('admin/classes') && (
                 <>
                   <th className={`${styles.small} ${styles.border}`}></th>
                   <th className={`${styles.small} ${styles.border}`}></th>
@@ -146,15 +152,15 @@ const Classes = () => {
                     <td>{theOne?.hour}</td>
                     <td>{theOne?.trainerId?.firstName}</td>
                     <td>{theOne?.slots}</td>
-                    {location.pathname.includes('admins/home/classes') && (
-                      <td>
-                        <Link to={`/admins/home/classes/form/${theOne?._id}`}>
+                    {location.pathname.includes('admin/classes') && (
+                      <td className={styles.tdBtn}>
+                        <Link to={`/admin/classes/form/${theOne?._id}`}>
                           <Button text={'Edit Item'} variant={'edit'} testid={'edit-btn'} />
                         </Link>
                       </td>
                     )}
-                    {location.pathname.includes('admins/home/classes') && (
-                      <td>
+                    {location.pathname.includes('admin/classes') && (
+                      <td className={styles.tdBtn}>
                         <Button
                           variant={'deleteIcon'}
                           type={'button'}
