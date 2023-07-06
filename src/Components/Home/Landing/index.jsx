@@ -1,11 +1,30 @@
 import React from 'react';
 import styles from './landing.module.css';
-import { Input, TextArea } from 'Components/Shared/Inputs';
+import { Input, TextArea, Select } from 'Components/Shared/Inputs';
+import Button from 'Components/Shared/Button';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
 const Landing = () => {
+  const motive = [
+    {
+      _id: 1,
+      name: 'I want to know about memberships and costs.',
+      value: 'costs'
+    },
+    {
+      _id: 2,
+      name: 'I want to make a question or a suggestion.',
+      value: 'suggestion'
+    },
+    {
+      _id: 3,
+      name: 'I want to make a claim.',
+      value: 'claim'
+    }
+  ];
+
   const schema = Joi.object({
     firstName: Joi.string()
       .min(3)
@@ -128,25 +147,95 @@ const Landing = () => {
         <div className={styles.inputGroup}>
           <Input
             register={register}
+            className={styles.input}
             labelText={'Email'}
             placeholder={'Email'}
             nameValue={'email'}
             error={errors.email?.message}
           />
-          <div className={styles.inputGroup}>
-            <TextArea
-              register={register}
-              labelText={'Email'}
-              nameValue={'description'}
-              label={'Description'}
-              placeholder={'Activity description'}
-              error={errors.description?.message}
-            />
+        </div>
+        <div className={styles.inputGroup}>
+          <Select
+            register={register}
+            placeholder={'Select motive'}
+            options={motive}
+            nameValue={'motive'}
+            error={errors.hour?.message}
+            label={'Motive'}
+          />
+        </div>
+        <div className={styles.inputGroup}>
+          <TextArea
+            register={register}
+            labelText={'Description'}
+            nameValue={'description'}
+            label={'Description'}
+            placeholder={'Activity description'}
+            error={errors.description?.message}
+          />
+        </div>
+        <Button variant={'add'} text={'SEND MESSAGE'} submitting />
+        <Button text={'RESET'} variant={'white'} />
+      </section>
+      <section className={styles.aboutUs}>
+        <h2>About Us</h2>
+        <p>
+          Megarocket SA gym was founded in 1995 by a former Olympic athlete named Max Strong. Max
+          had always been passionate about fitness and wanted to create a gym that would provide
+          people with a welcoming and inclusive environment to pursue their fitness goals.
+        </p>
+        <p>
+          Over the years, Megarocket SA grew into one of the most popular gyms in the city, with a
+          thriving community of members who were passionate about fitness. Max continued to run the
+          gym until he retired in 2020.
+        </p>
+        <h3>Our thoughts</h3>
+        <img src="../../assets/images/gym-2.svg" alt="gym workout"></img>
+        <p>
+          At Megarocket SA, we believe that fitness is not just a hobby, it is a lifelong journey.
+          Our expert trainers are committed to helping you achieve your goals.
+        </p>
+        <p>
+          We believe that fitness is not a one-size-fits-all solution. That is why we offer a wide
+          range of classes and services to cater to every individual is unique needs and
+          preferences.
+        </p>
+        <h3>We are a family</h3>
+        <p>
+          We are not just a gym - we are a family. At Megarocket SA, you will find a supportive and
+          welcoming community that will keep you motivated and inspired to reach your goals.
+        </p>
+        <img src="../../assets/images/gym-3.svg" alt="fitness culture"></img>
+      </section>
+      <section className={styles.membership}>
+        <h2>Memberships</h2>
+        <div className={styles.membershipBox}>
+          <div className={styles.membBox}>
+            <h3>Black Membership</h3>
+            <ol>
+              <li>Free pass to the weight room</li>
+              <li>Free pass to the lessons (previously enrolled)</li>
+              <li>Personalized follow up by a trainer</li>
+              <li>Grid visualization</li>
+            </ol>
+          </div>
+          <div className={styles.membBox}>
+            <h3>Classic Membership</h3>
+            <ol>
+              <li>Free pass to the weight room</li>
+              <li>Personalized follow up by a trainer</li>
+              <li>Grid visualization</li>
+            </ol>
+          </div>
+          <div className={styles.membBox}>
+            <h3>Only classes membership</h3>
+            <ol>
+              <li>Free pass to the weight room</li>
+              <li>Grid visualization</li>
+            </ol>
           </div>
         </div>
       </section>
-      <section className={styles.aboutUs}></section>
-      <section className={styles.membership}></section>
     </div>
   );
 };

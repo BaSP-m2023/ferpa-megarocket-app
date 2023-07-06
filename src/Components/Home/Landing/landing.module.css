@@ -26,13 +26,16 @@
   box-sizing: border-box;
 }
 
+.meetUs{
+    padding-bottom: 50px;
+    border-bottom: 2px solid black;
+}
+
 .meetUsBox {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding-bottom: 50px;
-  border-bottom: 2px solid black;
 }
 
 .box {
@@ -44,4 +47,14 @@
 
 .box img {
   margin-right: 20px;
+}
+
+.contactUs {
+  padding-bottom: 50px;
+  border-bottom: 2px solid black;
+}
+
+.aboutUs {
+  padding-bottom: 50px;
+  border-bottom: 2px solid black;
 }
