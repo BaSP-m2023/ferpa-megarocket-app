@@ -19,9 +19,9 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              to="/member/classes"
+              to="/member/schedule"
             >
-              <li>Classes</li>
+              <li>Schedule</li>
             </NavLink>
             <Link
               activeClassName={styles.linkFocused}
