@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClasses } from 'redux/classes/thunks';
-import { postSubscriptions, deleteSubscriptions, selectId } from 'redux/subscriptions/thunks';
+import {
+  getSubscriptions,
+  postSubscriptions,
+  deleteSubscriptions,
+  selectId
+} from 'redux/subscriptions/thunks';
 import styles from './schedule.module.css';
 import Modal from 'Components/Shared/Modal';
 import Button from '../Shared/Button/index';
@@ -10,12 +15,11 @@ import Button from '../Shared/Button/index';
 const Schedule = () => {
   const { classes } = useSelector((state) => state.classes);
   const { user } = useSelector((state) => state.auth);
-  const { subs, success, id } = useSelector((state) => state.subscriptions);
+  const { subs, success, id, message } = useSelector((state) => state.subscriptions);
   const [classSelected, setClassSelected] = useState({});
   const [subscribeModal, setSubscribeModal] = useState(false);
   const [unsubscribeModal, setUnsubscribeModal] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
-  const [successDeleteModal, setSuccessDeleteModal] = useState(false);
   const dispatch = useDispatch();
 
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -31,23 +35,16 @@ const Schedule = () => {
     }, 2000);
   };
 
-  const handleDeleteModal = () => {
-    setSuccessDeleteModal(!successDeleteModal);
-    setTimeout(() => {
-      setSuccessDeleteModal();
-    }, 2000);
-  };
-
   useEffect(() => {
     if (success) {
       handleModal();
-      handleDeleteModal();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success]);
 
   useEffect(() => {
     dispatch(getClasses());
+    getSubscriptions(dispatch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -94,15 +91,9 @@ const Schedule = () => {
     <section className={styles.container}>
       <Modal
         isOpen={successModal}
-        title={'Subscibed Successfully'}
+        title={message}
         success
         onClose={() => setSuccessModal(!successModal)}
-      />
-      <Modal
-        isOpen={successDeleteModal}
-        title={'Unsubscibed Successfully'}
-        success
-        onClose={() => setSuccessDeleteModal(!successDeleteModal)}
       />
       <Modal
         title={'Subscribe to Class'}
