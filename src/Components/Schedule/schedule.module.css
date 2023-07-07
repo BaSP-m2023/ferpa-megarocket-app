@@ -1,0 +1,60 @@
+.container {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  font-size: 25px;
+  color: white;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: url('../../../public/assets/images/admins-background.jpg');
+  min-height: 71vh;
+}
+
+.table {
+  width: 80%;
+  margin: 30px 0;
+  border-spacing: 6px;
+}
+
+.blueItem {
+  height: 50px;
+  min-width: 160px;
+  background-color: #373867;
+  border-radius: 7px;
+  text-align: center;
+}
+
+.whiteItem {
+  background-color: #c4c4e0;
+  border: 2px solid #474885;
+  border-radius: 7px;
+  color: #373867;
+  text-align: center;
+  cursor: pointer;
+}
+
+.whiteItem:hover {
+  background-color: #474885;
+  color: white;
+}
+
+.activeClass {
+  background-color: #49A37B;
+  border: 2px solid white;
+  border-radius: 7px;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+
+.disabledClass {
+  background-color: #51527e;
+  border-radius: 7px;
+  color: rgb(156, 156, 156);
+  text-align: center;
+  cursor: not-allowed;
+}
