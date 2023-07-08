@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTrainers, deleteTrainer } from 'redux/trainers/thunks';
+import AsyncSelect from 'react-select';
 import styles from './trainers.module.css';
 import Modal from 'Components/Shared/Modal';
 import Button from 'Components/Shared/Button';
@@ -113,6 +114,9 @@ const Trainers = () => {
                   <td className={styles.list}>{item.lastName}</td>
                   <td className={styles.list}>{item.phone}</td>
                   <td className={styles.list}>{item.email}</td>
+                  <td>
+                    <AsyncSelect /*loadOption={}*/ />
+                  </td>
                   <td>
                     <div className={styles.buttons}>
                       <Link to={`/admin/trainers/form/${item._id}`}>
