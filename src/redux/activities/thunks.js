@@ -1,9 +1,8 @@
 import * as actions from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getActivities = async (dispatch) => {
   dispatch(actions.getActivitiesPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities`, {
       method: 'GET',
@@ -26,6 +25,7 @@ export const getActivities = async (dispatch) => {
 
 export const postActivity = async (dispatch, newActivity) => {
   dispatch(actions.postActivitiesPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/`, {
       method: 'POST',
@@ -52,6 +52,7 @@ export const postActivity = async (dispatch, newActivity) => {
 
 export const deleteActivity = async (dispatch, id) => {
   dispatch(actions.deleteActivitiesPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
       method: 'DELETE',
@@ -75,6 +76,7 @@ export const deleteActivity = async (dispatch, id) => {
 
 export const putActivity = async (dispatch, id, activtyUpdated) => {
   dispatch(actions.putActivitiesPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/activities/${id}`, {
       method: 'PUT',

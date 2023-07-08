@@ -1,9 +1,8 @@
 import * as actionsConstants from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getAdmins = async (dispatch) => {
   dispatch(actionsConstants.getAdminsPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
       method: 'GET',
@@ -22,6 +21,7 @@ export const getAdmins = async (dispatch) => {
 
 export const deleteAdmin = async (dispatch, id) => {
   dispatch(actionsConstants.deleteAdminsPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
       method: 'DELETE',
@@ -44,6 +44,7 @@ export const updateAdmin = async (dispatch, id, updatedAdmin) => {
   delete adminToSend._id;
   delete adminToSend.__v;
   dispatch(actionsConstants.putAdminsPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
       method: 'PUT',
@@ -68,6 +69,7 @@ export const updateAdmin = async (dispatch, id, updatedAdmin) => {
 
 export const addAdmin = async (dispatch, admin) => {
   dispatch(actionsConstants.addAdminsPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
       method: 'POST',
