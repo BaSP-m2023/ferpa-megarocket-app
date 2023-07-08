@@ -3,9 +3,9 @@
   display: flex;
   flex-flow: column;
   justify-content: center;
-  width: 100%;
   align-items: center;
-  font-size: 25px;
+  width: 100%;
+  font-size: 20px;
   color: white;
   background-repeat: no-repeat;
   background-position: center;
@@ -15,9 +15,10 @@
 }
 
 .table {
-  width: 80%;
   margin: 30px 0;
   border-spacing: 6px;
+  background-color: #47488583;
+  border-radius: 7px;
 }
 
 .blueItem {
@@ -29,10 +30,10 @@
 }
 
 .whiteItem {
-  background-color: #c4c4e0;
-  border: 2px solid #474885;
+  background-color: #d4d4e9;
   border-radius: 7px;
   color: #373867;
+  font-weight: 600;
   text-align: center;
   cursor: pointer;
 }
@@ -44,10 +45,10 @@
 
 .activeClass {
   background-color: #49A37B;
-  border: 2px solid white;
   border-radius: 7px;
   color: white;
   text-align: center;
+  font-weight: 600;
   cursor: pointer;
 }
 
@@ -56,5 +57,11 @@
   border-radius: 7px;
   color: rgb(156, 156, 156);
   text-align: center;
+  font-weight: 600;
   cursor: not-allowed;
+}
+
+.empty {
+  background-color: rgba(148, 145, 160, 0.863);
+  border-radius: 7px;
 }
