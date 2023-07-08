@@ -47,7 +47,7 @@ export const sendTrainer = async (dispatch, item) => {
     city: item.city,
     password: item.password,
     salary: item.salary.toString(),
-    activityId: item.activityId
+    activities: item.activities
   };
   try {
     dispatch(trainersActions.addTrainersPending());
@@ -80,7 +80,7 @@ export const putTrainer = async (dispatch, id, updatedTrainer) => {
     city: updatedTrainer.city,
     password: updatedTrainer.password,
     salary: updatedTrainer.salary.toString(),
-    activityId: updatedTrainer.activityId
+    activities: updatedTrainer.activities
   };
   try {
     dispatch(trainersActions.editTrainersPending());

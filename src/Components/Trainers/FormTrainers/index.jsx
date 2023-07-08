@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Input } from 'Components/Shared/Inputs';
 import { sendTrainer, putTrainer } from 'redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import { useForm, useController } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { getActivities } from 'redux/activities/thunks';
 import Select from 'react-select';
@@ -24,7 +24,7 @@ const TrainerAddForm = () => {
   const history = useHistory();
   const RGXPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   const RGXEmail = /^[^@]+@[^@]+.[a-zA-Z]{2,}$/;
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  /* const [selectedOptions, setSelectedOptions] = useState([]); */
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -46,7 +46,7 @@ const TrainerAddForm = () => {
         'Password must contain at least one uppercase letter, one lowercase letter, and be at least 8 characters long'
     }),
     salary: Joi.number().min(10000),
-    activities: Joi.array().items(Joi.object().keys({ activityId: Joi.string().required() }))
+    activities: Joi.array()
   });
 
   const [inputs, setInputs] = useState({
@@ -58,7 +58,7 @@ const TrainerAddForm = () => {
     city: '',
     password: '',
     salary: '',
-    activities: [{ activityId: '' }]
+    activities: []
   });
 
   const {
@@ -66,6 +66,7 @@ const TrainerAddForm = () => {
     handleSubmit,
     reset,
     onChange,
+    control,
     formState: { errors, dirtyFields }
   } = useForm({ mode: 'onChange', resolver: joiResolver(schema), defaultValues: { inputs } });
 
@@ -111,6 +112,7 @@ const TrainerAddForm = () => {
   };
 
   const onSubmit = (data) => {
+    console.log(data);
     if (!isFormEdited) {
       history.goBack();
       return;
@@ -129,13 +131,20 @@ const TrainerAddForm = () => {
     label: item.name
   }));
 
-  const sendMulty = (selectedOptions) => {
+  /* const sendMulty = (selectedOptions) => {
     const transformedSelected = selectedOptions.map((option) => ({ activityId: option.value }));
     setSelectedOptions(selectedOptions);
     const sendArray = [];
     sendArray.push(transformedSelected);
     console.log(sendArray);
-  };
+  }; */
+
+  const {
+    field: { value: activity, onChange: actOnChange }
+  } = useController({ name: 'activities', control });
+
+  /* const { field } = useController({ name: 'activities', control });
+  const { value: activity, onChange: actOnChange, ...restLangField } = field; */
   // const {
   //   field: { value: activity, onChange: sendMulty }
   // } = useController({ name: 'trainers', control });
@@ -221,13 +230,10 @@ const TrainerAddForm = () => {
               </div>
             </div>
             <Select
-              options={transformedData}
+              value={activity ? transformedData.find((x) => x.value === activity) : activity}
               isMulti
-              onChange={(e) => {
-                sendMulty(e);
-              }}
-              name={'activities'}
-              value={selectedOptions}
+              options={transformedData}
+              onChange={(e) => actOnChange(e.map((c) => c.value))}
             />
           </div>
           <div className={styles.buttons}>
