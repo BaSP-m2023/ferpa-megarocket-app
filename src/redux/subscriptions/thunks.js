@@ -1,7 +1,5 @@
 import * as actions from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const selectId = (dispatch, id) => {
   dispatch(actions.selectIdAction(id));
 };
@@ -9,6 +7,7 @@ export const selectId = (dispatch, id) => {
 export const getSubscriptions = async (dispatch) => {
   dispatch(actions.resetState());
   dispatch(actions.subscriptionsPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/all`, {
       method: 'GET',
@@ -24,6 +23,7 @@ export const getSubscriptions = async (dispatch) => {
 export const deleteSubscriptions = async (dispatch, id) => {
   dispatch(actions.resetState());
   dispatch(actions.subscriptionsPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
       method: 'DELETE',
@@ -41,6 +41,7 @@ export const deleteSubscriptions = async (dispatch, id) => {
 export const postSubscriptions = async (dispatch, newSub) => {
   dispatch(actions.resetState());
   dispatch(actions.subscriptionsPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
       method: 'POST',
@@ -62,6 +63,7 @@ export const postSubscriptions = async (dispatch, newSub) => {
 export const updateSubscription = async (dispatch, update, id) => {
   dispatch(actions.resetState());
   dispatch(actions.subscriptionsPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
       method: 'PUT',

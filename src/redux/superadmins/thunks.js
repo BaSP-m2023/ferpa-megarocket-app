@@ -1,9 +1,8 @@
 import * as actions from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getSuperAdmins = async (dispatch) => {
   dispatch(actions.getSuperadminsPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
       method: 'GET',
@@ -27,6 +26,7 @@ export const getSuperAdmins = async (dispatch) => {
 export const postSuperAdmins = async (dispatch, newSuperadmin) => {
   try {
     dispatch(actions.postSuperadminsPending());
+    const token = sessionStorage.getItem('token');
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/`, {
       method: 'POST',
       body: JSON.stringify(newSuperadmin),
@@ -52,6 +52,7 @@ export const postSuperAdmins = async (dispatch, newSuperadmin) => {
 
 export const deleteSuperAdmin = async (dispatch, id) => {
   dispatch(actions.deleteSuperadminsPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
       method: 'DELETE',
@@ -75,6 +76,7 @@ export const deleteSuperAdmin = async (dispatch, id) => {
 
 export const putSuperAdmin = async (dispatch, id, superadminUpdated) => {
   dispatch(actions.putSuperadminsPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
       method: 'PUT',

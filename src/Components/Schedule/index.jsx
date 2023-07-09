@@ -45,8 +45,7 @@ const Schedule = () => {
   useEffect(() => {
     dispatch(getClasses());
     getSubscriptions(dispatch);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   const generateTd = ({ day, hour }) => {
     const classToShow = classes.find(
@@ -67,6 +66,8 @@ const Schedule = () => {
           }}
         >
           {classToShow?.activityId?.name}
+          <br></br>
+          {`Slots: ${classToShow?.slots}`}
         </td>
       );
     } else if (classToShow) {
@@ -80,10 +81,12 @@ const Schedule = () => {
           }}
         >
           {classToShow?.activityId?.name}
+          <br></br>
+          {`Slots: ${classToShow?.slots}`}
         </td>
       );
     } else {
-      return <td key={`${day}-${hour}`} className={styles.whiteItem}></td>;
+      return <td key={`${day}-${hour}`} className={styles.empty}></td>;
     }
   };
 
@@ -93,7 +96,7 @@ const Schedule = () => {
         isOpen={successModal}
         title={message}
         success
-        onClose={() => setSuccessModal(!successModal)}
+        onClose={() => setSubscribeModal(!successModal)}
       />
       <Modal
         title={'Subscribe to Class'}
