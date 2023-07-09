@@ -133,7 +133,7 @@ const Classes = () => {
               <th className={`${styles.medium} ${styles.border}`}>Day</th>
               <th className={`${styles.small} ${styles.border}`}>Hour</th>
               <th className={`${styles.medium} ${styles.border}`}>Trainer</th>
-              <th className={`${styles.small} ${styles.border}`}>Slots</th>
+              <th className={`${styles.small} ${styles.border}`}>Available slots</th>
               {location.pathname.includes('admin/classes') && (
                 <>
                   <th className={`${styles.small} ${styles.border}`}></th>
@@ -151,7 +151,7 @@ const Classes = () => {
                     <td>{theOne?.day}</td>
                     <td>{theOne?.hour}</td>
                     <td>{theOne?.trainerId?.firstName}</td>
-                    <td>{theOne?.slots}</td>
+                    <td>{20 - theOne?.subscribers.length}</td>
                     {location.pathname.includes('admin/classes') && (
                       <td className={styles.tdBtn}>
                         <Link to={`/admin/classes/form/${theOne?._id}`}>
