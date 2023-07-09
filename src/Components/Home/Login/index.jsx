@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { Input } from 'Components/Shared/Inputs';
 import { useForm } from 'react-hook-form';
 import Button from 'Components/Shared/Button';
-import Aside from '../../Shared/Aside';
 import { login } from 'redux/auth/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,7 +11,6 @@ function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { user } = useSelector((state) => state.auth);
-  const { isOn } = useSelector((state) => state.aside);
 
   useEffect(() => {
     if (user?.role === 'ADMIN') {
@@ -35,7 +33,6 @@ function Login() {
 
   return (
     <section className={styles.container}>
-      {isOn && <Aside />}
       <div className={styles.login}>
         <div className={styles.loginBox}>
           <div>

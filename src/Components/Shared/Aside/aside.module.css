@@ -1,12 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+.sidebar{
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 .aside {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   min-width: 300px;
-  min-height: 160vh;
+  height: 100%;
   background-color: #373867cf;
   text-align: left;
 }
@@ -85,4 +95,14 @@
 
 .customLink:hover {
   color: #46a37c;
+}
+
+.sandwichBlock {
+  display: flex;
+}
+
+.sandwich {
+  display: inline-block;
+  align-self: center;
+  padding-right: 20px;
 }

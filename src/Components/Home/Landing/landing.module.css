@@ -1,8 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 .container {
   display: flex;
   flex-direction: column;
   margin-left: 50px;
   margin-right: 50px;
+}
+
+.title{
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding-bottom: 20px;
+  font-size: 60px;
+  font-weight: 800;
+  line-height: 70px;
+  color: rgba(47, 48, 88, 1);
+}
+
+.megaColor{
+  color: rgba(47, 48, 88, 0.76);
+}
+
+.subTitle{
+  font-family: 'Roboto', sans-serif;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 40px;
+  color: rgba(47, 48, 88, 1);
+  margin-top: 70px;
+}
+
+.text{
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 25px;
+  color: rgba(0, 0, 0, 0.75);
 }
 
 .introduction{
@@ -11,6 +44,8 @@
   padding-top: 50px;
   padding-bottom: 50px;
   border-bottom: 2px solid black;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .introductionBox{
@@ -24,11 +59,26 @@
   display: flex;
   width: 50%;
   box-sizing: border-box;
+  height: 501px;
+  width: 705px;
+  padding-left: 30px;
+}
+
+.informationTitle {
+  font-family: 'Roboto', sans-serif;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 29px;
+  color: rgba(55, 56, 103, 1);
+}
+
+.introductionText {
+  width: 80%;
 }
 
 .meetUs{
-    padding-bottom: 50px;
-    border-bottom: 2px solid black;
+  padding-bottom: 50px;
+  border-bottom: 2px solid black;
 }
 
 .meetUsBox {
@@ -41,8 +91,15 @@
 .box {
   display: flex;
   align-items: center;
-  width: calc(50% - 10px);
-  margin-bottom: 50px;
+  width: calc(50% - 100px);
+  margin: 50px;
+  transition: transform 0.3s ease;
+}
+
+.box:hover {
+  transform: translateY(-10px);
+  border-radius: 25px;
+  background-color: rgba(170,207,155,0.5);
 }
 
 .box img {
@@ -54,7 +111,61 @@
   border-bottom: 2px solid black;
 }
 
+.inputs{
+  padding-top: 35px;
+  padding-right: 5%;
+  padding-left: 5%;
+}
+
+.firstInputs {
+  display: flex;
+  justify-content: space-between;
+}
+
+.firstInputs .inputGroup{
+  width: calc(50% - 10px);
+}
+
+/* .secondInputs .inputGroup {
+  width: calc(50% - 10px);
+} */
+
+.contactButtons{
+  display: flex;
+  justify-content: right;
+  padding-right: 20px;
+}
+
 .aboutUs {
   padding-bottom: 50px;
   border-bottom: 2px solid black;
+}
+
+.membershipBox{
+  display: flex;
+  justify-content: space-around;
+  padding-left: 25%;
+  padding-right: 25%;
+  margin-bottom: 45px;
+}
+
+.membBox {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  margin: 20px;
+  padding: 10px;
+  padding-top: 5%;
+  background-color: rgba(47, 48, 88, 0.2);
+  border-radius: 50px;
+  box-shadow: 2px 2px 4px rgba(47, 48, 88, 0.8);
+  transition: transform 0.5s ease;
+}
+
+.membBox h3{
+  text-align: center;
+}
+
+.membBox:hover {
+  transform: translateY(-20px);
 }
