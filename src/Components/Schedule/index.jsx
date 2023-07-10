@@ -15,11 +15,14 @@ import Button from '../Shared/Button/index';
 const Schedule = () => {
   const { classes } = useSelector((state) => state.classes);
   const { user } = useSelector((state) => state.auth);
-  const { subs, success, id, message } = useSelector((state) => state.subscriptions);
+  const { subs, success, id, message, isPending } = useSelector((state) => state.subscriptions);
   const [classSelected, setClassSelected] = useState({});
   const [subscribeModal, setSubscribeModal] = useState(false);
   const [unsubscribeModal, setUnsubscribeModal] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
+
+  const [subsMember, setMemberSubs] = useState([]);
+
   const dispatch = useDispatch();
 
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -47,14 +50,23 @@ const Schedule = () => {
     getSubscriptions(dispatch);
   }, [dispatch]);
 
+  useEffect(() => {
+    let subsFromMember = [];
+
+    const memberSubs = subs.filter((subscription) => subscription.memberId?._id === user?._id);
+
+    memberSubs.forEach((sub) => subsFromMember.push(sub));
+    setMemberSubs(subsFromMember);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subs]);
+
   const generateTd = ({ day, hour }) => {
     const classToShow = classes.find(
       (theClass) => theClass?.day === day && theClass?.hour === hour
     );
-    const mySubs = subs.filter((subscription) => subscription.memberId?._id === user?._id);
-    const subscribedClass = mySubs.some((sub) => sub.classId?._id === classToShow?._id);
+    const subscribedClass = subsMember.some((sub) => sub.classId?._id === classToShow?._id);
     const actualSub = subs.find((sub) => sub.classId?._id === classToShow?._id);
-    if (subscribedClass) {
+    if (classToShow && subscribedClass) {
       return (
         <td
           key={`${day}-${hour}`}
@@ -70,7 +82,8 @@ const Schedule = () => {
           {`Slots: ${classToShow?.slots}`}
         </td>
       );
-    } else if (classToShow) {
+    }
+    if (classToShow) {
       return (
         <td
           key={`${day}-${hour}`}
@@ -85,9 +98,8 @@ const Schedule = () => {
           {`Slots: ${classToShow?.slots}`}
         </td>
       );
-    } else {
-      return <td key={`${day}-${hour}`} className={styles.empty}></td>;
     }
+    return <td key={`${day}-${hour}`} className={styles.empty}></td>;
   };
 
   return (
