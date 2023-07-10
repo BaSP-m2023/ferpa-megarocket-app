@@ -3,6 +3,7 @@ import { Select } from 'Components/Shared/Inputs';
 import { useParams, useHistory } from 'react-router-dom';
 import { postClass, putClass } from 'redux/classes/thunks';
 import { useSelector, useDispatch } from 'react-redux';
+import { getClasses } from 'redux/classes/thunks';
 import { getActivities } from 'redux/activities/thunks';
 import { getTrainers } from 'redux/trainers/thunks';
 import { useForm } from 'react-hook-form';
@@ -14,7 +15,9 @@ import Modal from 'Components/Shared/Modal';
 import Loader from 'Components/Shared/Loader';
 
 const Form = () => {
-  const { isLoading, serverMessage, success, error } = useSelector((state) => state.classes);
+  const { classes, isLoading, serverMessage, success, error } = useSelector(
+    (state) => state.classes
+  );
   const { trainers } = useSelector((state) => state.trainers);
   const { data } = useSelector((state) => state.activities);
   const { id } = useParams();
@@ -168,9 +171,11 @@ const Form = () => {
   });
   const getClassById = async () => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`);
-      const data = await res.json();
-      setSingleClass(data.data);
+      const classWithId = classes.find((element) => element._id === id);
+      /*       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`);
+      const data = await res.json(); */
+      setSingleClass(classWithId);
+      console.log(classWithId);
       previousClass(singleClass);
     } catch (error) {
       console.error(error);
@@ -218,6 +223,7 @@ const Form = () => {
   };
   useEffect(() => {
     getActivities(dispatch);
+    getClasses(dispatch);
     getTrainers(dispatch);
     id && getClassById(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
