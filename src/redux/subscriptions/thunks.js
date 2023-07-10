@@ -30,9 +30,9 @@ export const deleteSubscriptions = async (dispatch, id) => {
       headers: { token: token }
     });
     const subjson = await subToDelete.json();
-    const member = await subjson.data.memberId;
+    const member = subjson.data.memberId;
     const editedClass = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/classes/${subToDelete.classId}`,
+      `${process.env.REACT_APP_API_URL}/api/classes/${subjson.data.classId._id}`,
       {
         method: 'GET',
         headers: {
@@ -41,10 +41,10 @@ export const deleteSubscriptions = async (dispatch, id) => {
         }
       }
     );
-    const classjson = editedClass.json();
-    const newSubs = await classjson.data.subscribers.filter((element) => element !== member);
+    const classjson = await editedClass.json();
+    const newSubs = classjson.data.subscribers.filter((element) => element !== member);
     classjson.data.subscribers = newSubs;
-    await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${subToDelete.classId}`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${subjson.data.classId}`, {
       method: 'PUT',
       body: JSON.stringify(classjson.data),
       headers: {
@@ -83,7 +83,6 @@ export const postSubscriptions = async (dispatch, newSub) => {
     const classjson = await editedClass.json();
     classjson.data.subscribers.push(member);
     const classToSend = { subscribers: classjson.data.subscribers };
-    console.log(classToSend);
     await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${newSub.classId}`, {
       method: 'PUT',
       body: JSON.stringify(classToSend),
