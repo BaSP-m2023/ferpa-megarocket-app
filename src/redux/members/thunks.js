@@ -14,15 +14,14 @@ import {
   deleteMemberError
 } from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getMembers = () => {
   return async (dispatch) => {
     dispatch(getMembersPending());
+    const token = sessionStorage.getItem('token');
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
         method: 'GET',
-        headers: { token: token }
+        headers: { token }
       });
       const { data, message } = await res.json();
       dispatch(resetInitialState());
@@ -41,6 +40,7 @@ export const getMembers = () => {
 export const updateMember = (id, member) => {
   return async (dispatch) => {
     dispatch(updateMemberPending());
+    const token = sessionStorage.getItem('token');
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
         method: 'PUT',
@@ -80,7 +80,7 @@ export const updateMember = (id, member) => {
 export const createMember = (member) => {
   return async (dispatch) => {
     dispatch(createMemberPending());
-
+    const token = sessionStorage.getItem('token');
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members/`, {
         method: 'POST',
@@ -109,10 +109,11 @@ export const createMember = (member) => {
 export const deleteMember = (id) => {
   return async (dispatch) => {
     dispatch(deleteMemberPending());
+    const token = sessionStorage.getItem('token');
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
         method: 'DELETE',
-        headers: { token: token }
+        headers: { token }
       });
       const { message } = await res.json();
       dispatch(resetInitialState());
