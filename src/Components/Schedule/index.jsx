@@ -15,7 +15,7 @@ import Button from '../Shared/Button/index';
 const Schedule = () => {
   const { classes } = useSelector((state) => state.classes);
   const { user } = useSelector((state) => state.auth);
-  const { subs, success, id, message, isPending } = useSelector((state) => state.subscriptions);
+  const { subs, success, id, message } = useSelector((state) => state.subscriptions);
   const [classSelected, setClassSelected] = useState({});
   const [subscribeModal, setSubscribeModal] = useState(false);
   const [unsubscribeModal, setUnsubscribeModal] = useState(false);
