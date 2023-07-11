@@ -110,7 +110,6 @@ function Subscriptions() {
                 <th className={styles.thead}>Member</th>
                 <th className={styles.thead}>Date</th>
                 <th className={styles.tdBtn}></th>
-                <th className={styles.tdBtn}></th>
               </tr>
             </thead>
             <tbody>
@@ -122,15 +121,6 @@ function Subscriptions() {
                     {subscription.memberId?.lastName}, {subscription.memberId?.firstName}
                   </td>
                   <td className={styles.td}>{subscription.date.slice(0, 10)}</td>
-                  <td className={styles.tdBtn}>
-                    <Link to={`/admin/subscriptions/form/${subscription._id}`}>
-                      <Button
-                        variant={'edit'}
-                        testid={'edit-btn'}
-                        clickAction={() => selectId(dispatch, subscription._id)}
-                      />
-                    </Link>
-                  </td>
                   <td className={styles.tdBtn}>
                     <Button
                       variant={'deleteIcon'}

@@ -21,6 +21,7 @@ const Schedule = () => {
   const [subscribeModal, setSubscribeModal] = useState(false);
   const [unsubscribeModal, setUnsubscribeModal] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
+
   const dispatch = useDispatch();
 
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -48,6 +49,16 @@ const Schedule = () => {
     getSubscriptions(dispatch);
   }, [dispatch, success]);
 
+  /*   useEffect(() => {
+    let subsFromMember = [];
+
+    const memberSubs = subs.filter((subscription) => subscription.memberId?._id === user?._id);
+
+    memberSubs.forEach((sub) => subsFromMember.push(sub));
+    setMemberSubs(subsFromMember);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subs]); */
+
   const generateTd = ({ day, hour }) => {
     const classToShow = classes.find(
       (theClass) => theClass?.day === day && theClass?.hour === hour
@@ -73,7 +84,8 @@ const Schedule = () => {
           {`Slots: ${slots}`}
         </td>
       );
-    } else if (classToShow) {
+    }
+    if (classToShow) {
       return (
         <td
           key={`${day}-${hour}`}
@@ -88,9 +100,8 @@ const Schedule = () => {
           {`Slots: ${slots}`}
         </td>
       );
-    } else {
-      return <td key={`${day}-${hour}`} className={styles.empty}></td>;
     }
+    return <td key={`${day}-${hour}`} className={styles.empty}></td>;
   };
 
   /*   if (isPending) {
