@@ -27,6 +27,7 @@ export const postClass = (newClass) => {
   return async (dispatch) => {
     dispatch(classActions.postClassPending());
     const token = sessionStorage.getItem('token');
+    newClass.subscribers = [];
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`, {
         method: 'POST',

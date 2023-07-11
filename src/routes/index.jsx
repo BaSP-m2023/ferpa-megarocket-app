@@ -11,6 +11,7 @@ import Footer from 'Components/Shared/Footer';
 const AdminsRoutes = lazy(() => import('./admins'));
 const SuperAdminsRoutes = lazy(() => import('./superAdmin'));
 const MembersRoutes = lazy(() => import('./members'));
+const TrainersRoutes = lazy(() => import('./trainers'));
 const HomeRoutes = lazy(() => import('./home'));
 const ChangePass = lazy(() => import('Components/Home/ChangePass'));
 
@@ -37,6 +38,7 @@ const Routes = () => {
         <Switch>
           <PrivateRoute path="/admin" role="ADMIN" component={AdminsRoutes} />
           <PrivateRoute path="/member" role="MEMBER" component={MembersRoutes} />
+          <PrivateRoute path="/trainer" role="TRAINER" component={TrainersRoutes} />
           <PrivateRoute path="/super-admin" role="SUPER-ADMIN" component={SuperAdminsRoutes} />
           <Route path="/home" component={HomeRoutes} />
           <Route path="/change_pass" component={ChangePass} />

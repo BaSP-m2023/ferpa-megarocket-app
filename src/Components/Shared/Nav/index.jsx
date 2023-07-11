@@ -85,6 +85,24 @@ const Nav = () => {
             </NavLink>
           </>
         )}
+        {role === 'TRAINER' && (
+          <>
+            <NavLink
+              activeClassName={styles.linkFocused}
+              className={styles.link}
+              to="/trainer/profile"
+            >
+              <li>Profile</li>
+            </NavLink>
+            <NavLink
+              activeClassName={styles.linkFocused}
+              className={styles.link}
+              to="/trainer/classes"
+            >
+              <li>Classes</li>
+            </NavLink>
+          </>
+        )}
       </ul>
     </nav>
   );

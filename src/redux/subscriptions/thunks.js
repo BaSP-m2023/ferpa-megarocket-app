@@ -25,6 +25,33 @@ export const deleteSubscriptions = async (dispatch, id) => {
   dispatch(actions.subscriptionsPending());
   const token = sessionStorage.getItem('token');
   try {
+    const subToDelete = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
+      method: 'GET',
+      headers: { token: token }
+    });
+    const subjson = await subToDelete.json();
+    const member = subjson.data.memberId;
+    const editedClass = await fetch(
+      `${process.env.REACT_APP_API_URL}/api/classes/${subjson.data.classId._id}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          token: token
+        }
+      }
+    );
+    const classjson = await editedClass.json();
+    const newSubs = classjson.data.subscribers.filter((element) => element !== member);
+    classjson.data.subscribers = newSubs;
+    await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${subjson.data.classId}`, {
+      method: 'PUT',
+      body: JSON.stringify(classjson.data),
+      headers: {
+        'Content-type': 'application/json',
+        token: token
+      }
+    });
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
       method: 'DELETE',
       headers: { token: token }
@@ -42,7 +69,29 @@ export const postSubscriptions = async (dispatch, newSub) => {
   dispatch(actions.resetState());
   dispatch(actions.subscriptionsPending());
   const token = sessionStorage.getItem('token');
+  const member = newSub.memberId;
   try {
+    const editedClass = await fetch(
+      `${process.env.REACT_APP_API_URL}/api/classes/${newSub.classId}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          token: token
+        }
+      }
+    );
+    const classjson = await editedClass.json();
+    classjson.data.subscribers.push(member);
+    const classToSend = { subscribers: classjson.data.subscribers };
+    await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${newSub.classId}`, {
+      method: 'PUT',
+      body: JSON.stringify(classToSend),
+      headers: {
+        'Content-type': 'application/json',
+        token: token
+      }
+    });
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/`, {
       method: 'POST',
       body: JSON.stringify(newSub),
@@ -51,6 +100,7 @@ export const postSubscriptions = async (dispatch, newSub) => {
         token: token
       }
     });
+
     const data = await res.json();
     data.error
       ? dispatch(actions.postSubscriptionError(data.message))

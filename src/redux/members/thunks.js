@@ -21,7 +21,7 @@ export const getMembers = () => {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members`, {
         method: 'GET',
-        headers: { token: token }
+        headers: { token }
       });
       const { data, message } = await res.json();
       dispatch(resetInitialState());
@@ -111,7 +111,7 @@ export const deleteMember = (id) => {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members/${id}`, {
         method: 'DELETE',
-        headers: { token: token }
+        headers: { token }
       });
       const { message } = await res.json();
       dispatch(resetInitialState());
