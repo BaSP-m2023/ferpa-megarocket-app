@@ -56,11 +56,16 @@ const Landing = () => {
 
   const {
     register,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = useForm({
     mode: 'onChange',
     resolver: joiResolver(schema)
   });
+
+  const handleReset = () => {
+    reset(); // Restablece los valores de los campos del formulario a sus valores iniciales
+  };
 
   return (
     <div className={styles.container}>
@@ -131,69 +136,73 @@ const Landing = () => {
         </div>
       </section>
       <section className={styles.contactUs}>
-        <h2 className={styles.subTitle}>Contact Us</h2>
-        <div className={styles.inputs}>
-          <div className={styles.firstInputs}>
-            <div className={styles.inputGroup}>
-              <Input
-                register={register}
-                dark
-                labelText={'First Name'}
-                placeholder={'First Name'}
-                nameValue={'firstName'}
-                error={errors.firstName?.message}
-              />
+        <div className={styles.element}>
+          <h2 className={styles.subTitle}>Contact Us</h2>
+          <form>
+            <div className={styles.inputs}>
+              <div className={styles.firstInputs}>
+                <div className={styles.inputGroup}>
+                  <Input
+                    register={register}
+                    dark
+                    labelText={'First Name'}
+                    placeholder={'First Name'}
+                    nameValue={'firstName'}
+                    error={errors.firstName?.message}
+                  />
+                </div>
+                <div className={styles.inputGroup}>
+                  <Input
+                    register={register}
+                    dark
+                    labelText={'Last Name'}
+                    placeholder={'Last Name'}
+                    nameValue={'lastName'}
+                    error={errors.lastName?.message}
+                  />
+                </div>
+              </div>
+              <div className={styles.secondInputs}>
+                <div className={styles.inputGroup}>
+                  <Input
+                    register={register}
+                    className={styles.input}
+                    dark
+                    labelText={'Email'}
+                    placeholder={'Email'}
+                    nameValue={'email'}
+                    error={errors.email?.message}
+                  />
+                </div>
+                <div className={styles.inputGroup}>
+                  <Select
+                    register={register}
+                    dark
+                    placeholder={'Select motive'}
+                    options={motive}
+                    nameValue={'motive'}
+                    error={errors.hour?.message}
+                    label={'Motive'}
+                  />
+                </div>
+              </div>
+              <div className={styles.inputGroup}>
+                <TextArea
+                  register={register}
+                  dark
+                  labelText={'Description'}
+                  nameValue={'description'}
+                  label={'Description'}
+                  placeholder={'Activity description'}
+                  error={errors.description?.message}
+                />
+              </div>
+              <div className={styles.contactButtons}>
+                <Button variant={'add'} text={'SEND MESSAGE'} submitting />
+                <Button text={'RESET'} variant={'white'} clickAction={handleReset} />
+              </div>
             </div>
-            <div className={styles.inputGroup}>
-              <Input
-                register={register}
-                dark
-                labelText={'Last Name'}
-                placeholder={'Last Name'}
-                nameValue={'lastName'}
-                error={errors.lastName?.message}
-              />
-            </div>
-          </div>
-          <div className={styles.secondInputs}>
-            <div className={styles.inputGroup}>
-              <Input
-                register={register}
-                className={styles.input}
-                dark
-                labelText={'Email'}
-                placeholder={'Email'}
-                nameValue={'email'}
-                error={errors.email?.message}
-              />
-            </div>
-            <div className={styles.inputGroup}>
-              <Select
-                register={register}
-                dark
-                placeholder={'Select motive'}
-                options={motive}
-                nameValue={'motive'}
-                error={errors.hour?.message}
-                label={'Motive'}
-              />
-            </div>
-          </div>
-          <div className={styles.inputGroup}>
-            <TextArea
-              register={register}
-              dark
-              labelText={'Description'}
-              nameValue={'description'}
-              label={'Description'}
-              placeholder={'Activity description'}
-              error={errors.description?.message}
-            />
-          </div>
-          <div className={styles.contactButtons}>
-            <Button variant={'add'} text={'SEND MESSAGE'} submitting />
-            <Button text={'RESET'} variant={'white'} />
-          </div>
+          </form>
         </div>
       </section>
       <section className={styles.aboutUs}>
@@ -209,49 +218,69 @@ const Landing = () => {
           gym until he retired in 2020.
         </p>
         <h3 className={styles.informationTitle}>Our thoughts</h3>
-        <img src="../../assets/images/gym-2.svg" alt="gym workout"></img>
-        <p className={styles.text}>
-          At Megarocket SA, we believe that fitness is not just a hobby, it is a lifelong journey.
-          Our expert trainers are committed to helping you achieve your goals.
-        </p>
-        <p className={styles.text}>
-          We believe that fitness is not a one-size-fits-all solution. That is why we offer a wide
-          range of classes and services to cater to every individual is unique needs and
-          preferences.
-        </p>
+        <div className={styles.aboutUsShadow}>
+          <div className={styles.aboutUsBox}>
+            <img src="../../assets/images/gym-2.svg" alt="gym workout"></img>
+            <div>
+              <p className={styles.text}>
+                At Megarocket SA, we believe that fitness is not just a hobby, it is a lifelong
+                journey. Our expert trainers are committed to helping you achieve your goals.
+              </p>
+              <p className={styles.text}>
+                We believe that fitness is not a one-size-fits-all solution. That is why we offer a
+                wide range of classes and services to cater to every individual is unique needs and
+                preferences.
+              </p>
+            </div>
+          </div>
+        </div>
         <h3 className={styles.informationTitle}>We are a family</h3>
-        <p className={styles.text}>
-          We are not just a gym - we are a family. At Megarocket SA, you will find a supportive and
-          welcoming community that will keep you motivated and inspired to reach your goals.
-        </p>
-        <img src="../../assets/images/gym-3.svg" alt="fitness culture"></img>
+        <div className={styles.aboutUsShadow}>
+          <div className={styles.aboutUsBox}>
+            <div>
+              <p className={styles.text}>
+                We are not just a gym - we are a family. At Megarocket SA, you will find a
+                supportive and welcoming community that will keep you motivated and inspired to
+                reach your goals.
+              </p>
+              <p className={styles.text}>
+                No matter what you’re looking for in a gym, we’ve got a membership option made for
+                you. All Mega Rockets members enjoy unlimited access to their home club and the
+                support of our friendly, knowledgeable staff anytime you need it. PF Black Card®
+                members receive additional benefits, including the ability to bring a guest for free
+                and access to any of our 2,400+ PF locations.
+              </p>
+            </div>
+            <img src="../../assets/images/gym-3.svg" alt="fitness culture"></img>
+          </div>
+        </div>
       </section>
       <section className={styles.membership}>
         <h2 className={styles.subTitle}>Memberships</h2>
         <div className={styles.membershipBox}>
           <div className={styles.membBox}>
             <h3 className={styles.informationTitle}>Black Membership</h3>
-            <ol>
+            <ul>
               <li>Free pass to the weight room</li>
               <li>Free pass to the lessons (previously enrolled)</li>
               <li>Personalized follow up by a trainer</li>
               <li>Grid visualization</li>
-            </ol>
+            </ul>
           </div>
           <div className={styles.membBox}>
             <h3 className={styles.informationTitle}>Classic Membership</h3>
-            <ol>
+            <ul>
               <li>Free pass to the weight room</li>
               <li>Personalized follow up by a trainer</li>
               <li>Grid visualization</li>
-            </ol>
+            </ul>
           </div>
           <div className={styles.membBox}>
             <h3 className={styles.informationTitle}>Only classes membership</h3>
-            <ol>
+            <ul>
               <li>Free pass to the weight room</li>
               <li>Grid visualization</li>
-            </ol>
+            </ul>
           </div>
         </div>
       </section>

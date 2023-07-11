@@ -17,8 +17,18 @@
   justify-content: flex-start;
   min-width: 300px;
   height: 100%;
-  background-color: #373867cf;
+  background: #373867;
   text-align: left;
+}
+
+.menuTitle {
+  color: #46A37C;
+  font-size: 30px;
+  font-weight: 700;
+  height: 10%;
+  min-height: 50px;
+  margin: 0;
+  padding: 30px 0;
 }
 
 .buttons,

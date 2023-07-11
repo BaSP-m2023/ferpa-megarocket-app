@@ -28,6 +28,7 @@ const Aside = () => {
           />
         </div>
         <div className={styles.div}>
+          <h3 className={styles.menuTitle}>Menu</h3>
           <div className={styles.buttons}>
             <Link to="/home" className={styles.customLink}>
               <h3 className={styles.link}>Home</h3>
@@ -47,11 +48,11 @@ const Aside = () => {
             </div>
             <div className={styles.contactItem}>
               <img src="../../assets/images/home.svg" alt="mail logo"></img>
-              <h4>(000)0000-000</h4>
+              <h4>(0341) - 4212121</h4>
             </div>
             <div className={styles.contactItem}>
               <img src="../../assets/images/phone.svg" alt="mail logo"></img>
-              <h4>Somewhere -Zeballos 1410</h4>
+              <h4>Zeballos 1410</h4>
             </div>
           </div>
         </div>

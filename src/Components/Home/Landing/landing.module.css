@@ -3,8 +3,9 @@
 .container {
   display: flex;
   flex-direction: column;
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 80px;
+  margin-right: 80px;
+  width: 100%;
 }
 
 .title{
@@ -22,6 +23,7 @@
 }
 
 .subTitle{
+  padding-top: 15px;
   font-family: 'Roboto', sans-serif;
   font-size: 34px;
   font-weight: 800;
@@ -58,7 +60,6 @@
 .introductionImg {
   display: flex;
   width: 50%;
-  box-sizing: border-box;
   height: 501px;
   width: 705px;
   padding-left: 30px;
@@ -109,7 +110,23 @@
 .contactUs {
   padding-bottom: 50px;
   border-bottom: 2px solid black;
+  position: relative;
+  perspective: 1000px;
+  /* Para aplicar perspectiva en el elemento */
 }
+
+.element {
+  transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
+}
+
+.contactUs:hover .element {
+  border-radius: 15px;
+  transform: scale(1.01);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+
+}
+
+
 
 .inputs{
   padding-top: 35px;
@@ -126,19 +143,42 @@
   width: calc(50% - 10px);
 }
 
-/* .secondInputs .inputGroup {
-  width: calc(50% - 10px);
-} */
-
 .contactButtons{
   display: flex;
   justify-content: right;
   padding-right: 20px;
+  padding-bottom: 15px;
 }
 
 .aboutUs {
   padding-bottom: 50px;
   border-bottom: 2px solid black;
+}
+
+.aboutUsBox {
+  display: flex;
+  align-items: center;
+}
+
+.aboutUsBox img{
+  height: 330px;
+  width: 370px;
+  margin-right: 50px;
+  margin-left: 50px;
+}
+
+.aboutUsShadow:hover {
+  background-color: rgba(47, 48, 88, 0.2);
+  border-radius: 20px;
+}
+
+.aboutUsShadow>*:hover {
+  background-color: inherit;
+  border-radius: 20px;
+}
+
+.aboutUsShadow>*>*:hover {
+  border-radius: 20px;
 }
 
 .membershipBox{
@@ -162,10 +202,29 @@
   transition: transform 0.5s ease;
 }
 
+.membBox ul,
+.informationTitle+ul {
+  list-style-type: none;
+}
+
+.membBox ul li::before,
+.informationTitle+ul li::before {
+  content: "\2022";
+  color: rgba(47, 48, 88, 1);
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
 .membBox h3{
   text-align: center;
 }
 
 .membBox:hover {
   transform: translateY(-20px);
+}
+
+.membBox:hover .informationTitle+ul li {
+  font-weight: bold;
+  color: rgba(47, 48, 88, 1);
 }
