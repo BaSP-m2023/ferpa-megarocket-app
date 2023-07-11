@@ -49,23 +49,11 @@ const Schedule = () => {
     getSubscriptions(dispatch);
   }, [dispatch, success]);
 
-  /*   useEffect(() => {
-    let subsFromMember = [];
-
-    const memberSubs = subs.filter((subscription) => subscription.memberId?._id === user?._id);
-
-    memberSubs.forEach((sub) => subsFromMember.push(sub));
-    setMemberSubs(subsFromMember);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subs]); */
-
   const generateTd = ({ day, hour }) => {
     const classToShow = classes.find(
       (theClass) => theClass?.day === day && theClass?.hour === hour
     );
     const subscribedClass = classToShow?.subscribers.some((sub) => user?._id === sub._id);
-    /* const mySubs = subs.filter((subscription) => subscription.memberId?._id === user?._id);
-    const subscribedClass = mySubs.some((sub) => sub.classId?._id === classToShow?._id); */
     const actualSub = subs.find((sub) => sub.classId?._id === classToShow?._id);
     const slots = 20 - classToShow?.subscribers.length;
     if (subscribedClass) {
@@ -80,34 +68,38 @@ const Schedule = () => {
           }}
         >
           {classToShow?.activityId?.name}
-          <br></br>
-          {`Slots: ${slots}`}
         </td>
       );
     }
     if (classToShow) {
       return (
-        <td
-          key={`${day}-${hour}`}
-          className={styles.whiteItem}
-          onClick={() => {
-            setSubscribeModal(!subscribeModal);
-            setClassSelected(classToShow);
-          }}
-        >
-          {classToShow?.activityId?.name}
-          <br></br>
-          {`Slots: ${slots}`}
-        </td>
+        <>
+          {classToShow?.subscribers.length !== 20 ? (
+            <td
+              key={`${day}-${hour}`}
+              className={styles.whiteItem}
+              onClick={() => {
+                setSubscribeModal(!subscribeModal);
+                setClassSelected(classToShow);
+              }}
+            >
+              {classToShow?.activityId?.name}
+              <br></br>
+              {`Slots: ${slots}`}
+            </td>
+          ) : (
+            <td key={`${day}-${hour}`} className={styles.disabledClass}>
+              {classToShow?.activityId?.name}
+              <br></br>
+              <span>No more slots</span>
+            </td>
+          )}
+        </>
       );
     }
     return <td key={`${day}-${hour}`} className={styles.empty}></td>;
   };
 
-  /*   if (isPending) {
-    return <Loader />;
-  }
- */
   return (
     <section className={styles.container}>
       <Modal
@@ -186,26 +178,37 @@ const Schedule = () => {
         />
       </Modal>
       {!isPending ? (
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th className={styles.blueItem}>Hour</th>
-              {days.map((day) => (
-                <th key={day} className={styles.blueItem}>
-                  {day}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {hours.map((hour) => (
-              <tr key={hour}>
-                <td className={styles.blueItem}>{hour}</td>
-                {days.map((day) => generateTd({ day, hour }))}
+        <>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th className={styles.blueItem}>Hour</th>
+                {days.map((day) => (
+                  <th key={day} className={styles.blueItem}>
+                    {day}
+                  </th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {hours.map((hour) => (
+                <tr key={hour}>
+                  <td className={styles.blueItem}>{hour}</td>
+                  {days.map((day) => generateTd({ day, hour }))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <table className={styles.glossary}>
+            <thead>
+              <tr>
+                <th className={styles.glossarySub}>Subscribed</th>
+                <th className={styles.glossaryClass}>Available</th>
+                <th className={styles.glossaryDis}>Disabled</th>
+              </tr>
+            </thead>
+          </table>
+        </>
       ) : (
         <Loader />
       )}

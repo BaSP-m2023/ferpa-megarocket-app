@@ -15,7 +15,7 @@
 }
 
 .table {
-  margin: 30px 0;
+  margin-top: 30px;
   border-spacing: 6px;
   background-color: #47488583;
   border-radius: 7px;
@@ -29,7 +29,7 @@
   text-align: center;
 }
 
-.whiteItem {
+.whiteItem, .glossaryClass {
   background-color: #d4d4e9;
   border-radius: 7px;
   color: #373867;
@@ -43,7 +43,7 @@
   color: white;
 }
 
-.activeClass {
+.activeClass, .glossarySub {
   background-color: #49A37B;
   border-radius: 7px;
   color: white;
@@ -52,7 +52,7 @@
   cursor: pointer;
 }
 
-.disabledClass {
+.disabledClass, .glossaryDis {
   background-color: #51527e;
   border-radius: 7px;
   color: rgb(156, 156, 156);
@@ -64,4 +64,14 @@
 .empty {
   background-color: rgba(148, 145, 160, 0.863);
   border-radius: 7px;
+}
+
+.glossary {
+  border-spacing: 30px;
+}
+
+.glossaryClass, .glossaryDis, .glossarySub {
+  height: 50px;
+  min-width: 160px;
+  margin-left: 30px;
 }
