@@ -11,11 +11,12 @@ import {
 import styles from './schedule.module.css';
 import Modal from 'Components/Shared/Modal';
 import Button from '../Shared/Button/index';
+import Loader from 'Components/Shared/Loader';
 
 const Schedule = () => {
   const { classes } = useSelector((state) => state.classes);
   const { user } = useSelector((state) => state.auth);
-  const { subs, success, id, message } = useSelector((state) => state.subscriptions);
+  const { isPending, subs, success, id, message } = useSelector((state) => state.subscriptions);
   const [classSelected, setClassSelected] = useState({});
   const [subscribeModal, setSubscribeModal] = useState(false);
   const [unsubscribeModal, setUnsubscribeModal] = useState(false);
@@ -45,15 +46,17 @@ const Schedule = () => {
   useEffect(() => {
     dispatch(getClasses());
     getSubscriptions(dispatch);
-  }, [dispatch]);
+  }, [dispatch, success]);
 
   const generateTd = ({ day, hour }) => {
     const classToShow = classes.find(
       (theClass) => theClass?.day === day && theClass?.hour === hour
     );
-    const mySubs = subs.filter((subscription) => subscription.memberId?._id === user?._id);
-    const subscribedClass = mySubs.some((sub) => sub.classId?._id === classToShow?._id);
+    const subscribedClass = classToShow?.subscribers.some((sub) => user?._id === sub._id);
+    /* const mySubs = subs.filter((subscription) => subscription.memberId?._id === user?._id);
+    const subscribedClass = mySubs.some((sub) => sub.classId?._id === classToShow?._id); */
     const actualSub = subs.find((sub) => sub.classId?._id === classToShow?._id);
+    const slots = 20 - classToShow?.subscribers.length;
     if (subscribedClass) {
       return (
         <td
@@ -67,7 +70,7 @@ const Schedule = () => {
         >
           {classToShow?.activityId?.name}
           <br></br>
-          {`Slots: ${classToShow?.slots}`}
+          {`Slots: ${slots}`}
         </td>
       );
     } else if (classToShow) {
@@ -82,7 +85,7 @@ const Schedule = () => {
         >
           {classToShow?.activityId?.name}
           <br></br>
-          {`Slots: ${classToShow?.slots}`}
+          {`Slots: ${slots}`}
         </td>
       );
     } else {
@@ -90,6 +93,10 @@ const Schedule = () => {
     }
   };
 
+  /*   if (isPending) {
+    return <Loader />;
+  }
+ */
   return (
     <section className={styles.container}>
       <Modal
@@ -167,26 +174,30 @@ const Schedule = () => {
           }}
         />
       </Modal>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th className={styles.blueItem}>Hour</th>
-            {days.map((day) => (
-              <th key={day} className={styles.blueItem}>
-                {day}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {hours.map((hour) => (
-            <tr key={hour}>
-              <td className={styles.blueItem}>{hour}</td>
-              {days.map((day) => generateTd({ day, hour }))}
+      {!isPending ? (
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th className={styles.blueItem}>Hour</th>
+              {days.map((day) => (
+                <th key={day} className={styles.blueItem}>
+                  {day}
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {hours.map((hour) => (
+              <tr key={hour}>
+                <td className={styles.blueItem}>{hour}</td>
+                {days.map((day) => generateTd({ day, hour }))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <Loader />
+      )}
     </section>
   );
 };

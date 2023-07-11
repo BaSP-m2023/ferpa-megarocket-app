@@ -42,11 +42,11 @@ export const deleteSubscriptions = async (dispatch, id) => {
       }
     );
     const classjson = await editedClass.json();
-    const newSubs = classjson.data.subscribers.filter((element) => element !== member);
-    classjson.data.subscribers = newSubs;
-    await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${subjson.data.classId}`, {
+    const newSubs = classjson.data.subscribers.filter((element) => element !== member._id);
+    const classToSend = { subscribers: newSubs };
+    await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${subjson.data.classId._id}`, {
       method: 'PUT',
-      body: JSON.stringify(classjson.data),
+      body: JSON.stringify(classToSend),
       headers: {
         'Content-type': 'application/json',
         token: token
