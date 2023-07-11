@@ -97,9 +97,9 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
-              to="/trainer/classes"
+              to="/trainer/schedule"
             >
-              <li>Classes</li>
+              <li>Schedule</li>
             </NavLink>
           </>
         )}

@@ -15,7 +15,7 @@
 }
 
 .table {
-  margin-top: 30px;
+  margin: 30px 0;
   border-spacing: 6px;
   background-color: #47488583;
   border-radius: 7px;
@@ -74,4 +74,16 @@
   height: 50px;
   min-width: 160px;
   margin-left: 30px;
+}
+
+.select {
+  height: 50px;
+  width: 15%;
+  padding: 10px;
+  margin-top: 30px;
+  border: 2px solid #373867;
+  border-radius: 14px;
+  background-color: #373867;
+  color: #F3F3F5;
+  font-size: 16px;
 }

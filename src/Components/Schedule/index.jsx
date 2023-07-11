@@ -14,6 +14,8 @@ import Button from '../Shared/Button/index';
 import Loader from 'Components/Shared/Loader';
 
 const Schedule = () => {
+  const role = sessionStorage.getItem('role');
+
   const { classes } = useSelector((state) => state.classes);
   const { user } = useSelector((state) => state.auth);
   const { isPending, subs, success, id, message } = useSelector((state) => state.subscriptions);
@@ -21,6 +23,7 @@ const Schedule = () => {
   const [subscribeModal, setSubscribeModal] = useState(false);
   const [unsubscribeModal, setUnsubscribeModal] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
+  const [trainerModal, setTrainerModal] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -53,10 +56,11 @@ const Schedule = () => {
     const classToShow = classes.find(
       (theClass) => theClass?.day === day && theClass?.hour === hour
     );
+    const trainersClass = classToShow?.trainerId?._id === user._id;
     const subscribedClass = classToShow?.subscribers.some((sub) => user?._id === sub._id);
     const actualSub = subs.find((sub) => sub.classId?._id === classToShow?._id);
     const slots = 20 - classToShow?.subscribers.length;
-    if (subscribedClass) {
+    if (role === 'MEMBER' && subscribedClass) {
       return (
         <td
           key={`${day}-${hour}`}
@@ -71,7 +75,7 @@ const Schedule = () => {
         </td>
       );
     }
-    if (classToShow) {
+    if (role === 'MEMBER' && classToShow) {
       return (
         <>
           {classToShow?.subscribers.length !== 20 ? (
@@ -97,6 +101,20 @@ const Schedule = () => {
         </>
       );
     }
+    if (role === 'TRAINER' && trainersClass) {
+      return (
+        <td
+          key={`${day}-${hour}`}
+          className={styles.whiteItem}
+          onClick={() => {
+            setClassSelected(classToShow);
+            setTrainerModal(!trainerModal);
+          }}
+        >
+          {classToShow?.activityId?.name}
+        </td>
+      );
+    }
     return <td key={`${day}-${hour}`} className={styles.empty}></td>;
   };
 
@@ -109,6 +127,24 @@ const Schedule = () => {
         onClose={() => setSubscribeModal(!successModal)}
       />
       <Modal
+        isOpen={trainerModal}
+        title={'Class Information'}
+        text={
+          <>
+            {classSelected?.activityId?.name}
+            <br></br>
+            {classSelected?.day} {classSelected?.hour}
+            <br></br>
+            {`Trainer: ${classSelected?.trainerId?.firstName}`}
+            <br></br>
+            Members:
+            <br></br>
+            {classSelected?.subscribers?.map((member) => member?.firstName).join(', ')}
+          </>
+        }
+        onClose={() => setTrainerModal(!trainerModal)}
+      />
+      <Modal
         title={'Subscribe to Class'}
         text={
           <>
@@ -116,7 +152,7 @@ const Schedule = () => {
             <br></br>
             {classSelected?.day} {classSelected?.hour}
             <br></br>
-            {classSelected?.trainerId?.firstName}{' '}
+            {`Trainer: ${classSelected?.trainerId?.firstName}`}
           </>
         }
         isOpen={subscribeModal}
@@ -153,7 +189,7 @@ const Schedule = () => {
             <br></br>
             {classSelected?.day} {classSelected?.hour}
             <br></br>
-            {classSelected?.trainerId?.firstName}{' '}
+            {`Trainer: ${classSelected?.trainerId?.firstName}`}
           </>
         }
         isOpen={unsubscribeModal}
@@ -179,6 +215,12 @@ const Schedule = () => {
       </Modal>
       {!isPending ? (
         <>
+          {role === 'TRAINER' && (
+            <select className={styles.select}>
+              <option>My classes</option>
+              <option>All classes</option>
+            </select>
+          )}
           <table className={styles.table}>
             <thead>
               <tr>
@@ -199,15 +241,17 @@ const Schedule = () => {
               ))}
             </tbody>
           </table>
-          <table className={styles.glossary}>
-            <thead>
-              <tr>
-                <th className={styles.glossarySub}>Subscribed</th>
-                <th className={styles.glossaryClass}>Available</th>
-                <th className={styles.glossaryDis}>Disabled</th>
-              </tr>
-            </thead>
-          </table>
+          {role === 'MEMBER' && (
+            <table className={styles.glossary}>
+              <thead>
+                <tr>
+                  <th className={styles.glossarySub}>Subscribed</th>
+                  <th className={styles.glossaryClass}>Available</th>
+                  <th className={styles.glossaryDis}>Disabled</th>
+                </tr>
+              </thead>
+            </table>
+          )}
         </>
       ) : (
         <Loader />

@@ -1,7 +1,7 @@
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import TrainerProfile from 'Components/TrainersHome/Profile/index';
 import TrainersEdit from 'Components/Trainers/FormTrainers/index';
-import Classes from 'Components/Classes';
+import Schedule from 'Components/Schedule';
 
 const TrainerRoutes = () => {
   const { url } = useRouteMatch();
@@ -9,7 +9,7 @@ const TrainerRoutes = () => {
     <Switch>
       <Route exact path={`${url}/profile`} component={TrainerProfile} />
       <Route exact path={`${url}/form/:id`} component={TrainersEdit} />
-      <Route exact path={`${url}/classes`} component={Classes} />
+      <Route exact path={`${url}/schedule`} component={Schedule} />
     </Switch>
   );
 };
