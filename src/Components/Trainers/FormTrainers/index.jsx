@@ -7,7 +7,6 @@ import { useForm, useController } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { getActivities } from 'redux/activities/thunks';
 import Select from 'react-select';
-// import AsyncSelect from 'react-select';
 import Joi from 'joi';
 import React from 'react';
 import Button from 'Components/Shared/Button';
@@ -24,9 +23,9 @@ const TrainerAddForm = () => {
   const history = useHistory();
   const RGXPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   const RGXEmail = /^[^@]+@[^@]+.[a-zA-Z]{2,}$/;
-  /* const [selectedOptions, setSelectedOptions] = useState([]); */
+  const trainer = trainers.find((trainer) => trainer._id === id);
 
-  const schema = Joi.object({
+  const createSchema = Joi.object({
     firstName: Joi.string()
       .min(3)
       .max(15)
@@ -49,6 +48,25 @@ const TrainerAddForm = () => {
     activities: Joi.array()
   });
 
+  const editSchema = Joi.object({
+    firstName: Joi.string()
+      .min(3)
+      .max(15)
+      .pattern(/^[a-zA-Z-]+$/),
+    lastName: Joi.string()
+      .min(3)
+      .max(15)
+      .pattern(/^[a-zA-Z-]+$/),
+    dni: Joi.number().min(1000000).max(99999999),
+    phone: Joi.number().min(1000000000).max(9999999999),
+    email: Joi.string().required().regex(RGXEmail).messages({
+      'string.pattern.base': 'Email must be in a valid format'
+    }),
+    city: Joi.string().min(2).max(30),
+    salary: Joi.number().min(10000),
+    activities: Joi.array()
+  });
+
   const [inputs, setInputs] = useState({
     firstName: '',
     lastName: '',
@@ -56,7 +74,6 @@ const TrainerAddForm = () => {
     phone: '',
     email: '',
     city: '',
-    password: '',
     salary: '',
     activities: []
   });
@@ -68,7 +85,11 @@ const TrainerAddForm = () => {
     onChange,
     control,
     formState: { errors, dirtyFields }
-  } = useForm({ mode: 'onChange', resolver: joiResolver(schema), defaultValues: { inputs } });
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(id ? editSchema : createSchema),
+    defaultValues: { inputs }
+  });
 
   const isFormEdited = Object.keys(dirtyFields).length > 0;
 
@@ -80,6 +101,10 @@ const TrainerAddForm = () => {
       delete copyTrainer.isActive;
       delete copyTrainer.__v;
       delete copyTrainer._id;
+      if (id) {
+        delete copyTrainer.firebaseUid;
+        delete copyTrainer.password;
+      }
       setInputs(copyTrainer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -96,6 +121,7 @@ const TrainerAddForm = () => {
 
   useEffect(() => {
     reset(inputs);
+    console.log(inputs);
   }, [inputs, reset]);
 
   const handleModalError = () => {
@@ -118,9 +144,11 @@ const TrainerAddForm = () => {
       return;
     }
     if (id) {
+      console.log(data);
       setSuccessModal(!successModal);
       putTrainer(dispatch, id, data);
     } else {
+      console.log('algo');
       setSuccessModal(!successModal);
       sendTrainer(dispatch, data);
     }
@@ -131,23 +159,9 @@ const TrainerAddForm = () => {
     label: item.name
   }));
 
-  /* const sendMulty = (selectedOptions) => {
-    const transformedSelected = selectedOptions.map((option) => ({ activityId: option.value }));
-    setSelectedOptions(selectedOptions);
-    const sendArray = [];
-    sendArray.push(transformedSelected);
-    console.log(sendArray);
-  }; */
-
   const {
     field: { value: activity, onChange: actOnChange }
   } = useController({ name: 'activities', control });
-
-  /* const { field } = useController({ name: 'activities', control });
-  const { value: activity, onChange: actOnChange, ...restLangField } = field; */
-  // const {
-  //   field: { value: activity, onChange: sendMulty }
-  // } = useController({ name: 'trainers', control });
 
   return (
     <div className={styles.formContainer}>
@@ -219,21 +233,38 @@ const TrainerAddForm = () => {
                   placeholder={'Salary'}
                   error={errors.salary?.message}
                 />
-                <Input
-                  register={register}
-                  onChangeInput={onChange}
-                  labelText={'Password'}
-                  nameValue={'password'}
-                  placeholder={'Password'}
-                  error={errors.password?.message}
-                />
+                {!id && (
+                  <Input
+                    register={register}
+                    onChangeInput={onChange}
+                    labelText={'Password'}
+                    nameValue={'password'}
+                    placeholder={'Password'}
+                    error={errors.password?.message}
+                  />
+                )}
               </div>
             </div>
             <Select
-              value={activity ? transformedData.find((x) => x.value === activity) : activity}
+              defaultValue={
+                trainer
+                  ? trainer.activities.map((activity) => ({
+                      value: activity._id,
+                      label: activity.name
+                    }))
+                  : trainer
+              }
+              value={
+                activity
+                  ? transformedData.find((singleActivity) => singleActivity.value === activity)
+                  : activity
+              }
               isMulti
               options={transformedData}
-              onChange={(e) => actOnChange(e.map((c) => c.value))}
+              onChange={(event) => {
+                console.log(event);
+                actOnChange(event.map((activity) => activity.value));
+              }}
             />
           </div>
           <div className={styles.buttons}>

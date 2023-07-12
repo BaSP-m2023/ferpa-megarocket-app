@@ -38,6 +38,7 @@ export const deleteTrainer = async (dispatch, id) => {
   }
 };
 export const sendTrainer = async (dispatch, item) => {
+  console.log(item);
   const trainer = {
     firstName: item.firstName,
     lastName: item.lastName,
@@ -71,6 +72,7 @@ export const sendTrainer = async (dispatch, item) => {
   }
 };
 export const putTrainer = async (dispatch, id, updatedTrainer) => {
+  console.log(updatedTrainer);
   const trainer = {
     firstName: updatedTrainer.firstName,
     lastName: updatedTrainer.lastName,
@@ -97,6 +99,7 @@ export const putTrainer = async (dispatch, id, updatedTrainer) => {
       dispatch(trainersActions.editTrainersSuccess(data, id, message));
     }
     if (error) {
+      console.log(error);
       throw new Error(message);
     }
   } catch (error) {

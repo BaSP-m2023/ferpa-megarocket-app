@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTrainers, deleteTrainer } from 'redux/trainers/thunks';
-import AsyncSelect from 'react-select';
 import styles from './trainers.module.css';
 import Modal from 'Components/Shared/Modal';
 import Button from 'Components/Shared/Button';
@@ -102,6 +101,7 @@ const Trainers = () => {
               <th className={styles.titles}>Last Name</th>
               <th className={styles.titles}>Phone</th>
               <th className={styles.titles}>Email</th>
+              <th className={styles.titles}>Activities</th>
               <th className={styles.titles}></th>
               <th className={styles.titles}></th>
             </tr>
@@ -114,8 +114,8 @@ const Trainers = () => {
                   <td className={styles.list}>{item.lastName}</td>
                   <td className={styles.list}>{item.phone}</td>
                   <td className={styles.list}>{item.email}</td>
-                  <td>
-                    <AsyncSelect /*loadOption={}*/ />
+                  <td className={styles.list}>
+                    {item.activities.map((activity) => activity.name).join(' / ')}
                   </td>
                   <td>
                     <div className={styles.buttons}>
