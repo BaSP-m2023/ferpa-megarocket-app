@@ -36,7 +36,6 @@ const AdminsRoutes = () => {
 
       <Route exact path={`${url}/subscriptions`} component={Subscriptions} />
       <Route exact path={`${url}/subscriptions/form`} component={SubscriptionForm} />
-      <Route exact path={`${url}/subscriptions/form/:id`} component={SubscriptionForm} />
 
       <Route exact path={`${url}/trainers`} component={Trainers} />
       <Route exact path={`${url}/trainers/form`} component={FormTrainers} />

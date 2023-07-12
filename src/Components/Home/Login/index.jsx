@@ -22,6 +22,9 @@ function Login() {
     if (user?.role === 'SUPER-ADMIN') {
       history.push('/super-admin/admins');
     }
+    if (user?.role === 'TRAINER') {
+      history.push('/trainer/profile');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
