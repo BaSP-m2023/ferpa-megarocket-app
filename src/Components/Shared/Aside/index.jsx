@@ -21,7 +21,7 @@ const Aside = () => {
       <aside className={styles.aside}>
         <div className={styles.menuIcon}>
           <Button
-            variant={'sandwichIcon'}
+            variant={'exitIcon'}
             className={styles.sandwich}
             testid={'delete-btn'}
             clickAction={handleSandwichClick}

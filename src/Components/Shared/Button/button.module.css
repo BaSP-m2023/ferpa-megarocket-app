@@ -72,6 +72,21 @@
   background-image: url('../../../../public/assets/images/Icono-menu-hover.svg');
 }
 
+.exitIcon {
+  background-image: url('../../../../public/assets/images/Icon-x.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  font-size: 0;
+  min-height: 55px;
+  min-width: 55px;
+}
+
+.exitIcon:hover {
+  background-image: url('../../../../public/assets/images/Icon-x-hover.svg');
+}
+
 .seePassword {
   background-image: url('../../../../public/assets/images/pass_icon.svg');
   background-size: cover;
