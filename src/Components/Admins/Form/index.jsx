@@ -225,74 +225,80 @@ const Form = () => {
         data-testid={'admin-editform'}
       >
         <h2 className={styles.title}>{id ? 'Edit Admin' : 'Add Admin'}</h2>
-        <div className={styles.inputGroup}>
-          <Input
-            register={register}
-            labelText={'First Name'}
-            placeholder={'First Name'}
-            nameValue={'firstName'}
-            error={errors.firstName?.message}
-          />
-        </div>
-        <div className={styles.inputGroup}>
-          <Input
-            register={register}
-            labelText={'Last Name'}
-            placeholder={'Last Name'}
-            nameValue={'lastName'}
-            error={errors.lastName?.message}
-          />
-        </div>
-        <div className={styles.inputGroup}>
-          <Input
-            register={register}
-            labelText={'DNI'}
-            placeholder={'DNI Number'}
-            nameValue={'dni'}
-            error={errors.dni?.message}
-          />
-        </div>
-        <div className={styles.inputGroup}>
-          <Input
-            register={register}
-            labelText={'Phone'}
-            placeholder={'Phone'}
-            nameValue={'phone'}
-            error={errors.phone?.message}
-          />
-        </div>
-        <div className={styles.inputGroup}>
-          <Input
-            register={register}
-            labelText={'Email'}
-            placeholder={'Email'}
-            nameValue={'email'}
-            error={errors.email?.message}
-          />
-        </div>
-        <div className={styles.inputGroup}>
-          <Input
-            register={register}
-            labelText={'City'}
-            placeholder={'City'}
-            nameValue={'city'}
-            error={errors.city?.message}
-          />
-        </div>
-        {id ? (
-          ''
-        ) : (
-          <div className={styles.inputGroup}>
-            <Input
-              register={register}
-              type={'password'}
-              labelText={'Password'}
-              placeholder={'Password'}
-              nameValue={'password'}
-              error={errors.password?.message}
-            />
+        <div className={styles.columns}>
+          <div className={styles.column}>
+            <div className={styles.inputGroup}>
+              <Input
+                register={register}
+                labelText={'First Name'}
+                placeholder={'First Name'}
+                nameValue={'firstName'}
+                error={errors.firstName?.message}
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <Input
+                register={register}
+                labelText={'Last Name'}
+                placeholder={'Last Name'}
+                nameValue={'lastName'}
+                error={errors.lastName?.message}
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <Input
+                register={register}
+                labelText={'DNI'}
+                placeholder={'DNI Number'}
+                nameValue={'dni'}
+                error={errors.dni?.message}
+              />
+            </div>
           </div>
-        )}
+          <div className={styles.column}>
+            <div className={styles.inputGroup}>
+              <Input
+                register={register}
+                labelText={'Phone'}
+                placeholder={'Phone'}
+                nameValue={'phone'}
+                error={errors.phone?.message}
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <Input
+                register={register}
+                labelText={'Email'}
+                placeholder={'Email'}
+                nameValue={'email'}
+                error={errors.email?.message}
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <Input
+                register={register}
+                labelText={'City'}
+                placeholder={'City'}
+                nameValue={'city'}
+                error={errors.city?.message}
+              />
+            </div>
+          </div>
+          {id ? (
+            ''
+          ) : (
+            <div className={styles.password}>
+              <Input
+                register={register}
+                type={'password'}
+                labelText={'Password'}
+                placeholder={'Password'}
+                nameValue={'password'}
+                error={errors.password?.message}
+              />
+            </div>
+          )}
+        </div>
         <div className={styles.modalBtns}>
           <Link to={cancelButtonDestination}>
             <Button text={'Cancel'} variant={'white'} />
