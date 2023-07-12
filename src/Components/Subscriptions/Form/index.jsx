@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './form.module.css';
-import { Link, useHistory, useParams, useLocation } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Select, DatePicker } from 'Components/Shared/Inputs';
+import { Select } from 'Components/Shared/Inputs';
 import Button from 'Components/Shared/Button';
 import Modal from 'Components/Shared/Modal';
-import { postSubscriptions, updateSubscription } from 'redux/subscriptions/thunks';
+import { postSubscriptions } from 'redux/subscriptions/thunks';
 import { getClasses } from 'redux/classes/thunks';
 import { getMembers } from 'redux/members/thunks';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,20 +16,12 @@ import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 const Form = () => {
-  const { id } = useParams();
-  const role = sessionStorage.getItem('role');
-  const { isPending, subs, message, error } = useSelector((state) => state.subscriptions);
-  const { user } = useSelector((state) => state.auth);
+  const { isPending, message, error } = useSelector((state) => state.subscriptions);
   const { classes } = useSelector((state) => state.classes);
   const { data: members } = useSelector((state) => state.members);
   const dispatch = useDispatch();
-  const [currentSub, setCurrentSub] = useState({ classId: '', memberId: '', date: '' });
   const [modalError, setModalError] = useState(false);
   const history = useHistory();
-  const location = useLocation();
-  /*   const [selectMembers, setSelectMembers] = useState([]);
-  const [selectActivities, setSelectActivities] = useState([]); */
-  const now = new Date().toISOString().split('T')[0];
 
   const selectMembers = members?.map((obj) => {
     return { _id: obj?._id, value: obj?._id, name: `${obj?.lastName}, ${obj?.firstName}` };
@@ -53,39 +45,21 @@ const Form = () => {
       .pattern(/^[0-9a-fA-F]{24}$/)
       .message({
         'string.pattern.base': 'Invalid format ID'
-      }),
-    date: Joi.date().min(now).message({
-      'date.min': 'You cannot subscribe to classes that have already occurred.'
-    })
+      })
   });
 
   const {
-    reset,
     register,
     handleSubmit,
     formState: { errors }
   } = useForm({
     mode: 'onChange',
-    resolver: joiResolver(schema),
-    defaultValues: currentSub
+    resolver: joiResolver(schema)
   });
 
   useEffect(() => {
     dispatch(getClasses());
-    if (role === 'ADMIN') {
-      dispatch(getMembers());
-    }
-    if (id) {
-      const editSub = subs.find((sub) => sub._id === id);
-      setCurrentSub({
-        memberId: editSub?.memberId?._id,
-        classId: editSub?.classId?._id,
-        date: editSub?.date.slice(0, 10)
-      });
-    }
-    if (location.pathname.includes('/member/subscriptions/form')) {
-      setCurrentSub({ ...currentSub, memberId: user._id });
-    }
+    dispatch(getMembers());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
@@ -97,21 +71,13 @@ const Form = () => {
     }
   }, [modalError]);
 
-  useEffect(() => {
-    reset(currentSub);
-  }, [currentSub, reset]);
-
-  const pathname = location.pathname.includes('/member/subscriptions/form')
-    ? '/member/subscriptions'
-    : '/admin/subscriptions';
-
   const onRedirect = {
-    pathname,
+    pathname: '/admin/subscriptions',
     state: { message: '' }
   };
 
   const onSubmit = async (data) => {
-    !id ? await postSubscriptions(dispatch, data) : await updateSubscription(dispatch, data, id);
+    await postSubscriptions(dispatch, { ...data, date: new Date() });
     const updatedState = store.getState();
     const updatedError = updatedState.subscriptions.error;
     if (!updatedError) {
@@ -136,30 +102,18 @@ const Form = () => {
         onSubmit={handleSubmit(onSubmit)}
         data-testid={'subs-add-container'}
       >
-        <h2 className={styles.formTitle}>{id ? 'EDIT SUBSCRIPTION' : 'ADD SUBSCRIPTION'}</h2>
+        <h2 className={styles.formTitle}>ADD SUBSCRIPTION</h2>
         <div>
-          {role === 'MEMBER' ? (
-            <div className={styles.hidden}>
-              <Select
-                nameValue={'memberId'}
-                register={register}
-                label={'Member'}
-                options={selectMembers}
-                error={errors.memberId?.message}
-              />
-            </div>
-          ) : (
-            <div className={styles.inputBox}>
-              <Select
-                nameValue={'memberId'}
-                register={register}
-                placeholder={'Select'}
-                label={'Member'}
-                options={selectMembers}
-                error={errors.memberId?.message}
-              />
-            </div>
-          )}
+          <div className={styles.inputBox}>
+            <Select
+              nameValue={'memberId'}
+              register={register}
+              placeholder={'Select'}
+              label={'Member'}
+              options={selectMembers}
+              error={errors.memberId?.message}
+            />
+          </div>
           <div className={styles.inputBox}>
             <Select
               nameValue={'classId'}
@@ -170,25 +124,11 @@ const Form = () => {
               error={errors.classId?.message}
             />
           </div>
-          <div className={styles.inputBox}>
-            <DatePicker
-              nameValue={'date'}
-              register={register}
-              label={'Date'}
-              error={errors.date?.message}
-            />
-          </div>
           <div className={styles.formBtns}>
-            {location.pathname.includes('/member/subscriptions/form') ? (
-              <Link to={'/member/subscriptions'}>
-                <Button variant={'white'} text={'Cancel'} />
-              </Link>
-            ) : (
-              <Link to={'/admin/subscriptions'}>
-                <Button variant={'white'} text={'Cancel'} />
-              </Link>
-            )}
-            <Button variant={'add'} text={id ? 'Edit' : 'Add'} submitting testid={'add-btn'} />
+            <Link to={'/admin/subscriptions'}>
+              <Button variant={'white'} text={'Cancel'} />
+            </Link>
+            <Button variant={'add'} text={'Add'} submitting testid={'add-btn'} />
           </div>
         </div>
         {isPending ? (

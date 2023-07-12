@@ -1,4 +1,4 @@
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Input } from 'Components/Shared/Inputs';
 import { sendTrainer, putTrainer } from 'redux/trainers/thunks';
@@ -21,6 +21,7 @@ const TrainerAddForm = () => {
   const { data } = useSelector((state) => state.activities);
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
   const RGXPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   const RGXEmail = /^[^@]+@[^@]+.[a-zA-Z]{2,}$/;
   const trainer = trainers.find((trainer) => trainer._id === id);
@@ -130,13 +131,6 @@ const TrainerAddForm = () => {
     }, 2000);
   };
 
-  const handleModalSuccess = () => {
-    setTimeout(() => {
-      history.push('/admin/trainers');
-      setSuccessModal(!successModal);
-    }, 2000);
-  };
-
   const onSubmit = (data) => {
     console.log(data);
     if (!isFormEdited) {
@@ -162,6 +156,18 @@ const TrainerAddForm = () => {
   const {
     field: { value: activity, onChange: actOnChange }
   } = useController({ name: 'activities', control });
+  const cancelButtonDestination = location.pathname.startsWith('/admin/trainers')
+    ? '/admin/trainers'
+    : location.pathname.startsWith('/trainer/form')
+    ? '/trainer/profile'
+    : null;
+
+  const handleModalSuccess = () => {
+    setTimeout(() => {
+      history.push(cancelButtonDestination);
+      setSuccessModal(!successModal);
+    }, 2000);
+  };
 
   return (
     <div className={styles.formContainer}>
@@ -268,7 +274,7 @@ const TrainerAddForm = () => {
             />
           </div>
           <div className={styles.buttons}>
-            <Link to={'/admin/trainers'}>
+            <Link to={cancelButtonDestination}>
               <Button text={'Cancel'} variant={'white'} />
             </Link>
             <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting testid={'add-edit-btn'} />

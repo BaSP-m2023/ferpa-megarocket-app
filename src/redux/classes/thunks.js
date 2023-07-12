@@ -1,10 +1,9 @@
 import * as classActions from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getClasses = () => {
   return async (dispatch) => {
     dispatch(classActions.getClassesPending());
+    const token = sessionStorage.getItem('token');
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes`, {
         method: 'GET',
@@ -27,6 +26,8 @@ export const getClasses = () => {
 export const postClass = (newClass) => {
   return async (dispatch) => {
     dispatch(classActions.postClassPending());
+    const token = sessionStorage.getItem('token');
+    newClass.subscribers = [];
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/`, {
         method: 'POST',
@@ -52,6 +53,7 @@ export const postClass = (newClass) => {
 export const deleteClass = (id) => {
   return async (dispatch) => {
     dispatch(classActions.deleteClassPending());
+    const token = sessionStorage.getItem('token');
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
         method: 'DELETE',
@@ -73,6 +75,7 @@ export const deleteClass = (id) => {
 export const putClass = (id, newClass) => {
   return async (dispatch) => {
     dispatch(classActions.putClassPending());
+    const token = sessionStorage.getItem('token');
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`, {
         method: 'PUT',

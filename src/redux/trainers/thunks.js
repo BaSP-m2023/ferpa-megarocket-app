@@ -1,10 +1,9 @@
 import * as trainersActions from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const getTrainers = async (dispatch) => {
   try {
     dispatch(trainersActions.getTrainersPending());
+    const token = sessionStorage.getItem('token');
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers`, {
       method: 'GET',
       headers: { token: token }
@@ -22,6 +21,7 @@ export const getTrainers = async (dispatch) => {
 };
 export const deleteTrainer = async (dispatch, id) => {
   dispatch(trainersActions.deleteTrainersPending());
+  const token = sessionStorage.getItem('token');
   try {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
       method: 'DELETE',
@@ -52,6 +52,7 @@ export const sendTrainer = async (dispatch, item) => {
   };
   try {
     dispatch(trainersActions.addTrainersPending());
+    const token = sessionStorage.getItem('token');
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/`, {
       method: 'POST',
       body: JSON.stringify(trainer),
@@ -86,6 +87,7 @@ export const putTrainer = async (dispatch, id, updatedTrainer) => {
   };
   try {
     dispatch(trainersActions.editTrainersPending());
+    const token = sessionStorage.getItem('token');
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/trainers/${id}`, {
       method: 'PUT',
       body: JSON.stringify(trainer),

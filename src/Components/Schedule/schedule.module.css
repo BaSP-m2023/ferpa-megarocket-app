@@ -1,0 +1,89 @@
+.container {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 20px;
+  color: white;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: url('../../../public/assets/images/admins-background.jpg');
+  min-height: 71vh;
+}
+
+.table {
+  margin: 30px 0;
+  border-spacing: 6px;
+  background-color: #47488583;
+  border-radius: 7px;
+}
+
+.blueItem {
+  height: 50px;
+  min-width: 160px;
+  background-color: #373867;
+  border-radius: 7px;
+  text-align: center;
+}
+
+.whiteItem, .glossaryClass {
+  background-color: #d4d4e9;
+  border-radius: 7px;
+  color: #373867;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+}
+
+.whiteItem:hover {
+  background-color: #474885;
+  color: white;
+}
+
+.activeClass, .glossarySub {
+  background-color: #49A37B;
+  border-radius: 7px;
+  color: white;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.disabledClass, .glossaryDis {
+  background-color: #51527e;
+  border-radius: 7px;
+  color: rgb(156, 156, 156);
+  text-align: center;
+  font-weight: 600;
+  cursor: not-allowed;
+}
+
+.empty {
+  background-color: rgba(148, 145, 160, 0.863);
+  border-radius: 7px;
+}
+
+.glossary {
+  border-spacing: 30px;
+}
+
+.glossaryClass, .glossaryDis, .glossarySub {
+  height: 50px;
+  min-width: 160px;
+  margin-left: 30px;
+}
+
+.select {
+  height: 50px;
+  width: 15%;
+  padding: 10px;
+  margin-top: 30px;
+  border: 2px solid #373867;
+  border-radius: 14px;
+  background-color: #373867;
+  color: #F3F3F5;
+  font-size: 16px;
+}
