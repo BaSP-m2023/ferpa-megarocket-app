@@ -11,7 +11,6 @@ import { signUpMember } from 'redux/auth/thunks';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
-import Aside from 'Components/Shared/Aside';
 
 const MembersCreate = () => {
   const location = useLocation();
@@ -134,7 +133,6 @@ const MembersCreate = () => {
   if (location.pathname.includes('/home/signup')) {
     return (
       <section className={styles.signupContainer}>
-        <Aside />
         <div className={styles.signup}>
           <div className={styles.box}>
             <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>

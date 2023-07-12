@@ -7,6 +7,7 @@ import superadminsReducer from './superadmins/reducer';
 import membersReducer from './members/reducer';
 import subscriptionsReducer from './subscriptions/reducer';
 import authReducer from './auth/reducer';
+import asideReducer from './aside/reducer';
 
 const reducers = combineReducers({
   trainers: trainersReducer,
@@ -16,7 +17,8 @@ const reducers = combineReducers({
   members: membersReducer,
   superadmins: superadminsReducer,
   subscriptions: subscriptionsReducer,
-  auth: authReducer
+  auth: authReducer,
+  aside: asideReducer
 });
 
 export default reducers;

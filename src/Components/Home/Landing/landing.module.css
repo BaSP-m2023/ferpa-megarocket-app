@@ -1,12 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 .container {
-  width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  margin-left: 80px;
+  margin-right: 80px;
+  width: 100%;
+}
+
+.title{
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding-bottom: 20px;
+  font-size: 60px;
+  font-weight: 800;
+  line-height: 70px;
+  color: rgba(47, 48, 88, 1);
+}
+
+.megaColor{
+  color: rgba(47, 48, 88, 0.76);
+}
+
+.subTitle{
+  padding-top: 15px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 40px;
+  color: rgba(47, 48, 88, 1);
+  margin-top: 70px;
+}
+
+.text{
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 25px;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.introduction{
+  display: flex;
+  flex-direction: row;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  border-bottom: 2px solid black;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.introductionBox{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.introductionImg {
+  display: flex;
+  width: 50%;
+  height: 501px;
+  width: 705px;
+  padding-left: 30px;
+}
+
+.informationTitle {
+  font-family: 'Roboto', sans-serif;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 29px;
+  color: rgba(55, 56, 103, 1);
+}
+
+.introductionText {
+  width: 80%;
+}
+
+.meetUs{
+  padding-bottom: 50px;
+  border-bottom: 2px solid black;
+}
+
+.meetUsBox {
+  display: flex;
   align-items: center;
-  background-image: url('../../../../public/assets/images/subscriptions-background.jpg');
-  height: 77vh;
-  box-shadow: 0px 0px 41px 4px rgba(0, 0, 0, 0.71) inset;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  width: calc(50% - 100px);
+  margin: 50px;
+  transition: transform 0.3s ease;
+}
+
+.box:hover {
+  transform: translateY(-10px);
+  border-radius: 25px;
+  background-color: rgba(170,207,155,0.5);
+}
+
+.box img {
+  margin-right: 20px;
+}
+
+.contactUs {
+  padding-bottom: 50px;
+  border-bottom: 2px solid black;
+  position: relative;
+  perspective: 1000px;
+  /* Para aplicar perspectiva en el elemento */
+}
+
+.element {
+  transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
+}
+
+.contactUs:hover .element {
+  border-radius: 15px;
+  transform: scale(1.01);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+
+}
+
+
+
+.inputs{
+  padding-top: 35px;
+  padding-right: 5%;
+  padding-left: 5%;
+}
+
+.firstInputs {
+  display: flex;
+  justify-content: space-between;
+}
+
+.firstInputs .inputGroup{
+  width: calc(50% - 10px);
+}
+
+.contactButtons{
+  display: flex;
+  justify-content: right;
+  padding-right: 20px;
+  padding-bottom: 15px;
+}
+
+.aboutUs {
+  padding-bottom: 50px;
+  border-bottom: 2px solid black;
+}
+
+.aboutUsBox {
+  display: flex;
+  align-items: center;
+}
+
+.aboutUsBox img{
+  height: 330px;
+  width: 370px;
+  margin-right: 50px;
+  margin-left: 50px;
+}
+
+.aboutUsShadow:hover {
+  background-color: rgba(47, 48, 88, 0.2);
+  border-radius: 20px;
+}
+
+.aboutUsShadow>*:hover {
+  background-color: inherit;
+  border-radius: 20px;
+}
+
+.aboutUsShadow>*>*:hover {
+  border-radius: 20px;
+}
+
+.membershipBox{
+  display: flex;
+  justify-content: space-around;
+  padding-left: 25%;
+  padding-right: 25%;
+  margin-bottom: 45px;
+}
+
+.membBox {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  margin: 20px;
+  padding: 10px;
+  padding-top: 5%;
+  background-color: rgba(47, 48, 88, 0.2);
+  border-radius: 50px;
+  box-shadow: 2px 2px 4px rgba(47, 48, 88, 0.8);
+  transition: transform 0.5s ease;
+}
+
+.membBox ul,
+.informationTitle+ul {
+  list-style-type: none;
+}
+
+.membBox ul li::before,
+.informationTitle+ul li::before {
+  content: "\2022";
+  color: rgba(47, 48, 88, 1);
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+.membBox h3{
+  text-align: center;
+}
+
+.membBox:hover {
+  transform: translateY(-20px);
+}
+
+.membBox:hover .informationTitle+ul li {
+  font-weight: bold;
+  color: rgba(47, 48, 88, 1);
 }

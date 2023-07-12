@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { Input } from 'Components/Shared/Inputs';
 import { useForm } from 'react-hook-form';
 import Button from 'Components/Shared/Button';
-import Aside from '../../Shared/Aside';
 import { login } from 'redux/auth/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -37,7 +36,6 @@ function Login() {
 
   return (
     <section className={styles.container}>
-      <Aside />
       <div className={styles.login}>
         <div className={styles.loginBox}>
           <div>
