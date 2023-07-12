@@ -1,7 +1,5 @@
 import * as actions from './actions';
 
-const token = sessionStorage.getItem('token');
-
 export const selectId = (dispatch, id) => {
   dispatch(actions.selectIdAction(id));
 };
@@ -9,6 +7,7 @@ export const selectId = (dispatch, id) => {
 export const getSubscriptions = async (dispatch) => {
   dispatch(actions.resetState());
   dispatch(actions.subscriptionsPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/all`, {
       method: 'GET',
@@ -24,6 +23,7 @@ export const getSubscriptions = async (dispatch) => {
 export const deleteSubscriptions = async (dispatch, id) => {
   dispatch(actions.resetState());
   dispatch(actions.subscriptionsPending());
+  const token = sessionStorage.getItem('token');
   try {
     const subToDelete = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
       method: 'GET',
@@ -42,11 +42,11 @@ export const deleteSubscriptions = async (dispatch, id) => {
       }
     );
     const classjson = await editedClass.json();
-    const newSubs = classjson.data.subscribers.filter((element) => element !== member);
-    classjson.data.subscribers = newSubs;
-    await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${subjson.data.classId}`, {
+    const newSubs = classjson.data.subscribers.filter((element) => element !== member._id);
+    const classToSend = { subscribers: newSubs };
+    await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${subjson.data.classId._id}`, {
       method: 'PUT',
-      body: JSON.stringify(classjson.data),
+      body: JSON.stringify(classToSend),
       headers: {
         'Content-type': 'application/json',
         token: token
@@ -68,6 +68,7 @@ export const deleteSubscriptions = async (dispatch, id) => {
 export const postSubscriptions = async (dispatch, newSub) => {
   dispatch(actions.resetState());
   dispatch(actions.subscriptionsPending());
+  const token = sessionStorage.getItem('token');
   const member = newSub.memberId;
   try {
     const editedClass = await fetch(
@@ -112,6 +113,7 @@ export const postSubscriptions = async (dispatch, newSub) => {
 export const updateSubscription = async (dispatch, update, id) => {
   dispatch(actions.resetState());
   dispatch(actions.subscriptionsPending());
+  const token = sessionStorage.getItem('token');
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
       method: 'PUT',

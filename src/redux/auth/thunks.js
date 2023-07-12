@@ -58,6 +58,7 @@ export const logout = () => {
       await firebaseApp.auth().signOut();
       sessionStorage.removeItem('role', '');
       sessionStorage.removeItem('token', '');
+      sessionStorage.removeItem('firebaseUid', '');
       dispatch(logoutSuccess());
     } catch (error) {
       dispatch(logoutError(error.toString()));

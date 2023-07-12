@@ -6,7 +6,8 @@ const INITIAL_STATE = {
   error: false,
   message: '',
   id: '',
-  isPending: false
+  isPending: false,
+  success: false
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -17,7 +18,8 @@ const reducer = (state = INITIAL_STATE, action) => {
         sub: { classId: '', memberId: '', date: '' },
         error: false,
         id: '',
-        isPending: false
+        isPending: false,
+        success: false
       };
     case actionConstant.SUBSCRIPTIONS_PENDING:
       return { ...state, isPending: true };
@@ -34,7 +36,8 @@ const reducer = (state = INITIAL_STATE, action) => {
         message: action.payload.message,
         isPending: false,
         subs: state.subs.filter((subs) => subs._id !== action.payload.id),
-        error: false
+        error: false,
+        success: true
       };
     case actionConstant.DELETE_SUBSCRIPTIONS_ERROR:
       return {
@@ -49,7 +52,8 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isPending: false,
         message: action.payload.message,
-        subs: [...state.subs, action.payload.newSubscription]
+        subs: [...state.subs, action.payload.newSubscription],
+        success: true
       };
     case actionConstant.POST_SUBSCRIPTIONS_ERROR:
       return {

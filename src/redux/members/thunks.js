@@ -80,13 +80,11 @@ export const updateMember = (id, member) => {
 export const createMember = (member) => {
   return async (dispatch) => {
     dispatch(createMemberPending());
-    const token = sessionStorage.getItem('token');
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/members/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          token: token
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(member)
       });
