@@ -39,11 +39,17 @@ function Login() {
     <section className={styles.container}>
       <Aside />
       <div className={styles.login}>
-        <div className={styles.loginBox}>
+        <div className={styles.loginBox} data-testid={'login-container'}>
           <div>
-            <h2 className={styles.title}>Login</h2>
+            <h2 className={styles.title} data-testid={'login-title'}>
+              Login
+            </h2>
           </div>
-          <form onSubmit={handleSubmit(handleLogin)} className={styles.form}>
+          <form
+            onSubmit={handleSubmit(handleLogin)}
+            className={styles.form}
+            data-testid={'login-form'}
+          >
             <div className={styles.inputs}>
               <div className={styles.fieldset}>
                 <img src="../../assets/images/mail.svg" alt="email icon"></img>
@@ -64,7 +70,7 @@ function Login() {
                 />
               </div>
             </div>
-            <Button text={'Continue'} variant={'add'} submitting />
+            <Button text={'Continue'} variant={'add'} submitting testid={'continue-btn'} />
           </form>
         </div>
       </div>

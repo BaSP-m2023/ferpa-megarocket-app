@@ -31,13 +31,14 @@ function Header() {
           ></img>
         </div>
         {role ? (
-          <div className={styles.rightSide}>
+          <div className={styles.rightSide} data-testid={'logout-container'}>
             <span className={styles.title}>Hi, {user?.firstName}</span>
             <img
               onClick={handleLogout}
               className={styles.logout}
               src="../../assets/images/logout-icon.svg"
               alt="log out icon"
+              data-testid={'logout-logo'}
             ></img>
           </div>
         ) : (

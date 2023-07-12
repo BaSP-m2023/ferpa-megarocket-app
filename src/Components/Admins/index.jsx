@@ -98,14 +98,14 @@ const Admins = () => {
           variant={'delete'}
           text={'Close'}
           clickAction={() => setErrorModal(!errorModal)}
-          testid={'delete-btn'}
+          testid={'close-btn'}
         />
       </Modal>
-      <section className={styles.list}>
+      <section className={styles.list} data-testid={'superadmin-container'}>
         <header className={styles.header}>
           <h1 className={styles.title}>Administrators</h1>
           <Link to="/super-admin/admins/form">
-            <Button text={'Add'} variant={'add'} />
+            <Button text={'Add'} variant={'add'} testid={'add-btn'} />
           </Link>
         </header>
         {data?.length > 0 ? (
@@ -127,7 +127,7 @@ const Admins = () => {
                     <td className={styles.td}></td>
                     <td className={styles.icons}>
                       <Link to={`/super-admin/admins/form/${admin._id}`}>
-                        <Button variant={'edit'} />
+                        <Button variant={'edit'} testid={'edit-btn'} />
                       </Link>
                     </td>
                     <td className={styles.icons}>

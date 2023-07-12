@@ -206,7 +206,7 @@ const TrainerAddForm = () => {
           </div>
           <div className={styles.buttons}>
             <Link to={cancelButtonDestination}>
-              <Button text={'Cancel'} variant={'white'} />
+              <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
             </Link>
             <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting testid={'add-edit-btn'} />
           </div>

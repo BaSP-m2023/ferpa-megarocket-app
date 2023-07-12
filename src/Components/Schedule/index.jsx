@@ -125,6 +125,7 @@ const Schedule = () => {
         title={message}
         success
         onClose={() => setSubscribeModal(!successModal)}
+        testid={'success-modal'}
       />
       <Modal
         isOpen={trainerModal}
@@ -143,6 +144,7 @@ const Schedule = () => {
           </>
         }
         onClose={() => setTrainerModal(!trainerModal)}
+        testid={'class-information-modal'}
       />
       <Modal
         title={'Subscribe to Class'}
@@ -159,6 +161,7 @@ const Schedule = () => {
         onClose={() => {
           setSubscribeModal(!subscribeModal);
         }}
+        testid={'subs-class-modal'}
       >
         <Button
           text={'Cancel'}
@@ -178,6 +181,7 @@ const Schedule = () => {
             });
             setSubscribeModal(!subscribeModal);
           }}
+          testid={'subs-btn'}
         />
       </Modal>
       <Modal
@@ -196,6 +200,7 @@ const Schedule = () => {
         onClose={() => {
           setUnsubscribeModal(!unsubscribeModal);
         }}
+        testid={'delete-subs-modal'}
       >
         <Button
           text={'Cancel'}
@@ -211,6 +216,7 @@ const Schedule = () => {
             deleteSubscriptions(dispatch, id);
             setUnsubscribeModal(!unsubscribeModal);
           }}
+          testid={'unsubscribe-btn'}
         />
       </Modal>
       {!isPending ? (
@@ -221,7 +227,7 @@ const Schedule = () => {
               <option>All classes</option>
             </select>
           )}
-          <table className={styles.table}>
+          <table className={styles.table} data-testid={'schedule-container'}>
             <thead>
               <tr>
                 <th className={styles.blueItem}>Hour</th>
@@ -232,7 +238,7 @@ const Schedule = () => {
                 ))}
               </tr>
             </thead>
-            <tbody>
+            <tbody data-testid={'schedule-activities'}>
               {hours.map((hour) => (
                 <tr key={hour}>
                   <td className={styles.blueItem}>{hour}</td>
@@ -242,7 +248,7 @@ const Schedule = () => {
             </tbody>
           </table>
           {role === 'MEMBER' && (
-            <table className={styles.glossary}>
+            <table className={styles.glossary} data-testid={'schedule-glossary'}>
               <thead>
                 <tr>
                   <th className={styles.glossarySub}>Subscribed</th>

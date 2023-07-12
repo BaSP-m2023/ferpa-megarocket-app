@@ -295,12 +295,12 @@ const Form = () => {
         )}
         <div className={styles.modalBtns}>
           <Link to={cancelButtonDestination}>
-            <Button text={'Cancel'} variant={'white'} />
+            <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
           </Link>
           {id ? (
             <Button variant={'add'} text={'Update Admin'} submitting testid={'confirm-edit-btn'} />
           ) : (
-            <Button variant={'add'} text={'Add Admin'} submitting />
+            <Button variant={'add'} text={'Add Admin'} submitting testid={'add-btn'} />
           )}
         </div>
       </form>
