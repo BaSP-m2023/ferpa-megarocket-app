@@ -122,7 +122,6 @@ const TrainerAddForm = () => {
 
   useEffect(() => {
     reset(inputs);
-    console.log(inputs);
   }, [inputs, reset]);
 
   const handleModalError = () => {
@@ -132,17 +131,14 @@ const TrainerAddForm = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
     if (!isFormEdited) {
       history.goBack();
       return;
     }
     if (id) {
-      console.log(data);
       setSuccessModal(!successModal);
       putTrainer(dispatch, id, data);
     } else {
-      console.log('algo');
       setSuccessModal(!successModal);
       sendTrainer(dispatch, data);
     }
@@ -269,7 +265,6 @@ const TrainerAddForm = () => {
               isMulti
               options={transformedData}
               onChange={(event) => {
-                console.log(event);
                 onActivityChange(event.map((activity) => activity.value));
               }}
             />
