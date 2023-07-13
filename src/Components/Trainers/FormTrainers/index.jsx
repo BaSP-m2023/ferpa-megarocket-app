@@ -252,6 +252,7 @@ const TrainerAddForm = () => {
               </div>
             </div>
             <Select
+              className={styles.select}
               defaultValue={
                 trainer
                   ? trainer.activities.map((activity) => ({
