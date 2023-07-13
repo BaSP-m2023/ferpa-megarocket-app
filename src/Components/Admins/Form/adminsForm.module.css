@@ -27,7 +27,7 @@
   align-items: center;
   flex-direction: column;
   border-radius: 1vw;
-  width: 80%;
+  width: 60%;
 }
 
 .title {
@@ -42,15 +42,26 @@
 }
 
 .inputGroup {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  width: 50%;
-  margin-bottom: 20px;
+  width: 90%;
 }
 
 .modalBtns {
   display: flex;
   margin-top: 20px;
   justify-content: space-around;
+}
+
+.columns {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 80%;
+}
+
+.column {
+  width: 50%;
+}
+
+.password {
+  width: 45%;
 }
