@@ -50,12 +50,14 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <Link to={'/change_pass'}>
-          <Button text={'Change Password'} testid={'change-pass-btn'} />
-        </Link>
-        <Link to={`/admin/form/${user?._id}`}>
-          <Button variant={'add'} text={'Edit Profile'} testid={'edit-btn'} />
-        </Link>
+        <div>
+          <Link to={'/change_pass'}>
+            <Button text={'Change Password'} testid={'change-pass-btn'} />
+          </Link>
+          <Link to={`/admin/form/${user?._id}`}>
+            <Button variant={'add'} text={'Edit Profile'} testid={'edit-btn'} />
+          </Link>
+        </div>
       </div>
     </section>
   );

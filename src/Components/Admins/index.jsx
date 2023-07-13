@@ -116,7 +116,7 @@ const Admins = () => {
                 <th className={styles.th}>City</th>
                 <th className={styles.th}>Email</th>
                 <th className={styles.th}></th>
-                <th className={styles.th}></th>
+                <th className={styles.lastTh}></th>
               </tr>
               {data?.map((admin) => {
                 return (
@@ -124,7 +124,6 @@ const Admins = () => {
                     <td className={styles.td}>{admin.firstName}</td>
                     <td className={styles.td}>{admin.city}</td>
                     <td className={styles.td}>{admin.email}</td>
-                    <td className={styles.td}></td>
                     <td className={styles.icons}>
                       <Link to={`/super-admin/admins/form/${admin._id}`}>
                         <Button variant={'edit'} testid={'edit-btn'} />
