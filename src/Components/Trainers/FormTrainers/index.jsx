@@ -154,7 +154,7 @@ const TrainerAddForm = () => {
   }));
 
   const {
-    field: { value: activity, onChange: actOnChange }
+    field: { value: activity, onChange: onActivityChange }
   } = useController({ name: 'activities', control });
   const cancelButtonDestination = location.pathname.startsWith('/admin/trainers')
     ? '/admin/trainers'
@@ -269,7 +269,7 @@ const TrainerAddForm = () => {
               options={transformedData}
               onChange={(event) => {
                 console.log(event);
-                actOnChange(event.map((activity) => activity.value));
+                onActivityChange(event.map((activity) => activity.value));
               }}
             />
           </div>
