@@ -70,7 +70,7 @@
 
 .onTop {
   width: 80%;
-  height: 80%;
+  margin: 30px 0;
   display: flex;
   flex-flow: column;
   align-items: center;

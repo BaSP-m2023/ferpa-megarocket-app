@@ -5,8 +5,12 @@
   text-align: start;
 }
 
-.td {
-  border-bottom: 1px solid white;
+.th {
+  padding-bottom: 1vw;
+}
+
+.lastTh {
+  width: 50px;
 }
 
 .container {
@@ -59,6 +63,7 @@
   font-weight: bold;
   line-height: 29px;
   margin-bottom: 20px;
+  border-bottom: 3px solid white;
 }
 
 .tbody {
@@ -68,20 +73,12 @@
 }
 
 .tr {
-  border-bottom: 1px solid white;
   height: 50px;
   margin-bottom: 20px;
 }
 
 .icons {
   text-align: end;
-}
-
-.form {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 80%;
 }
 
 .emptySpan {
