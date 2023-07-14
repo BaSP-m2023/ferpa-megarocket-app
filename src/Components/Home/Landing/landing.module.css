@@ -192,15 +192,22 @@
 .membBox {
   display: flex;
   flex-direction: column;
-  min-width: 300px;
+  justify-content: space-between;
+  min-width: 325px;
   margin: 20px;
   padding: 10px;
   padding-top: 5%;
   background-color: rgba(47, 48, 88, 0.2);
   border-radius: 50px;
+  border: 1.5px solid rgba(47, 48, 88, 1);
   box-shadow: 2px 2px 4px rgba(47, 48, 88, 0.8);
   transition: transform 0.5s ease;
 }
+
+.membBox .informationTitle{
+  border-bottom: 3px solid #46a37c;
+  padding-bottom: 30px;
+  }
 
 .membBox ul,
 .informationTitle+ul {
@@ -210,7 +217,7 @@
 .membBox ul li::before,
 .informationTitle+ul li::before {
   content: "\2022";
-  color: rgba(47, 48, 88, 1);
+  color: #46a37c;
   display: inline-block;
   width: 1em;
   margin-left: -1em;
@@ -227,4 +234,26 @@
 .membBox:hover .informationTitle+ul li {
   font-weight: bold;
   color: rgba(47, 48, 88, 1);
+}
+
+.membIcon{
+  display: flex;
+  justify-content: center;
+  height: 60px;
+  width: 35px;
+}
+
+.membIconBox{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.membIconBox p{
+  font-size: 30px;
+  color: white;
+  border-radius: 15px;
+  background-color: #46a37c;
+  padding: 5px;
+  margin-left: 10px;
 }

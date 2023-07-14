@@ -1,7 +1,9 @@
 import React from 'react';
+import { useState } from 'react';
 import styles from './landing.module.css';
 import { Input, TextArea, Select } from 'Components/Shared/Inputs';
 import Button from 'Components/Shared/Button';
+import Modal from 'Components/Shared/Modal';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
@@ -24,6 +26,19 @@ const Landing = () => {
       value: 'claim'
     }
   ];
+
+  const [successModal, setSuccessModal] = useState(false);
+
+  const handleButtonClick = () => {
+    setSuccessModal(true);
+    setTimeout(() => {
+      setSuccessModal(false);
+    }, 2000);
+  };
+
+  const handleCloseModal = () => {
+    setSuccessModal(false);
+  };
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -64,7 +79,7 @@ const Landing = () => {
   });
 
   const handleReset = () => {
-    reset(); // Restablece los valores de los campos del formulario a sus valores iniciales
+    reset();
   };
 
   return (
@@ -138,6 +153,9 @@ const Landing = () => {
       <section className={styles.contactUs}>
         <div className={styles.element}>
           <h2 className={styles.subTitle}>Contact Us</h2>
+          <>
+            <Modal isOpen={successModal} title={'Success submit'} onClose={handleCloseModal} />
+          </>
           <form>
             <div className={styles.inputs}>
               <div className={styles.firstInputs}>
@@ -198,7 +216,7 @@ const Landing = () => {
                 />
               </div>
               <div className={styles.contactButtons}>
-                <Button variant={'add'} text={'SEND MESSAGE'} submitting />
+                <Button variant={'add'} text={'SEND MESSAGE'} clickAction={handleButtonClick} />
                 <Button text={'RESET'} variant={'white'} clickAction={handleReset} />
               </div>
             </div>
@@ -266,6 +284,14 @@ const Landing = () => {
               <li>Personalized follow up by a trainer</li>
               <li>Grid visualization</li>
             </ul>
+            <div className={styles.membIconBox}>
+              <img
+                className={styles.membIcon}
+                src="../../assets/images/space_rocket-1.png"
+                alt="gym icon"
+              ></img>
+              <p>150 USD</p>
+            </div>
           </div>
           <div className={styles.membBox}>
             <h3 className={styles.informationTitle}>Classic Membership</h3>
@@ -274,6 +300,14 @@ const Landing = () => {
               <li>Personalized follow up by a trainer</li>
               <li>Grid visualization</li>
             </ul>
+            <div className={styles.membIconBox}>
+              <img
+                className={styles.membIcon}
+                src="../../assets/images/space_rocket-3.png"
+                alt="gym icon"
+              ></img>
+              <p>100 USD</p>
+            </div>
           </div>
           <div className={styles.membBox}>
             <h3 className={styles.informationTitle}>Only classes membership</h3>
@@ -281,6 +315,14 @@ const Landing = () => {
               <li>Free pass to the weight room</li>
               <li>Grid visualization</li>
             </ul>
+            <div className={styles.membIconBox}>
+              <img
+                className={styles.membIcon}
+                src="../../assets/images/space_rocket-2.png"
+                alt="gym icon"
+              ></img>
+              <p>50 USD</p>
+            </div>
           </div>
         </div>
       </section>
