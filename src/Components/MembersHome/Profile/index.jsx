@@ -24,7 +24,7 @@ const Profile = () => {
   return (
     <section className={styles.container}>
       <h2 className={styles.header}>Your profile</h2>
-      <div className={styles.dataWraper}>
+      <div className={styles.dataWraper} data-testid={'member-profile-container'}>
         <div className={styles.userData}>
           <div className={styles.inputDuo}>
             <p className={styles.infoTag}>Name:</p>
@@ -75,10 +75,10 @@ const Profile = () => {
       </div>
       <div className={styles.editButton}>
         <Link to={'/change_pass'}>
-          <Button text={'Change Password'} />
+          <Button text={'Change Password'} testid={'change-pass-btn'} />
         </Link>
         <Link to={`/member/form/${user?._id}`}>
-          <Button text={'Edit your profile!'} variant={'add'} />
+          <Button text={'Edit your profile!'} variant={'add'} testid={'add-btn'} />
         </Link>
       </div>
     </section>

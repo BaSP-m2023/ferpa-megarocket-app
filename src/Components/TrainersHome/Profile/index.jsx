@@ -51,10 +51,10 @@ const Profile = () => {
           </div>
         </div>
         <Link to={'/change_pass'}>
-          <Button text={'Change Password'} />
+          <Button text={'Change Password'} testid={'change-pass-btn'} />
         </Link>
         <Link to={`/trainer/form/${user?._id}`}>
-          <Button variant={'add'} text={'Edit Profile'} />
+          <Button variant={'add'} text={'Edit Profile'} testid={'edit-btn'} />
         </Link>
       </div>
     </section>
