@@ -69,7 +69,7 @@ const Form = () => {
   }, [success, error]);
 
   useEffect(() => {
-    if (location.pathname.includes('edit')) {
+    if (location.pathname.includes(id)) {
       const activity = data.find((activity) => activity._id === id);
       setName(activity.name);
       setDescription(activity.description);

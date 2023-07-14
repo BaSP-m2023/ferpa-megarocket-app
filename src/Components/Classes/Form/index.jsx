@@ -264,36 +264,30 @@ const Form = () => {
             />
           )}
           <div className={styles.sideBySideContainer}>
-            <div className={styles.selectContainer}>
-              <Select
-                register={register}
-                placeholder={id ? singleClass.day : 'Day'}
-                options={weekDays}
-                nameValue={'day'}
-                error={errors.day?.message}
-                label={'Day'}
-              />
-              <Select
-                register={register}
-                placeholder={id ? singleClass?.hour : 'Hour'}
-                options={hours}
-                nameValue={'hour'}
-                error={errors.hour?.message}
-                label={'Hour'}
-              />
-            </div>
-            <div className={styles.selectContainer}>
-              <Select
-                register={register}
-                placeholder={id ? singleClass.trainerId?.firstName : 'Trainer'}
-                options={updatedTrainers}
-                nameValue={'trainerId'}
-                error={errors.trainerId?.message}
-                label={'Trainer'}
-              />
-            </div>
-          </div>
-          <div className={styles.selectContainer}>
+            <Select
+              register={register}
+              placeholder={id ? singleClass.day : 'Day'}
+              options={weekDays}
+              nameValue={'day'}
+              error={errors.day?.message}
+              label={'Day'}
+            />
+            <Select
+              register={register}
+              placeholder={id ? singleClass?.hour : 'Hour'}
+              options={hours}
+              nameValue={'hour'}
+              error={errors.hour?.message}
+              label={'Hour'}
+            />
+            <Select
+              register={register}
+              placeholder={id ? singleClass.trainerId?.firstName : 'Trainer'}
+              options={updatedTrainers}
+              nameValue={'trainerId'}
+              error={errors.trainerId?.message}
+              label={'Trainer'}
+            />
             <Select
               register={register}
               placeholder={id ? singleClass.activityId?.name : 'Activity'}
@@ -302,12 +296,13 @@ const Form = () => {
               error={errors.activityId?.message}
               label={'Activity'}
             />
+          </div>
+          <div className={styles.selectContainer}>
             <div className={styles.buttons}>
               <Button
                 variant={'white'}
                 text={'Cancel'}
-                submitting
-                clickAction={() => history.push('/admins/home/classes')}
+                clickAction={() => history.push('/admin/classes')}
                 testid={'cancel-btn'}
               />
               <Button
