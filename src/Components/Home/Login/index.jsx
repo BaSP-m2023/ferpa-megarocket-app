@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { user } = useSelector((state) => state.auth);
+  const { user, error, message } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (user?.role === 'ADMIN') {
@@ -69,6 +69,9 @@ function Login() {
                   placeholder={'Password:'}
                 />
               </div>
+              <p className={!error ? `${styles.errorHidden}` : `${styles.error}`}>
+                <img src="../../../assets/images/warning.svg" alt="warning" /> {message}
+              </p>
             </div>
             <Button text={'Continue'} variant={'add'} submitting testid={'continue-btn'} />
           </form>
