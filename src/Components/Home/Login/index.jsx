@@ -62,7 +62,9 @@ function Login() {
                 />
               </div>
             </div>
-            <Button text={'Continue'} variant={'add'} submitting />
+            <div className={styles.LogInbtn}>
+              <Button text={'Continue'} variant={'add'} submitting />
+            </div>
           </form>
         </div>
       </div>

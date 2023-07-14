@@ -38,7 +38,7 @@ const Routes = () => {
     <Router>
       <div className={styles.container}>
         <div className={styles.aside}>{isOn && <Aside />}</div>
-        <div>
+        <div className={styles.fullWidth}>
           <Header />
           <Suspense fallback={<Loader />}>
             <Switch>

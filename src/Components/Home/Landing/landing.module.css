@@ -18,6 +18,23 @@
   color: rgba(47, 48, 88, 1);
 }
 
+.joinUs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.joinUs a {
+  font-size: 20px;
+  color: white;
+  text-decoration: none;
+  border-radius: 15px;
+  background-color: #46a37c;
+  padding: 15px 60px;
+
+}
+
+
 .megaColor{
   color: rgba(47, 48, 88, 0.76);
 }
@@ -256,4 +273,8 @@
   background-color: #46a37c;
   padding: 5px;
   margin-left: 10px;
+}
+
+.link {
+  text-decoration: none;
 }

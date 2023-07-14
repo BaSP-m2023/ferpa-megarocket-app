@@ -1,9 +1,8 @@
 import React from 'react';
-import { useState } from 'react';
 import styles from './landing.module.css';
+import { Link } from 'react-router-dom';
 import { Input, TextArea, Select } from 'Components/Shared/Inputs';
 import Button from 'Components/Shared/Button';
-import Modal from 'Components/Shared/Modal';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
@@ -26,19 +25,6 @@ const Landing = () => {
       value: 'claim'
     }
   ];
-
-  const [successModal, setSuccessModal] = useState(false);
-
-  const handleButtonClick = () => {
-    setSuccessModal(true);
-    setTimeout(() => {
-      setSuccessModal(false);
-    }, 2000);
-  };
-
-  const handleCloseModal = () => {
-    setSuccessModal(false);
-  };
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -102,6 +88,9 @@ const Landing = () => {
               that fitness is a lifestyle, not just a hobby. Join us today and start your journey
               towards a healthier, happier you.
             </p>
+            <div className={styles.joinUs}>
+              <a href="#Memberships">JOIN US</a>
+            </div>
           </div>
         </div>
         <div className={styles.introductionImg}>
@@ -153,9 +142,6 @@ const Landing = () => {
       <section className={styles.contactUs}>
         <div className={styles.element}>
           <h2 className={styles.subTitle}>Contact Us</h2>
-          <>
-            <Modal isOpen={successModal} title={'Success submit'} onClose={handleCloseModal} />
-          </>
           <form>
             <div className={styles.inputs}>
               <div className={styles.firstInputs}>
@@ -216,7 +202,7 @@ const Landing = () => {
                 />
               </div>
               <div className={styles.contactButtons}>
-                <Button variant={'add'} text={'SEND MESSAGE'} clickAction={handleButtonClick} />
+                <Button variant={'add'} text={'SEND MESSAGE'} submitting />
                 <Button text={'RESET'} variant={'white'} clickAction={handleReset} />
               </div>
             </div>
@@ -273,7 +259,7 @@ const Landing = () => {
           </div>
         </div>
       </section>
-      <section className={styles.membership}>
+      <section className={styles.membership} id="Memberships">
         <h2 className={styles.subTitle}>Memberships</h2>
         <div className={styles.membershipBox}>
           <div className={styles.membBox}>
@@ -290,7 +276,9 @@ const Landing = () => {
                 src="../../assets/images/space_rocket-1.png"
                 alt="gym icon"
               ></img>
-              <p>150 USD</p>
+              <Link to="/home/signup" className={styles.link}>
+                <p>150 USD</p>
+              </Link>
             </div>
           </div>
           <div className={styles.membBox}>
@@ -306,7 +294,9 @@ const Landing = () => {
                 src="../../assets/images/space_rocket-3.png"
                 alt="gym icon"
               ></img>
-              <p>100 USD</p>
+              <Link to="/home/signup" className={styles.link}>
+                <p>100 USD</p>
+              </Link>
             </div>
           </div>
           <div className={styles.membBox}>
@@ -321,7 +311,9 @@ const Landing = () => {
                 src="../../assets/images/space_rocket-2.png"
                 alt="gym icon"
               ></img>
-              <p>50 USD</p>
+              <Link to="/home/signup" className={styles.link}>
+                <p>50 USD</p>
+              </Link>
             </div>
           </div>
         </div>
