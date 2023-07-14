@@ -65,7 +65,11 @@ const ChangePass = () => {
 
   return (
     <section className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit(onSubmit)}
+        data-testid={'changePass-container'}
+      >
         <h2 className={styles.formTitle}>PASSWORD CHANGE</h2>
         <div className={styles.inputBox}>
           <Input
@@ -88,9 +92,9 @@ const ChangePass = () => {
         </div>
         <div className={styles.formBtns}>
           <Link to={redirect}>
-            <Button variant={'white'} text={'Cancel'} />
+            <Button variant={'white'} text={'Cancel'} testid={'cancel-btn'} />
           </Link>
-          <Button variant={'add'} text="Confirm" submitting />
+          <Button variant={'add'} text="Confirm" submitting testid={'add-btn'} />
         </div>
       </form>
     </section>

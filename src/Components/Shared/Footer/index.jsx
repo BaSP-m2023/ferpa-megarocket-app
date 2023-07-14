@@ -6,21 +6,36 @@ function Footer() {
     <footer className={styles.container} data-testid={'footer-container'}>
       <div className={styles.license}>
         <div>
-          <a href={'https://twitter.com/radiumrocket'} target={'_blank'} rel="noreferrer">
+          <a
+            href={'https://twitter.com/radiumrocket'}
+            target={'_blank'}
+            rel="noreferrer"
+            data-testid={'tw-link'}
+          >
             <img
               alt={'Twitter'}
               className={styles.socialIcon}
               src={'../../assets/images/Twitter-Icon.svg'}
             />
           </a>
-          <a href={'https://www.instagram.com/radium.rocket/'} target={'_blank'} rel="noreferrer">
+          <a
+            href={'https://www.instagram.com/radium.rocket/'}
+            target={'_blank'}
+            rel="noreferrer"
+            data-testid={'ig-link'}
+          >
             <img
               alt={'Instagram'}
               className={styles.socialIcon}
               src={'../../assets/images/Instagram-Icon.svg'}
             />
           </a>
-          <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
+          <a
+            href={'https://www.facebook.com/radiumrocket'}
+            target={'_blank'}
+            rel="noreferrer"
+            data-testid={'fb-link'}
+          >
             <img
               alt={'facebook'}
               className={styles.socialIcon}
