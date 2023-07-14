@@ -101,6 +101,7 @@ const Trainers = () => {
               <th className={styles.titles}>Last Name</th>
               <th className={styles.titles}>Phone</th>
               <th className={styles.titles}>Email</th>
+              <th className={styles.titles}>Activities</th>
               <th className={styles.titles}></th>
               <th className={styles.titles}></th>
             </tr>
@@ -113,6 +114,9 @@ const Trainers = () => {
                   <td className={styles.list}>{item.lastName}</td>
                   <td className={styles.list}>{item.phone}</td>
                   <td className={styles.list}>{item.email}</td>
+                  <td className={styles.list}>
+                    {item.activities.map((activity) => activity.name).join(' / ')}
+                  </td>
                   <td>
                     <div className={styles.buttons}>
                       <Link to={`/admin/trainers/form/${item._id}`}>
