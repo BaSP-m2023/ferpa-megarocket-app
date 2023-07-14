@@ -25,7 +25,7 @@
 
 .h2 {
   font-size: 40px;
-  margin: 0;
+  margin: 2vh 0 3vw 5vw;
   padding: 0;
 }
 
@@ -38,7 +38,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-  width: 80%;
+  width: 60%;
   margin: 2vh auto;
 }
 
@@ -46,7 +46,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 80vw;
+  width: 75vw;
   min-width: 380px;
   margin: 2%;
   border-radius: 1.5vh;

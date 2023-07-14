@@ -253,7 +253,7 @@ const Form = () => {
           onSubmit={handleSubmit(onSubmit)}
           data-testid={'class-add-edit-container'}
         >
-          <h2>{id ? 'Edit' : 'Add'}</h2>
+          <h2 className={styles.h2}>{id ? 'Edit' : 'Add'}</h2>
           {showErrorModal && (
             <Modal
               title={serverMessage}
