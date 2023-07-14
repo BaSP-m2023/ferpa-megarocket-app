@@ -14,16 +14,16 @@ function Login() {
   const { user, error, message } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (user?.role === 'ADMIN') {
+    if (user?.role === 'ADMIN' && !error) {
       history.push('/admin/profile');
     }
-    if (user?.role === 'MEMBER') {
+    if (user?.role === 'MEMBER' && !error) {
       history.push('/member/profile');
     }
-    if (user?.role === 'SUPER-ADMIN') {
+    if (user?.role === 'SUPER-ADMIN' && !error) {
       history.push('/super-admin/admins');
     }
-    if (user?.role === 'TRAINER') {
+    if (user?.role === 'TRAINER' && !error) {
       history.push('/trainer/profile');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

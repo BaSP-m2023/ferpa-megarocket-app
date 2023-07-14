@@ -84,11 +84,10 @@ export const signUpMember = (data) => {
         body: JSON.stringify(data)
       });
       const res = await response.json();
-      if (response.error) {
-        throw new Error(response.message);
+      if (res.error) {
+        throw new Error(res.message);
       }
       await dispatch(signUpSuccess(data));
-      return res;
     } catch (error) {
       dispatch(signUpError(error.message));
     }

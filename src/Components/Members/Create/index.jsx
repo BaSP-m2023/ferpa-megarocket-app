@@ -15,6 +15,11 @@ import Aside from 'Components/Shared/Aside';
 
 const MembersCreate = () => {
   const location = useLocation();
+  const {
+    error: signupError,
+    message: signupMessage,
+    success: signupSuccess
+  } = useSelector((state) => state.auth);
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -122,10 +127,16 @@ const MembersCreate = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success, error]);
 
+  useEffect(() => {
+    if (signupSuccess) {
+      history.push('/home/login');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success]);
+
   const onSubmit = (data) => {
     if (location.pathname.includes('/home/signup')) {
       dispatch(signUpMember(data));
-      history.push('/home/login');
     } else {
       dispatch(createMember(data));
     }
@@ -247,6 +258,9 @@ const MembersCreate = () => {
                   </div>
                 </div>
               </div>
+              <p className={!signupError ? `${styles.errorHidden}` : `${styles.error}`}>
+                <img src="../../../assets/images/warning.svg" alt="warning" /> {signupMessage}
+              </p>
               <div className={styles.signupButton}>
                 <Button text={'Add'} variant={'add'} submitting testid={'add-btn'} />
               </div>
