@@ -91,7 +91,7 @@ const Trainers = () => {
         <div className={styles.inside}>
           <h2 className={styles.title}>Trainers</h2>
           <Link to={'/admin/trainers/form'}>
-            <Button text={'Add'} variant={'add'} />
+            <Button text={'Add'} variant={'add'} testid={'add-btn'} />
           </Link>
         </div>
         <table className={styles.table}>
@@ -101,6 +101,7 @@ const Trainers = () => {
               <th className={styles.titles}>Last Name</th>
               <th className={styles.titles}>Phone</th>
               <th className={styles.titles}>Email</th>
+              <th className={styles.titles}>Activities</th>
               <th className={styles.titles}></th>
               <th className={styles.titles}></th>
             </tr>
@@ -113,10 +114,13 @@ const Trainers = () => {
                   <td className={styles.list}>{item.lastName}</td>
                   <td className={styles.list}>{item.phone}</td>
                   <td className={styles.list}>{item.email}</td>
+                  <td className={styles.list}>
+                    {item.activities.map((activity) => activity.name).join(' / ')}
+                  </td>
                   <td>
                     <div className={styles.buttons}>
                       <Link to={`/admin/trainers/form/${item._id}`}>
-                        <Button variant={'edit'} />
+                        <Button variant={'edit'} testid={'edit-btn'} />
                       </Link>
                       <Button
                         variant={'deleteIcon'}

@@ -12,6 +12,7 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
+              data-testid={'member-profile'}
               to="/member/profile"
             >
               <li>Profile</li>
@@ -19,6 +20,7 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
+              data-testid={'member-schedule'}
               to="/member/schedule"
             >
               <li>Schedule</li>
@@ -26,6 +28,7 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
+              data-testid={'member-activities'}
               to="/member/activities"
             >
               <li>Activities</li>
@@ -37,6 +40,7 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
+              data-testid={'admins-profile'}
               to="/admin/profile"
             >
               <li>Profile</li>
@@ -44,6 +48,7 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
+              data-testid={'admins-reports'}
               to="/admin/reports"
             >
               <li>Reports</li>
@@ -51,6 +56,7 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
+              data-testid={'admins-activities'}
               to="/admin/activities"
             >
               <li>Activities</li>
@@ -58,6 +64,7 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
+              data-testid={'admins-classes'}
               to="/admin/classes"
             >
               <li>Classes</li>
@@ -65,6 +72,7 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
+              data-testid={'admins-members'}
               to="/admin/members"
             >
               <li>Members</li>
@@ -72,6 +80,7 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
+              data-testid={'admins-subs'}
               to="/admin/subscriptions"
             >
               <li>Subscriptions</li>
@@ -79,6 +88,7 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
+              data-testid={'admins-trainers'}
               to="/admin/trainers"
             >
               <li>Trainers</li>
@@ -90,6 +100,7 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
+              data-testid={'trainer-profile'}
               to="/trainer/profile"
             >
               <li>Profile</li>
@@ -97,6 +108,7 @@ const Nav = () => {
             <NavLink
               activeClassName={styles.linkFocused}
               className={styles.link}
+              data-testid={'trainer-schedule'}
               to="/trainer/schedule"
             >
               <li>Schedule</li>

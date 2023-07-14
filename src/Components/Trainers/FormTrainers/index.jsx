@@ -3,8 +3,10 @@ import { useState, useEffect } from 'react';
 import { Input } from 'Components/Shared/Inputs';
 import { sendTrainer, putTrainer } from 'redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import { useForm, useController } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { getActivities } from 'redux/activities/thunks';
+import Select from 'react-select';
 import Joi from 'joi';
 import React from 'react';
 import Button from 'Components/Shared/Button';
@@ -16,13 +18,15 @@ const TrainerAddForm = () => {
   const [successModal, setSuccessModal] = useState(false);
   const { id } = useParams();
   const { trainers, success, error, formError } = useSelector((state) => state.trainers);
+  const { data } = useSelector((state) => state.activities);
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
   const RGXPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   const RGXEmail = /^[^@]+@[^@]+.[a-zA-Z]{2,}$/;
+  const trainer = trainers.find((trainer) => trainer._id === id);
 
-  const schema = Joi.object({
+  const createSchema = Joi.object({
     firstName: Joi.string()
       .min(3)
       .max(15)
@@ -41,7 +45,27 @@ const TrainerAddForm = () => {
       'string.pattern.base':
         'Password must contain at least one uppercase letter, one lowercase letter, and be at least 8 characters long'
     }),
-    salary: Joi.number().min(10000)
+    salary: Joi.number().min(10000),
+    activities: Joi.array()
+  });
+
+  const editSchema = Joi.object({
+    firstName: Joi.string()
+      .min(3)
+      .max(15)
+      .pattern(/^[a-zA-Z-]+$/),
+    lastName: Joi.string()
+      .min(3)
+      .max(15)
+      .pattern(/^[a-zA-Z-]+$/),
+    dni: Joi.number().min(1000000).max(99999999),
+    phone: Joi.number().min(1000000000).max(9999999999),
+    email: Joi.string().required().regex(RGXEmail).messages({
+      'string.pattern.base': 'Email must be in a valid format'
+    }),
+    city: Joi.string().min(2).max(30),
+    salary: Joi.number().min(10000),
+    activities: Joi.array()
   });
 
   const [inputs, setInputs] = useState({
@@ -51,8 +75,8 @@ const TrainerAddForm = () => {
     phone: '',
     email: '',
     city: '',
-    password: '',
-    salary: ''
+    salary: '',
+    activities: []
   });
 
   const {
@@ -60,18 +84,28 @@ const TrainerAddForm = () => {
     handleSubmit,
     reset,
     onChange,
+    control,
     formState: { errors, dirtyFields }
-  } = useForm({ mode: 'onChange', resolver: joiResolver(schema), defaultValues: { inputs } });
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(id ? editSchema : createSchema),
+    defaultValues: { inputs }
+  });
 
   const isFormEdited = Object.keys(dirtyFields).length > 0;
 
   useEffect(() => {
+    getActivities(dispatch);
     if (id) {
       const trainer = trainers.find((trainer) => trainer._id === id);
       const copyTrainer = { ...trainer };
       delete copyTrainer.isActive;
       delete copyTrainer.__v;
       delete copyTrainer._id;
+      if (id) {
+        delete copyTrainer.firebaseUid;
+        delete copyTrainer.password;
+      }
       setInputs(copyTrainer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -110,6 +144,14 @@ const TrainerAddForm = () => {
     }
   };
 
+  const transformedData = data.map((item) => ({
+    value: item._id,
+    label: item.name
+  }));
+
+  const {
+    field: { value: activity, onChange: onActivityChange }
+  } = useController({ name: 'activities', control });
   const cancelButtonDestination = location.pathname.startsWith('/admin/trainers')
     ? '/admin/trainers'
     : location.pathname.startsWith('/trainer/form')
@@ -193,20 +235,43 @@ const TrainerAddForm = () => {
                   placeholder={'Salary'}
                   error={errors.salary?.message}
                 />
-                <Input
-                  register={register}
-                  onChangeInput={onChange}
-                  labelText={'Password'}
-                  nameValue={'password'}
-                  placeholder={'Password'}
-                  error={errors.password?.message}
-                />
+                {!id && (
+                  <Input
+                    register={register}
+                    onChangeInput={onChange}
+                    labelText={'Password'}
+                    nameValue={'password'}
+                    placeholder={'Password'}
+                    error={errors.password?.message}
+                  />
+                )}
               </div>
             </div>
+            <Select
+              className={styles.select}
+              defaultValue={
+                trainer
+                  ? trainer.activities.map((activity) => ({
+                      value: activity._id,
+                      label: activity.name
+                    }))
+                  : trainer
+              }
+              value={
+                activity
+                  ? transformedData.find((singleActivity) => singleActivity.value === activity)
+                  : activity
+              }
+              isMulti
+              options={transformedData}
+              onChange={(event) => {
+                onActivityChange(event.map((activity) => activity.value));
+              }}
+            />
           </div>
           <div className={styles.buttons}>
             <Link to={cancelButtonDestination}>
-              <Button text={'Cancel'} variant={'white'} />
+              <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
             </Link>
             <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting testid={'add-edit-btn'} />
           </div>

@@ -136,8 +136,12 @@ const MembersCreate = () => {
       <section className={styles.signupContainer}>
         <Aside />
         <div className={styles.signup}>
-          <div className={styles.box}>
-            <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+          <div className={styles.box} data-testid={'signup-container'}>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className={styles.form}
+              data-testid={'signup-form'}
+            >
               <h2 className={styles.formTitle}>SIGN UP</h2>
               <div className={styles.columns}>
                 <div className={styles.column}>
@@ -244,7 +248,7 @@ const MembersCreate = () => {
                 </div>
               </div>
               <div className={styles.signupButton}>
-                <Button text={'Add'} variant={'add'} submitting />
+                <Button text={'Add'} variant={'add'} submitting testid={'add-btn'} />
               </div>
             </form>
           </div>
