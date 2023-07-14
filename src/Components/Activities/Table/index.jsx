@@ -1,13 +1,17 @@
 import styles from './table.module.css';
 import { Link } from 'react-router-dom';
-import Button from '../../Shared/Button';
-import Modal from '../../Shared/Modal';
+import Button from 'Components/Shared/Button';
+import Modal from 'Components/Shared/Modal';
 import { useState, useEffect } from 'react';
-import { deleteActivity } from '../../../redux/activities/thunks';
+import { deleteActivity } from 'redux/activities/thunks';
+import { getClasses, deleteClass } from 'redux/classes/thunks';
+import { getSubscriptions, deleteSubscriptions } from 'redux/subscriptions/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Table = () => {
   const { data, message, success } = useSelector((state) => state.activities);
+  const { classes } = useSelector((state) => state.classes);
+  const { subs } = useSelector((state) => state.subscriptions);
   const [modalMessage, setModalMessage] = useState('');
   const [currentID, setCurrentID] = useState('');
   const [confirmModal, setConfirmModal] = useState(false);
@@ -21,7 +25,22 @@ const Table = () => {
     }, 2000);
   };
 
+  const deleteClassSub = (classes, activityId, subscriptions) => {
+    classes.forEach((clas) => {
+      if (clas.activityId === activityId) {
+        dispatch(deleteClass(clas._id));
+        subscriptions.forEach((sub) => {
+          if (sub.classId === clas._id) {
+            deleteSubscriptions(dispatch, sub._id);
+          }
+        });
+      }
+    });
+  };
+
   useEffect(() => {
+    getSubscriptions(dispatch);
+    dispatch(getClasses());
     if (success) {
       handleModal();
       setModalMessage(message);
@@ -42,7 +61,10 @@ const Table = () => {
         <Button
           text={'Delete'}
           variant={'delete'}
-          clickAction={() => deleteActivity(dispatch, currentID)}
+          clickAction={() => {
+            deleteActivity(dispatch, currentID);
+            deleteClassSub(classes, currentID, subs);
+          }}
           testid={'delete-btn'}
         />
         <Button
