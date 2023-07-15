@@ -132,7 +132,7 @@ const MembersCreate = () => {
       history.push('/home/login');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [success]);
+  }, [signupSuccess]);
 
   const onSubmit = (data) => {
     if (location.pathname.includes('/home/signup')) {
