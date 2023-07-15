@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  font-size: 20px;
+  font-size: 18px;
   color: white;
   background-repeat: no-repeat;
   background-position: center;
@@ -22,14 +22,16 @@
 }
 
 .blueItem {
-  height: 50px;
-  min-width: 160px;
+  height: 58px;
+  min-width: 180px;
+  padding: 5px;
   background-color: #373867;
   border-radius: 7px;
   text-align: center;
 }
 
 .whiteItem, .glossaryClass {
+  padding: 5px;
   background-color: #d4d4e9;
   border-radius: 7px;
   color: #373867;
@@ -44,6 +46,7 @@
 }
 
 .activeClass, .glossarySub {
+  padding: 5px;
   background-color: #49A37B;
   border-radius: 7px;
   color: white;
@@ -53,12 +56,17 @@
 }
 
 .disabledClass, .glossaryDis {
+  padding: 5px;
   background-color: #51527e;
   border-radius: 7px;
   color: rgb(156, 156, 156);
   text-align: center;
   font-weight: 600;
-  cursor: not-allowed;
+}
+
+.slots {
+  font-size: 14px;
+  color: #3c8b68;
 }
 
 .empty {
@@ -67,13 +75,14 @@
 }
 
 .glossary {
-  border-spacing: 30px;
+  border-spacing: 25px;
 }
 
 .glossaryClass, .glossaryDis, .glossarySub {
   height: 50px;
   min-width: 160px;
   margin-left: 30px;
+  cursor: auto;
 }
 
 .select {
