@@ -8,6 +8,7 @@ import Modal from 'Components/Shared/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { createMember } from 'redux/members/thunks';
 import { signUpMember } from 'redux/auth/thunks';
+import { resetError } from 'redux/auth/action';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -15,6 +16,11 @@ import Aside from 'Components/Shared/Aside';
 
 const MembersCreate = () => {
   const location = useLocation();
+  const {
+    error: signupError,
+    message: signupMessage,
+    success: signupSuccess
+  } = useSelector((state) => state.auth);
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -94,6 +100,7 @@ const MembersCreate = () => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
+  const [signupModal, setSignupModal] = useState(false);
 
   const history = useHistory();
   const { error, success, message } = useSelector((state) => state.members);
@@ -109,6 +116,11 @@ const MembersCreate = () => {
   });
 
   useEffect(() => {
+    dispatch(resetError());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if (success && location.pathname.includes('/admin/members/form')) {
       setTimeout(() => {
         history.push('/admin/members');
@@ -122,10 +134,19 @@ const MembersCreate = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success, error]);
 
+  useEffect(() => {
+    if (signupSuccess) {
+      setTimeout(() => {
+        history.push('/home/login');
+      }, 2000);
+      setSignupModal(!signupModal);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [signupSuccess]);
+
   const onSubmit = (data) => {
     if (location.pathname.includes('/home/signup')) {
       dispatch(signUpMember(data));
-      history.push('/home/login');
     } else {
       dispatch(createMember(data));
     }
@@ -134,6 +155,13 @@ const MembersCreate = () => {
   if (location.pathname.includes('/home/signup')) {
     return (
       <section className={styles.signupContainer}>
+        <Modal
+          onClose={() => setSignupModal(!signupModal)}
+          isOpen={signupModal}
+          title={'Successfully created'}
+          success
+          testid={'success-modal'}
+        />
         <Aside />
         <div className={styles.signup}>
           <div className={styles.box} data-testid={'signup-container'}>
@@ -247,6 +275,9 @@ const MembersCreate = () => {
                   </div>
                 </div>
               </div>
+              <p className={!signupError ? `${styles.errorHidden}` : `${styles.error}`}>
+                <img src="../../../assets/images/warning.svg" alt="warning" /> {signupMessage}
+              </p>
               <div className={styles.signupButton}>
                 <Button text={'Add'} variant={'add'} submitting testid={'add-btn'} />
               </div>
