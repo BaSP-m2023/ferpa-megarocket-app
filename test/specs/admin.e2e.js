@@ -2,6 +2,7 @@
 const HomePage = require('../pageobjects/home.page');
 const ShearedComponents = require('../pageobjects/sheared.components');
 const LoginPage = require('../pageobjects/login.Page');
+const AdminPage = require('../pageobjects/admin.page');
 
 describe('Happy path Admin entity.', () => {
   beforeAll(() => {
@@ -82,17 +83,17 @@ describe('Happy path Admin entity.', () => {
   //   await browser.pause(1000);
   //   await AdminPage.formAdminFirstChild.waitForDisplayed();
   //   await expect(AdminPage.formFirstLabel).toHaveTextContaining('First Name');
-  //   await AdminPage.formAdminFirstChild.setValue('Mili');
+  //   await AdminPage.formAdminFirstChild.setValue('Dani');
 
   //   await browser.pause(1000);
   //   await AdminPage.formAdminSecondChild.waitForDisplayed();
   //   await expect(AdminPage.formSecondLabel).toHaveTextContaining('Last Name');
-  //   await AdminPage.formAdminSecondChild.setValue('Cerro');
+  //   await AdminPage.formAdminSecondChild.setValue('Lezama');
 
   //   await browser.pause(1000);
   //   await AdminPage.formAdminThirdChild.waitForDisplayed();
   //   await expect(AdminPage.formThirdLabel).toHaveTextContaining('DNI');
-  //   await AdminPage.formAdminThirdChild.setValue('42400400');
+  //   await AdminPage.formAdminThirdChild.setValue('40400400');
 
   //   await browser.pause(1000);
   //   await AdminPage.formAdminFourthChild.waitForDisplayed();
@@ -102,7 +103,7 @@ describe('Happy path Admin entity.', () => {
   //   await browser.pause(1000);
   //   await AdminPage.formAdminFifthChild.waitForDisplayed();
   //   await expect(AdminPage.formFifthLabel).toHaveTextContaining('Email');
-  //   await AdminPage.formAdminFifthChild.setValue('c@m.com');
+  //   await AdminPage.formAdminFifthChild.setValue('admin@gmail.com');
 
   //   await browser.pause(1000);
   //   await AdminPage.formAdminSixthChild.waitForDisplayed();
@@ -110,58 +111,53 @@ describe('Happy path Admin entity.', () => {
   //   await AdminPage.formAdminSixthChild.setValue('Rosario');
 
   //   await browser.pause(1000);
-  //   await AdminPage.formAdminSeventhChild.waitForDisplayed();
-  //   await expect(AdminPage.formSeventhLabel).toHaveTextContaining('Password');
-  //   await AdminPage.formAdminSeventhChild.setValue('Mili1234&');
-
-  //   await browser.pause(1000);
   //   await AdminPage.editBtnClick();
   //   await browser.pause(2000);
   //   await AdminPage.successModal.waitForDisplayed();
   // });
 
-  // it('Verify correct flow and display of the navigation bar.', async () => {
-  //   await browser.pause(3000);
-  //   await expect(HomePage.navbar).toBeDisplayed();
-  //   await expect(HomePage.navProfile).toBeDisplayed();
+  it('Verify correct flow and display of the navigation bar.', async () => {
+    await browser.pause(3000);
+    await expect(ShearedComponents.navbar).toBeDisplayed();
+    await expect(ShearedComponents.navProfile).toBeDisplayed();
 
-  //   await expect(HomePage.navReports).toBeDisplayed();
-  //   await HomePage.navReports.click();
-  //   await browser.pause(1000);
-  //   await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/admins/home/reports');
-  //   await browser.pause(1000);
-  // });
+    await expect(ShearedComponents.navReports).toBeDisplayed();
+    await ShearedComponents.navReports.click();
+    await browser.pause(1000);
+    await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/admin/reports');
+    await browser.pause(1000);
+  });
 
-  // it('Verify correct CRUD of activities.', async () => {
-  //   await expect(HomePage.navActivities).toBeDisplayed();
-  //   await HomePage.navActivities.click();
-  //   await browser.pause(1000);
-  //   await expect(browser).toHaveUrl(
-  //     'https://ferpa-megarocket-app.vercel.app/admins/home/activities'
-  //   );
-  //   await expect(AdminPage.addBtn).toBeDisplayed();
-  //   await AdminPage.editActivitiesBtn();
+  it('Verify correct CRUD of activities.', async () => {
+    await expect(HomePage.navActivities).toBeDisplayed();
+    await HomePage.navActivities.click();
+    await browser.pause(1000);
+    await expect(browser).toHaveUrl(
+      'https://ferpa-megarocket-app.vercel.app/admins/home/activities'
+    );
+    await expect(AdminPage.addBtn).toBeDisplayed();
+    await AdminPage.editActivitiesBtn();
 
-  //   await expect(AdminPage.formActivities).toBeDisplayed();
-  //   await browser.pause(1000);
-  //   await AdminPage.addFormActivitiesFirst.waitForDisplayed();
-  //   await expect(AdminPage.formActivitieFirstLabel).toHaveTextContaining('Name');
-  //   await browser.pause(1000);
-  //   await AdminPage.addFormActivitiesFirst.setValue('Contemporaneo');
+    await expect(AdminPage.formActivities).toBeDisplayed();
+    await browser.pause(1000);
+    await AdminPage.addFormActivitiesFirst.waitForDisplayed();
+    await expect(AdminPage.formActivitieFirstLabel).toHaveTextContaining('Name');
+    await browser.pause(1000);
+    await AdminPage.addFormActivitiesFirst.setValue('Contemporaneo');
 
-  //   await AdminPage.addFormActivitiesSecond.waitForDisplayed();
-  //   await expect(AdminPage.formActivitieSecondLabel).toHaveTextContaining('Description');
-  //   await AdminPage.addFormActivitiesSecond.setValue(
-  //     'The Contemporary Age is the name by which the historical period'
-  //   );
+    await AdminPage.addFormActivitiesSecond.waitForDisplayed();
+    await expect(AdminPage.formActivitieSecondLabel).toHaveTextContaining('Description');
+    await AdminPage.addFormActivitiesSecond.setValue(
+      'The Contemporary Age is the name by which the historical period'
+    );
 
-  //   await AdminPage.addFormActivitiesThird.waitForDisplayed();
-  //   await expect(AdminPage.formActivitieThirdLabel).toHaveTextContaining('Is Active?');
-  //   await AdminPage.addFormActivitiesThird.click();
+    await AdminPage.addFormActivitiesThird.waitForDisplayed();
+    await expect(AdminPage.formActivitieThirdLabel).toHaveTextContaining('Is Active?');
+    await AdminPage.addFormActivitiesThird.click();
 
-  //   await AdminPage.addAndEditBtnClick();
-  //   await AdminPage.successModal.waitForDisplayed();
-  // });
+    await AdminPage.addAndEditBtnClick();
+    await AdminPage.successModal.waitForDisplayed();
+  });
 
   // it('Verify edit activity from the form.', async () => {
   //   await expect(AdminPage.formActivities).toBeDisplayed();

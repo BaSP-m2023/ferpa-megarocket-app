@@ -22,46 +22,46 @@ class AdminPage {
     return $("[data-testid='admin-editform']");
   }
   get formAdminFirstChild() {
-    return $("[data-testid='admin-editform'] div:nth-child(2) input");
+    return $("[data-testid='admin-editform'] div:nth-child(1) div:nth-child(1) input");
   }
   get formAdminSecondChild() {
-    return $("[data-testid='admin-editform'] div:nth-child(3) input");
+    return $("[data-testid='admin-editform'] div:nth-child(1) div:nth-child(2) input");
   }
   get formAdminThirdChild() {
-    return $("[data-testid='admin-editform'] div:nth-child(4) input");
+    return $("[data-testid='admin-editform'] div:nth-child(1) div:nth-child(3) input");
   }
   get formAdminFourthChild() {
-    return $("[data-testid='admin-editform'] div:nth-child(5) input");
+    return $("[data-testid='admin-editform'] div div:nth-child(2) div:nth-child(1) input");
   }
   get formAdminFifthChild() {
-    return $("[data-testid='admin-editform'] div:nth-child(6) input");
+    return $("[data-testid='admin-editform'] div div:nth-child(2) div:nth-child(2) input");
   }
   get formAdminSixthChild() {
-    return $("[data-testid='admin-editform'] div:nth-child(7) input");
+    return $("[data-testid='admin-editform'] div div:nth-child(2) div:nth-child(3) input");
   }
-  get formAdminSeventhChild() {
+  get passChange() {
     return $("[data-testid='admin-editform'] div:nth-child(8) input");
   }
 
   get formFirstLabel() {
-    return $("[data-testid='admin-editform'] div:nth-child(2) label");
+    return $("[data-testid='admin-editform'] div:nth-child(1) div:nth-child(1) label");
   }
   get formSecondLabel() {
-    return $("[data-testid='admin-editform'] div:nth-child(3) label");
+    return $("[data-testid='admin-editform'] div:nth-child(1) div:nth-child(2) label");
   }
   get formThirdLabel() {
-    return $("[data-testid='admin-editform'] div:nth-child(4) label");
+    return $("[data-testid='admin-editform'] div:nth-child(1) div:nth-child(3) label");
   }
   get formFourthLabel() {
-    return $("[data-testid='admin-editform'] div:nth-child(5) label");
+    return $("[data-testid='admin-editform'] div div:nth-child(2) div:nth-child(1) label");
   }
   get formFifthLabel() {
-    return $("[data-testid='admin-editform'] div:nth-child(6) label");
+    return $("[data-testid='admin-editform'] div div:nth-child(2) div:nth-child(2) label");
   }
   get formSixthLabel() {
-    return $("[data-testid='admin-editform'] div:nth-child(7) label");
+    return $("[data-testid='admin-editform'] div div:nth-child(2) div:nth-child(3) label");
   }
-  get formSeventhLabel() {
+  get passChangeLabel() {
     return $("[data-testid='admin-editform'] div:nth-child(8) label");
   }
 
