@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTrainers, deleteTrainer } from 'redux/trainers/thunks';
+import { getClasses, deleteClass } from 'redux/classes/thunks';
+import { getSubscriptions, deleteSubscriptions } from 'redux/subscriptions/thunks';
 import styles from './trainers.module.css';
 import Modal from 'Components/Shared/Modal';
 import Button from 'Components/Shared/Button';
@@ -12,10 +14,27 @@ const Trainers = () => {
   const [successModal, setSuccessModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const dispatch = useDispatch();
+  const { classes } = useSelector((state) => state.classes);
+  const { subs } = useSelector((state) => state.subscriptions);
   const { isLoading, trainers, error, formError } = useSelector((state) => state.trainers);
+
+  const deleteTrainerClass = (classes, trainerId, subscriptions) => {
+    classes.forEach((clas) => {
+      if (clas.trainerId === trainerId) {
+        dispatch(deleteClass(clas._id));
+        subscriptions.forEach((sub) => {
+          if (sub.classId === clas._id) {
+            deleteSubscriptions(dispatch, sub._id);
+          }
+        });
+      }
+    });
+  };
 
   useEffect(() => {
     getTrainers(dispatch);
+    getSubscriptions(dispatch);
+    dispatch(getClasses());
   }, [dispatch]);
 
   useEffect(() => {
@@ -68,6 +87,7 @@ const Trainers = () => {
           variant={'delete'}
           clickAction={() => {
             deleteTrainer(dispatch, currentId);
+            deleteTrainerClass(classes, currentId, subs);
             setDeleteModal(!deleteModal);
             setSuccessModal(!successModal);
           }}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getActivities } from '../../redux/activities/thunks';
 import styles from './activities.module.css';
@@ -13,6 +13,7 @@ function Activities() {
   const [modalMessage, setModalMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const handleModal = () => {
@@ -64,9 +65,14 @@ function Activities() {
             <>
               <div className={styles.header}>
                 <h2 className={styles.title}>Activities</h2>
-                <Link to="/admins/activities/create">
-                  <Button text={'Add'} variant={'add'} testid={'add-btn'} />
-                </Link>
+                <Button
+                  text={'Add'}
+                  variant={'add'}
+                  testid={'add-btn'}
+                  clickAction={() => {
+                    history.push('/admin/activities/form');
+                  }}
+                />
               </div>
               <Modal
                 onClose={() => setShowModal(false)}
@@ -103,7 +109,7 @@ function Activities() {
           <>
             <div className={styles.header}>
               <h2 className={styles.title}>Activities</h2>
-              <Link to="/admin/activities/form">
+              <Link to="/activities/form">
                 <Button text={'Add'} variant={'add'} />
               </Link>
             </div>

@@ -3,6 +3,7 @@ import styles from './members.module.css';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMembers, deleteMember } from 'redux/members/thunks';
+import { getSubscriptions, deleteSingleSubscription } from 'redux/subscriptions/thunks';
 import Button from 'Components/Shared/Button/';
 import Modal from 'Components/Shared/Modal/';
 import Loader from 'Components/Shared/Loader';
@@ -12,11 +13,13 @@ function Members() {
   const [showModalDeleteSuccess, setShowModalDeleteSuccess] = useState(false);
   const [memberId, setMemberId] = useState('');
   const { data, isPending, message, error, success } = useSelector((state) => state.members);
+  const { subs } = useSelector((state) => state.subscriptions);
   const [theMessage, setTheMessage] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMembers());
+    getSubscriptions(dispatch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -33,6 +36,13 @@ function Members() {
 
   const delMember = (id) => {
     dispatch(deleteMember(id));
+  };
+  const deleteSubClass = (subs, memberId) => {
+    subs.forEach((sub) => {
+      if (sub.memberId._id === memberId) {
+        deleteSingleSubscription(dispatch, sub._id);
+      }
+    });
   };
 
   if (isPending) {
@@ -126,6 +136,7 @@ function Members() {
               text={'Delete'}
               variant={'delete'}
               clickAction={() => {
+                deleteSubClass(subs, memberId);
                 delMember(memberId);
                 setShowModal(false);
               }}
