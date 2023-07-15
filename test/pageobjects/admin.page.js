@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-class ActivitiesPage {
+class AdminPage {
   //buttoms and modals
   get editBtn() {
     return $("[data-testid='edit-btn']");
@@ -15,41 +15,6 @@ class ActivitiesPage {
   }
   get confirmModal() {
     return $("[data-testid='confirm-modal']");
-  }
-
-  //sheared component
-  get header() {
-    return $("[data-testid='header-container']");
-  }
-  get logo() {
-    return $("[data-testid='header-logo']");
-  }
-  get navbar() {
-    return $("[data-testid='nav-container']");
-  }
-  get navProfile() {
-    return $("[data-testid='admins-profile']");
-  }
-  get navReports() {
-    return $("[data-testid='admins-reports']");
-  }
-  get navActivities() {
-    return $("[data-testid='admins-activities']");
-  }
-  get navClasses() {
-    return $("[data-testid='admins-classes']");
-  }
-  get navMembers() {
-    return $("[data-testid='admins-members']");
-  }
-  get navSubs() {
-    return $("[data-testid='admins-subs']");
-  }
-  get navTrainers() {
-    return $("[data-testid='admins-trainers']");
-  }
-  get footer() {
-    return $("[data-testid='footer-container']");
   }
 
   //form
@@ -151,4 +116,4 @@ class ActivitiesPage {
     await this.deleteBtn.click();
   }
 }
-module.exports = new ActivitiesPage();
+module.exports = new AdminPage();

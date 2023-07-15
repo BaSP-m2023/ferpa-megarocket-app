@@ -6,7 +6,6 @@ exports.config = {
   // ====================
   // WebdriverIO supports running e2e tests as well as unit and component tests.
   runner: 'local',
-
   //
   // ==================
   // Specify Test Files
@@ -23,8 +22,8 @@ exports.config = {
   // then the current working directory is where your `package.json` resides, so `wdio`
   // will be called from there.
   //
-  specs: ['./test/specs/admin.activities.e2e.js', './test/specs/member.edit.e2e.js'],
-
+  specs: ['./test/specs/admin.e2e.js'],
+  // Patterns to exclude.
   exclude: [
     // 'path/to/excluded/files'
   ],
@@ -52,11 +51,11 @@ exports.config = {
   //
   capabilities: [
     {
-      // capabilities for local browser web tests
-      browserName: 'chrome', // or "firefox", "microsoftedge", "safari"
+      browserName: 'chrome',
       'goog:chromeOptions': { args: ['headless'] }
     }
   ],
+
   //
   // ===================
   // Test Configurations
@@ -258,7 +257,7 @@ exports.config = {
     });
   },
   afterTest: async function (test, context, { error, result, duration, passed, retries }) {
-    if (error) {
+    if (!passed) {
       await browser.takeScreenshot();
     }
   }
