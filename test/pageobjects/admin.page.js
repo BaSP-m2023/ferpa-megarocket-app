@@ -16,6 +16,9 @@ class AdminPage {
   get confirmModal() {
     return $("[data-testid='confirm-modal']");
   }
+  get changePassBtn() {
+    return $("[data-testid='change-pass-btn']");
+  }
 
   //form
   get formAdmin() {
@@ -64,6 +67,24 @@ class AdminPage {
   get passChangeLabel() {
     return $("[data-testid='admin-editform'] div:nth-child(8) label");
   }
+  get changePassForm() {
+    return $("[data-testid='changePass-container']");
+  }
+  get changePassText() {
+    return $("[data-testid='changePass-container'] h2");
+  }
+  get changePassFirst() {
+    return $("[data-testid='changePass-container'] div:nth-child(2) input");
+  }
+  get changePassFirstLabel() {
+    return $("[data-testid='changePass-container'] div:nth-child(2) label");
+  }
+  get changePassSecond() {
+    return $("[data-testid='changePass-container'] div:nth-child(3) input");
+  }
+  get changePassSecondLabel() {
+    return $("[data-testid='changePass-container'] div:nth-child(3) label");
+  }
 
   //activities
   get addBtn() {
@@ -79,22 +100,22 @@ class AdminPage {
     return $("[data-testid='add-edit-btn']");
   }
   get formActivities() {
-    return $("[data-testid='activity-add-edit-container']");
+    return $("[data-testid='activities-editform']");
   }
   get addFormActivitiesFirst() {
-    return $("[data-testid='activity-add-edit-container'] div:nth-child(1) input");
+    return $("[data-testid='activities-editform'] div:nth-child(1) input");
   }
   get formActivitieFirstLabel() {
-    return $("[data-testid='activity-add-edit-container'] div:nth-child(1) label");
+    return $("[data-testid='activities-editform'] div:nth-child(1) label");
   }
   get addFormActivitiesSecond() {
-    return $("[data-testid='activity-add-edit-container'] div:nth-child(2) textarea");
+    return $("[data-testid='activities-editform'] div:nth-child(2) textarea");
   }
   get addFormActivitiesThird() {
-    return $("[data-testid='activity-add-edit-container'] div:nth-child(3) input");
+    return $("[data-testid='activities-editform'] div:nth-child(3) input");
   }
   get formActivitieThirdLabel() {
-    return $("[data-testid='activity-add-edit-container'] div:nth-child(3) label");
+    return $("[data-testid='activities-editform'] div:nth-child(3) label");
   }
 
   async editAdminBtnClick() {
@@ -114,6 +135,9 @@ class AdminPage {
   }
   async deleteActivitiesBtnClick() {
     await this.deleteBtn.click();
+  }
+  async changePassBtnClick() {
+    await this.changePassBtn.click();
   }
 }
 module.exports = new AdminPage();
