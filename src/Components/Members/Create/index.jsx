@@ -99,6 +99,7 @@ const MembersCreate = () => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
+  const [signupModal, setSignupModal] = useState(false);
 
   const history = useHistory();
   const { error, success, message } = useSelector((state) => state.members);
@@ -129,7 +130,10 @@ const MembersCreate = () => {
 
   useEffect(() => {
     if (signupSuccess) {
-      history.push('/home/login');
+      setTimeout(() => {
+        history.push('/home/login');
+      }, 2000);
+      setSignupModal(!signupModal);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signupSuccess]);
@@ -145,6 +149,13 @@ const MembersCreate = () => {
   if (location.pathname.includes('/home/signup')) {
     return (
       <section className={styles.signupContainer}>
+        <Modal
+          onClose={() => setSignupModal(!signupModal)}
+          isOpen={signupModal}
+          title={'Successfully created'}
+          success
+          testid={'success-modal'}
+        />
         <Aside />
         <div className={styles.signup}>
           <div className={styles.box} data-testid={'signup-container'}>
