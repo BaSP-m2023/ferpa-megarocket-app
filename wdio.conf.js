@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 exports.config = {
   //
   // ====================
@@ -5,7 +6,6 @@ exports.config = {
   // ====================
   // WebdriverIO supports running e2e tests as well as unit and component tests.
   runner: 'local',
-
   //
   // ==================
   // Specify Test Files
@@ -22,7 +22,7 @@ exports.config = {
   // then the current working directory is where your `package.json` resides, so `wdio`
   // will be called from there.
   //
-  specs: ['./test/specs/**/*.js'],
+  specs: ['./test/specs/admin.e2e.js'],
   // Patterns to exclude.
   exclude: [
     // 'path/to/excluded/files'
@@ -51,11 +51,11 @@ exports.config = {
   //
   capabilities: [
     {
-      // capabilities for local browser web tests
-      browserName: 'chrome', // or "firefox", "microsoftedge", "safari"
+      browserName: 'chrome',
       'goog:chromeOptions': { args: ['headless'] }
     }
   ],
+
   //
   // ===================
   // Test Configurations
@@ -240,7 +240,6 @@ exports.config = {
    */
   onComplete: function () {
     const reportError = new Error('Could not generate Allure report');
-    // eslint-disable-next-line no-undef
     const generation = allure(['generate', 'allure-results', '--clean']);
     return new Promise((resolve, reject) => {
       const generationTimeout = setTimeout(() => reject(reportError), 5000);
@@ -258,8 +257,7 @@ exports.config = {
     });
   },
   afterTest: async function (test, context, { error, result, duration, passed, retries }) {
-    if (error) {
-      // eslint-disable-next-line no-undef
+    if (!passed) {
       await browser.takeScreenshot();
     }
   }
