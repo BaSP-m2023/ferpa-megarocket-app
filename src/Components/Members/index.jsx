@@ -96,7 +96,7 @@ function Members() {
                   <td className={styles.td}>{item.email}</td>
                   <td className={styles.td}>{item.phone}</td>
                   <td className={styles.tdBtn}>
-                    <Link to={`members/edit/${item._id}`}>
+                    <Link to={`members/form/${item._id}`}>
                       <Button variant={'edit'} testid={'edit-btn'} />
                     </Link>
                   </td>

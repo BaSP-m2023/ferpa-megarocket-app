@@ -114,7 +114,8 @@ const MembersEdit = () => {
 
   useEffect(() => {
     dispatch(getMembers());
-    const memberToUpdate = data.find((member) => member._id === user._id);
+    const memberToUpdate = data.find((member) => member._id === id);
+    console.log(user);
     setMember({
       firstName: memberToUpdate?.firstName,
       lastName: memberToUpdate?.lastName,
