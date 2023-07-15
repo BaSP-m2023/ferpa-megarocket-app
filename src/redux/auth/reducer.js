@@ -12,6 +12,11 @@ const INITIAL_STATE = {
 
 const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case actionConstants.RESET_ERROR:
+      return {
+        message: '',
+        error: false
+      };
     case actionConstants.GET_AUTH_PENDING:
       return {
         ...state,

@@ -31,7 +31,6 @@ export const login = (credentials) => {
       } = await firebaseResponse.user.getIdTokenResult();
       dispatch(loginSuccess({ role, token }));
     } catch (error) {
-      console.log(error);
       if (error.code === 'auth/invalid-email' || error.code === 'auth/user-not-found') {
         dispatch(loginError(`Email doesn't exists`));
       }

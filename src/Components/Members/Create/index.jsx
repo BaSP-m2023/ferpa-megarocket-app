@@ -8,6 +8,7 @@ import Modal from 'Components/Shared/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { createMember } from 'redux/members/thunks';
 import { signUpMember } from 'redux/auth/thunks';
+import { resetError } from 'redux/auth/action';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -113,6 +114,11 @@ const MembersCreate = () => {
     resolver: joiResolver(schema),
     defaultValues: { isActive: false }
   });
+
+  useEffect(() => {
+    dispatch(resetError());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (success && location.pathname.includes('/admin/members/form')) {

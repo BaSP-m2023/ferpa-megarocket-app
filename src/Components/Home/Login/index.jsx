@@ -7,6 +7,7 @@ import Button from 'Components/Shared/Button';
 import Aside from '../../Shared/Aside';
 import { login } from 'redux/auth/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import { resetError } from 'redux/auth/action';
 
 function Login() {
   const dispatch = useDispatch();
@@ -34,6 +35,11 @@ function Login() {
   const handleLogin = (data) => {
     dispatch(login(data));
   };
+
+  useEffect(() => {
+    dispatch(resetError());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <section className={styles.container}>
