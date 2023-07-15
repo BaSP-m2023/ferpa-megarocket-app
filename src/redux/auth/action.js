@@ -97,3 +97,9 @@ export const checkError = (error) => {
     payload: error
   };
 };
+
+export const resetError = () => {
+  return {
+    type: actionConstants.RESET_ERROR
+  };
+};

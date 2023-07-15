@@ -48,7 +48,7 @@
 }
 
 .inputs {
-  margin-top: 20%;
+  margin-top: 10%;
   margin-bottom: 10%;
 }
 
@@ -59,4 +59,26 @@
 
 .fieldset img {
   margin-right: 20px;
+}
+
+.error {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  min-height: 25px;
+  padding-left: 5px;
+  color: rgb(255, 255, 255);
+  background-color: #F23F42;
+  border-radius: 6px;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.errorHidden {
+  margin: 0;
+  visibility: hidden;
+}
+
+.error img {
+  margin-right: 10px;
 }
