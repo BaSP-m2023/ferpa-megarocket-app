@@ -5,7 +5,7 @@ import Modal from 'Components/Shared/Modal';
 import { useState, useEffect } from 'react';
 import { deleteActivity } from 'redux/activities/thunks';
 import { getClasses, deleteClass } from 'redux/classes/thunks';
-import { getSubscriptions, deleteSubscriptions } from 'redux/subscriptions/thunks';
+import { getSubscriptions, deleteSingleSubscription } from 'redux/subscriptions/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Table = () => {
@@ -24,16 +24,15 @@ const Table = () => {
       setDeleteModal();
     }, 2000);
   };
-
   const deleteClassSub = (classes, activityId, subscriptions) => {
     classes.forEach((clas) => {
-      if (clas.activityId === activityId) {
-        dispatch(deleteClass(clas._id));
+      if (clas.activityId._id === activityId) {
         subscriptions.forEach((sub) => {
-          if (sub.classId === clas._id) {
-            deleteSubscriptions(dispatch, sub._id);
+          if (sub.classId._id === clas._id) {
+            deleteSingleSubscription(dispatch, sub._id);
           }
         });
+        dispatch(deleteClass(clas._id));
       }
     });
   };
@@ -62,8 +61,8 @@ const Table = () => {
           text={'Delete'}
           variant={'delete'}
           clickAction={() => {
-            deleteActivity(dispatch, currentID);
             deleteClassSub(classes, currentID, subs);
+            deleteActivity(dispatch, currentID);
           }}
           testid={'delete-btn'}
         />

@@ -82,7 +82,6 @@ const Form = () => {
   }, [name, description, isActive, reset]);
 
   const onSubmit = async (data) => {
-    console.log(data);
     if (id) {
       await putActivity(dispatch, id, data);
     } else {

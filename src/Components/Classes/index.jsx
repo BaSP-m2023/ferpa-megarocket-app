@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import Modal from 'Components/Shared/Modal';
 import styles from './classes.module.css';
-import Button from '../Shared/Button/index';
+import Button from 'Components/Shared/Button/index';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { getClasses, deleteClass } from '../../redux/classes/thunks';
+import { getClasses, deleteClass } from 'redux/classes/thunks';
+import { getSubscriptions, deleteSingleSubscription } from 'redux/subscriptions/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import Loader from 'Components/Shared/Loader';
 
@@ -16,7 +17,7 @@ const Classes = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const location = useLocation();
-
+  const { subs } = useSelector((state) => state.subscriptions);
   const { classes, isLoading, error, serverMessage, success } = useSelector(
     (state) => state.classes
   );
@@ -26,6 +27,13 @@ const Classes = () => {
     if (success) {
       setShowDeleteModal(false);
     }
+  };
+  const deleteSubClass = (subs, classId) => {
+    subs.forEach((sub) => {
+      if (sub.classId._id === classId) {
+        deleteSingleSubscription(dispatch, sub._id);
+      }
+    });
   };
 
   const check = () => {
@@ -51,6 +59,7 @@ const Classes = () => {
 
   useEffect(() => {
     dispatch(getClasses());
+    getSubscriptions(dispatch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -120,6 +129,7 @@ const Classes = () => {
             type={'button'}
             variant={'delete'}
             clickAction={() => {
+              deleteSubClass(subs, currentId);
               deleteSingleClass(currentId);
             }}
             testid={'delete-btn'}
