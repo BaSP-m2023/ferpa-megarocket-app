@@ -224,7 +224,11 @@ const Form = () => {
         onSubmit={handleSubmit(id ? handleUpdate : handleSubmiting)}
         data-testid={'admin-editform'}
       >
-        <h2 className={styles.title}>{id ? 'Edit Admin' : 'Add Admin'}</h2>
+        {location.pathname.includes('admin/form') ? (
+          <h2 className={styles.title}>Edit Profile</h2>
+        ) : (
+          <h2 className={styles.title}>{id ? 'Edit Admin' : 'Add Admin'}</h2>
+        )}
         <div className={styles.columns}>
           <div className={styles.column}>
             <div className={styles.inputGroup}>

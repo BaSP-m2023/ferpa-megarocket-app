@@ -1,25 +1,25 @@
 .btn {
   margin: 0 5px;
   padding: 2px 10px 0px 10px;
-  min-width: 90px;
+  min-width: 150px;
   min-height: 50px;
-  font-size: 16px;
-  border-radius: 5px;
+  font-size: 20px;
+  border-radius: 15px;
   font-weight: bold;
   text-align: center;
   cursor: pointer;
 }
 
 .delete {
-  background-color: #a30000;
-  border: 1.5px solid #ffffff;
+  background-color: #cd3133;
+  border: none;
   color: #ffffff;
 }
 
 .delete:hover {
   background-color: #ffffff;
-  border: 1.5px solid #a30000;
-  color: #a30000;
+  border: 1.5px solid #cd3133;
+  color: #cd3133;
 }
 
 .deleteIcon {
@@ -28,6 +28,7 @@
   background-repeat: no-repeat;
   background-color: transparent;
   border: none;
+  border-radius: 0;
   font-size: 0;
   min-height: 30px;
   min-width: 30px;
@@ -52,6 +53,7 @@
   background-repeat: no-repeat;
   background-color: transparent;
   border: none;
+  border-radius: 0;
   font-size: 0;
   min-height: 30px;
   min-width: 30px;
@@ -69,25 +71,25 @@
 }
 
 .add {
-  background-color: #46a37c;
-  border: 1.5px solid #ffffff;
+  background-color: #49A37B;
+  border: none;
   color: #ffffff;
 }
 
 .add:hover {
   background-color: #ffffff;
-  border: 1.5px solid #46a37c;
-  color: #46a37c;
+  border: 1.5px solid #49A37B;
+  color: #49A37B;
 }
 
 .white {
   background-color: #ffffff;
-  border: 1.5px solid #000000;
-  color: #000000;
+  border: 2px solid #373867;
+  color: #373867;
 }
 
 .white:hover {
-  background-color: #000000;
-  border: 1.5px solid #ffffff;
+  background-color: #373867;
+  border: 2px solid #ffffff;
   color: #ffffff;
 }

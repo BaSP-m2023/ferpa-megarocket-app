@@ -74,8 +74,7 @@ const MembersCreate = () => {
     password: Joi.string()
       .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{7,}$/)
       .messages({
-        'string.pattern.base':
-          'Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 7 characters long'
+        'string.pattern.base': 'Password too weak. Example: pAssword1'
       })
   });
 
@@ -275,11 +274,15 @@ const MembersCreate = () => {
                   </div>
                 </div>
               </div>
-              <p className={!signupError ? `${styles.errorHidden}` : `${styles.error}`}>
+              <p
+                className={
+                  !signupError ? `${styles.error} ${styles.errorHidden}` : `${styles.error}`
+                }
+              >
                 <img src="../../../assets/images/warning.svg" alt="warning" /> {signupMessage}
               </p>
               <div className={styles.signupButton}>
-                <Button text={'Add'} variant={'add'} submitting testid={'add-btn'} />
+                <Button text={'Sign Up'} variant={'add'} submitting testid={'add-btn'} />
               </div>
             </form>
           </div>
@@ -404,13 +407,16 @@ const MembersCreate = () => {
                 />
               </div>
               <div className={styles.checkboxField}>
-                <label>Is Active?</label>
-                <input
-                  className={styles.checkbox}
-                  name={'isActive'}
-                  type="checkbox"
-                  {...register('isActive')}
-                />
+                <label>Active / Inactive</label>
+                <label className={styles.switch}>
+                  <input
+                    className={styles.checkbox}
+                    name={'isActive'}
+                    type="checkbox"
+                    {...register('isActive')}
+                  />
+                  <span className={`${styles.slider} ${styles.round}`}></span>
+                </label>
               </div>
             </div>
           </div>
