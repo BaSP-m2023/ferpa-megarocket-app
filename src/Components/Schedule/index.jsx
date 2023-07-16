@@ -25,6 +25,7 @@ const Schedule = () => {
   const [successModal, setSuccessModal] = useState(false);
   const [trainerModal, setTrainerModal] = useState(false);
   const [memberActiveModal, setMemberActiveModal] = useState(false);
+  const [selectOption, setSelectOption] = useState('my-classes');
 
   const dispatch = useDispatch();
 
@@ -127,7 +128,21 @@ const Schedule = () => {
         </>
       );
     }
-    if (role === 'TRAINER' && trainersClass) {
+    if (role === 'TRAINER' && trainersClass && selectOption === 'my-classes') {
+      return (
+        <td
+          key={`${day}-${hour}`}
+          className={styles.whiteItem}
+          onClick={() => {
+            setClassSelected(classToShow);
+            setTrainerModal(!trainerModal);
+          }}
+        >
+          {classToShow?.activityId?.name}
+        </td>
+      );
+    }
+    if (role === 'TRAINER' && classToShow && selectOption === 'all-classes') {
       return (
         <td
           key={`${day}-${hour}`}
@@ -257,9 +272,14 @@ const Schedule = () => {
       {!isPending ? (
         <>
           {role === 'TRAINER' && (
-            <select className={styles.select}>
-              <option>My classes</option>
-              <option>All classes</option>
+            <select
+              className={styles.select}
+              onChange={(e) => {
+                setSelectOption(e.target.value);
+              }}
+            >
+              <option value={'my-classes'}>My classes</option>
+              <option value={'all-classes'}>All classes</option>
             </select>
           )}
           <table className={styles.table} data-testid={'schedule-container'}>
