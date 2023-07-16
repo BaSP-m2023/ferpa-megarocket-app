@@ -20,10 +20,10 @@ const Trainers = () => {
 
   const deleteTrainerClass = (classes, trainerId, subscriptions) => {
     classes.forEach((clas) => {
-      if (clas.trainerId === trainerId) {
+      if (clas.trainerId._id === trainerId) {
         dispatch(deleteClass(clas._id));
         subscriptions.forEach((sub) => {
-          if (sub.classId === clas._id) {
+          if (sub.classId._id === clas._id) {
             deleteSubscriptions(dispatch, sub._id);
           }
         });
@@ -86,8 +86,8 @@ const Trainers = () => {
           text={'Delete'}
           variant={'delete'}
           clickAction={() => {
-            deleteTrainer(dispatch, currentId);
             deleteTrainerClass(classes, currentId, subs);
+            deleteTrainer(dispatch, currentId);
             setDeleteModal(!deleteModal);
             setSuccessModal(!successModal);
           }}
