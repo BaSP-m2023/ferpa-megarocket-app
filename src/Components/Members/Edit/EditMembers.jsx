@@ -176,7 +176,9 @@ const MembersEdit = () => {
       />
       <div className={styles.box} data-testid={'member-editform-container'}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-          <h2 className={styles.formTitle}>EDIT MEMBER</h2>
+          <h2 className={styles.formTitle}>
+            {location.pathname.includes('member/form') ? 'Edit Profile' : 'Edit Member'}
+          </h2>
           <div className={styles.row}>
             <div className={styles.column}>
               <div className={styles.inputBox}>
@@ -269,15 +271,18 @@ const MembersEdit = () => {
                   error={errors.membership?.message}
                 />
               </div>
-              {location.pathname.includes('admins/home/members') ? (
+              {location.pathname.includes('admin/members/form') ? (
                 <div className={styles.checkboxField}>
-                  <label>Is Active?</label>
-                  <input
-                    className={styles.checkbox}
-                    name={'isActive'}
-                    type="checkbox"
-                    {...register('isActive')}
-                  />
+                  <label>Active / Inactive</label>
+                  <label className={styles.switch}>
+                    <input
+                      className={styles.checkbox}
+                      name={'isActive'}
+                      type="checkbox"
+                      {...register('isActive')}
+                    />
+                    <span className={`${styles.slider} ${styles.round}`}></span>
+                  </label>
                 </div>
               ) : (
                 ''

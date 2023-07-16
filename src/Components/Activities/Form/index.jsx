@@ -95,7 +95,11 @@ const Form = () => {
   return (
     <div className={styles.container}>
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} error />
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit(onSubmit)}
+        data-testid={'activities-editform'}
+      >
         <h2 className={styles.formTitle}>{!id ? 'ADD ACTIVITY' : 'EDIT ACTIVITY'}</h2>
         {isPending ? (
           <Loader />
@@ -121,20 +125,22 @@ const Form = () => {
               />
             </div>
             <div className={styles.checkboxField}>
-              <label>Is Active?</label>
-              <input
-                className={styles.checkbox}
-                name={'isActive'}
-                type="checkbox"
-                {...register('isActive')}
-              />
-              {errors.isActive && <span>{errors.isActive.message}</span>}
+              <label>Active / Inactive</label>
+              <label className={styles.switch}>
+                <input
+                  className={styles.checkbox}
+                  name={'isActive'}
+                  type="checkbox"
+                  {...register('isActive')}
+                />
+                <span className={`${styles.slider} ${styles.round}`}></span>
+              </label>
             </div>
             <div className={styles.formBtns}>
               <Link to="/admin/activities">
-                <Button text={'Cancel'} variant={'white'} />
+                <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
               </Link>
-              <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting />
+              <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting testid={'add-btn'} />
             </div>
           </div>
         )}
