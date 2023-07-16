@@ -121,14 +121,16 @@ const Form = () => {
               />
             </div>
             <div className={styles.checkboxField}>
-              <label>Is Active?</label>
-              <input
-                className={styles.checkbox}
-                name={'isActive'}
-                type="checkbox"
-                {...register('isActive')}
-              />
-              {errors.isActive && <span>{errors.isActive.message}</span>}
+              <label>Active / Inactive</label>
+              <label className={styles.switch}>
+                <input
+                  className={styles.checkbox}
+                  name={'isActive'}
+                  type="checkbox"
+                  {...register('isActive')}
+                />
+                <span className={`${styles.slider} ${styles.round}`}></span>
+              </label>
             </div>
             <div className={styles.formBtns}>
               <Link to="/admin/activities">

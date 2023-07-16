@@ -71,6 +71,10 @@
   padding-top: 1vh;
 }
 
+.tr {
+  height: 55px;
+}
+
 .fetchError {
   color: white;
 }

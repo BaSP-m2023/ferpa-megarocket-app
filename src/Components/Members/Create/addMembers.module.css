@@ -47,7 +47,7 @@
 .inAdminBox {
   display: flex;
   justify-content: center;
-  width: 40vw;
+  width: 50%;
   border-radius: 1vw;
   margin: 2vw;
   background-color: rgba(55, 56, 103, 0.9);
@@ -60,6 +60,7 @@
   align-items: center;
   justify-content: space-between;
   height: 20%;
+  width: 95%;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -71,10 +72,12 @@
   padding: 20px;
   display: flex;
   flex-flow: column;
+  width: 100%;
 }
 
 .formTitle {
   color: white;
+  font-size: 30px;
 }
 
 .inputBox {
@@ -99,7 +102,7 @@
 .formBtns {
   display: flex;
   width: 20vw;
-  justify-content: space-between;
+  justify-content: center;
   margin: 2vw 0;
 }
 
@@ -115,6 +118,7 @@
 
 .row {
   display: flex;
+  width: 100%;
 }
 
 .error {
@@ -143,7 +147,7 @@
 .switch {
   position: relative;
   display: inline-block;
-  width: 300px;
+  width: 360px;
   height: 34px;
 }
 
@@ -186,9 +190,9 @@
 }
 
 .checkbox:checked + .slider:before {
-  -webkit-transform: translateX(250px);
-  -ms-transform: translateX(250px);
-  transform: translateX(260px);
+  -webkit-transform: translateX(320px);
+  -ms-transform: translateX(320px);
+  transform: translateX(320px);
 }
 
 .slider.round {

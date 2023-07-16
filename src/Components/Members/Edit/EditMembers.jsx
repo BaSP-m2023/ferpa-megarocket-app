@@ -269,7 +269,7 @@ const MembersEdit = () => {
                   error={errors.membership?.message}
                 />
               </div>
-              {location.pathname.includes('admins/home/members') ? (
+              {location.pathname.includes('admin/members/form') ? (
                 <div className={styles.checkboxField}>
                   <label>Active / Inactive</label>
                   <label className={styles.switch}>
