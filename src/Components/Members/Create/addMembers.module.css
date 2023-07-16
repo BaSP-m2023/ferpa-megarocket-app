@@ -52,7 +52,6 @@
   margin: 2vw;
   background-color: rgba(55, 56, 103, 0.9);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  height: 100vh;
 }
 
 .form {
@@ -85,6 +84,8 @@
 .checkboxField {
   align-self: flex-start;
   margin-top: 0.5vw;
+  display: flex;
+  flex-direction: column;
 }
 
 .checkboxField label {
@@ -93,12 +94,6 @@
   font-size: 20px;
   line-height: 29px;
   margin-right: 20px;
-}
-
-.checkbox {
-  accent-color: white;
-  width: 18px;
-  height: 18px;
 }
 
 .formBtns {
@@ -134,4 +129,63 @@
 
 .errorHidden {
   visibility: hidden;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 300px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.checkbox:checked + .slider {
+  background-color: #49A37B;
+}
+
+.checkbox:focus + .slider {
+  box-shadow: 0 0 1px #49A37B;
+}
+
+.checkbox:checked + .slider:before {
+  -webkit-transform: translateX(250px);
+  -ms-transform: translateX(250px);
+  transform: translateX(260px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }

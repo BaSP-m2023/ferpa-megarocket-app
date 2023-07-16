@@ -404,13 +404,16 @@ const MembersCreate = () => {
                 />
               </div>
               <div className={styles.checkboxField}>
-                <label>Is Active?</label>
-                <input
-                  className={styles.checkbox}
-                  name={'isActive'}
-                  type="checkbox"
-                  {...register('isActive')}
-                />
+                <label>Active / Inactive</label>
+                <label className={styles.switch}>
+                  <input
+                    className={styles.checkbox}
+                    name={'isActive'}
+                    type="checkbox"
+                    {...register('isActive')}
+                  />
+                  <span className={`${styles.slider} ${styles.round}`}></span>
+                </label>
               </div>
             </div>
           </div>
