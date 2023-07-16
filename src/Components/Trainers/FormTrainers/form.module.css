@@ -84,5 +84,8 @@
   flex-direction: column;
   align-self: center;
   width: 100%;
+}
+
+.wideSelect {
   padding: 0 20px;
 }
