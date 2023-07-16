@@ -52,7 +52,7 @@ const Profile = () => {
         </div>
         <div>
           <Link to={'/change_pass'}>
-            <Button text={'Change Password'} testid={'change-pass-btn'} />
+            <Button variant={'white'} text={'Change Password'} testid={'change-pass-btn'} />
           </Link>
           <Link to={`/admin/form/${user?._id}`}>
             <Button variant={'add'} text={'Edit Profile'} testid={'edit-btn'} />

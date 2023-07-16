@@ -247,27 +247,36 @@ const TrainerAddForm = () => {
                 )}
               </div>
             </div>
-            <Select
-              className={styles.select}
-              defaultValue={
-                trainer
-                  ? trainer.activities.map((activity) => ({
-                      value: activity._id,
-                      label: activity.name
-                    }))
-                  : trainer
-              }
-              value={
-                activity
-                  ? transformedData.find((singleActivity) => singleActivity.value === activity)
-                  : activity
-              }
-              isMulti
-              options={transformedData}
-              onChange={(event) => {
-                onActivityChange(event.map((activity) => activity.value));
-              }}
-            />
+            <div className={styles.select}>
+              <label className={styles.label}>Activities</label>
+              <Select
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    borderRadius: '30px',
+                    height: '50px'
+                  })
+                }}
+                defaultValue={
+                  trainer
+                    ? trainer.activities.map((activity) => ({
+                        value: activity._id,
+                        label: activity.name
+                      }))
+                    : trainer
+                }
+                value={
+                  activity
+                    ? transformedData.find((singleActivity) => singleActivity.value === activity)
+                    : activity
+                }
+                isMulti
+                options={transformedData}
+                onChange={(event) => {
+                  onActivityChange(event.map((activity) => activity.value));
+                }}
+              />
+            </div>
           </div>
           <div className={styles.buttons}>
             <Link to={cancelButtonDestination}>

@@ -35,6 +35,8 @@
 }
 
 .field {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 20px;
   width: 100%;
 }
@@ -62,13 +64,24 @@
 
 .column {
   width: 100%;
-  padding: 20px;
+  padding: 0 20px;
   display: flex;
   flex-flow: column;
 }
 
+.label {
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  font-size: 20px;
+  line-height: 29px;
+  margin-left: 8px;
+  margin-bottom: 8px;
+}
+
 .select {
-  width: 94%;
-  margin: auto;
-  color: #373867;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  width: 100%;
+  padding: 0 20px;
 }

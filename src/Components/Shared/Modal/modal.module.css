@@ -62,7 +62,7 @@
 }
 
 .modalError {
-  background-color: #a30000;
+  background-color: #cd3133;
   border: 0.1vw solid white;
   min-height: 5vw;
   min-width: 20vw;
@@ -78,7 +78,7 @@
 }
 
 .modalWarn {
-  color: #a30000;
+  color: #cd3133;
 }
 
 .modalText{
@@ -100,5 +100,5 @@
   cursor: pointer;
 }
 .modalCloseBtn:hover {
-  color: red; 
+  color: #cd3133;
 }

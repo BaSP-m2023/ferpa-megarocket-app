@@ -8,6 +8,7 @@ import Aside from '../../Shared/Aside';
 import { login } from 'redux/auth/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetError } from 'redux/auth/action';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Login() {
   const dispatch = useDispatch();
@@ -51,6 +52,9 @@ function Login() {
               Login
             </h2>
           </div>
+          <p className={!error ? `${styles.errorHidden}` : `${styles.error}`}>
+            <img src="../../../assets/images/warning.svg" alt="warning" /> {message}
+          </p>
           <form
             onSubmit={handleSubmit(handleLogin)}
             className={styles.form}
@@ -75,12 +79,17 @@ function Login() {
                   placeholder={'Password:'}
                 />
               </div>
-              <p className={!error ? `${styles.errorHidden}` : `${styles.error}`}>
-                <img src="../../../assets/images/warning.svg" alt="warning" /> {message}
-              </p>
             </div>
             <Button text={'Continue'} variant={'add'} submitting testid={'continue-btn'} />
           </form>
+          <p>
+            {`Don't have an account? `}
+            <span>
+              <Link to="home/signup" className={styles.signup}>
+                Sign up now!
+              </Link>
+            </span>
+          </p>
         </div>
       </div>
     </section>
