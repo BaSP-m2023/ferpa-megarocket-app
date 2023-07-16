@@ -57,9 +57,10 @@
 
 .titles {
   text-align: start;
-  border-bottom: 1px solid white;
+  border-bottom: 3px solid white;
   color: white;
-  font-size: 25px;
+  font-size: 22px;
+  padding-bottom: 1vw;
 }
 
 .list {

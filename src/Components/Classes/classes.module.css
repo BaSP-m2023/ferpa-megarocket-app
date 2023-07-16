@@ -100,11 +100,10 @@
 }
 
 .border {
-  border-bottom: solid 4px white;
+  border-bottom: solid 3px white;
 }
 
 .small {
-  width: 10%;
   text-align: left;
   padding-bottom: 1vw;
 }
@@ -116,7 +115,7 @@
 }
 
 .large {
-  width: 30%;
+  width: 20%;
   text-align: left;
   padding-bottom: 1vw;
 }
