@@ -274,7 +274,11 @@ const MembersCreate = () => {
                   </div>
                 </div>
               </div>
-              <p className={!signupError ? `${styles.errorHidden}` : `${styles.error}`}>
+              <p
+                className={
+                  !signupError ? `${styles.error} ${styles.errorHidden}` : `${styles.error}`
+                }
+              >
                 <img src="../../../assets/images/warning.svg" alt="warning" /> {signupMessage}
               </p>
               <div className={styles.signupButton}>

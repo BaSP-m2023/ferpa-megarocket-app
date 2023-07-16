@@ -59,6 +59,10 @@
   margin-right: 20px;
 }
 
+.fieldset p {
+  display: none;
+}
+
 .signup {
   text-decoration: none;
   color: #49A37B;
