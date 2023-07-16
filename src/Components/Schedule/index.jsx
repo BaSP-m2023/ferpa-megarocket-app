@@ -80,7 +80,7 @@ const Schedule = () => {
     if (role === 'MEMBER' && classToShow && user?.isActive) {
       return (
         <>
-          {classToShow?.subscribers.length !== 1 ? (
+          {classToShow?.subscribers.length !== 20 ? (
             <td
               key={`${day}-${hour}`}
               className={styles.whiteItem}
