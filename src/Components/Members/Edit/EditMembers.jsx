@@ -213,7 +213,7 @@ const MembersEdit = () => {
                 <Input
                   labelText={'Phone'}
                   type={'text'}
-                  placeholder={'ex: 096513178'}
+                  placeholder={'Phone Number'}
                   nameValue={'phone'}
                   register={register}
                   error={errors.phone?.message}
@@ -223,7 +223,7 @@ const MembersEdit = () => {
                 <Input
                   labelText={'Email'}
                   type={'text'}
-                  placeholder={'robertomariaoverdrive@soybostero.edu'}
+                  placeholder={'example@example.com'}
                   nameValue={'email'}
                   register={register}
                   error={errors.email?.message}

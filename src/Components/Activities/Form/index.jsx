@@ -122,7 +122,7 @@ const Form = () => {
               />
             </div>
             <div className={styles.checkboxField}>
-              <label>Active / Inactive</label>
+              <label>Inactive / Active</label>
               <label className={styles.switch}>
                 <input
                   className={styles.checkbox}
