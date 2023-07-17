@@ -172,10 +172,7 @@ const Form = () => {
   const getClassById = async () => {
     try {
       const classWithId = classes.find((element) => element._id === id);
-      /*       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`);
-      const data = await res.json(); */
       setSingleClass(classWithId);
-      console.log(classWithId);
       previousClass(singleClass);
     } catch (error) {
       console.error(error);

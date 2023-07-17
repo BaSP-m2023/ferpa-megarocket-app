@@ -243,6 +243,7 @@ const TrainerAddForm = () => {
                   <Input
                     register={register}
                     onChangeInput={onChange}
+                    type={'password'}
                     labelText={'Password'}
                     nameValue={'password'}
                     placeholder={'Password'}

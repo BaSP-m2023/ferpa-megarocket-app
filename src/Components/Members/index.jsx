@@ -50,7 +50,7 @@ function Members() {
       <div className={`${styles.container}`}>
         <div className={styles.list}>
           <div className={styles.header}>
-            <h2 className={styles.title}>Members</h2>W
+            <h2 className={styles.title}>Members</h2>
           </div>
           <div className={styles.loading}>{<Loader />}</div>
         </div>
@@ -106,7 +106,7 @@ function Members() {
                   <td className={styles.td}>{item.email}</td>
                   <td className={styles.td}>{item.phone}</td>
                   <td className={styles.tdBtn}>
-                    <Link to={`members/edit/${item._id}`}>
+                    <Link to={`members/form/${item._id}`}>
                       <Button variant={'edit'} testid={'edit-btn'} />
                     </Link>
                   </td>

@@ -28,7 +28,6 @@ const MembersEdit = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
   const { data, message, success, error } = useSelector((state) => state.members);
   const history = useHistory();
   const { id } = useParams();
@@ -111,10 +110,9 @@ const MembersEdit = () => {
     resolver: joiResolver(schema),
     defaultValues: member
   });
-
   useEffect(() => {
     dispatch(getMembers());
-    const memberToUpdate = data.find((member) => member._id === user._id);
+    const memberToUpdate = data.find((member) => member._id === id);
     setMember({
       firstName: memberToUpdate?.firstName,
       lastName: memberToUpdate?.lastName,
@@ -273,7 +271,7 @@ const MembersEdit = () => {
               </div>
               {location.pathname.includes('admin/members/form') ? (
                 <div className={styles.checkboxField}>
-                  <label>Active / Inactive</label>
+                  <label>Inactive / Active</label>
                   <label className={styles.switch}>
                     <input
                       className={styles.checkbox}
