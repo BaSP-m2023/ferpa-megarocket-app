@@ -91,15 +91,15 @@
   transition: .4s;
 }
 
-.checkbox:checked + .slider {
+.checkbox:checked+.slider {
   background-color: #49A37B;
 }
 
-.checkbox:focus + .slider {
+.checkbox:focus+.slider {
   box-shadow: 0 0 1px #49A37B;
 }
 
-.checkbox:checked + .slider:before {
+.checkbox:checked+.slider:before {
   -webkit-transform: translateX(320px);
   -ms-transform: translateX(320px);
   transform: translateX(320px);

@@ -89,3 +89,12 @@
 .error img {
   margin-right: 10px;
 }
+
+.spaceForError {
+  height: 5vh;
+  margin-top: 1vh;
+}
+
+.spaceForSignup {
+  margin-top: 5vh;
+}
