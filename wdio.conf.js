@@ -6,7 +6,6 @@ exports.config = {
   // ====================
   // WebdriverIO supports running e2e tests as well as unit and component tests.
   runner: 'local',
-
   //
   // ==================
   // Specify Test Files
@@ -23,7 +22,9 @@ exports.config = {
   // then the current working directory is where your `package.json` resides, so `wdio`
   // will be called from there.
   //
-  specs: ['./test/specs/**/*.js'],
+  specs: [
+    // ToDo: define location for spec files here
+  ],
   // Patterns to exclude.
   exclude: [
     // 'path/to/excluded/files'
@@ -44,7 +45,7 @@ exports.config = {
   // and 30 processes will get spawned. The property handles how many capabilities
   // from the same test should run tests.
   //
-  maxInstances: 1,
+  maxInstances: 10,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -52,11 +53,10 @@ exports.config = {
   //
   capabilities: [
     {
-      // capabilities for local browser web tests
-      browserName: 'chrome', // or "firefox", "microsoftedge", "safari"
-      'goog:chromeOptions': { args: ['headless'] }
+      browserName: 'chrome'
     }
   ],
+
   //
   // ===================
   // Test Configurations
@@ -88,7 +88,7 @@ exports.config = {
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
   // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
   // gets prepended directly.
-  baseUrl: '(http://localhost)',
+  baseUrl: 'http://localhost',
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 10000,
@@ -126,10 +126,7 @@ exports.config = {
   // Test reporter for stdout.
   // The only one supported by default is 'dot'
   // see also: https://webdriver.io/docs/dot-reporter
-  reporters: [
-    'spec',
-    ['allure', { outputDir: 'allure-results', disableWebdriverScreenshotsReporting: true }]
-  ],
+  reporters: ['spec', ['allure', { outputDir: 'allure-results' }]],
 
   //
   // Options to be passed to Jasmine.
@@ -239,26 +236,8 @@ exports.config = {
    * @param {boolean} result.passed    true if test has passed, otherwise false
    * @param {object}  result.retries   informations to spec related retries, e.g. `{ attempts: 0, limit: 0 }`
    */
-  onComplete: function () {
-    const reportError = new Error('Could not generate Allure report');
-    const generation = allure(['generate', 'allure-results', '--clean']);
-    return new Promise((resolve, reject) => {
-      const generationTimeout = setTimeout(() => reject(reportError), 5000);
-
-      generation.on('exit', function (exitCode) {
-        clearTimeout(generationTimeout);
-
-        if (exitCode !== 0) {
-          return reject(reportError);
-        }
-
-        console.log('Allure report successfully generated');
-        resolve();
-      });
-    });
-  },
   afterTest: async function (test, context, { error, result, duration, passed, retries }) {
-    if (!error) {
+    if (!passed) {
       await browser.takeScreenshot();
     }
   }
