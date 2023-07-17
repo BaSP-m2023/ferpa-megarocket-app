@@ -251,7 +251,7 @@ const Form = () => {
       </div>
     );
   }
-  console.log(updatedActivity.length);
+
   return (
     <div className={styles.container}>
       <div className={styles.transparetnBlueForm}>

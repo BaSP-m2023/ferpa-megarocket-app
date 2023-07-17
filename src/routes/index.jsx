@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
+import { Switch, Route, BrowserRouter as Router, Redirect, useLocation } from 'react-router-dom';
 import PrivateRoute from './privateRoute';
 import { useDispatch } from 'react-redux';
 import { tokenListener } from '../helper/firebase';
@@ -17,6 +17,7 @@ const HomeRoutes = lazy(() => import('./home'));
 const ChangePass = lazy(() => import('Components/Home/ChangePass'));
 
 const Routes = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const token = sessionStorage.getItem('token');
 
@@ -37,7 +38,9 @@ const Routes = () => {
       <Header />
       <Suspense
         fallback={
-          <div className={styles.fallback}>
+          <div
+            className={location.pathname.includes('/home') ? styles.fallbackHome : styles.fallback}
+          >
             <Loader />
           </div>
         }
