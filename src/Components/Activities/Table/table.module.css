@@ -33,26 +33,23 @@
 .thName {
   text-align: start;
   width: 15vw;
-  padding-bottom: 1vh;
-  padding-top: 1vh;
+  padding: 1vw 1.5vw;
 }
 
 .thDes {
   text-align: start;
   width: 45vw;
-  padding-bottom: 1vh;
-  padding-top: 1vh;
+  padding: 1vw 1.5vw;
 }
 
 .thStatus {
   text-align: start;
   width: 10vw;
-  padding-bottom: 1vh;
-  padding-top: 1vh;
+  padding: 1vw 1.5vw;
 }
 
 .tdBtn {
   width: 4vw;
-  padding-bottom: 1vh;
-  padding-top: 1vh;
+  padding-bottom: 1vw;
+  text-align: end;
 }

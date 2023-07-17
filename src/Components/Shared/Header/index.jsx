@@ -7,16 +7,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { asideOnThunk, asideOffThunk } from 'redux/aside/thunks';
 
 function Header() {
+  const role = sessionStorage.getItem('role');
   const { user } = useSelector((state) => state.auth);
   const { isOn } = useSelector((state) => state.aside);
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
+
   const currentPath = location.pathname;
   const homePath = '/home';
   const loginPath = '/home/login';
   const signupPath = '/home/signup';
-  const role = sessionStorage.getItem('role');
+
   const handleLogout = async () => {
     await dispatch(logout());
     history.push('/home');
@@ -49,9 +51,21 @@ function Header() {
             alt="IsoLogo"
           ></img>
         </div>
-        {role ? (
-          <div className={styles.rightSide}>
+        {role && role !== 'SUPER-ADMIN' && (
+          <div className={styles.rightSide} data-testid={'logout-container'}>
             <span className={styles.title}>Hi, {user?.firstName}</span>
+            <img
+              onClick={handleLogout}
+              className={styles.logout}
+              src="../../assets/images/logout-icon.svg"
+              alt="log out icon"
+              data-testid={'logout-logo'}
+            ></img>
+          </div>
+        )}
+        {role === 'SUPER-ADMIN' && (
+          <div className={styles.rightSide}>
+            <span className={styles.title}>Hi, Super Admin</span>
             <img
               onClick={handleLogout}
               className={styles.logout}
@@ -59,8 +73,6 @@ function Header() {
               alt="log out icon"
             ></img>
           </div>
-        ) : (
-          ''
         )}
       </div>
       {currentPath === homePath || currentPath === loginPath || currentPath === signupPath ? (

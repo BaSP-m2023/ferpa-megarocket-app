@@ -30,16 +30,20 @@ export const Select = ({
         onFocus={onFocus}
         onBlur={onBlur}
       >
-        <option hidden>{placeholder}</option>
+        <option selected disabled>
+          {placeholder}
+        </option>
         {options.map((item) => {
           return (
-            <option key={item._id} value={item.value}>
+            <option key={item._id} value={item.value} className={styles.options}>
               {item.name}
             </option>
           );
         })}
       </select>
-      {error ? <p className={styles.error}>{error}</p> : <p className={styles.placeholder}>{}</p>}
+      <p className={error ? `${styles.error}` : `${styles.error} ${styles.hidden}`}>
+        <img src="../../../assets/images/warning.svg" alt="warning" /> {error}
+      </p>
     </>
   );
 };
@@ -73,14 +77,9 @@ export const Input = ({
         onFocus={onFocus}
         onBlur={onBlur}
       />
-      {error ? (
-        <p className={styles.error}>
-          {' '}
-          <img src="../../../assets/images/warning.svg" alt="warning" /> {error}
-        </p>
-      ) : (
-        <p className={styles.placeholder}>{}</p>
-      )}
+      <p className={error ? `${styles.error}` : `${styles.error} ${styles.hidden}`}>
+        <img src="../../../assets/images/warning.svg" alt="warning" /> {error}
+      </p>
     </>
   );
 };
@@ -109,7 +108,9 @@ export const DatePicker = ({
         onFocus={onFocus}
         onBlur={onBlur}
       />
-      {error ? <p className={styles.error}>{error}</p> : <p className={styles.placeholder}>{}</p>}
+      <p className={error ? `${styles.error}` : `${styles.error} ${styles.hidden}`}>
+        <img src="../../../assets/images/warning.svg" alt="warning" /> {error}
+      </p>
     </>
   );
 };
@@ -144,7 +145,9 @@ export const TextArea = ({
         onFocus={onFocus}
         onBlur={onBlur}
       ></textarea>
-      {error ? <p className={styles.error}>{error}</p> : <p className={styles.placeholder}>{}</p>}
+      <p className={error ? `${styles.error}` : `${styles.error} ${styles.hidden}`}>
+        <img src="../../../assets/images/warning.svg" alt="warning" /> {error}
+      </p>
     </>
   );
 };

@@ -75,7 +75,7 @@ const Landing = () => {
           <h1 className={styles.title}>
             <span className={styles.megaColor}>Mega</span>Rocket GYM
           </h1>
-          <h3 className={styles.informationTitle}>Launch your fitness journey with MegaRocket</h3>
+          <h3>Launch your fitness journey with MegaRocket</h3>
           <div className={styles.introductionText}>
             <p className={styles.text}>
               Welcome to Megarocket SA, where we believe in creating a holistic approach to fitness.
@@ -90,7 +90,7 @@ const Landing = () => {
             </p>
             <div className={styles.joinUs}>
               <a className={styles.scrollableLink} href="#Memberships">
-                JOIN US
+                BECOME A MEMBER
               </a>
             </div>
           </div>
@@ -213,34 +213,6 @@ const Landing = () => {
       </section>
       <section className={styles.aboutUs}>
         <h2 className={styles.subTitle}>About Us</h2>
-        <p className={styles.text}>
-          After Maxs retirement, his son, Alex Strong, took over the leadership of Megarocket SA
-          gym. Alex had grown up in the gym and shared the same passion for fitness as his father.
-          He decided to keep Maxs vision alive by providing a positive and motivating environment
-          for the members of Megarocket.
-        </p>
-        <p className={styles.text}>
-          Under Alexss guidance, Megarocket SA gym has undergone a series of significant
-          improvements. New and modern facilities have been incorporated, state-of-the-art equipment
-          has been added, and a wide range of fitness classes have been introduced to cater to the
-          diverse needs of the members. Additionally, strategic partnerships have been established
-          with leading nutritionists and personal trainers to offer comprehensive wellness programs
-          for the members.
-        </p>
-        <p className={styles.text}>
-          Despite the growth and success, the gym has managed to maintain its sense of community.
-          Regular social events, group challenges, and charity initiatives are organized to foster a
-          strong bond among the members. Megarocket SA gym has become not just a place to work out
-          but a hub for like-minded individuals who support and motivate each other on their fitness
-          journeys.
-        </p>
-        <p className={styles.text}>
-          The legacy of Max Strong lives on through Megarocket SA gym, as it continues to inspire
-          and transform lives through fitness. With Alexs leadership and the dedication of the
-          staff, the gym remains committed to providing a welcoming and inclusive space for people
-          of all fitness levels to pursue their health and wellness goals.
-        </p>
-        <h3 className={styles.informationTitle}>Our thoughts</h3>
         <div className={styles.aboutUsShadow}>
           <div className={styles.aboutUsBox}>
             <img
@@ -248,7 +220,7 @@ const Landing = () => {
               src="../../assets/images/gym-about-us.jpeg"
               alt="gym workout"
             ></img>
-            <div>
+            <div className={styles.aboutText}>
               <p className={styles.text}>
                 At Megarocket SA, we understand that each persons fitness journey is unique and
                 personal. That is why our expert trainers are dedicated to providing personalized
@@ -268,10 +240,9 @@ const Landing = () => {
             </div>
           </div>
         </div>
-        <h3 className={styles.informationTitle}>We are a family</h3>
         <div className={styles.aboutUsShadow}>
           <div className={styles.aboutUsBox}>
-            <div>
+            <div className={styles.aboutText}>
               <p className={styles.text}>
                 At Megarocket SA, we pride ourselves on being more than just a gym; we are a
                 close-knit family. From the moment you step through our doors, you will feel the
@@ -304,6 +275,46 @@ const Landing = () => {
         <h2 className={styles.subTitle}>Memberships</h2>
         <div className={styles.membershipBox}>
           <div className={styles.membBox}>
+            <img
+              className={styles.membIcon}
+              src="../../assets/images/rocket-classic.svg"
+              alt="gym icon"
+            ></img>
+            <h3 className={styles.informationTitle}>Only classes membership</h3>
+            <ul>
+              <li>Free pass to the weight room</li>
+              <li>Grid visualization</li>
+            </ul>
+            <div className={styles.membIconBox}>
+              <Link to="/home/signup" className={styles.link}>
+                <p>U$S 50</p>
+              </Link>
+            </div>
+          </div>
+          <div className={styles.membBox}>
+            <img
+              className={styles.membIcon}
+              src="../../assets/images/rocket-onlyclasses.svg"
+              alt="gym icon"
+            ></img>
+            <h3 className={styles.informationTitle}>Classic Membership</h3>
+            <ul>
+              <li>Free pass to the weight room</li>
+              <li>Personalized follow up by a trainer</li>
+              <li>Grid visualization</li>
+            </ul>
+            <div className={styles.membIconBox}>
+              <Link to="/home/signup" className={styles.link}>
+                <p>U$S 100</p>
+              </Link>
+            </div>
+          </div>
+          <div className={styles.membBox}>
+            <img
+              className={styles.membIcon}
+              src="../../assets/images/rocket-black.svg"
+              alt="gym icon"
+            ></img>
             <h3 className={styles.informationTitle}>Black Membership</h3>
             <ul>
               <li>Free pass to the weight room</li>
@@ -312,48 +323,8 @@ const Landing = () => {
               <li>Grid visualization</li>
             </ul>
             <div className={styles.membIconBox}>
-              <img
-                className={styles.membIcon}
-                src="../../assets/images/rocket-black.svg"
-                alt="gym icon"
-              ></img>
               <Link to="/home/signup" className={styles.link}>
-                <p>150 $</p>
-              </Link>
-            </div>
-          </div>
-          <div className={styles.membBox}>
-            <h3 className={styles.informationTitle}>Classic Membership</h3>
-            <ul>
-              <li>Free pass to the weight room</li>
-              <li>Personalized follow up by a trainer</li>
-              <li>Grid visualization</li>
-            </ul>
-            <div className={styles.membIconBox}>
-              <img
-                className={styles.membIcon}
-                src="../../assets/images/rocket-classic.svg"
-                alt="gym icon"
-              ></img>
-              <Link to="/home/signup" className={styles.link}>
-                <p>100 $</p>
-              </Link>
-            </div>
-          </div>
-          <div className={styles.membBox}>
-            <h3 className={styles.informationTitle}>Only classes membership</h3>
-            <ul>
-              <li>Free pass to the weight room</li>
-              <li>Grid visualization</li>
-            </ul>
-            <div className={styles.membIconBox}>
-              <img
-                className={styles.membIcon}
-                src="../../assets/images/rocket-onlyclasses.svg"
-                alt="gym icon"
-              ></img>
-              <Link to="/home/signup" className={styles.link}>
-                <p>50 $ </p>
+                <p>U$S 150</p>
               </Link>
             </div>
           </div>

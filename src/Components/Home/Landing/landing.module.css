@@ -3,13 +3,13 @@
 .container {
   display: flex;
   flex-direction: column;
-  margin-left: 80px;
-  margin-right: 80px;
+  margin: 0 150px;
   width: 100%;
+  font-family: 'Roboto', sans-serif;
+  color: #373867;
 }
 
 .title{
-  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding-bottom: 20px;
   font-size: 60px;
@@ -20,20 +20,25 @@
 
 .joinUs {
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: center;
 }
 
 .joinUs a {
-  font-size: 20px;
+  font-size: 30px;
   color: white;
   text-decoration: none;
   border-radius: 15px;
-  background-color: #46a37c;
+  background-color: #373867;
   padding: 15px 60px;
 }
 
 .scrollableLink {
+  width: 100%;
+  height: 74px;
+  text-align: center;
+  margin-top: 20px;
   scroll-behavior: smooth;
 }
 
@@ -63,6 +68,7 @@
 .introduction{
   display: flex;
   flex-direction: row;
+  border-bottom: 10px solid #02004070;
   padding-top: 50px;
   padding-bottom: 50px;
   border-bottom: 2px solid black;
@@ -90,7 +96,7 @@
   font-size: 25px;
   font-weight: 600;
   line-height: 29px;
-  color: rgba(55, 56, 103, 1);
+  margin:0; 
   padding-top: 25px;
 }
 
@@ -100,6 +106,7 @@
 
 .meetUs{
   padding-bottom: 50px;
+  border-bottom: 10px solid #02004070;
   border-bottom: 2px solid black;
 }
 
@@ -134,11 +141,11 @@
 .contactUs {
   padding-bottom: 50px;
   border-bottom: 2px solid black;
+  border-bottom: 10px solid #02004070;
   position: relative;
   perspective: 1000px;
   /* Para aplicar perspectiva en el elemento */
 }
-
 
 .inputs{
   padding-top: 35px;
@@ -164,29 +171,40 @@
 
 .aboutUs {
   padding-bottom: 50px;
+  border-bottom: 10px solid #02004070;
   border-bottom: 2px solid black;
 }
 
 .aboutUsBox {
   display: flex;
   align-items: center;
+  padding: 40px;
+  border-radius: 40px;
+  background-color: #3738678f;
 }
 
 .aboutUsBox .text{
 padding-left: 20px;
-color: rgba(47, 48, 88, 1);
+color: #1a014b;
 font-weight: 200;
+}
+
+.aboutText {
+  width: 80%;
+  margin-right: 100px;
 }
 
 .aboutImg {
   height: 330px;
   width: 570px;
+  border:15px solid #373867;
   border-radius: 500px;
   border-bottom-left-radius: 0;
 }
 
 .aboutImgDos {
   height: 330px;
+  border:15px solid #373867;
   width: 570px;
   border-radius: 500px;
   border-bottom-right-radius: 0;
@@ -200,17 +218,23 @@ font-weight: 200;
   margin-bottom: 45px;
 }
 
+.membBox h3 {
+  color: #46a37c
+}
+
 .membBox {
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
   min-width: 325px;
   margin: 20px;
   padding: 10px;
   padding-top: 5%;
-  background-color: rgba(47, 48, 88, 0.2);
+  background-color: #373867;
   border-radius: 50px;
-  border: 1.5px solid rgba(47, 48, 88, 1);
+  color:white;
+  font-weight: bold;
   box-shadow: 2px 2px 4px rgba(47, 48, 88, 0.8);
   transition: transform 0.5s ease;
 }
@@ -228,7 +252,6 @@ font-weight: 200;
 .membBox ul li::before,
 .informationTitle+ul li::before {
   content: "\2022";
-  color: #46a37c;
   display: inline-block;
   width: 1em;
   margin-left: -1em;
@@ -242,20 +265,16 @@ font-weight: 200;
   transform: translateY(-20px);
 }
 
-.membBox:hover .informationTitle+ul li {
-  font-weight: bold;
-  color: rgba(47, 48, 88, 1);
-}
-
 .membIcon{
   display: flex;
   justify-content: center;
-  height: 60px;
-  width: 35px;
+  height: 120px;
+  width: 120px;
 }
 
 .membIconBox{
   display: flex;
+  width:270px;
   align-items: center;
   justify-content: center;
 }
@@ -271,4 +290,11 @@ font-weight: 200;
 
 .link {
   text-decoration: none;
+  text-align: center;
+  font-weight: 500;
+  width: 60%;
+}
+
+.aboutUsShadow {
+  margin: 20px;
 }

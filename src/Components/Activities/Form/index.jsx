@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import { Input, TextArea } from '../../Shared/Inputs';
-import { Link, useParams, useLocation, useHistory } from 'react-router-dom';
+import { Input, TextArea } from 'Components/Shared/Inputs';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { postActivity, putActivity } from '../../../redux/activities/thunks';
-import Button from '../../Shared/Button';
-import Modal from '../../Shared/Modal';
-import Loader from '../../Shared/Loader';
+import { postActivity, putActivity } from 'redux/activities/thunks';
+import Button from 'Components/Shared/Button';
+import Modal from 'Components/Shared/Modal';
+import Loader from 'Components/Shared/Loader';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -18,7 +18,6 @@ const Form = () => {
   const [description, setDescription] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -69,7 +68,7 @@ const Form = () => {
   }, [success, error]);
 
   useEffect(() => {
-    if (location.pathname.includes('edit')) {
+    if (id) {
       const activity = data.find((activity) => activity._id === id);
       setName(activity.name);
       setDescription(activity.description);
@@ -83,19 +82,21 @@ const Form = () => {
   }, [name, description, isActive, reset]);
 
   const onSubmit = async (data) => {
-    if (location.pathname.includes('create')) {
-      await postActivity(dispatch, data);
-    }
-
-    if (location.pathname.includes('edit')) {
+    if (id) {
       await putActivity(dispatch, id, data);
+    } else {
+      await postActivity(dispatch, data);
     }
   };
 
   return (
     <div className={styles.container}>
       <Modal onClose={() => setShowModal(false)} isOpen={showModal} title={message} error />
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit(onSubmit)}
+        data-testid={'activities-editform'}
+      >
         <h2 className={styles.formTitle}>{!id ? 'ADD ACTIVITY' : 'EDIT ACTIVITY'}</h2>
         {isPending ? (
           <Loader />
@@ -121,20 +122,22 @@ const Form = () => {
               />
             </div>
             <div className={styles.checkboxField}>
-              <label>Is Active?</label>
-              <input
-                className={styles.checkbox}
-                name={'isActive'}
-                type="checkbox"
-                {...register('isActive')}
-              />
-              {errors.isActive && <span>{errors.isActive.message}</span>}
+              <label>Inactive / Active</label>
+              <label className={styles.switch}>
+                <input
+                  className={styles.checkbox}
+                  name={'isActive'}
+                  type="checkbox"
+                  {...register('isActive')}
+                />
+                <span className={`${styles.slider} ${styles.round}`}></span>
+              </label>
             </div>
             <div className={styles.formBtns}>
               <Link to="/admin/activities">
-                <Button text={'Cancel'} variant={'white'} />
+                <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
               </Link>
-              <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting />
+              <Button text={id ? 'Edit' : 'Add'} variant={'add'} submitting testid={'add-btn'} />
             </div>
           </div>
         )}

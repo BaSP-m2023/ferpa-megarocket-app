@@ -28,7 +28,6 @@ const MembersEdit = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
   const { data, message, success, error } = useSelector((state) => state.members);
   const history = useHistory();
   const { id } = useParams();
@@ -111,10 +110,9 @@ const MembersEdit = () => {
     resolver: joiResolver(schema),
     defaultValues: member
   });
-
   useEffect(() => {
     dispatch(getMembers());
-    const memberToUpdate = data.find((member) => member._id === user._id);
+    const memberToUpdate = data.find((member) => member._id === id);
     setMember({
       firstName: memberToUpdate?.firstName,
       lastName: memberToUpdate?.lastName,
@@ -176,7 +174,9 @@ const MembersEdit = () => {
       />
       <div className={styles.box} data-testid={'member-editform-container'}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-          <h2 className={styles.formTitle}>EDIT MEMBER</h2>
+          <h2 className={styles.formTitle}>
+            {location.pathname.includes('member/form') ? 'Edit Profile' : 'Edit Member'}
+          </h2>
           <div className={styles.row}>
             <div className={styles.column}>
               <div className={styles.inputBox}>
@@ -213,7 +213,7 @@ const MembersEdit = () => {
                 <Input
                   labelText={'Phone'}
                   type={'text'}
-                  placeholder={'ex: 096513178'}
+                  placeholder={'Phone Number'}
                   nameValue={'phone'}
                   register={register}
                   error={errors.phone?.message}
@@ -223,7 +223,7 @@ const MembersEdit = () => {
                 <Input
                   labelText={'Email'}
                   type={'text'}
-                  placeholder={'robertomariaoverdrive@soybostero.edu'}
+                  placeholder={'example@example.com'}
                   nameValue={'email'}
                   register={register}
                   error={errors.email?.message}
@@ -269,15 +269,18 @@ const MembersEdit = () => {
                   error={errors.membership?.message}
                 />
               </div>
-              {location.pathname.includes('admins/home/members') ? (
+              {location.pathname.includes('admin/members/form') ? (
                 <div className={styles.checkboxField}>
-                  <label>Is Active?</label>
-                  <input
-                    className={styles.checkbox}
-                    name={'isActive'}
-                    type="checkbox"
-                    {...register('isActive')}
-                  />
+                  <label>Inactive / Active</label>
+                  <label className={styles.switch}>
+                    <input
+                      className={styles.checkbox}
+                      name={'isActive'}
+                      type="checkbox"
+                      {...register('isActive')}
+                    />
+                    <span className={`${styles.slider} ${styles.round}`}></span>
+                  </label>
                 </div>
               ) : (
                 ''

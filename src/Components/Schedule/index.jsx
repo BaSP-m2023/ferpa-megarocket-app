@@ -24,6 +24,8 @@ const Schedule = () => {
   const [unsubscribeModal, setUnsubscribeModal] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
   const [trainerModal, setTrainerModal] = useState(false);
+  const [memberActiveModal, setMemberActiveModal] = useState(false);
+  const [selectOption, setSelectOption] = useState('my-classes');
 
   const dispatch = useDispatch();
 
@@ -60,7 +62,7 @@ const Schedule = () => {
     const subscribedClass = classToShow?.subscribers.some((sub) => user?._id === sub._id);
     const actualSub = subs.find((sub) => sub.classId?._id === classToShow?._id);
     const slots = 20 - classToShow?.subscribers.length;
-    if (role === 'MEMBER' && subscribedClass) {
+    if (role === 'MEMBER' && subscribedClass && user?.isActive) {
       return (
         <td
           key={`${day}-${hour}`}
@@ -75,7 +77,7 @@ const Schedule = () => {
         </td>
       );
     }
-    if (role === 'MEMBER' && classToShow) {
+    if (role === 'MEMBER' && classToShow && user?.isActive) {
       return (
         <>
           {classToShow?.subscribers.length !== 20 ? (
@@ -89,19 +91,58 @@ const Schedule = () => {
             >
               {classToShow?.activityId?.name}
               <br></br>
-              {`Slots: ${slots}`}
+              <span className={styles.slots}>{`Slots: ${slots}`}</span>
             </td>
           ) : (
             <td key={`${day}-${hour}`} className={styles.disabledClass}>
               {classToShow?.activityId?.name}
               <br></br>
-              <span>No more slots</span>
+              <span className={styles.slots}>No more slots</span>
             </td>
           )}
         </>
       );
     }
-    if (role === 'TRAINER' && trainersClass) {
+    if (!user?.isActive && classToShow && role === 'MEMBER') {
+      return (
+        <>
+          {classToShow?.subscribers.length !== 20 ? (
+            <td
+              key={`${day}-${hour}`}
+              className={styles.whiteItem}
+              onClick={() => {
+                setMemberActiveModal(!memberActiveModal);
+              }}
+            >
+              {classToShow?.activityId?.name}
+              <br></br>
+              <span className={styles.slots}>{`Slots: ${slots}`}</span>
+            </td>
+          ) : (
+            <td key={`${day}-${hour}`} className={styles.disabledClass}>
+              {classToShow?.activityId?.name}
+              <br></br>
+              <span className={styles.slots}>No more slots</span>
+            </td>
+          )}
+        </>
+      );
+    }
+    if (role === 'TRAINER' && trainersClass && selectOption === 'my-classes') {
+      return (
+        <td
+          key={`${day}-${hour}`}
+          className={styles.whiteItem}
+          onClick={() => {
+            setClassSelected(classToShow);
+            setTrainerModal(!trainerModal);
+          }}
+        >
+          {classToShow?.activityId?.name}
+        </td>
+      );
+    }
+    if (role === 'TRAINER' && classToShow && selectOption === 'all-classes') {
       return (
         <td
           key={`${day}-${hour}`}
@@ -121,10 +162,18 @@ const Schedule = () => {
   return (
     <section className={styles.container}>
       <Modal
+        isOpen={memberActiveModal}
+        title={'You must be an active user to subscribe!'}
+        text={'A gym administrator will be activating your account as soon as possible.'}
+        onClose={() => setMemberActiveModal(!memberActiveModal)}
+        testid={'isActive-modal'}
+      />
+      <Modal
         isOpen={successModal}
         title={message}
         success
         onClose={() => setSubscribeModal(!successModal)}
+        testid={'success-modal'}
       />
       <Modal
         isOpen={trainerModal}
@@ -137,12 +186,15 @@ const Schedule = () => {
             <br></br>
             {`Trainer: ${classSelected?.trainerId?.firstName}`}
             <br></br>
-            Members:
-            <br></br>
-            {classSelected?.subscribers?.map((member) => member?.firstName).join(', ')}
+            {classSelected?.subscribers?.length === 0
+              ? 'No members yet'
+              : `Members: ${classSelected?.subscribers
+                  ?.map((member) => member?.firstName)
+                  .join(', ')}`}
           </>
         }
         onClose={() => setTrainerModal(!trainerModal)}
+        testid={'class-information-modal'}
       />
       <Modal
         title={'Subscribe to Class'}
@@ -159,6 +211,7 @@ const Schedule = () => {
         onClose={() => {
           setSubscribeModal(!subscribeModal);
         }}
+        testid={'subs-class-modal'}
       >
         <Button
           text={'Cancel'}
@@ -178,6 +231,7 @@ const Schedule = () => {
             });
             setSubscribeModal(!subscribeModal);
           }}
+          testid={'subs-btn'}
         />
       </Modal>
       <Modal
@@ -196,6 +250,7 @@ const Schedule = () => {
         onClose={() => {
           setUnsubscribeModal(!unsubscribeModal);
         }}
+        testid={'delete-subs-modal'}
       >
         <Button
           text={'Cancel'}
@@ -211,17 +266,23 @@ const Schedule = () => {
             deleteSubscriptions(dispatch, id);
             setUnsubscribeModal(!unsubscribeModal);
           }}
+          testid={'unsubscribe-btn'}
         />
       </Modal>
       {!isPending ? (
         <>
           {role === 'TRAINER' && (
-            <select className={styles.select}>
-              <option>My classes</option>
-              <option>All classes</option>
+            <select
+              className={styles.select}
+              onChange={(e) => {
+                setSelectOption(e.target.value);
+              }}
+            >
+              <option value={'my-classes'}>My classes</option>
+              <option value={'all-classes'}>All classes</option>
             </select>
           )}
-          <table className={styles.table}>
+          <table className={styles.table} data-testid={'schedule-container'}>
             <thead>
               <tr>
                 <th className={styles.blueItem}>Hour</th>
@@ -232,7 +293,7 @@ const Schedule = () => {
                 ))}
               </tr>
             </thead>
-            <tbody>
+            <tbody data-testid={'schedule-activities'}>
               {hours.map((hour) => (
                 <tr key={hour}>
                   <td className={styles.blueItem}>{hour}</td>
@@ -242,7 +303,7 @@ const Schedule = () => {
             </tbody>
           </table>
           {role === 'MEMBER' && (
-            <table className={styles.glossary}>
+            <table className={styles.glossary} data-testid={'schedule-glossary'}>
               <thead>
                 <tr>
                   <th className={styles.glossarySub}>Subscribed</th>

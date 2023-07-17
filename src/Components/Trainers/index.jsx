@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTrainers, deleteTrainer } from 'redux/trainers/thunks';
+import { getClasses, deleteClass } from 'redux/classes/thunks';
+import { getSubscriptions, deleteSingleSubscription } from 'redux/subscriptions/thunks';
 import styles from './trainers.module.css';
 import Modal from 'Components/Shared/Modal';
 import Button from 'Components/Shared/Button';
@@ -12,10 +14,27 @@ const Trainers = () => {
   const [successModal, setSuccessModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const dispatch = useDispatch();
+  const { classes } = useSelector((state) => state.classes);
+  const { subs } = useSelector((state) => state.subscriptions);
   const { isLoading, trainers, error, formError } = useSelector((state) => state.trainers);
+
+  const deleteTrainerClass = (classes, trainerId, subscriptions) => {
+    classes.forEach((clas) => {
+      if (clas.trainerId._id === trainerId) {
+        subscriptions.forEach((sub) => {
+          if (sub.classId._id === clas._id) {
+            deleteSingleSubscription(dispatch, sub._id);
+          }
+        });
+        dispatch(deleteClass(clas._id));
+      }
+    });
+  };
 
   useEffect(() => {
     getTrainers(dispatch);
+    getSubscriptions(dispatch);
+    dispatch(getClasses());
   }, [dispatch]);
 
   useEffect(() => {
@@ -67,6 +86,7 @@ const Trainers = () => {
           text={'Delete'}
           variant={'delete'}
           clickAction={() => {
+            deleteTrainerClass(classes, currentId, subs);
             deleteTrainer(dispatch, currentId);
             setDeleteModal(!deleteModal);
             setSuccessModal(!successModal);
@@ -91,7 +111,7 @@ const Trainers = () => {
         <div className={styles.inside}>
           <h2 className={styles.title}>Trainers</h2>
           <Link to={'/admin/trainers/form'}>
-            <Button text={'Add'} variant={'add'} />
+            <Button text={'Add'} variant={'add'} testid={'add-btn'} />
           </Link>
         </div>
         <table className={styles.table}>
@@ -101,22 +121,26 @@ const Trainers = () => {
               <th className={styles.titles}>Last Name</th>
               <th className={styles.titles}>Phone</th>
               <th className={styles.titles}>Email</th>
+              <th className={styles.titles}>Activities</th>
               <th className={styles.titles}></th>
               <th className={styles.titles}></th>
             </tr>
           </thead>
           <tbody>
-            {trainers.map((item, index) => {
+            {trainers.map((item) => {
               return (
-                <tr key={item._id}>
+                <tr key={item._id} className={styles.tr}>
                   <td className={styles.list}>{item.firstName}</td>
                   <td className={styles.list}>{item.lastName}</td>
                   <td className={styles.list}>{item.phone}</td>
                   <td className={styles.list}>{item.email}</td>
+                  <td className={styles.list}>
+                    {item.activities.map((activity) => activity.name).join(' / ')}
+                  </td>
                   <td>
                     <div className={styles.buttons}>
                       <Link to={`/admin/trainers/form/${item._id}`}>
-                        <Button variant={'edit'} />
+                        <Button variant={'edit'} testid={'edit-btn'} />
                       </Link>
                       <Button
                         variant={'deleteIcon'}
