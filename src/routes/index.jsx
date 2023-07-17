@@ -7,6 +7,7 @@ import { getAuth } from '../redux/auth/thunks';
 import Loader from 'Components/Shared/Loader';
 import Header from 'Components/Shared/Header';
 import Footer from 'Components/Shared/Footer';
+import styles from 'Components/Home/home.module.css';
 
 const AdminsRoutes = lazy(() => import('./admins'));
 const SuperAdminsRoutes = lazy(() => import('./superAdmin'));
@@ -34,7 +35,13 @@ const Routes = () => {
   return (
     <Router>
       <Header />
-      <Suspense fallback={<Loader />}>
+      <Suspense
+        fallback={
+          <div className={styles.fallback}>
+            <Loader />
+          </div>
+        }
+      >
         <Switch>
           <PrivateRoute path="/admin" role="ADMIN" component={AdminsRoutes} />
           <PrivateRoute path="/member" role="MEMBER" component={MembersRoutes} />

@@ -42,3 +42,17 @@
   text-transform: uppercase;
   cursor: pointer;
 }
+
+.fallback {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../../../public/assets/images/subscriptions-background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  font-family: 'Roboto', sans-serif;
+  font-size: 22px;
+  align-self: center;
+  min-height: 71vh;
+}
