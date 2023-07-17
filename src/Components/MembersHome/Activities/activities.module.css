@@ -16,6 +16,7 @@
   background-image: url('../../../../public/assets/images/admins-background.jpg');
   font-weight: bold;
   min-height: 71vh;
+  margin-top: 200px;
 }
 
 .header {

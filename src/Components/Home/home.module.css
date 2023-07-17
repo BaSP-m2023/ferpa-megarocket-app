@@ -3,6 +3,8 @@
 .container {
   display: flex;
   align-items: center;
+  margin-top: 130px;
+  background-color: #e2e3fb;
 }
 
 .member,
@@ -43,6 +45,7 @@
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 .fallback {
   display: flex;
   justify-content: center;
@@ -70,3 +73,8 @@
   align-self: center;
   min-height: 76.95vh;
 }
+=======
+.membBox{
+height: 1000px;
+  }
+>>>>>>> master

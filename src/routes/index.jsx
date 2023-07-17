@@ -1,10 +1,11 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { Switch, Route, BrowserRouter as Router, Redirect, useLocation } from 'react-router-dom';
 import PrivateRoute from './privateRoute';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { tokenListener } from '../helper/firebase';
 import { getAuth } from '../redux/auth/thunks';
 import Loader from 'Components/Shared/Loader';
+import Aside from 'Components/Shared/Aside';
 import Header from 'Components/Shared/Header';
 import Footer from 'Components/Shared/Footer';
 import styles from 'Components/Home/home.module.css';
@@ -20,6 +21,7 @@ const Routes = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const token = sessionStorage.getItem('token');
+  const { isOn } = useSelector((state) => state.aside);
 
   useEffect(() => {
     tokenListener();
@@ -35,27 +37,34 @@ const Routes = () => {
 
   return (
     <Router>
-      <Header />
-      <Suspense
-        fallback={
-          <div
-            className={location.pathname.includes('/home') ? styles.fallbackHome : styles.fallback}
+      <div className={styles.container}>
+        <div className={styles.aside}>{isOn && <Aside />}</div>
+        <div className={styles.fullWidth}>
+          <Header />
+          <Suspense
+            fallback={
+              <div
+                className={
+                  location.pathname.includes('/home') ? styles.fallbackHome : styles.fallback
+                }
+              >
+                <Loader />
+              </div>
+            }
           >
-            <Loader />
-          </div>
-        }
-      >
-        <Switch>
-          <PrivateRoute path="/admin" role="ADMIN" component={AdminsRoutes} />
-          <PrivateRoute path="/member" role="MEMBER" component={MembersRoutes} />
-          <PrivateRoute path="/trainer" role="TRAINER" component={TrainersRoutes} />
-          <PrivateRoute path="/super-admin" role="SUPER-ADMIN" component={SuperAdminsRoutes} />
-          <Route path="/home" component={HomeRoutes} />
-          <Route path="/change_pass" component={ChangePass} />
-          <Redirect to="/home" />
-        </Switch>
-      </Suspense>
-      <Footer />
+            <Switch>
+              <PrivateRoute path="/admin" role="ADMIN" component={AdminsRoutes} />
+              <PrivateRoute path="/member" role="MEMBER" component={MembersRoutes} />
+              <PrivateRoute path="/trainer" role="TRAINER" component={TrainersRoutes} />
+              <PrivateRoute path="/super-admin" role="SUPER-ADMIN" component={SuperAdminsRoutes} />
+              <Route path="/home" component={HomeRoutes} />
+              <Route path="/change_pass" component={ChangePass} />
+              <Redirect to="/home" />
+            </Switch>
+          </Suspense>
+          <Footer />
+        </div>
+      </div>
     </Router>
   );
 };

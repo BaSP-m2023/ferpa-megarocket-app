@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { Input } from 'Components/Shared/Inputs';
 import { useForm } from 'react-hook-form';
 import Button from 'Components/Shared/Button';
-import Aside from '../../Shared/Aside';
 import { login } from 'redux/auth/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetError } from 'redux/auth/action';
@@ -44,7 +43,6 @@ function Login() {
 
   return (
     <section className={styles.container}>
-      <Aside />
       <div className={styles.login}>
         <div className={styles.loginBox} data-testid={'login-container'}>
           <div>
@@ -77,7 +75,9 @@ function Login() {
                 />
               </div>
             </div>
-            <Button text={'Continue'} variant={'add'} submitting testid={'continue-btn'} />
+            <div className={styles.LogInbtn}>
+              <Button text={'Continue'} variant={'add'} submitting />
+            </div>
           </form>
           <p className={styles.spaceForSignup}>
             {`Don't have an account? `}

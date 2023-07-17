@@ -9,7 +9,7 @@
   font-family: 'Roboto', sans-serif;
   font-size: 22px;
   min-height: 80vh;
-  box-shadow: 0px 0px 41px 4px rgba(0, 0, 0, 0.71) inset;
+  margin-top: 130px;
 }
 
 .login {
@@ -57,6 +57,12 @@
 
 .fieldset img {
   margin-right: 20px;
+}
+
+.LogInbtn{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .fieldset p {
