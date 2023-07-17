@@ -33,19 +33,19 @@
 .thName {
   text-align: start;
   width: 15vw;
-  padding-bottom: 1vw;
+  padding: 1vw 1.5vw;
 }
 
 .thDes {
   text-align: start;
   width: 45vw;
-  padding-bottom: 1vw;
+  padding: 1vw 1.5vw;
 }
 
 .thStatus {
   text-align: start;
   width: 10vw;
-  padding-bottom: 1vw;
+  padding: 1vw 1.5vw;
 }
 
 .tdBtn {

@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile.module.css';
 import { getAuth } from 'redux/auth/thunks';
 import { Link } from 'react-router-dom';
+import Loader from 'Components/Shared/Loader';
 
 const Profile = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user, isAuthPending } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const token = sessionStorage.getItem('token');
   const firebaseId = sessionStorage.getItem('firebaseUid');
@@ -15,6 +16,16 @@ const Profile = () => {
     dispatch(getAuth(token, firebaseId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (isAuthPending) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.onTop}>
+          <div className={styles.loading}>{<Loader />}</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section className={styles.container}>

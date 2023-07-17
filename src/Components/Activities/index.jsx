@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getActivities } from '../../redux/activities/thunks';
 import styles from './activities.module.css';
@@ -13,7 +13,6 @@ function Activities() {
   const [modalMessage, setModalMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const handleModal = () => {
@@ -46,44 +45,6 @@ function Activities() {
           <div className={styles.loading}>
             <Loader />
           </div>
-        </div>
-      </section>
-    );
-  }
-  if (!isPending) {
-    return (
-      <section className={styles.container}>
-        <div className={styles.list}>
-          {error ? (
-            <>
-              <div className={styles.header}>
-                <h2 className={styles.title}>Activities</h2>
-              </div>
-              <p className={styles.dataError}>{message}</p>
-            </>
-          ) : (
-            <>
-              <div className={styles.header}>
-                <h2 className={styles.title}>Activities</h2>
-                <Button
-                  text={'Add'}
-                  variant={'add'}
-                  testid={'add-btn'}
-                  clickAction={() => {
-                    history.push('/admin/activities/form');
-                  }}
-                />
-              </div>
-              <Modal
-                onClose={() => setShowModal(false)}
-                isOpen={showModal}
-                title={modalMessage}
-                success
-                testid={'success-modal'}
-              />
-              <Table />
-            </>
-          )}
         </div>
       </section>
     );
