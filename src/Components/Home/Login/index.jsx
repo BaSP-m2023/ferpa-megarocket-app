@@ -7,23 +7,25 @@ import Button from 'Components/Shared/Button';
 import Aside from '../../Shared/Aside';
 import { login } from 'redux/auth/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import { resetError } from 'redux/auth/action';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { user } = useSelector((state) => state.auth);
+  const { user, error, message } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (user?.role === 'ADMIN') {
+    if (user?.role === 'ADMIN' && !error) {
       history.push('/admin/profile');
     }
-    if (user?.role === 'MEMBER') {
+    if (user?.role === 'MEMBER' && !error) {
       history.push('/member/profile');
     }
-    if (user?.role === 'SUPER-ADMIN') {
+    if (user?.role === 'SUPER-ADMIN' && !error) {
       history.push('/super-admin/admins');
     }
-    if (user?.role === 'TRAINER') {
+    if (user?.role === 'TRAINER' && !error) {
       history.push('/trainer/profile');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,6 +37,11 @@ function Login() {
     dispatch(login(data));
   };
 
+  useEffect(() => {
+    dispatch(resetError());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <section className={styles.container}>
       <Aside />
@@ -45,6 +52,9 @@ function Login() {
               Login
             </h2>
           </div>
+          <p className={!error ? `${styles.errorHidden}` : `${styles.error}`}>
+            <img src="../../../assets/images/warning.svg" alt="warning" /> {message}
+          </p>
           <form
             onSubmit={handleSubmit(handleLogin)}
             className={styles.form}
@@ -72,6 +82,14 @@ function Login() {
             </div>
             <Button text={'Continue'} variant={'add'} submitting testid={'continue-btn'} />
           </form>
+          <p>
+            {`Don't have an account? `}
+            <span>
+              <Link to="signup" className={styles.signup}>
+                Sign up now!
+              </Link>
+            </span>
+          </p>
         </div>
       </div>
     </section>

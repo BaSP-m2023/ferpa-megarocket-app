@@ -91,6 +91,7 @@
 
 .tr {
   color: white;
+  height: 55px;
 }
 
 .td {
@@ -102,6 +103,7 @@
 
 .tdBtn {
   width: 5vw;
+  text-align: end;
 }
 
 .loading {

@@ -13,3 +13,4 @@ export const SIGN_UP_ERROR = 'SIGN_UP_ERROR';
 export const CHECK_CLEAN = 'CHECK_CLEAN';
 export const CHECK_SUCCESS = 'CHECK_SUCCESS';
 export const CHECK_ERROR = 'CHECK_ERROR';
+export const RESET_ERROR = 'RESET_ERROR';

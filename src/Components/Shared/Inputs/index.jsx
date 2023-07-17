@@ -41,7 +41,9 @@ export const Select = ({
           );
         })}
       </select>
-      {error ? <p className={styles.error}>{error}</p> : <p className={styles.placeholder}>{}</p>}
+      <p className={error ? `${styles.error}` : `${styles.error} ${styles.hidden}`}>
+        <img src="../../../assets/images/warning.svg" alt="warning" /> {error}
+      </p>
     </>
   );
 };
@@ -75,14 +77,9 @@ export const Input = ({
         onFocus={onFocus}
         onBlur={onBlur}
       />
-      {error ? (
-        <p className={styles.error}>
-          {' '}
-          <img src="../../../assets/images/warning.svg" alt="warning" /> {error}
-        </p>
-      ) : (
-        <p className={styles.placeholder}>{}</p>
-      )}
+      <p className={error ? `${styles.error}` : `${styles.error} ${styles.hidden}`}>
+        <img src="../../../assets/images/warning.svg" alt="warning" /> {error}
+      </p>
     </>
   );
 };
@@ -111,7 +108,9 @@ export const DatePicker = ({
         onFocus={onFocus}
         onBlur={onBlur}
       />
-      {error ? <p className={styles.error}>{error}</p> : <p className={styles.placeholder}>{}</p>}
+      <p className={error ? `${styles.error}` : `${styles.error} ${styles.hidden}`}>
+        <img src="../../../assets/images/warning.svg" alt="warning" /> {error}
+      </p>
     </>
   );
 };
@@ -146,7 +145,9 @@ export const TextArea = ({
         onFocus={onFocus}
         onBlur={onBlur}
       ></textarea>
-      {error ? <p className={styles.error}>{error}</p> : <p className={styles.placeholder}>{}</p>}
+      <p className={error ? `${styles.error}` : `${styles.error} ${styles.hidden}`}>
+        <img src="../../../assets/images/warning.svg" alt="warning" /> {error}
+      </p>
     </>
   );
 };

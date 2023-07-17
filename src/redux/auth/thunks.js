@@ -31,7 +31,12 @@ export const login = (credentials) => {
       } = await firebaseResponse.user.getIdTokenResult();
       dispatch(loginSuccess({ role, token }));
     } catch (error) {
-      dispatch(loginError(error.toString()));
+      if (error.code === 'auth/invalid-email' || error.code === 'auth/user-not-found') {
+        dispatch(loginError(`Email doesn't exists`));
+      }
+      if (error.code === 'auth/wrong-password' || error.code === 'auth/missing-password') {
+        dispatch(loginError('Incorrect password'));
+      }
     }
   };
 };
@@ -79,13 +84,12 @@ export const signUpMember = (data) => {
         body: JSON.stringify(data)
       });
       const res = await response.json();
-      if (response.error) {
-        throw new Error(response.message);
+      if (res.error) {
+        throw new Error(res.message);
       }
       await dispatch(signUpSuccess(data));
-      return res;
     } catch (error) {
-      dispatch(signUpError(error.toString()));
+      dispatch(signUpError(error.message));
     }
   };
 };
