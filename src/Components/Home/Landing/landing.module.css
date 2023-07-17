@@ -31,7 +31,10 @@
   border-radius: 15px;
   background-color: #46a37c;
   padding: 15px 60px;
+}
 
+.scrollableLink {
+  scroll-behavior: smooth;
 }
 
 
@@ -52,9 +55,9 @@
 .text{
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
-  font-weight: 400;
   line-height: 25px;
-  color: rgba(0, 0, 0, 0.75);
+  color: rgba(47, 48, 88, 1);
+  font-weight: 200;
 }
 
 .introduction{
@@ -88,6 +91,7 @@
   font-weight: 600;
   line-height: 29px;
   color: rgba(55, 56, 103, 1);
+  padding-top: 25px;
 }
 
 .introductionText {
@@ -122,6 +126,9 @@
 
 .box img {
   margin-right: 20px;
+  padding-left: 15px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .contactUs {
@@ -131,18 +138,6 @@
   perspective: 1000px;
   /* Para aplicar perspectiva en el elemento */
 }
-
-.element {
-  transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
-}
-
-.contactUs:hover .element {
-  border-radius: 15px;
-  transform: scale(1.01);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-
-}
-
 
 
 .inputs{
@@ -177,25 +172,24 @@
   align-items: center;
 }
 
-.aboutUsBox img{
+.aboutUsBox .text{
+padding-left: 20px;
+color: rgba(47, 48, 88, 1);
+font-weight: 200;
+}
+
+.aboutImg {
   height: 330px;
-  width: 370px;
-  margin-right: 50px;
-  margin-left: 50px;
+  width: 570px;
+  border-radius: 500px;
+  border-bottom-left-radius: 0;
 }
 
-.aboutUsShadow:hover {
-  background-color: rgba(47, 48, 88, 0.2);
-  border-radius: 20px;
-}
-
-.aboutUsShadow>*:hover {
-  background-color: inherit;
-  border-radius: 20px;
-}
-
-.aboutUsShadow>*>*:hover {
-  border-radius: 20px;
+.aboutImgDos {
+  height: 330px;
+  width: 570px;
+  border-radius: 500px;
+  border-bottom-right-radius: 0;
 }
 
 .membershipBox{

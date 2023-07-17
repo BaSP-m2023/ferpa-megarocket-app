@@ -89,7 +89,9 @@ const Landing = () => {
               towards a healthier, happier you.
             </p>
             <div className={styles.joinUs}>
-              <a href="#Memberships">JOIN US</a>
+              <a className={styles.scrollableLink} href="#Memberships">
+                JOIN US
+              </a>
             </div>
           </div>
         </div>
@@ -212,28 +214,56 @@ const Landing = () => {
       <section className={styles.aboutUs}>
         <h2 className={styles.subTitle}>About Us</h2>
         <p className={styles.text}>
-          Megarocket SA gym was founded in 1995 by a former Olympic athlete named Max Strong. Max
-          had always been passionate about fitness and wanted to create a gym that would provide
-          people with a welcoming and inclusive environment to pursue their fitness goals.
+          After Maxs retirement, his son, Alex Strong, took over the leadership of Megarocket SA
+          gym. Alex had grown up in the gym and shared the same passion for fitness as his father.
+          He decided to keep Maxs vision alive by providing a positive and motivating environment
+          for the members of Megarocket.
         </p>
         <p className={styles.text}>
-          Over the years, Megarocket SA grew into one of the most popular gyms in the city, with a
-          thriving community of members who were passionate about fitness. Max continued to run the
-          gym until he retired in 2020.
+          Under Alexss guidance, Megarocket SA gym has undergone a series of significant
+          improvements. New and modern facilities have been incorporated, state-of-the-art equipment
+          has been added, and a wide range of fitness classes have been introduced to cater to the
+          diverse needs of the members. Additionally, strategic partnerships have been established
+          with leading nutritionists and personal trainers to offer comprehensive wellness programs
+          for the members.
+        </p>
+        <p className={styles.text}>
+          Despite the growth and success, the gym has managed to maintain its sense of community.
+          Regular social events, group challenges, and charity initiatives are organized to foster a
+          strong bond among the members. Megarocket SA gym has become not just a place to work out
+          but a hub for like-minded individuals who support and motivate each other on their fitness
+          journeys.
+        </p>
+        <p className={styles.text}>
+          The legacy of Max Strong lives on through Megarocket SA gym, as it continues to inspire
+          and transform lives through fitness. With Alexs leadership and the dedication of the
+          staff, the gym remains committed to providing a welcoming and inclusive space for people
+          of all fitness levels to pursue their health and wellness goals.
         </p>
         <h3 className={styles.informationTitle}>Our thoughts</h3>
         <div className={styles.aboutUsShadow}>
           <div className={styles.aboutUsBox}>
-            <img src="../../assets/images/gym-2.svg" alt="gym workout"></img>
+            <img
+              className={styles.aboutImg}
+              src="../../assets/images/gym-about-us.jpeg"
+              alt="gym workout"
+            ></img>
             <div>
               <p className={styles.text}>
-                At Megarocket SA, we believe that fitness is not just a hobby, it is a lifelong
-                journey. Our expert trainers are committed to helping you achieve your goals.
+                At Megarocket SA, we understand that each persons fitness journey is unique and
+                personal. That is why our expert trainers are dedicated to providing personalized
+                guidance and support to help you achieve your specific goals. Whether you are aiming
+                to lose weight, build muscle, improve flexibility, or enhance overall wellness, our
+                trainers will work closely with you to create a customized workout plan that fits
+                your needs and abilities.
               </p>
               <p className={styles.text}>
-                We believe that fitness is not a one-size-fits-all solution. That is why we offer a
-                wide range of classes and services to cater to every individual is unique needs and
-                preferences.
+                In addition to our personalized approach, we also offer a diverse range of classes
+                and services to cater to different fitness preferences. From high-intensity interval
+                training (HIIT) and strength training to yoga, pilates, and dance, we have a class
+                for everyone. Our certified instructors bring their passion and expertise to each
+                session, ensuring that you have a rewarding and enjoyable experience while pushing
+                your limits and reaching new heights.
               </p>
             </div>
           </div>
@@ -243,19 +273,30 @@ const Landing = () => {
           <div className={styles.aboutUsBox}>
             <div>
               <p className={styles.text}>
-                We are not just a gym - we are a family. At Megarocket SA, you will find a
-                supportive and welcoming community that will keep you motivated and inspired to
-                reach your goals.
+                At Megarocket SA, we pride ourselves on being more than just a gym; we are a
+                close-knit family. From the moment you step through our doors, you will feel the
+                warm and inclusive atmosphere that permeates our facility. Our members create a
+                supportive community that encourages and uplifts each other, making every visit to
+                Megarocket SA a motivating and enjoyable experience.
               </p>
               <p className={styles.text}>
-                No matter what you’re looking for in a gym, we’ve got a membership option made for
-                you. All Mega Rockets members enjoy unlimited access to their home club and the
-                support of our friendly, knowledgeable staff anytime you need it. PF Black Card®
-                members receive additional benefits, including the ability to bring a guest for free
-                and access to any of our 2,400+ PF locations.
+                We believe that fitness is not a solitary journey but a shared endeavor. Our
+                dedicated staff and trainers are passionate about helping you succeed in your
+                fitness goals. Whether you need guidance on proper form, nutritional advice, or
+                simply some words of encouragement, our friendly and knowledgeable team is always
+                available to support you throughout your fitness journey.
+              </p>
+              <p className={styles.text}>
+                Join Megarocket SA today and become part of our fitness family. Together, we all
+                celebrate victories, overcome challenges, and create lasting memories as we strive
+                towards a healthier and happier lifestyle.
               </p>
             </div>
-            <img src="../../assets/images/gym-3.svg" alt="fitness culture"></img>
+            <img
+              className={styles.aboutImgDos}
+              src="../../assets/images/gym-3.svg"
+              alt="fitness culture"
+            ></img>
           </div>
         </div>
       </section>
@@ -273,11 +314,11 @@ const Landing = () => {
             <div className={styles.membIconBox}>
               <img
                 className={styles.membIcon}
-                src="../../assets/images/space_rocket-1.png"
+                src="../../assets/images/rocket-black.svg"
                 alt="gym icon"
               ></img>
               <Link to="/home/signup" className={styles.link}>
-                <p>150 USD</p>
+                <p>150 $</p>
               </Link>
             </div>
           </div>
@@ -291,11 +332,11 @@ const Landing = () => {
             <div className={styles.membIconBox}>
               <img
                 className={styles.membIcon}
-                src="../../assets/images/space_rocket-3.png"
+                src="../../assets/images/rocket-classic.svg"
                 alt="gym icon"
               ></img>
               <Link to="/home/signup" className={styles.link}>
-                <p>100 USD</p>
+                <p>100 $</p>
               </Link>
             </div>
           </div>
@@ -308,11 +349,11 @@ const Landing = () => {
             <div className={styles.membIconBox}>
               <img
                 className={styles.membIcon}
-                src="../../assets/images/space_rocket-2.png"
+                src="../../assets/images/rocket-onlyclasses.svg"
                 alt="gym icon"
               ></img>
               <Link to="/home/signup" className={styles.link}>
-                <p>50 USD</p>
+                <p>50 $ </p>
               </Link>
             </div>
           </div>
