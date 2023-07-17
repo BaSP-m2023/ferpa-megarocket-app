@@ -70,7 +70,7 @@ function Activities() {
           <>
             <div className={styles.header}>
               <h2 className={styles.title}>Activities</h2>
-              <Link to="/activities/form">
+              <Link to="/admin/activities/form">
                 <Button text={'Add'} variant={'add'} />
               </Link>
             </div>

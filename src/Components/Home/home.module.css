@@ -3,6 +3,8 @@
 .container {
   display: flex;
   align-items: center;
+  margin-top: 130px;
+  background-color: #e2e3fb;
 }
 
 .member,
@@ -42,3 +44,7 @@
   text-transform: uppercase;
   cursor: pointer;
 }
+
+.membBox{
+height: 1000px;
+  }

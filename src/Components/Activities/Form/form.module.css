@@ -7,6 +7,7 @@
   background-image: url('../../../../public/assets/images/subscriptions-background.jpg');
   background-size: cover;
   min-height: 80vh;
+  margin-top: 200px;
 }
 
 .form {
