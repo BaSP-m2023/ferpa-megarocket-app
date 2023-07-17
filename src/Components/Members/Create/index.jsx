@@ -206,7 +206,7 @@ const MembersCreate = () => {
                     <Input
                       labelText={'Phone'}
                       type={'text'}
-                      placeholder={'ex: 096513178'}
+                      placeholder={'Phone Number'}
                       nameValue={'phone'}
                       register={register}
                       error={errors.phone?.message}
@@ -216,7 +216,7 @@ const MembersCreate = () => {
                     <Input
                       labelText={'Email'}
                       type={'text'}
-                      placeholder={'robertomariaoverdrive@soybostero.edu'}
+                      placeholder={'example@example.com'}
                       nameValue={'email'}
                       register={register}
                       error={errors.email?.message}
@@ -407,7 +407,7 @@ const MembersCreate = () => {
                 />
               </div>
               <div className={styles.checkboxField}>
-                <label>Active / Inactive</label>
+                <label>Inactive / Active</label>
                 <label className={styles.switch}>
                   <input
                     className={styles.checkbox}
