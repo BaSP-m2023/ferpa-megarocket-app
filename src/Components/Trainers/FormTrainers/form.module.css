@@ -89,3 +89,20 @@
 .wideSelect {
   padding: 0 20px;
 }
+
+.error {
+  display: flex;
+  align-items: center;
+  min-height: 27px;
+  margin: 8px;
+  padding-left: 12px;
+  color: rgb(255, 255, 255);
+  background-color: #F23F42;
+  border-radius: 15px;
+  font-size: 15px;
+}
+
+.hidden {
+  margin: 8px;
+  visibility: hidden;
+}

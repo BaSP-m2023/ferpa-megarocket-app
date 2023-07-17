@@ -46,7 +46,11 @@ const TrainerAddForm = () => {
         'Password must contain at least one uppercase letter, one lowercase letter, and be at least 8 characters long'
     }),
     salary: Joi.number().min(10000),
-    activities: Joi.array()
+    activities: Joi.array().items(
+      Joi.string().required().min(1).messages({
+        'string.pattern.base': 'Trainers must be assigned to at least one activity'
+      })
+    )
   });
 
   const editSchema = Joi.object({
@@ -65,9 +69,12 @@ const TrainerAddForm = () => {
     }),
     city: Joi.string().min(2).max(30),
     salary: Joi.number().min(10000),
-    activities: Joi.array()
+    activities: Joi.array().items(
+      Joi.string().required().min(1).messages({
+        'string.pattern.base': 'Trainers must be assigned to at least one activity'
+      })
+    )
   });
-
   const [inputs, setInputs] = useState({
     firstName: '',
     lastName: '',
@@ -93,6 +100,8 @@ const TrainerAddForm = () => {
   });
 
   const isFormEdited = Object.keys(dirtyFields).length > 0;
+
+  const selectError = errors.activities?.message;
 
   useEffect(() => {
     getActivities(dispatch);
@@ -297,6 +306,13 @@ const TrainerAddForm = () => {
                         onActivityChange(event.map((activity) => activity.value));
                       }}
                     />
+                    <p
+                      className={
+                        selectError ? `${styles.error}` : `${styles.error} ${styles.hidden}`
+                      }
+                    >
+                      {selectError}
+                    </p>
                   </div>
                 )}
               </div>
@@ -331,6 +347,9 @@ const TrainerAddForm = () => {
                     onActivityChange(event.map((activity) => activity.value));
                   }}
                 />
+                <p className={selectError ? `${styles.error}` : `${styles.error} ${styles.hidden}`}>
+                  {selectError}
+                </p>
               </div>
             )}
           </div>
