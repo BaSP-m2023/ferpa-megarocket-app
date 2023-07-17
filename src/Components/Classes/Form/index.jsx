@@ -172,7 +172,6 @@ const Form = () => {
       const classWithId = classes.find((element) => element._id === id);
       setSingleClass(classWithId);
       previousClass(singleClass);
-      console.log(classWithId);
     } catch (error) {
       console.error(error);
     }
