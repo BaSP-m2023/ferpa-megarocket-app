@@ -177,97 +177,115 @@ const TrainerAddForm = () => {
           <div className={styles.field}>
             <div className={styles.row}>
               <div className={styles.column}>
-                <Input
-                  register={register}
-                  onChangeInput={onChange}
-                  labelText={'Name'}
-                  nameValue={'firstName'}
-                  placeholder={'First Name'}
-                  error={errors.firstName?.message}
-                />
-                <Input
-                  register={register}
-                  onChangeInput={onChange}
-                  labelText={'LastName'}
-                  nameValue={'lastName'}
-                  placeholder={'Last Name'}
-                  error={errors.lastName?.message}
-                />
-                <Input
-                  register={register}
-                  onChangeInput={onChange}
-                  labelText={'DNI'}
-                  nameValue={'dni'}
-                  placeholder={'DNI'}
-                  error={errors.dni?.message}
-                />
-                <Input
-                  register={register}
-                  onChangeInput={onChange}
-                  labelText={'Phone'}
-                  nameValue={'phone'}
-                  placeholder={'Phone'}
-                  error={errors.phone?.message}
-                />
-              </div>
-              <div className={styles.column}>
-                <Input
-                  register={register}
-                  onChangeInput={onChange}
-                  labelText={'Email'}
-                  nameValue={'email'}
-                  placeholder={'Email'}
-                  error={errors.email?.message}
-                />
-                <Input
-                  register={register}
-                  onChangeInput={onChange}
-                  labelText={'City'}
-                  nameValue={'city'}
-                  placeholder={'City'}
-                  error={errors.city?.message}
-                />
-                <Input
-                  register={register}
-                  onChangeInput={onChange}
-                  labelText={'Salary'}
-                  nameValue={'salary'}
-                  placeholder={'Salary'}
-                  error={errors.salary?.message}
-                />
-                {!id && (
+                <div>
                   <Input
                     register={register}
                     onChangeInput={onChange}
-                    labelText={'Password'}
-                    nameValue={'password'}
-                    placeholder={'Password'}
-                    error={errors.password?.message}
+                    labelText={'Name'}
+                    nameValue={'firstName'}
+                    placeholder={'First Name'}
+                    error={errors.firstName?.message}
                   />
+                </div>
+                <div>
+                  <Input
+                    register={register}
+                    onChangeInput={onChange}
+                    labelText={'LastName'}
+                    nameValue={'lastName'}
+                    placeholder={'Last Name'}
+                    error={errors.lastName?.message}
+                  />
+                </div>
+                <div>
+                  <Input
+                    register={register}
+                    onChangeInput={onChange}
+                    labelText={'DNI'}
+                    nameValue={'dni'}
+                    placeholder={'DNI'}
+                    error={errors.dni?.message}
+                  />
+                </div>
+                <div>
+                  <Input
+                    register={register}
+                    onChangeInput={onChange}
+                    labelText={'Phone'}
+                    nameValue={'phone'}
+                    placeholder={'Phone'}
+                    error={errors.phone?.message}
+                  />
+                </div>
+              </div>
+              <div className={styles.column}>
+                <div>
+                  <Input
+                    register={register}
+                    onChangeInput={onChange}
+                    labelText={'Email'}
+                    nameValue={'email'}
+                    placeholder={'Email'}
+                    error={errors.email?.message}
+                  />
+                </div>
+                <div>
+                  <Input
+                    register={register}
+                    onChangeInput={onChange}
+                    labelText={'City'}
+                    nameValue={'city'}
+                    placeholder={'City'}
+                    error={errors.city?.message}
+                  />
+                </div>
+                <div>
+                  <Input
+                    register={register}
+                    onChangeInput={onChange}
+                    labelText={'Salary'}
+                    nameValue={'salary'}
+                    placeholder={'Salary'}
+                    error={errors.salary?.message}
+                  />
+                </div>
+                {!id && (
+                  <div>
+                    <Input
+                      register={register}
+                      onChangeInput={onChange}
+                      labelText={'Password'}
+                      nameValue={'password'}
+                      placeholder={'Password'}
+                      error={errors.password?.message}
+                    />
+                  </div>
                 )}
               </div>
             </div>
-            <Select
-              className={styles.select}
-              defaultValue={
-                trainer
-                  ? trainer.activities.map((activity) => ({
-                      value: activity._id,
-                      label: activity.name
-                    }))
-                  : trainer
-              }
-              value={
-                activity
-                  ? transformedData.find((singleActivity) => singleActivity.value === activity)
-                  : activity
-              }
-              isMulti
-              options={transformedData}
-              onChange={(event) => {
-                onActivityChange(event.map((activity) => activity.value));
-              }}
-            />
+            <div>
+              <Select
+                className={styles.select}
+                defaultValue={
+                  trainer
+                    ? trainer.activities.map((activity) => ({
+                        value: activity._id,
+                        label: activity.name
+                      }))
+                    : trainer
+                }
+                value={
+                  activity
+                    ? transformedData.find((singleActivity) => singleActivity.value === activity)
+                    : activity
+                }
+                isMulti
+                options={transformedData}
+                onChange={(event) => {
+                  onActivityChange(event.map((activity) => activity.value));
+                }}
+              />
+            </div>
           </div>
           <div className={styles.buttons}>
             <Link to={cancelButtonDestination}>

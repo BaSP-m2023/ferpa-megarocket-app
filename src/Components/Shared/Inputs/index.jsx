@@ -30,7 +30,9 @@ export const Select = ({
         onFocus={onFocus}
         onBlur={onBlur}
       >
-        <option hidden>{placeholder}</option>
+        <option key={10} hidden>
+          {placeholder}
+        </option>
         {options.map((item) => {
           return (
             <option key={item._id} value={item.value}>

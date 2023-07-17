@@ -19,10 +19,10 @@ const Form = () => {
     (state) => state.classes
   );
   const { trainers } = useSelector((state) => state.trainers);
-  const { data } = useSelector((state) => state.activities);
   const { id } = useParams();
   const [singleClass, setSingleClass] = useState({});
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [trainer, setTrainer] = useState('');
   const [newClass, setNewClass] = useState({
     day: '',
     hour: '',
@@ -51,6 +51,7 @@ const Form = () => {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors, dirtyFields }
   } = useForm({ mode: 'onChange', resolver: joiResolver(schema), defaultValues: { newClass } });
 
@@ -166,17 +167,12 @@ const Form = () => {
   const updatedTrainers = trainers.map((trainer) => {
     return { ...trainer, name: trainer.firstName, value: trainer._id };
   });
-  const updatedActivity = data.map((activity) => {
-    return { ...activity, name: activity.name, value: activity._id };
-  });
   const getClassById = async () => {
     try {
       const classWithId = classes.find((element) => element._id === id);
-      /*       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`);
-      const data = await res.json(); */
       setSingleClass(classWithId);
-      console.log(classWithId);
       previousClass(singleClass);
+      console.log(classWithId);
     } catch (error) {
       console.error(error);
     }
@@ -235,6 +231,18 @@ const Form = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [singleClass]);
+
+  const watchTrainer = watch('trainerId');
+  useEffect(() => {
+    trainers.map((trainer) => trainer._id === watchTrainer && setTrainer(trainer));
+  }, [watchTrainer, trainers]);
+
+  const updatedActivity = trainer
+    ? trainer.activities.map((activity) => {
+        return { ...activity, name: activity.name, value: activity._id };
+      })
+    : [];
+
   if (isLoading) {
     return (
       <div className={styles.container}>
@@ -244,7 +252,6 @@ const Form = () => {
       </div>
     );
   }
-
   return (
     <div className={styles.container}>
       <div className={styles.transparetnBlueForm}>
@@ -264,38 +271,52 @@ const Form = () => {
             />
           )}
           <div className={styles.sideBySideContainer}>
-            <Select
-              register={register}
-              placeholder={id ? singleClass.day : 'Day'}
-              options={weekDays}
-              nameValue={'day'}
-              error={errors.day?.message}
-              label={'Day'}
-            />
-            <Select
-              register={register}
-              placeholder={id ? singleClass?.hour : 'Hour'}
-              options={hours}
-              nameValue={'hour'}
-              error={errors.hour?.message}
-              label={'Hour'}
-            />
-            <Select
-              register={register}
-              placeholder={id ? singleClass.trainerId?.firstName : 'Trainer'}
-              options={updatedTrainers}
-              nameValue={'trainerId'}
-              error={errors.trainerId?.message}
-              label={'Trainer'}
-            />
-            <Select
-              register={register}
-              placeholder={id ? singleClass.activityId?.name : 'Activity'}
-              options={updatedActivity}
-              nameValue={'activityId'}
-              error={errors.activityId?.message}
-              label={'Activity'}
-            />
+            <div>
+              <Select
+                register={register}
+                placeholder={id ? singleClass.day : 'Day'}
+                options={weekDays}
+                nameValue={'day'}
+                error={errors.day?.message}
+                label={'Day'}
+              />
+            </div>
+            <div>
+              <Select
+                register={register}
+                placeholder={id ? singleClass?.hour : 'Hour'}
+                options={hours}
+                nameValue={'hour'}
+                error={errors.hour?.message}
+                label={'Hour'}
+              />
+            </div>
+            <div>
+              <Select
+                register={register}
+                placeholder={id ? singleClass.trainerId?.firstName : 'Trainer'}
+                options={updatedTrainers}
+                nameValue={'trainerId'}
+                error={errors.trainerId?.message}
+                label={'Trainer'}
+              />
+            </div>
+            <div>
+              <Select
+                register={register}
+                placeholder={
+                  id
+                    ? singleClass.activityId?.name
+                    : updatedActivity.length !== 0
+                    ? 'Trainers assigned activities'
+                    : 'Please select a trainer first'
+                }
+                options={updatedActivity}
+                nameValue={'activityId'}
+                error={errors.activityId?.message}
+                label={'Activity'}
+              />
+            </div>
           </div>
           <div className={styles.selectContainer}>
             <div className={styles.buttons}>
