@@ -17,6 +17,7 @@ export const Select = ({
   return (
     <>
       <label className={dark ? `${styles.label} ${styles.dark}` : `${styles.label}`}>{label}</label>
+      {console.log(placeholder)}
       <select
         name={nameValue}
         className={
@@ -30,12 +31,12 @@ export const Select = ({
         onFocus={onFocus}
         onBlur={onBlur}
       >
-        <option key={10} hidden>
+        <option hidden disabled>
           {placeholder}
         </option>
         {options.map((item) => {
           return (
-            <option key={item._id} value={item.value}>
+            <option key={item._id} value={item.value} className={styles.options}>
               {item.name}
             </option>
           );
