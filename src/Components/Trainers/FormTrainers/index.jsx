@@ -168,7 +168,11 @@ const TrainerAddForm = () => {
   return (
     <div className={styles.formContainer}>
       <div className={styles.fromBackground}>
-        <h2 className={styles.title}>{id ? 'Edit Trainer' : 'Add Trainer'}</h2>
+        {location.pathname.includes('trainer/form') ? (
+          <h2 className={styles.title}>Edit Profile</h2>
+        ) : (
+          <h2 className={styles.title}>{id ? 'Edit Trainer' : 'Add Trainer'}</h2>
+        )}
         <form
           className={styles.form}
           onSubmit={handleSubmit(onSubmit)}
@@ -245,29 +249,74 @@ const TrainerAddForm = () => {
                     error={errors.password?.message}
                   />
                 )}
+                {(location.pathname.includes('trainer/form') || id) && (
+                  <div className={styles.select}>
+                    <label className={styles.label}>Activities</label>
+                    <Select
+                      styles={{
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+                          borderRadius: '30px',
+                          height: '50px'
+                        })
+                      }}
+                      defaultValue={
+                        trainer
+                          ? trainer.activities.map((activity) => ({
+                              value: activity._id,
+                              label: activity.name
+                            }))
+                          : trainer
+                      }
+                      value={
+                        activity
+                          ? transformedData.find(
+                              (singleActivity) => singleActivity.value === activity
+                            )
+                          : activity
+                      }
+                      isMulti
+                      options={transformedData}
+                      onChange={(event) => {
+                        onActivityChange(event.map((activity) => activity.value));
+                      }}
+                    />
+                  </div>
+                )}
               </div>
             </div>
-            <Select
-              className={styles.select}
-              defaultValue={
-                trainer
-                  ? trainer.activities.map((activity) => ({
-                      value: activity._id,
-                      label: activity.name
-                    }))
-                  : trainer
-              }
-              value={
-                activity
-                  ? transformedData.find((singleActivity) => singleActivity.value === activity)
-                  : activity
-              }
-              isMulti
-              options={transformedData}
-              onChange={(event) => {
-                onActivityChange(event.map((activity) => activity.value));
-              }}
-            />
+            {location.pathname.includes('admin/trainers/form') && !id && (
+              <div className={`${styles.select} ${styles.wideSelect}`}>
+                <label className={styles.label}>Activities</label>
+                <Select
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderRadius: '30px',
+                      height: '50px'
+                    })
+                  }}
+                  defaultValue={
+                    trainer
+                      ? trainer.activities.map((activity) => ({
+                          value: activity._id,
+                          label: activity.name
+                        }))
+                      : trainer
+                  }
+                  value={
+                    activity
+                      ? transformedData.find((singleActivity) => singleActivity.value === activity)
+                      : activity
+                  }
+                  isMulti
+                  options={transformedData}
+                  onChange={(event) => {
+                    onActivityChange(event.map((activity) => activity.value));
+                  }}
+                />
+              </div>
+            )}
           </div>
           <div className={styles.buttons}>
             <Link to={cancelButtonDestination}>

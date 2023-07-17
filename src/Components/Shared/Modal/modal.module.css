@@ -62,7 +62,7 @@
 }
 
 .modalError {
-  background-color: #a30000;
+  background-color: #cd3133;
   border: 0.1vw solid white;
   min-height: 5vw;
   min-width: 20vw;
@@ -74,17 +74,17 @@
 .modalTitle {
   display: inline-block;
   margin: 0;
-  font-size: 22px;
+  font-size: 24px;
 }
 
 .modalWarn {
-  color: #a30000;
+  color: #cd3133;
 }
 
 .modalText{
   align-self: center;
   margin: 2vw 0;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .modalCloseBtn {
@@ -100,5 +100,5 @@
   cursor: pointer;
 }
 .modalCloseBtn:hover {
-  color: red; 
+  color: #cd3133;
 }

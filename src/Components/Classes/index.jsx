@@ -139,11 +139,11 @@ const Classes = () => {
         <table className={styles.table}>
           <thead>
             <tr>
-              <th className={`${styles.large} ${styles.border}`}>Activity Name</th>
+              <th className={`${styles.large} ${styles.border}`}>Activity</th>
               <th className={`${styles.medium} ${styles.border}`}>Day</th>
               <th className={`${styles.small} ${styles.border}`}>Hour</th>
               <th className={`${styles.medium} ${styles.border}`}>Trainer</th>
-              <th className={`${styles.small} ${styles.border}`}>Available slots</th>
+              <th className={`${styles.small} ${styles.border}`}>Slots</th>
               {location.pathname.includes('admin/classes') && (
                 <>
                   <th className={`${styles.small} ${styles.border}`}></th>

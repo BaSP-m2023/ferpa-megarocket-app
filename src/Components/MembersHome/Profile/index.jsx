@@ -23,63 +23,54 @@ const Profile = () => {
 
   return (
     <section className={styles.container}>
-      <h2 className={styles.header}>Your profile</h2>
-      <div className={styles.dataWraper} data-testid={'member-profile-container'}>
-        <div className={styles.userData}>
-          <div className={styles.inputDuo}>
-            <p className={styles.infoTag}>Name:</p>
-            <p className={styles.userInfo}>{user?.firstName}</p>
+      <div className={styles.onTop} data-testid={'member-profile-container'}>
+        <h2 className={styles.h2}>Account information</h2>
+        <div className={styles.nextToEachOther}>
+          <div className={styles.big}>
+            <div className={styles.list}>
+              <span className={styles.title}>Name</span>
+              <span className={styles.welcome}>{user?.firstName}</span>
+            </div>
+            <div className={styles.list}>
+              <span className={styles.title}>Email</span>
+              <span className={styles.welcome}>{user?.email}</span>
+            </div>
+            <div className={styles.list}>
+              <span className={styles.title}>Membership</span>
+              <span className={styles.welcome}>{user?.membership}</span>
+            </div>
           </div>
-          <div className={styles.inputDuo}>
-            <p className={styles.infoTag}>Last Name:</p>
-            <p className={styles.userInfo}>{user?.lastName}</p>
-          </div>
-          <div className={styles.inputDuo}>
-            <p className={styles.infoTag}>DNI:</p>
-            <p className={styles.userInfo}>{user?.dni}</p>
-          </div>
-          <div className={styles.inputDuo}>
-            <p className={styles.infoTag}>Birthday:</p>
-            <p className={styles.userInfo}>{user.birthday}</p>
-          </div>
-          <div className={styles.inputDuo}>
-            <p className={styles.infoTag}>Current membership:</p>
-            <p className={styles.userInfo}>{user?.membership}</p>
-          </div>
-        </div>
-        <div className={styles.userData}>
-          <div className={styles.inputDuo}>
-            <p className={styles.infoTag}>Phone:</p>
-            <p className={styles.userInfo}>{user?.phone}</p>
-          </div>
-          <div className={styles.inputDuo}>
-            <p className={styles.infoTag}>Email:</p>
-            <p className={styles.userInfo}>{user?.email}</p>
-          </div>
-          <div className={styles.inputDuo}>
-            <p className={styles.infoTag}>City:</p>
-            <p className={styles.userInfo}>{user?.city}</p>
-          </div>
-          <div className={styles.inputDuo}>
-            <p className={styles.infoTag}>Postal Code:</p>
-            <p className={styles.userInfo}>{user?.postalCode}</p>
-          </div>
-          <div className={styles.inputDuo}>
-            {user?.isActive ? (
-              <div className={styles.userInfo}>You are an active user</div>
-            ) : (
-              <div className={styles.userInfo}>You are not an active user</div>
-            )}
+          <div className={styles.big}>
+            <div className={styles.list}>
+              <span className={styles.title}>Last Name</span>
+              <span className={styles.welcome}>{user?.lastName}</span>
+            </div>
+            <div className={styles.list}>
+              <span className={styles.title}>Phone</span>
+              <span className={styles.welcome}>{user?.phone}</span>
+            </div>
+            <div className={styles.list}>
+              <span className={styles.title}>Account State</span>
+              {user?.isActive ? (
+                <div className={styles.welcome}>You are an active user</div>
+              ) : (
+                <div className={styles.welcome}>You are not an active user</div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <div className={styles.editButton}>
-        <Link to={'/change_pass'}>
-          <Button text={'Change Password'} testid={'change-pass-btn'} />
-        </Link>
-        <Link to={`/member/form/${user?._id}`}>
-          <Button text={'Edit your profile!'} variant={'add'} testid={'add-btn'} />
-        </Link>
+        <div className={styles.btns}>
+          <div className={styles.btn}>
+            <Link to={'/change_pass'}>
+              <Button variant={'white'} text={'Change Password'} testid={'change-pass-btn'} />
+            </Link>
+          </div>
+          <div className={styles.btn}>
+            <Link to={`/member/form/${user?._id}`}>
+              <Button variant={'add'} text={'Edit Profile'} testid={'edit-btn'} />
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );

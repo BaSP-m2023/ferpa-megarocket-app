@@ -8,6 +8,7 @@ import Modal from 'Components/Shared/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { createMember } from 'redux/members/thunks';
 import { signUpMember } from 'redux/auth/thunks';
+import { resetError } from 'redux/auth/action';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -15,6 +16,11 @@ import Aside from 'Components/Shared/Aside';
 
 const MembersCreate = () => {
   const location = useLocation();
+  const {
+    error: signupError,
+    message: signupMessage,
+    success: signupSuccess
+  } = useSelector((state) => state.auth);
 
   const schema = Joi.object({
     firstName: Joi.string()
@@ -68,8 +74,7 @@ const MembersCreate = () => {
     password: Joi.string()
       .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{7,}$/)
       .messages({
-        'string.pattern.base':
-          'Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 7 characters long'
+        'string.pattern.base': 'Password too weak. Example: pAssword1'
       })
   });
 
@@ -94,6 +99,7 @@ const MembersCreate = () => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
+  const [signupModal, setSignupModal] = useState(false);
 
   const history = useHistory();
   const { error, success, message } = useSelector((state) => state.members);
@@ -109,6 +115,11 @@ const MembersCreate = () => {
   });
 
   useEffect(() => {
+    dispatch(resetError());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if (success && location.pathname.includes('/admin/members/form')) {
       setTimeout(() => {
         history.push('/admin/members');
@@ -122,10 +133,19 @@ const MembersCreate = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success, error]);
 
+  useEffect(() => {
+    if (signupSuccess) {
+      setTimeout(() => {
+        history.push('/home/login');
+      }, 2000);
+      setSignupModal(!signupModal);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [signupSuccess]);
+
   const onSubmit = (data) => {
     if (location.pathname.includes('/home/signup')) {
       dispatch(signUpMember(data));
-      history.push('/home/login');
     } else {
       dispatch(createMember(data));
     }
@@ -134,6 +154,13 @@ const MembersCreate = () => {
   if (location.pathname.includes('/home/signup')) {
     return (
       <section className={styles.signupContainer}>
+        <Modal
+          onClose={() => setSignupModal(!signupModal)}
+          isOpen={signupModal}
+          title={'Successfully created'}
+          success
+          testid={'success-modal'}
+        />
         <Aside />
         <div className={styles.signup}>
           <div className={styles.box} data-testid={'signup-container'}>
@@ -247,8 +274,15 @@ const MembersCreate = () => {
                   </div>
                 </div>
               </div>
+              <p
+                className={
+                  !signupError ? `${styles.error} ${styles.errorHidden}` : `${styles.error}`
+                }
+              >
+                <img src="../../../assets/images/warning.svg" alt="warning" /> {signupMessage}
+              </p>
               <div className={styles.signupButton}>
-                <Button text={'Add'} variant={'add'} submitting testid={'add-btn'} />
+                <Button text={'Sign Up'} variant={'add'} submitting testid={'add-btn'} />
               </div>
             </form>
           </div>
@@ -373,13 +407,16 @@ const MembersCreate = () => {
                 />
               </div>
               <div className={styles.checkboxField}>
-                <label>Is Active?</label>
-                <input
-                  className={styles.checkbox}
-                  name={'isActive'}
-                  type="checkbox"
-                  {...register('isActive')}
-                />
+                <label>Active / Inactive</label>
+                <label className={styles.switch}>
+                  <input
+                    className={styles.checkbox}
+                    name={'isActive'}
+                    type="checkbox"
+                    {...register('isActive')}
+                  />
+                  <span className={`${styles.slider} ${styles.round}`}></span>
+                </label>
               </div>
             </div>
           </div>

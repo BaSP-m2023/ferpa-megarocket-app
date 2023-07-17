@@ -99,7 +99,7 @@ function Subscriptions() {
           <div className={styles.header}>
             <h2 className={styles.title}>Subscriptions</h2>
             <Link to={`/admin/subscriptions/form`}>
-              <Button variant={'add'} text={'New Subscription'} />
+              <Button variant={'add'} text={'New Subscription'} testid={'add-btn'} />
             </Link>
           </div>
           <table className={styles.table}>

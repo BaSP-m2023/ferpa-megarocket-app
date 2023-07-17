@@ -127,9 +127,9 @@ const Trainers = () => {
             </tr>
           </thead>
           <tbody>
-            {trainers.map((item, index) => {
+            {trainers.map((item) => {
               return (
-                <tr key={item._id}>
+                <tr key={item._id} className={styles.tr}>
                   <td className={styles.list}>{item.firstName}</td>
                   <td className={styles.list}>{item.lastName}</td>
                   <td className={styles.list}>{item.phone}</td>
