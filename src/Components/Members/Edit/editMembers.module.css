@@ -14,6 +14,7 @@
   background-size: cover;
   background-image: url('../../../../public/assets/images/subscriptions-background.jpg');
   min-height: 71vh;
+  margin-top: 200px;
 }
 
 .box {

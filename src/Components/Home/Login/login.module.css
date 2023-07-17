@@ -8,6 +8,8 @@
   background-size: cover;
   font-family: 'Roboto', sans-serif;
   font-size: 22px;
+  min-height: 80vh;
+  margin-top: 130px;
 }
 
 .login {

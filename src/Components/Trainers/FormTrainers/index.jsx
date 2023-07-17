@@ -1,7 +1,7 @@
 import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Input } from 'Components/Shared/Inputs';
-import { sendTrainer, putTrainer } from 'redux/trainers/thunks';
+import { sendTrainer, putTrainer, getTrainers } from 'redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm, useController } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -95,10 +95,11 @@ const TrainerAddForm = () => {
   const isFormEdited = Object.keys(dirtyFields).length > 0;
 
   useEffect(() => {
+    getTrainers(dispatch);
     getActivities(dispatch);
     if (id) {
-      const trainer = trainers.find((trainer) => trainer._id === id);
-      const copyTrainer = { ...trainer };
+      const singleTrainer = trainers.find((trainer) => trainer._id === id);
+      const copyTrainer = { ...singleTrainer };
       delete copyTrainer.isActive;
       delete copyTrainer.__v;
       delete copyTrainer._id;

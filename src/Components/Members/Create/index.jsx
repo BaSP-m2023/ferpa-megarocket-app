@@ -73,7 +73,7 @@ const MembersCreate = () => {
     password: Joi.string()
       .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{7,}$/)
       .messages({
-        'string.pattern.base': 'Password too weak. Example: pAssword1'
+        'string.pattern.base': 'At least 1 uppercase, 1 lowercase, 1 number, 7 characters.'
       })
   });
 
