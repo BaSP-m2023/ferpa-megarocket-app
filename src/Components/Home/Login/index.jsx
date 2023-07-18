@@ -76,13 +76,13 @@ function Login() {
               </div>
             </div>
             <div className={styles.LogInbtn}>
-              <Button text={'Continue'} variant={'add'} submitting />
+              <Button text={'Continue'} variant={'add'} submitting testid={'continue-btn'} />
             </div>
           </form>
           <p className={styles.spaceForSignup}>
             {`Don't have an account? `}
             <span>
-              <Link to="signup" className={styles.signup}>
+              <Link to="signup" className={styles.signup} data-testid={'sign-up-btn'}>
                 Sign up now!
               </Link>
             </span>

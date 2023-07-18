@@ -70,7 +70,7 @@ const Landing = () => {
 
   return (
     <div className={styles.container}>
-      <section className={styles.introduction}>
+      <section className={styles.introduction} data-testid={'landing-container'}>
         <div className={styles.introductionBox}>
           <h1 className={styles.title}>
             <span className={styles.megaColor}>Mega</span>Rocket GYM
@@ -88,7 +88,7 @@ const Landing = () => {
               that fitness is a lifestyle, not just a hobby. Join us today and start your journey
               towards a healthier, happier you.
             </p>
-            <div className={styles.joinUs}>
+            <div className={styles.joinUs} data-testid={'become-btn'}>
               <a className={styles.scrollableLink} href="#Memberships">
                 BECOME A MEMBER
               </a>
@@ -103,7 +103,7 @@ const Landing = () => {
           ></img>
         </div>
       </section>
-      <section className={styles.meetUs}>
+      <section className={styles.meetUs} data-testid={'meet-us-container'}>
         <h2 className={styles.subTitle}>Meet Us</h2>
         <div className={styles.meetUsBox}>
           <div className={styles.box}>
@@ -141,7 +141,7 @@ const Landing = () => {
           </div>
         </div>
       </section>
-      <section className={styles.contactUs}>
+      <section className={styles.contactUs} data-testid={'contact-us-container'}>
         <div className={styles.element}>
           <h2 className={styles.subTitle}>Contact Us</h2>
           <form>
@@ -211,7 +211,7 @@ const Landing = () => {
           </form>
         </div>
       </section>
-      <section className={styles.aboutUs}>
+      <section className={styles.aboutUs} data-testid={'about-us-container'}>
         <h2 className={styles.subTitle}>About Us</h2>
         <div className={styles.aboutUsShadow}>
           <div className={styles.aboutUsBox}>
@@ -271,7 +271,7 @@ const Landing = () => {
           </div>
         </div>
       </section>
-      <section className={styles.membership} id="Memberships">
+      <section className={styles.membership} id="Memberships" data-testid={'membership-container'}>
         <h2 className={styles.subTitle}>Memberships</h2>
         <div className={styles.membershipBox}>
           <div className={styles.membBox}>
@@ -304,7 +304,7 @@ const Landing = () => {
               <li>Grid visualization</li>
             </ul>
             <div className={styles.membIconBox}>
-              <Link to="/home/signup" className={styles.link}>
+              <Link to="/home/signup" className={styles.link} data-testid={'classic-btn'}>
                 <p>U$S 100</p>
               </Link>
             </div>
