@@ -7,9 +7,10 @@
   width: 100%;
   font-family: 'Roboto', sans-serif;
   color: #373867;
+  min-height: 69.4vh;
 }
 
-.title{
+.title {
   margin: 0;
   padding-bottom: 20px;
   font-size: 60px;
@@ -43,11 +44,11 @@
 }
 
 
-.megaColor{
+.megaColor {
   color: rgba(47, 48, 88, 0.76);
 }
 
-.subTitle{
+.subTitle {
   padding-top: 15px;
   font-family: 'Roboto', sans-serif;
   font-size: 34px;
@@ -57,7 +58,7 @@
   margin-top: 70px;
 }
 
-.text{
+.text {
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   line-height: 25px;
@@ -65,7 +66,7 @@
   font-weight: 200;
 }
 
-.introduction{
+.introduction {
   display: flex;
   flex-direction: row;
   border-bottom: 10px solid #02004070;
@@ -76,7 +77,7 @@
   margin-left: auto;
 }
 
-.introductionBox{
+.introductionBox {
   display: flex;
   flex-direction: column;
   width: 50%;
@@ -96,7 +97,7 @@
   font-size: 25px;
   font-weight: 600;
   line-height: 29px;
-  margin:0; 
+  margin: 0;
   padding-top: 25px;
 }
 
@@ -104,7 +105,7 @@
   width: 80%;
 }
 
-.meetUs{
+.meetUs {
   padding-bottom: 50px;
   border-bottom: 10px solid #02004070;
   border-bottom: 2px solid black;
@@ -128,7 +129,7 @@
 .box:hover {
   transform: translateY(-10px);
   border-radius: 25px;
-  background-color: rgba(170,207,155,0.5);
+  background-color: rgba(170, 207, 155, 0.5);
 }
 
 .box img {
@@ -147,7 +148,7 @@
   /* Para aplicar perspectiva en el elemento */
 }
 
-.inputs{
+.inputs {
   padding-top: 35px;
   padding-right: 5%;
   padding-left: 5%;
@@ -158,11 +159,11 @@
   justify-content: space-between;
 }
 
-.firstInputs .inputGroup{
+.firstInputs .inputGroup {
   width: calc(50% - 10px);
 }
 
-.contactButtons{
+.contactButtons {
   display: flex;
   justify-content: right;
   padding-right: 20px;
@@ -183,10 +184,10 @@
   background-color: #3738678f;
 }
 
-.aboutUsBox .text{
-padding-left: 20px;
-color: #1a014b;
-font-weight: 200;
+.aboutUsBox .text {
+  padding-left: 20px;
+  color: #1a014b;
+  font-weight: 200;
 }
 
 .aboutText {
@@ -197,20 +198,20 @@ font-weight: 200;
 .aboutImg {
   height: 330px;
   width: 570px;
-  border:15px solid #373867;
+  border: 15px solid #373867;
   border-radius: 500px;
   border-bottom-left-radius: 0;
 }
 
 .aboutImgDos {
   height: 330px;
-  border:15px solid #373867;
+  border: 15px solid #373867;
   width: 570px;
   border-radius: 500px;
   border-bottom-right-radius: 0;
 }
 
-.membershipBox{
+.membershipBox {
   display: flex;
   justify-content: space-around;
   padding-left: 25%;
@@ -233,16 +234,16 @@ font-weight: 200;
   padding-top: 5%;
   background-color: #373867;
   border-radius: 50px;
-  color:white;
+  color: white;
   font-weight: bold;
   box-shadow: 2px 2px 4px rgba(47, 48, 88, 0.8);
   transition: transform 0.5s ease;
 }
 
-.membBox .informationTitle{
+.membBox .informationTitle {
   border-bottom: 3px solid #46a37c;
   padding-bottom: 30px;
-  }
+}
 
 .membBox ul,
 .informationTitle+ul {
@@ -257,7 +258,7 @@ font-weight: 200;
   margin-left: -1em;
 }
 
-.membBox h3{
+.membBox h3 {
   text-align: center;
 }
 
@@ -265,21 +266,21 @@ font-weight: 200;
   transform: translateY(-20px);
 }
 
-.membIcon{
+.membIcon {
   display: flex;
   justify-content: center;
   height: 120px;
   width: 120px;
 }
 
-.membIconBox{
+.membIconBox {
   display: flex;
-  width:270px;
+  width: 270px;
   align-items: center;
   justify-content: center;
 }
 
-.membIconBox p{
+.membIconBox p {
   font-size: 30px;
   color: white;
   border-radius: 15px;
