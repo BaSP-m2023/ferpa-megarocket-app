@@ -80,7 +80,7 @@ const Table = () => {
         onClose={() => setDeleteModal(!deleteModal)}
         testid={'success-modal'}
       />
-      <table className={styles.table}>
+      <table className={styles.table} data-testid={'activities-container'}>
         <thead className={styles.tHead}>
           <tr className={styles.trHead}>
             <th className={styles.thName}>Activity</th>
@@ -99,7 +99,7 @@ const Table = () => {
                 <td className={styles.thStatus}>{activity?.isActive ? 'Active' : 'Inactive'}</td>
                 <td className={styles.tdBtn}>
                   <Link to={`/admin/activities/form/${activity._id}`}>
-                    <Button variant={'edit'} />
+                    <Button variant={'edit'} testid={'edit-btn'} />
                   </Link>
                 </td>
                 <td className={styles.tdBtn}>

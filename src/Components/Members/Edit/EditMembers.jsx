@@ -290,11 +290,11 @@ const MembersEdit = () => {
           <div className={styles.formBtns}>
             {location.pathname.includes('member/form') ? (
               <Link to="/member/profile">
-                <Button text={'Cancel'} variant={'white'} />
+                <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
               </Link>
             ) : (
               <Link to="/admin/members">
-                <Button text={'Cancel'} variant={'white'} />
+                <Button text={'Cancel'} variant={'white'} testid={'cancel-btn'} />
               </Link>
             )}
             <Button text={'Edit'} variant={'add'} submitting testid={'confirm-edit-btn'} />

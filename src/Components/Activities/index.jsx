@@ -71,7 +71,7 @@ function Activities() {
             <div className={styles.header}>
               <h2 className={styles.title}>Activities</h2>
               <Link to="/admin/activities/form">
-                <Button text={'Add'} variant={'add'} />
+                <Button text={'Add'} variant={'add'} testid={'add-btn'} />
               </Link>
             </div>
             <Modal
