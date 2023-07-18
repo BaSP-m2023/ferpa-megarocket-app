@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { Switch, Route, BrowserRouter as Router, Redirect, useLocation } from 'react-router-dom';
+import styles from './index.module.css';
+import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import PrivateRoute from './privateRoute';
 import { useDispatch, useSelector } from 'react-redux';
 import { tokenListener } from '../helper/firebase';
@@ -8,7 +9,7 @@ import Loader from 'Components/Shared/Loader';
 import Aside from 'Components/Shared/Aside';
 import Header from 'Components/Shared/Header';
 import Footer from 'Components/Shared/Footer';
-import styles from 'Components/Home/home.module.css';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 const AdminsRoutes = lazy(() => import('./admins'));
 const SuperAdminsRoutes = lazy(() => import('./superAdmin'));
@@ -18,10 +19,10 @@ const HomeRoutes = lazy(() => import('./home'));
 const ChangePass = lazy(() => import('Components/Home/ChangePass'));
 
 const Routes = () => {
-  const location = useLocation();
   const dispatch = useDispatch();
   const token = sessionStorage.getItem('token');
   const { isOn } = useSelector((state) => state.aside);
+  const location = useLocation();
 
   useEffect(() => {
     tokenListener();

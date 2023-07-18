@@ -45,36 +45,6 @@
   cursor: pointer;
 }
 
-<<<<<<< HEAD
-.fallback {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url('../../../public/assets/images/subscriptions-background.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  font-family: 'Roboto', sans-serif;
-  font-size: 22px;
-  align-self: center;
-  min-height: 71vh;
+.membBox {
+  height: 1000px;
 }
-
-.fallbackHome {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url('../../../public/assets/images/subscriptions-background.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  font-family: 'Roboto', sans-serif;
-  font-size: 22px;
-  align-self: center;
-  min-height: 76.95vh;
-}
-=======
-.membBox{
-height: 1000px;
-  }
->>>>>>> master
