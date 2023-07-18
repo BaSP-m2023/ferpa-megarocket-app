@@ -1,12 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 .container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 150px;
   width: 100%;
+  font-family: 'Roboto', sans-serif;
+  color: #373867;
+  min-height: 69.4vh;
+}
+
+.title {
+  margin: 0;
+  padding-bottom: 20px;
+  font-size: 60px;
+  font-weight: 800;
+  line-height: 70px;
+  color: rgba(47, 48, 88, 1);
+}
+
+.joinUs {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.joinUs a {
+  font-size: 30px;
+  color: white;
+  text-decoration: none;
+  border-radius: 15px;
+  background-color: #373867;
+  padding: 15px 60px;
+}
+
+.scrollableLink {
+  width: 100%;
+  height: 74px;
+  text-align: center;
+  margin-top: 20px;
+  scroll-behavior: smooth;
+}
+
+
+.megaColor {
+  color: rgba(47, 48, 88, 0.76);
+}
+
+.subTitle {
+  padding-top: 15px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 40px;
+  color: rgba(47, 48, 88, 1);
+  margin-top: 70px;
+}
+
+.text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  line-height: 25px;
+  color: rgba(47, 48, 88, 1);
+  font-weight: 200;
+}
+
+.introduction {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 10px solid #02004070;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  border-bottom: 2px solid black;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.introductionBox {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.introductionImg {
+  display: flex;
+  width: 50%;
+  height: 501px;
+  width: 705px;
+  padding-left: 30px;
+}
+
+.informationTitle {
+  font-family: 'Roboto', sans-serif;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 29px;
+  margin: 0;
+  padding-top: 25px;
+}
+
+.introductionText {
+  width: 80%;
+}
+
+.meetUs {
+  padding-bottom: 50px;
+  border-bottom: 10px solid #02004070;
+  border-bottom: 2px solid black;
+}
+
+.meetUsBox {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  width: calc(50% - 100px);
+  margin: 50px;
+  transition: transform 0.3s ease;
+}
+
+.box:hover {
+  transform: translateY(-10px);
+  border-radius: 25px;
+  background-color: rgba(170, 207, 155, 0.5);
+}
+
+.box img {
+  margin-right: 20px;
+  padding-left: 15px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.contactUs {
+  padding-bottom: 50px;
+  border-bottom: 2px solid black;
+  border-bottom: 10px solid #02004070;
+  position: relative;
+  perspective: 1000px;
+  /* Para aplicar perspectiva en el elemento */
+}
+
+.inputs {
+  padding-top: 35px;
+  padding-right: 5%;
+  padding-left: 5%;
+}
+
+.firstInputs {
+  display: flex;
+  justify-content: space-between;
+}
+
+.firstInputs .inputGroup {
+  width: calc(50% - 10px);
+}
+
+.contactButtons {
+  display: flex;
+  justify-content: right;
+  padding-right: 20px;
+  padding-bottom: 15px;
+}
+
+.aboutUs {
+  padding-bottom: 50px;
+  border-bottom: 10px solid #02004070;
+  border-bottom: 2px solid black;
+}
+
+.aboutUsBox {
+  display: flex;
+  align-items: center;
+  padding: 40px;
+  border-radius: 40px;
+  background-color: #3738678f;
+}
+
+.aboutUsBox .text {
+  padding-left: 20px;
+  color: #1a014b;
+  font-weight: 200;
+}
+
+.aboutText {
+  width: 80%;
+  margin-right: 100px;
+}
+
+.aboutImg {
+  height: 330px;
+  width: 570px;
+  border: 15px solid #373867;
+  border-radius: 500px;
+  border-bottom-left-radius: 0;
+}
+
+.aboutImgDos {
+  height: 330px;
+  border: 15px solid #373867;
+  width: 570px;
+  border-radius: 500px;
+  border-bottom-right-radius: 0;
+}
+
+.membershipBox {
+  display: flex;
+  justify-content: space-around;
+  padding-left: 25%;
+  padding-right: 25%;
+  margin-bottom: 45px;
+}
+
+.membBox h3 {
+  color: #46a37c
+}
+
+.membBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 325px;
+  margin: 20px;
+  padding: 10px;
+  padding-top: 5%;
+  background-color: #373867;
+  border-radius: 50px;
+  color: white;
+  font-weight: bold;
+  box-shadow: 2px 2px 4px rgba(47, 48, 88, 0.8);
+  transition: transform 0.5s ease;
+}
+
+.membBox .informationTitle {
+  border-bottom: 3px solid #46a37c;
+  padding-bottom: 30px;
+}
+
+.membBox ul,
+.informationTitle+ul {
+  list-style-type: none;
+}
+
+.membBox ul li::before,
+.informationTitle+ul li::before {
+  content: "\2022";
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+.membBox h3 {
+  text-align: center;
+}
+
+.membBox:hover {
+  transform: translateY(-20px);
+}
+
+.membIcon {
   display: flex;
   justify-content: center;
+  height: 120px;
+  width: 120px;
+}
+
+.membIconBox {
+  display: flex;
+  width: 270px;
   align-items: center;
-  background-image: url('../../../../public/assets/images/subscriptions-background.jpg');
-  height: 77vh;
-  box-shadow: 0px 0px 41px 4px rgba(0, 0, 0, 0.71) inset;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  justify-content: center;
+}
+
+.membIconBox p {
+  font-size: 30px;
+  color: white;
+  border-radius: 15px;
+  background-color: #46a37c;
+  padding: 5px;
+  margin-left: 10px;
+}
+
+.link {
+  text-decoration: none;
+  text-align: center;
+  font-weight: 500;
+  width: 60%;
+}
+
+.aboutUsShadow {
+  margin: 20px;
 }

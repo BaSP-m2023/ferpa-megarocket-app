@@ -11,7 +11,8 @@
   background-size: cover;
   font-family: 'Roboto', sans-serif;
   font-size: 22px;
-  min-height: 71vh;
+  min-height: 69.4vh;
+  margin-top: 200px;
 }
 
 .list {
@@ -91,6 +92,7 @@
 
 .tr {
   color: white;
+  height: 55px;
 }
 
 .td {
@@ -102,6 +104,7 @@
 
 .tdBtn {
   width: 5vw;
+  text-align: end;
 }
 
 .loading {

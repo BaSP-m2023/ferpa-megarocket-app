@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   font-size: 25px;
   color: white;
   background-size: cover;
@@ -14,7 +15,8 @@
   background-size: cover;
   background-image: url('../../../../public/assets/images/admins-background.jpg');
   font-weight: bold;
-  min-height: 71vh;
+  min-height: 69.4vh;
+  margin-top: 200px;
 }
 
 .header {
@@ -25,20 +27,20 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  justify-content: space-evenly;
+  justify-content: center;
   width: 95vw;
-  margin-bottom: 75px;
+  margin: 2%;
 }
 
 .activity {
+  margin: 0 40px;
   border-radius: 13px;
   box-shadow: 0px 14px 7px 1px rgb(0 0 0 / 75%);
   background-color: #474885;
-  width: 15vw;
+  width: 280px;
   display: flex;
   flex-direction: column;
-  height: 400px;
-  margin-bottom: 80px;
+  height: 420px;
 }
 
 .image {
@@ -48,7 +50,7 @@
 }
 
 .activityName {
-  font-size: 22px;
+  font-size: 24px;
   padding-left: 10px;
   color: #8ddeba;
 }
@@ -56,7 +58,7 @@
 .activityDescription {
   padding: 11px;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 16px;
   height: 100%;
 }
 
@@ -65,4 +67,5 @@
   display: flex;
   flex-direction: column;
   color: white;
+  padding: 20px;
 }

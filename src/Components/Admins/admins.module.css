@@ -17,11 +17,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 71vh;
+  min-height: 69.4vh;
   background-image: url('../../../public/assets/images/admins-background.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  margin-top: 200px;
 }
 
 .list {

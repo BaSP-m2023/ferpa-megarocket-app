@@ -11,7 +11,8 @@
   background-position: center;
   background-size: cover;
   background-image: url('../../../public/assets/images/admins-background.jpg');
-  min-height: 71vh;
+  min-height: 69.4vh;
+  margin-top: 200px;
 }
 
 .title {
@@ -25,8 +26,9 @@
 
 .h2 {
   font-size: 40px;
-  margin: 0;
   padding: 0;
+  text-align: center;
+  margin: 0;
 }
 
 .error {
@@ -36,9 +38,9 @@
 
 .buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: 20px;
-  width: 80%;
+  width: 60%;
   margin: 2vh auto;
 }
 
@@ -61,7 +63,7 @@
   align-items: center;
   flex-direction: column;
   width: 40vw;
-  height: 75vh;
+  height: 80vh;
   margin: 2%;
   border-radius: 1.5vh;
   background-color: rgba(55, 56, 103, 0.8);
@@ -69,16 +71,11 @@
   padding: 20px;
 }
 
-.transparetnBlueForm h2 {
-  height: 5%;
-}
 
 .form {
   display: flex;
   flex-flow: column;
-  justify-content: space-between;
   width: 100%;
-  height: 100%;
 }
 
 .table {
@@ -100,11 +97,10 @@
 }
 
 .border {
-  border-bottom: solid 4px white;
+  border-bottom: solid 3px white;
 }
 
 .small {
-  width: 10%;
   text-align: left;
   padding-bottom: 1vw;
 }
@@ -116,7 +112,7 @@
 }
 
 .large {
-  width: 30%;
+  width: 20%;
   text-align: left;
   padding-bottom: 1vw;
 }
@@ -134,23 +130,19 @@
 .loading {
   border-radius: 20px;
   box-shadow: 10px 10px 20px -6px rgba(0, 0, 0, 0.59);
+  margin: 50px;
 }
 
 .tdBtn {
   width: 100px;
+  text-align: end;
 }
 
 .sideBySideContainer {
   display: flex;
-  width: 100%;
-  height: 60%;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.selectContainer {
-  display: flex;
   flex-flow: column;
-  padding: 50px 20px 0 20px;
-  width: 100%;
+  padding: 0 20px 0 20px;
+  width: 80%;
+  margin: 0 auto;
+  height: 100%;
 }

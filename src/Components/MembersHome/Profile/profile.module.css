@@ -1,61 +1,91 @@
-* {
-  margin: 0;
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 .container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  font-size: 25px;
-  color: white;
-  background-size: cover;
+  font-family: 'Roboto', sans-serif;
+  background-image: url('../../../../public/assets/images/admins-background.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  background-image: url('../../../../public/assets/images/admins-background.jpg');
+  min-height: 69.4vh;
+  margin-top: 200px;
+}
+
+.list {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  background-color: rgb(255 255 255);
+  border-radius: 1vw;
+  padding: 12px 20px;
+  margin: 50px 0px;
+}
+
+.welcome {
+  display: block;
+  margin: 0;
+  font-weight: 500;
+  font-size: 26px;
+  color: #373867;
+}
+
+.title {
+  display: block;
+  margin: 0;
+  font-size: 16px;
+  color: #46a37c;
+}
+
+.today {
+  font-size: 30px;
   font-weight: bold;
-  min-height: 71vh;
+  color: white;
 }
 
-.header {
-  margin: 25px 0;
-}
-
-.dataWraper {
+.nextToEachOther {
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: 40px;
+  justify-content: space-between;
 }
 
-.userData {
+.big {
+  justify-items: center;
+  width: 90%;
+  padding: 0 3vh;
+  height: 20%;
+}
+
+.onTop {
+  width: 55%;
+  margin: 2%;
   display: flex;
-  flex-direction: column;
-  margin: 0 35px;
-  gap: 15px;
+  flex-flow: column;
+  align-items: center;
+  background-color: rgba(55, 56, 103, 0.8);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 1vw;
+  padding: 50px;
+  min-height: 60vh;
 }
 
-.inputDuo {
+.h2 {
+  height: 10%;
+  margin: 0;
+  font-size: 35px;
+  color: white;
+}
+
+.btns {
   display: flex;
-  flex-direction: column;
-  min-width: 25vw;
-  background-color: #474885;
-  border-radius: 15px;
-  border-right: white solid 0.1px;
-  border-bottom: white solid 0.1px;
-  padding: 7px 15px;
-  min-height: 88px;
 }
 
-.infoTag {
-  font-size: 17px;
-  font-weight: bold;
-  color: #49a37b;
+.btn button {
+  width: 197px;
 }
 
-.userInfo {
-  margin: 5px 0;
-}
-
-.editButton {
-  margin: 75px 0;
+.loading {
+  margin: 50px;
 }

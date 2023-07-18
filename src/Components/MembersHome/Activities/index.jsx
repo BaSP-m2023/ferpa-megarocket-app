@@ -15,7 +15,6 @@ const Activities = () => {
 
   return (
     <section className={styles.container}>
-      <h2 className={styles.header}>Activities</h2>
       <div className={styles.body}>
         {data.map((activity) => {
           return (

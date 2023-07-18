@@ -19,10 +19,10 @@ const Form = () => {
     (state) => state.classes
   );
   const { trainers } = useSelector((state) => state.trainers);
-  const { data } = useSelector((state) => state.activities);
   const { id } = useParams();
   const [singleClass, setSingleClass] = useState({});
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [trainer, setTrainer] = useState('');
   const [newClass, setNewClass] = useState({
     day: '',
     hour: '',
@@ -51,6 +51,7 @@ const Form = () => {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors, dirtyFields }
   } = useForm({ mode: 'onChange', resolver: joiResolver(schema), defaultValues: { newClass } });
 
@@ -166,16 +167,10 @@ const Form = () => {
   const updatedTrainers = trainers.map((trainer) => {
     return { ...trainer, name: trainer.firstName, value: trainer._id };
   });
-  const updatedActivity = data.map((activity) => {
-    return { ...activity, name: activity.name, value: activity._id };
-  });
   const getClassById = async () => {
     try {
       const classWithId = classes.find((element) => element._id === id);
-      /*       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/classes/${id}`);
-      const data = await res.json(); */
       setSingleClass(classWithId);
-      console.log(classWithId);
       previousClass(singleClass);
     } catch (error) {
       console.error(error);
@@ -235,6 +230,18 @@ const Form = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [singleClass]);
+
+  const watchTrainer = watch('trainerId');
+  useEffect(() => {
+    trainers.map((trainer) => trainer._id === watchTrainer && setTrainer(trainer));
+  }, [watchTrainer, trainers]);
+
+  const updatedActivity = trainer
+    ? trainer.activities.map((activity) => {
+        return { ...activity, name: activity.name, value: activity._id };
+      })
+    : [];
+
   if (isLoading) {
     return (
       <div className={styles.container}>
@@ -253,7 +260,7 @@ const Form = () => {
           onSubmit={handleSubmit(onSubmit)}
           data-testid={'class-add-edit-container'}
         >
-          <h2>{id ? 'Edit' : 'Add'}</h2>
+          <h2 className={styles.h2}>{id ? 'Edit Class' : 'Add Class'}</h2>
           {showErrorModal && (
             <Modal
               title={serverMessage}
@@ -264,7 +271,7 @@ const Form = () => {
             />
           )}
           <div className={styles.sideBySideContainer}>
-            <div className={styles.selectContainer}>
+            <div>
               <Select
                 register={register}
                 placeholder={id ? singleClass.day : 'Day'}
@@ -273,6 +280,8 @@ const Form = () => {
                 error={errors.day?.message}
                 label={'Day'}
               />
+            </div>
+            <div>
               <Select
                 register={register}
                 placeholder={id ? singleClass?.hour : 'Hour'}
@@ -282,7 +291,7 @@ const Form = () => {
                 label={'Hour'}
               />
             </div>
-            <div className={styles.selectContainer}>
+            <div>
               <Select
                 register={register}
                 placeholder={id ? singleClass.trainerId?.firstName : 'Trainer'}
@@ -292,22 +301,29 @@ const Form = () => {
                 label={'Trainer'}
               />
             </div>
+            <div>
+              <Select
+                register={register}
+                placeholder={
+                  id
+                    ? singleClass.activityId?.name
+                    : updatedActivity.length !== 0
+                    ? 'Trainers assigned activities'
+                    : 'Please select a trainer first'
+                }
+                options={updatedActivity}
+                nameValue={'activityId'}
+                error={errors.activityId?.message}
+                label={'Activity'}
+              />
+            </div>
           </div>
           <div className={styles.selectContainer}>
-            <Select
-              register={register}
-              placeholder={id ? singleClass.activityId?.name : 'Activity'}
-              options={updatedActivity}
-              nameValue={'activityId'}
-              error={errors.activityId?.message}
-              label={'Activity'}
-            />
             <div className={styles.buttons}>
               <Button
                 variant={'white'}
                 text={'Cancel'}
-                submitting
-                clickAction={() => history.push('/admins/home/classes')}
+                clickAction={() => history.push('/admin/classes')}
                 testid={'cancel-btn'}
               />
               <Button

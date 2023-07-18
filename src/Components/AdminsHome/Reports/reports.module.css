@@ -10,7 +10,8 @@
   background-size: cover;
   width: 100%;
   min-height: 80vh;
-  min-height: 71vh;
+  min-height: 69.4vh;
+  margin-top: 200px;
 }
 
 .container {
@@ -26,8 +27,8 @@
 
 .repcontainer {
   width: 70%;
-  height: 100px;
-  margin: 25px auto;
+  padding: 20px;
+  margin: 20px;
   background-color: rgba(55, 56, 103);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 1vw;
@@ -35,7 +36,8 @@
 
 .repcontainerBottom {
   width: 70%;
-  margin: 30px auto;
+  padding: 20px;
+  margin: 20px;
   min-height: 130px;
   background-color: rgba(55, 56, 103);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -75,7 +77,8 @@
   display: flex;
   justify-content: space-between;
   width: 85%;
-  margin: auto;
+  margin-top: 20px;
+  margin-left: 14px;
   font-size: 20px;
   color: white;
 }
@@ -88,45 +91,38 @@
 }
 
 .subtitle {
-  align-self: flex-start;
   color: #46a37c;
-  margin: 10px 0 0 30px;
+  margin: 10px 30px;
 }
 
 .popular {
-  font-size: 25px;
+  font-size: 20px;
   color: white;
-  width: 80%;
-  padding: 0 50px;
-  text-align: center;
+  padding: 0 30px;
 }
 
 .popularContainer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
-  margin: 0 auto;
-  width: 50%;
+  justify-content: center;
 }
 
 .index {
-  padding: 5px auto;
   text-align: center;
   font-weight: bold;
   background-color: #46a37cbb;
-  border-radius: 3px;
-  width: 100%;
-  margin: 0 auto;
-
+  border-radius: 63px;
 }
 
 .largerTop {
+  margin: 0;
   width: 21%;
   text-align: center;
   min-width: 200px;
 }
 
 .smallerBottom {
+  margin: 0;
   width: 18%;
   text-align: center;
 }

@@ -1,13 +1,17 @@
 import styles from './table.module.css';
 import { Link } from 'react-router-dom';
-import Button from '../../Shared/Button';
-import Modal from '../../Shared/Modal';
+import Button from 'Components/Shared/Button';
+import Modal from 'Components/Shared/Modal';
 import { useState, useEffect } from 'react';
-import { deleteActivity } from '../../../redux/activities/thunks';
+import { deleteActivity } from 'redux/activities/thunks';
+import { getClasses, deleteClass } from 'redux/classes/thunks';
+import { getSubscriptions, deleteSingleSubscription } from 'redux/subscriptions/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Table = () => {
   const { data, message, success } = useSelector((state) => state.activities);
+  const { classes } = useSelector((state) => state.classes);
+  const { subs } = useSelector((state) => state.subscriptions);
   const [modalMessage, setModalMessage] = useState('');
   const [currentID, setCurrentID] = useState('');
   const [confirmModal, setConfirmModal] = useState(false);
@@ -20,8 +24,22 @@ const Table = () => {
       setDeleteModal();
     }, 2000);
   };
+  const deleteClassSub = (classes, activityId, subscriptions) => {
+    classes.forEach((clas) => {
+      if (clas.activityId._id === activityId) {
+        subscriptions.forEach((sub) => {
+          if (sub.classId._id === clas._id) {
+            deleteSingleSubscription(dispatch, sub._id);
+          }
+        });
+        dispatch(deleteClass(clas._id));
+      }
+    });
+  };
 
   useEffect(() => {
+    getSubscriptions(dispatch);
+    dispatch(getClasses());
     if (success) {
       handleModal();
       setModalMessage(message);
@@ -42,7 +60,10 @@ const Table = () => {
         <Button
           text={'Delete'}
           variant={'delete'}
-          clickAction={() => deleteActivity(dispatch, currentID)}
+          clickAction={() => {
+            deleteClassSub(classes, currentID, subs);
+            deleteActivity(dispatch, currentID);
+          }}
           testid={'delete-btn'}
         />
         <Button
@@ -59,7 +80,7 @@ const Table = () => {
         onClose={() => setDeleteModal(!deleteModal)}
         testid={'success-modal'}
       />
-      <table className={styles.table}>
+      <table className={styles.table} data-testid={'activities-container'}>
         <thead className={styles.tHead}>
           <tr className={styles.trHead}>
             <th className={styles.thName}>Activity</th>
@@ -78,7 +99,7 @@ const Table = () => {
                 <td className={styles.thStatus}>{activity?.isActive ? 'Active' : 'Inactive'}</td>
                 <td className={styles.tdBtn}>
                   <Link to={`/admin/activities/form/${activity._id}`}>
-                    <Button variant={'edit'} />
+                    <Button variant={'edit'} testid={'edit-btn'} />
                   </Link>
                 </td>
                 <td className={styles.tdBtn}>

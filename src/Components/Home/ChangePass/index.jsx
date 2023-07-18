@@ -75,7 +75,7 @@ const ChangePass = () => {
         onSubmit={handleSubmit(onSubmit)}
         data-testid={'changePass-container'}
       >
-        <h2 className={styles.formTitle}>PASSWORD CHANGE</h2>
+        <h2 className={styles.formTitle}>CHANGE PASSWORD</h2>
         <div className={styles.inputBox}>
           <Input
             nameValue={'oldPass'}

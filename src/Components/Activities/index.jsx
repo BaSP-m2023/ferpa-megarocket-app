@@ -49,39 +49,6 @@ function Activities() {
       </section>
     );
   }
-  if (!isPending) {
-    return (
-      <section className={styles.container}>
-        <div className={styles.list}>
-          {error ? (
-            <>
-              <div className={styles.header}>
-                <h2 className={styles.title}>Activities</h2>
-              </div>
-              <p className={styles.dataError}>{message}</p>
-            </>
-          ) : (
-            <>
-              <div className={styles.header}>
-                <h2 className={styles.title}>Activities</h2>
-                <Link to="/admins/activities/create">
-                  <Button text={'Add'} variant={'add'} testid={'add-btn'} />
-                </Link>
-              </div>
-              <Modal
-                onClose={() => setShowModal(false)}
-                isOpen={showModal}
-                title={modalMessage}
-                success
-                testid={'success-modal'}
-              />
-              <Table />
-            </>
-          )}
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className={styles.container}>
@@ -104,7 +71,7 @@ function Activities() {
             <div className={styles.header}>
               <h2 className={styles.title}>Activities</h2>
               <Link to="/admin/activities/form">
-                <Button text={'Add'} variant={'add'} />
+                <Button text={'Add'} variant={'add'} testid={'add-btn'} />
               </Link>
             </div>
             <Modal

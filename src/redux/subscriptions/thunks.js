@@ -131,3 +131,24 @@ export const updateSubscription = async (dispatch, update, id) => {
     dispatch(actions.putSubscriptionError(error.toString()));
   }
 };
+
+export const deleteSingleSubscription = async (dispatch, id) => {
+  dispatch(actions.resetState());
+  dispatch(actions.subscriptionsPending());
+  const token = sessionStorage.getItem('token');
+  try {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        token: token
+      }
+    });
+    const data = await res.json();
+    data.error
+      ? dispatch(actions.deleteSubscriptionError(data.message))
+      : dispatch(actions.deleteSubscriptionSuccess(data.message, id));
+  } catch (error) {
+    dispatch(actions.deleteSubscriptionError(error.toString()));
+  }
+};

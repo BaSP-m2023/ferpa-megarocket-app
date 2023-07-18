@@ -5,13 +5,14 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  font-size: 20px;
+  font-size: 18px;
   color: white;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   background-image: url('../../../public/assets/images/admins-background.jpg');
-  min-height: 71vh;
+  min-height: 69.4vh;
+  margin-top: 200px;
 }
 
 .table {
@@ -22,14 +23,17 @@
 }
 
 .blueItem {
-  height: 50px;
-  min-width: 160px;
+  height: 58px;
+  min-width: 180px;
+  padding: 5px;
   background-color: #373867;
   border-radius: 7px;
   text-align: center;
 }
 
-.whiteItem, .glossaryClass {
+.whiteItem,
+.glossaryClass {
+  padding: 5px;
   background-color: #d4d4e9;
   border-radius: 7px;
   color: #373867;
@@ -43,7 +47,9 @@
   color: white;
 }
 
-.activeClass, .glossarySub {
+.activeClass,
+.glossarySub {
+  padding: 5px;
   background-color: #49A37B;
   border-radius: 7px;
   color: white;
@@ -52,13 +58,19 @@
   cursor: pointer;
 }
 
-.disabledClass, .glossaryDis {
+.disabledClass,
+.glossaryDis {
+  padding: 5px;
   background-color: #51527e;
   border-radius: 7px;
   color: rgb(156, 156, 156);
   text-align: center;
   font-weight: 600;
-  cursor: not-allowed;
+}
+
+.slots {
+  font-size: 14px;
+  color: #3c8b68;
 }
 
 .empty {
@@ -67,13 +79,16 @@
 }
 
 .glossary {
-  border-spacing: 30px;
+  border-spacing: 25px;
 }
 
-.glossaryClass, .glossaryDis, .glossarySub {
+.glossaryClass,
+.glossaryDis,
+.glossarySub {
   height: 50px;
   min-width: 160px;
   margin-left: 30px;
+  cursor: auto;
 }
 
 .select {

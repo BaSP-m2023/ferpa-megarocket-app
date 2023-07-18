@@ -9,7 +9,8 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  min-height: 700px;
+  min-height: 71.4vh;
+  margin-top: 200px;
 }
 
 .form {
@@ -27,6 +28,7 @@
 
 .formTitle {
   color: white;
+  font-size: 30px;
 }
 
 .inputBox {
@@ -36,7 +38,7 @@
 
 .formBtns {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: 2vw;
 }
 
