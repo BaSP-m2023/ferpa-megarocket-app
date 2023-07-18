@@ -67,9 +67,9 @@ class MemberPage {
   get memberNinethChildLabel() {
     return $("[data-testid='member-add-form'] div div:nth-child(2) div:nth-child(4) label");
   }
-  // get memberTenthChild() {
-  //   return $("[data-testid='member-add-form'] div div:nth-child(2) div:nth-child(5) label input");
-  // }
+  get memberTenthChild() {
+    return $("[data-testid='member-add-form'] div div:nth-child(2) div:nth-child(5) label input");
+  }
   get memberTenthChildLabel() {
     return $("[data-testid='member-add-form'] div div:nth-child(2) div:nth-child(5) label");
   }
