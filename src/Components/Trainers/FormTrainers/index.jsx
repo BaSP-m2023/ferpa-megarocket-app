@@ -275,47 +275,6 @@ const TrainerAddForm = () => {
                     />
                   </div>
                 )}
-                {(location.pathname.includes('trainer/form') || id) && (
-                  <div className={styles.select}>
-                    <label className={styles.label}>Activities</label>
-                    <Select
-                      styles={{
-                        control: (baseStyles, state) => ({
-                          ...baseStyles,
-                          borderRadius: '30px',
-                          height: '50px'
-                        })
-                      }}
-                      defaultValue={
-                        trainer
-                          ? trainer.activities.map((activity) => ({
-                              value: activity._id,
-                              label: activity.name
-                            }))
-                          : trainer
-                      }
-                      value={
-                        activity
-                          ? transformedData.find(
-                              (singleActivity) => singleActivity.value === activity
-                            )
-                          : activity
-                      }
-                      isMulti
-                      options={transformedData}
-                      onChange={(event) => {
-                        onActivityChange(event.map((activity) => activity.value));
-                      }}
-                    />
-                    <p
-                      className={
-                        selectError ? `${styles.error}` : `${styles.error} ${styles.hidden}`
-                      }
-                    >
-                      {selectError}
-                    </p>
-                  </div>
-                )}
               </div>
             </div>
             {location.pathname.includes('admin/trainers/form') && !id && (
