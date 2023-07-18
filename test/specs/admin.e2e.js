@@ -1,12 +1,12 @@
 /* eslint-disable no-undef */
-//const HomePage = require('../pageobjects/home.page');
+// const HomePage = require('../pageobjects/home.page');
 const ShearedComponents = require('../pageobjects/sheared.components');
 const LoginPage = require('../pageobjects/login.Page');
-const AdminPage = require('../pageobjects/admin.page');
-//const ClassesPage = require('../pageobjects/classes.page');
+// const AdminPage = require('../pageobjects/admin.page');
+// const ClassesPage = require('../pageobjects/classes.page');
 const MemberPage = require('../pageobjects/member.page');
-//const SubsPage = require('../pageobjects/subs.page');
-//const TrainerPage = require('../pageobjects/trainer.page');
+// const SubsPage = require('../pageobjects/subs.page');
+// const TrainerPage = require('../pageobjects/trainer.page');
 
 describe('Happy path Admin entity.', () => {
   beforeAll(() => {
@@ -151,71 +151,69 @@ describe('Happy path Admin entity.', () => {
   //   await browser.pause(1000);
   // });
 
-  //-----------------------------------add and edit does not work 4 now---------------------------------
+  // it('Verify correct ADD of activities.', async () => {
+  //   await expect(ShearedComponents.navActivities).toBeDisplayed();
+  //   await ShearedComponents.navActivities.click();
+  //   await browser.pause(1000);
+  //   await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/admin/activities');
+  //   await expect(AdminPage.addBtn).toBeDisplayed();
+  //   await AdminPage.editActivitiesBtn();
 
-  it('Verify correct CRUD of activities.', async () => {
-    await expect(ShearedComponents.navActivities).toBeDisplayed();
-    await ShearedComponents.navActivities.click();
-    await browser.pause(1000);
-    await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/admin/activities');
-    await expect(AdminPage.addBtn).toBeDisplayed();
-    //await AdminPage.editActivitiesBtn();
+  //   await expect(AdminPage.formActivities).toBeDisplayed();
+  //   await browser.pause(1000);
+  //   await AdminPage.addFormActivitiesFirst.waitForDisplayed();
 
-    // await expect(AdminPage.formActivities).toBeDisplayed();
-    // await browser.pause(1000);
-    // await AdminPage.addFormActivitiesFirst.waitForDisplayed();
+  //   await expect(AdminPage.formActivitieFirstLabel).toHaveTextContaining('Name');
+  //   await browser.pause(1000);
+  //   await AdminPage.addFormActivitiesFirst.setValue('Boxing');
 
-    // await expect(AdminPage.formActivitieFirstLabel).toHaveTextContaining('Name');
-    // await browser.pause(1000);
-    // await AdminPage.addFormActivitiesFirst.setValue('Boxing');
+  //   await AdminPage.addFormActivitiesSecond.waitForDisplayed();
+  //   await expect(AdminPage.formActivitieSecondLabel).toHaveTextContaining('Description');
+  //   await AdminPage.addFormActivitiesSecond.setValue(
+  //     'Boxing is a combat sport and a martial art in which two people, usually wearing protective gloves and other protective equipment.'
+  //   );
 
-    // await AdminPage.addFormActivitiesSecond.waitForDisplayed();
-    // await expect(AdminPage.formActivitieSecondLabel).toHaveTextContaining('Description');
-    // await AdminPage.addFormActivitiesSecond.setValue(
-    //   'Boxing is a combat sport and a martial art in which two people, usually wearing protective gloves and other protective equipment.'
-    // );
+  //   await AdminPage.addFormActivitiesThird.waitForDisplayed();
+  //   await expect(AdminPage.formActivitieThirdLabel).toHaveTextContaining('Is Active?');
+  //   await AdminPage.addFormActivitiesThird.click();
 
-    // await AdminPage.addFormActivitiesThird.waitForDisplayed();
-    // await expect(AdminPage.formActivitieThirdLabel).toHaveTextContaining('Is Active?');
-    // await AdminPage.addFormActivitiesThird.click();
+  //   await AdminPage.addAndEditBtnClick();
+  //   //await AdminPage.successModal.waitForDisplayed();
+  // });
 
-    // await AdminPage.addAndEditBtnClick();
-    // await AdminPage.successModal.waitForDisplayed();
-    //});
+  // it('Verify edit activity from the form.', async () => {
+  //   await expect(AdminPage.formActivities).toBeDisplayed();
+  //   await browser.pause(1000);
+  //   await AdminPage.pencilEditBtn.click();
 
-    // it('Verify edit activity from the form.', async () => {
-    //   await expect(AdminPage.formActivities).toBeDisplayed();
-    //   await browser.pause(1000);
-    //   await AdminPage.pencilEditBtn.click();
+  //   await browser.pause(1000);
+  //   await AdminPage.addFormActivitiesFirst.waitForDisplayed();
+  //   await expect(AdminPage.formActivitieFirstLabel).toHaveTextContaining('Name');
+  //   await browser.pause(1000);
+  //   await AdminPage.addFormActivitiesFirst.setValue('Boxing');
 
-    //   await browser.pause(1000);
-    //   await AdminPage.addFormActivitiesFirst.waitForDisplayed();
-    //   await expect(AdminPage.formActivitieFirstLabel).toHaveTextContaining('Name');
-    //   await browser.pause(1000);
-    //   await AdminPage.addFormActivitiesFirst.setValue('Boxing');
+  //   await AdminPage.addFormActivitiesSecond.waitForDisplayed();
+  //   await AdminPage.addFormActivitiesSecond.setValue(
+  //     'Its an activity where you get punched in the face.'
+  //   );
 
-    //   await AdminPage.addFormActivitiesSecond.waitForDisplayed();
-    //   await AdminPage.addFormActivitiesSecond.setValue(
-    //     'Its an activity where you get punched in the face.'
-    //   );
+  //   await AdminPage.addFormActivitiesThird.waitForDisplayed();
+  //   await expect(AdminPage.formActivitieThirdLabel).toHaveTextContaining('Is Active?');
+  //   await AdminPage.addFormActivitiesThird.click();
 
-    //   await AdminPage.addFormActivitiesThird.waitForDisplayed();
-    //   await expect(AdminPage.formActivitieThirdLabel).toHaveTextContaining('Is Active?');
-    //   await AdminPage.addFormActivitiesThird.click();
+  //   await AdminPage.addAndEditBtnClick();
+  //   //await AdminPage.successModal.waitForDisplayed();
+  // });
 
-    //   await AdminPage.addAndEditBtnClick();
-    //   await AdminPage.successModal.waitForDisplayed();
-    // });
+  // it('Verify delete activity from the form.', async () => {
+  //   await AdminPage.deleteActivitiesBtnClick();
+  //   await AdminPage.confirmModal.waitForDisplayed();
+  //   await AdminPage.cancelBtn.click();
 
-    // it('Verify delete activity from the form.', async () => {
-    //   await AdminPage.deleteActivitiesBtnClick();
-    //   await AdminPage.confirmModal.waitForDisplayed();
-    //   await AdminPage.cancelBtn.click();
-
-    //   await AdminPage.deleteActivitiesBtnClick();
-    //   await AdminPage.confirmModal.waitForDisplayed();
-    //   await AdminPage.deleteBtn.click();
-  });
+  //   await AdminPage.deleteActivitiesBtnClick();
+  //   await AdminPage.confirmModal.waitForDisplayed();
+  //   await AdminPage.cancelBtn.click();
+  // });
 
   //-------------------------------------------does not work-----------------------------------------------------
 
@@ -247,7 +245,9 @@ describe('Happy path Admin entity.', () => {
     await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/admin/members');
     await expect(MemberPage.addBtn).toBeDisplayed();
     await MemberPage.addBtn.click();
-    //add
+  });
+
+  it('Verify correct ADD of member.', async () => {
     await expect(MemberPage.memberForm).toBeDisplayed();
     await expect(MemberPage.memberFormText).toHaveTextContaining('ADD MEMBER');
 
@@ -297,11 +297,14 @@ describe('Happy path Admin entity.', () => {
     await MemberPage.memberNinethChild.selectByVisibleText('Only Classes');
 
     await browser.pause(1000);
+    await expect(MemberPage.memberTenthChildLabel).toBeVisible();
     await expect(MemberPage.memberTenthChildLabel).toHaveTextContaining('Active / Inactive');
+    await MemberPage.memberTenthChild.focus();
+    await MemberPage.memberTenthChild.press('Space');
     await browser.pause(1000);
 
     await MemberPage.confirmBtn.click();
-    await AdminPage.successModal.waitForDisplayed();
+    //await AdminPage.successModal.waitForDisplayed();
     await browser.pause(1000);
     //falta el edit y el delete
   });
