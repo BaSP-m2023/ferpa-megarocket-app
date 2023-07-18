@@ -4,7 +4,11 @@ import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSubscriptions, selectId, deleteSubscriptions } from '../../redux/subscriptions/thunks';
+import {
+  getSubscriptions,
+  selectId,
+  deleteSingleSubscription
+} from '../../redux/subscriptions/thunks';
 import Loader from '../Shared/Loader';
 
 function Subscriptions() {
@@ -81,7 +85,7 @@ function Subscriptions() {
           <Button
             text={'Delete'}
             clickAction={() => {
-              deleteSubscriptions(dispatch, id);
+              deleteSingleSubscription(dispatch, id);
               setModalConfirmDel(!modalConfirmDel);
               setModalSuccess(true);
             }}

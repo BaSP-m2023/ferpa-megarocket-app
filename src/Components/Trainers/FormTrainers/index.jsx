@@ -1,7 +1,7 @@
 import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Input } from 'Components/Shared/Inputs';
-import { sendTrainer, putTrainer } from 'redux/trainers/thunks';
+import { sendTrainer, putTrainer, getTrainers } from 'redux/trainers/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm, useController } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -95,10 +95,11 @@ const TrainerAddForm = () => {
   const isFormEdited = Object.keys(dirtyFields).length > 0;
 
   useEffect(() => {
+    getTrainers(dispatch);
     getActivities(dispatch);
     if (id) {
-      const trainer = trainers.find((trainer) => trainer._id === id);
-      const copyTrainer = { ...trainer };
+      const singleTrainer = trainers.find((trainer) => trainer._id === id);
+      const copyTrainer = { ...singleTrainer };
       delete copyTrainer.isActive;
       delete copyTrainer.__v;
       delete copyTrainer._id;
@@ -181,73 +182,89 @@ const TrainerAddForm = () => {
           <div className={styles.field}>
             <div className={styles.row}>
               <div className={styles.column}>
-                <Input
-                  register={register}
-                  onChangeInput={onChange}
-                  labelText={'Name'}
-                  nameValue={'firstName'}
-                  placeholder={'First Name'}
-                  error={errors.firstName?.message}
-                />
-                <Input
-                  register={register}
-                  onChangeInput={onChange}
-                  labelText={'LastName'}
-                  nameValue={'lastName'}
-                  placeholder={'Last Name'}
-                  error={errors.lastName?.message}
-                />
-                <Input
-                  register={register}
-                  onChangeInput={onChange}
-                  labelText={'DNI'}
-                  nameValue={'dni'}
-                  placeholder={'DNI'}
-                  error={errors.dni?.message}
-                />
-                <Input
-                  register={register}
-                  onChangeInput={onChange}
-                  labelText={'Phone'}
-                  nameValue={'phone'}
-                  placeholder={'Phone'}
-                  error={errors.phone?.message}
-                />
-              </div>
-              <div className={styles.column}>
-                <Input
-                  register={register}
-                  onChangeInput={onChange}
-                  labelText={'Email'}
-                  nameValue={'email'}
-                  placeholder={'Email'}
-                  error={errors.email?.message}
-                />
-                <Input
-                  register={register}
-                  onChangeInput={onChange}
-                  labelText={'City'}
-                  nameValue={'city'}
-                  placeholder={'City'}
-                  error={errors.city?.message}
-                />
-                <Input
-                  register={register}
-                  onChangeInput={onChange}
-                  labelText={'Salary'}
-                  nameValue={'salary'}
-                  placeholder={'Salary'}
-                  error={errors.salary?.message}
-                />
-                {!id && (
+                <div>
                   <Input
                     register={register}
                     onChangeInput={onChange}
-                    labelText={'Password'}
-                    nameValue={'password'}
-                    placeholder={'Password'}
-                    error={errors.password?.message}
+                    labelText={'Name'}
+                    nameValue={'firstName'}
+                    placeholder={'First Name'}
+                    error={errors.firstName?.message}
                   />
+                </div>
+                <div>
+                  <Input
+                    register={register}
+                    onChangeInput={onChange}
+                    labelText={'LastName'}
+                    nameValue={'lastName'}
+                    placeholder={'Last Name'}
+                    error={errors.lastName?.message}
+                  />
+                </div>
+                <div>
+                  <Input
+                    register={register}
+                    onChangeInput={onChange}
+                    labelText={'DNI'}
+                    nameValue={'dni'}
+                    placeholder={'DNI'}
+                    error={errors.dni?.message}
+                  />
+                </div>
+                <div>
+                  <Input
+                    register={register}
+                    onChangeInput={onChange}
+                    labelText={'Phone'}
+                    nameValue={'phone'}
+                    placeholder={'Phone'}
+                    error={errors.phone?.message}
+                  />
+                </div>
+              </div>
+              <div className={styles.column}>
+                <div>
+                  <Input
+                    register={register}
+                    onChangeInput={onChange}
+                    labelText={'Email'}
+                    nameValue={'email'}
+                    placeholder={'Email'}
+                    error={errors.email?.message}
+                  />
+                </div>
+                <div>
+                  <Input
+                    register={register}
+                    onChangeInput={onChange}
+                    labelText={'City'}
+                    nameValue={'city'}
+                    placeholder={'City'}
+                    error={errors.city?.message}
+                  />
+                </div>
+                <div>
+                  <Input
+                    register={register}
+                    onChangeInput={onChange}
+                    labelText={'Salary'}
+                    nameValue={'salary'}
+                    placeholder={'Salary'}
+                    error={errors.salary?.message}
+                  />
+                </div>
+                {!id && (
+                  <div>
+                    <Input
+                      register={register}
+                      onChangeInput={onChange}
+                      labelText={'Password'}
+                      nameValue={'password'}
+                      placeholder={'Password'}
+                      error={errors.password?.message}
+                    />
+                  </div>
                 )}
                 {(location.pathname.includes('trainer/form') || id) && (
                   <div className={styles.select}>

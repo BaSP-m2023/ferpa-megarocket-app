@@ -1,9 +1,12 @@
 .container {
+  position: fixed;
+  width: 100%;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-right: auto;
-  height: 13vh;
+  height: 130px;
   background: #373867;
 }
 
@@ -31,7 +34,17 @@
 }
 
 .isologo {
-  padding-bottom: 6px;
+  padding-top: 10px;
+}
+
+.sandwichBlock{
+  display: flex;
+}
+
+.sandwich{
+  display: inline-block;
+  align-self: center;
+  padding-right: 20px;
 }
 
 @media screen and (min-width: 750px) {

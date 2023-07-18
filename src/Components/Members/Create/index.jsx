@@ -12,7 +12,6 @@ import { resetError } from 'redux/auth/action';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
-import Aside from 'Components/Shared/Aside';
 
 const MembersCreate = () => {
   const location = useLocation();
@@ -74,7 +73,7 @@ const MembersCreate = () => {
     password: Joi.string()
       .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{7,}$/)
       .messages({
-        'string.pattern.base': 'Password too weak. Example: pAssword1'
+        'string.pattern.base': 'At least 1 uppercase, 1 lowercase, 1 number, 7 characters.'
       })
   });
 
@@ -161,7 +160,6 @@ const MembersCreate = () => {
           success
           testid={'success-modal'}
         />
-        <Aside />
         <div className={styles.signup}>
           <div className={styles.box} data-testid={'signup-container'}>
             <form
@@ -206,7 +204,7 @@ const MembersCreate = () => {
                     <Input
                       labelText={'Phone'}
                       type={'text'}
-                      placeholder={'ex: 096513178'}
+                      placeholder={'Phone Number'}
                       nameValue={'phone'}
                       register={register}
                       error={errors.phone?.message}
@@ -216,7 +214,7 @@ const MembersCreate = () => {
                     <Input
                       labelText={'Email'}
                       type={'text'}
-                      placeholder={'robertomariaoverdrive@soybostero.edu'}
+                      placeholder={'example@example.com'}
                       nameValue={'email'}
                       register={register}
                       error={errors.email?.message}
@@ -407,7 +405,7 @@ const MembersCreate = () => {
                 />
               </div>
               <div className={styles.checkboxField}>
-                <label>Active / Inactive</label>
+                <label>Inactive / Active</label>
                 <label className={styles.switch}>
                   <input
                     className={styles.checkbox}
