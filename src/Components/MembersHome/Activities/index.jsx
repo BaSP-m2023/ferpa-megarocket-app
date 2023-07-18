@@ -26,8 +26,40 @@ const Activities = () => {
                     case 'Boxing':
                       return (
                         <img
-                          src="/assets/boxing.jpg"
-                          alt="Some activity"
+                          src={'../../assets/images/boxing.jpg'}
+                          alt={'Boxing'}
+                          className={styles.image}
+                        />
+                      );
+                    case 'Spinning':
+                      return (
+                        <img
+                          src={'../../assets/images/spinning.jpg'}
+                          alt={'Spinning'}
+                          className={styles.image}
+                        />
+                      );
+                    case 'Crossfit':
+                      return (
+                        <img
+                          src={'../../assets/images/crossfit.jpg'}
+                          alt={'Crossfit'}
+                          className={styles.image}
+                        />
+                      );
+                    case 'Functional training':
+                      return (
+                        <img
+                          src={'../../assets/images/functional.jpg'}
+                          alt={'Functional'}
+                          className={styles.image}
+                        />
+                      );
+                    case 'Weightlifting':
+                      return (
+                        <img
+                          src={'../../assets/images/muscle.jpg'}
+                          alt={'Functional'}
                           className={styles.image}
                         />
                       );
