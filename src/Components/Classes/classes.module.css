@@ -11,7 +11,7 @@
   background-position: center;
   background-size: cover;
   background-image: url('../../../public/assets/images/admins-background.jpg');
-  min-height: 71vh;
+  min-height: 69.4vh;
   margin-top: 200px;
 }
 
@@ -28,6 +28,7 @@
   font-size: 40px;
   padding: 0;
   text-align: center;
+  margin: 0;
 }
 
 .error {
@@ -129,6 +130,7 @@
 .loading {
   border-radius: 20px;
   box-shadow: 10px 10px 20px -6px rgba(0, 0, 0, 0.59);
+  margin: 50px;
 }
 
 .tdBtn {

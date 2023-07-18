@@ -8,7 +8,7 @@
   background-size: cover;
   font-family: 'Roboto', sans-serif;
   font-size: 22px;
-  min-height: 80vh;
+  min-height: 76.6vh;
   margin-top: 130px;
 }
 
@@ -59,7 +59,7 @@
   margin-right: 20px;
 }
 
-.LogInbtn{
+.LogInbtn {
   display: flex;
   align-items: center;
   justify-content: space-around;

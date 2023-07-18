@@ -30,7 +30,7 @@ export const Select = ({
         onFocus={onFocus}
         onBlur={onBlur}
       >
-        <option selected disabled>
+        <option hidden disabled>
           {placeholder}
         </option>
         {options.map((item) => {
