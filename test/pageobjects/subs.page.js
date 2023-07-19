@@ -10,6 +10,9 @@ class SubsPage {
   get subsForm() {
     return $("[data-testid='subs-add-container']");
   }
+  get containerForm() {
+    return $("[data-testid='subs-table-container']");
+  }
   get firstLabel() {
     return $("[data-testid='subs-add-container'] div:nth-child(1) label");
   }

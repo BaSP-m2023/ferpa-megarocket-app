@@ -35,6 +35,12 @@ class ShearedComponents {
     return $("[data-testid='footer-container']");
   }
   //menu hambuerguesa
+  get closeSandwichBtn() {
+    return $("[data-testid='sandwich-btn']");
+  }
+  get sandwich() {
+    return $("[data-testid='delete-btn']");
+  }
   get asideBar() {
     return $("[data-testid='aside-container']");
   }
@@ -53,17 +59,8 @@ class ShearedComponents {
   get contactText() {
     return $("[data-testid='contact-container'] h3");
   }
-  get contactFirstChild() {
-    return $("[data-testid='contact-container'] div:nth-child(2) h4");
-  }
-  get contactSecondChild() {
-    return $("[data-testid='contact-container'] div:nth-child(3) h4");
-  }
-  get contactThirdChild() {
-    return $("[data-testid='contact-container'] div:nth-child(4) h4");
-  }
 
-  async continueClick() {
+  async loginClick() {
     await this.loginBtn.click();
   }
 }

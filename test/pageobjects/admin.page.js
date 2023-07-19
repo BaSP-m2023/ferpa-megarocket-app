@@ -111,6 +111,9 @@ class AdminPage {
   get addFormActivitiesSecond() {
     return $("[data-testid='activities-editform'] div:nth-child(2) textarea");
   }
+  get formActivitieSecondLabel() {
+    return $("[data-testid='activities-editform'] div:nth-child(2) label");
+  }
   get addFormActivitiesThird() {
     return $("[data-testid='activities-editform'] div:nth-child(3) input");
   }
