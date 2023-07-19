@@ -82,9 +82,6 @@ function Members() {
         ></Modal>
         <div className={styles.header}>
           <h2 className={styles.title}>Members</h2>
-          <Link to={'/admin/members/form'}>
-            <Button text={'Add'} variant={'add'} testid={'add-btn'} />
-          </Link>
         </div>
         <table className={styles.table}>
           <tbody>

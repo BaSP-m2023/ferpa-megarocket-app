@@ -17,6 +17,7 @@
 
 .modalOverlayPop {
   position: fixed;
+  z-index: 3;
   top: 0.4vw;
   right: 0.4vw;
   display: flex;

@@ -20,6 +20,10 @@
   color: #49A37B;
 }
 
+.userImg {
+  width: 70px;
+}
+
 .logout {
   height: 35px;
   width: 35px;
@@ -44,6 +48,7 @@
 .sandwich{
   display: inline-block;
   align-self: center;
+  width: 100px;
   padding-right: 20px;
 }
 

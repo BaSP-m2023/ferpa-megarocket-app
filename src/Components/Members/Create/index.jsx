@@ -358,7 +358,7 @@ const MembersCreate = () => {
                 <Input
                   labelText={'Email'}
                   type={'text'}
-                  placeholder={'robertomariaoverdrive@soybostero.edu'}
+                  placeholder={'Email'}
                   nameValue={'email'}
                   register={register}
                   error={errors.email?.message}

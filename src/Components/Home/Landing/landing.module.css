@@ -19,30 +19,22 @@
   color: rgba(47, 48, 88, 1);
 }
 
-.joinUs {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-}
-
-.joinUs a {
-  font-size: 30px;
-  color: white;
-  text-decoration: none;
-  border-radius: 15px;
-  background-color: #373867;
-  padding: 15px 60px;
-}
-
 .scrollableLink {
+  background-color: #373867;
+  font-size: 30px;
+  border-radius: 15px;
+  color: white;
   width: 100%;
   height: 74px;
   text-align: center;
   margin-top: 20px;
-  scroll-behavior: smooth;
+  cursor: pointer;
 }
 
+.scrollableLink:hover {
+  background-color: white;
+  color: #373867;
+}
 
 .megaColor {
   color: rgba(47, 48, 88, 0.76);

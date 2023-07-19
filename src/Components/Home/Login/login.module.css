@@ -59,10 +59,16 @@
   margin-right: 20px;
 }
 
-.LogInbtn {
+.logInBtn {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  margin: 0;
+  
+}
+
+.logInBtn button {
+  width: 100%;
 }
 
 .fieldset p {
