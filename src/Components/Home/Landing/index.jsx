@@ -68,6 +68,11 @@ const Landing = () => {
     reset();
   };
 
+  const scrollToMemberships = () => {
+    const membershipsSection = document.getElementById('Memberships');
+    membershipsSection.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className={styles.container}>
       <section className={styles.introduction} data-testid={'landing-container'}>
@@ -88,10 +93,14 @@ const Landing = () => {
               that fitness is a lifestyle, not just a hobby. Join us today and start your journey
               towards a healthier, happier you.
             </p>
-            <div className={styles.joinUs} data-testid={'become-btn'}>
-              <a className={styles.scrollableLink} href="#Memberships">
+            <div className={styles.joinUs}>
+              <button
+                className={styles.scrollableLink}
+                onClick={() => scrollToMemberships()}
+                data-testid={'become-btn'}
+              >
                 BECOME A MEMBER
-              </a>
+              </button>
             </div>
           </div>
         </div>
