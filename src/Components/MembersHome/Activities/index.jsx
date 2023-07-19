@@ -20,11 +20,74 @@ const Activities = () => {
           return (
             <div className={styles.activity} key={activity._id}>
               <div className={styles.activityImage}>
-                <img
+                {(() => {
+                  switch (activity.name) {
+                    case 'Boxing':
+                      return (
+                        <img
+                          src={'../../assets/images/boxing.jpg'}
+                          alt={'Boxing'}
+                          className={styles.image}
+                        />
+                      );
+                    case 'Spinning':
+                      return (
+                        <img
+                          src={'../../assets/images/spinning.jpg'}
+                          alt={'Spinning'}
+                          className={styles.image}
+                        />
+                      );
+                    case 'Crossfit':
+                      return (
+                        <img
+                          src={'../../assets/images/crossfit.jpg'}
+                          alt={'Crossfit'}
+                          className={styles.image}
+                        />
+                      );
+                    case 'Functional training':
+                      return (
+                        <img
+                          src={'../../assets/images/functional.jpg'}
+                          alt={'Functional'}
+                          className={styles.image}
+                        />
+                      );
+                    case 'Weightlifting':
+                      return (
+                        <img
+                          src={'../../assets/images/muscle.jpg'}
+                          alt={'Functional'}
+                          className={styles.image}
+                        />
+                      );
+                    default:
+                      return (
+                        <img
+                          src="https://st.depositphotos.com/1708346/1404/i/450/depositphotos_14043607-stock-photo-college-gym-49ers-football-team.jpg"
+                          alt="Some activity"
+                          className={styles.image}
+                        />
+                      );
+                  }
+                })()}
+                {/* (switch (activity.name) {
+                  case 'Boxing': return {
+                    <img
                   src="https://st.depositphotos.com/1708346/1404/i/450/depositphotos_14043607-stock-photo-college-gym-49ers-football-team.jpg"
                   alt="Some activity"
                   className={styles.image}
                 />
+                  }
+
+                  }
+                )
+                <img
+                  src="https://st.depositphotos.com/1708346/1404/i/450/depositphotos_14043607-stock-photo-college-gym-49ers-football-team.jpg"
+                  alt="Some activity"
+                  className={styles.image}
+                /> */}
               </div>
               <div className={styles.activityData}>
                 <h3 className={styles.activityName}>{activity.name}</h3>

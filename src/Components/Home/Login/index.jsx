@@ -75,7 +75,7 @@ function Login() {
                 />
               </div>
             </div>
-            <div className={styles.LogInbtn}>
+            <div className={styles.logInBtn}>
               <Button text={'Continue'} variant={'add'} submitting testid={'continue-btn'} />
             </div>
           </form>

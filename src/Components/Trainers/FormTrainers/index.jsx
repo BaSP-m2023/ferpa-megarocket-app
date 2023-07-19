@@ -22,33 +22,51 @@ const TrainerAddForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const RGXPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-  const RGXEmail = /^[^@]+@[^@]+.[a-zA-Z]{2,}$/;
+  const RGXEmail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/;
   const trainer = trainers.find((trainer) => trainer._id === id);
 
   const createSchema = Joi.object({
     firstName: Joi.string()
       .min(3)
       .max(15)
-      .pattern(/^[a-zA-Z-]+$/),
+      .pattern(/^[a-zA-Z-]+$/)
+      .messages({
+        'string.pattern.base': 'First name must contain only letters'
+      }),
     lastName: Joi.string()
       .min(3)
       .max(15)
-      .pattern(/^[a-zA-Z-]+$/),
-    dni: Joi.number().min(1000000).max(99999999),
-    phone: Joi.number().min(1000000000).max(9999999999),
+      .pattern(/^[a-zA-Z-]+$/)
+      .messages({
+        'string.pattern.base': 'Last name must contain only letters'
+      }),
+    dni: Joi.string()
+      .pattern(/^[0-9]+$/)
+      .min(7)
+      .max(8)
+      .messages({
+        'string.pattern.base': 'DNI must contain only numbers'
+      }),
+    phone: Joi.string()
+      .pattern(/^[0-9]+$/)
+      .min(10)
+      .max(10)
+      .messages({
+        'string.pattern.base': 'Phone number must contain only numbers'
+      }),
     email: Joi.string().required().regex(RGXEmail).messages({
-      'string.pattern.base': 'Email must be in a valid format'
+      'string.pattern.base': 'Invalid email format'
     }),
     city: Joi.string().min(2).max(30),
-    password: Joi.string().regex(RGXPassword).min(8).required().messages({
-      'string.pattern.base':
-        'Password must contain at least one uppercase letter, one lowercase letter, and be at least 8 characters long'
-    }),
+    password: Joi.string()
+      .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{7,}$/)
+      .messages({
+        'string.pattern.base': 'At least 1 uppercase, 1 lowercase, 1 number, 7 characters.'
+      }),
     salary: Joi.number().min(10000),
     activities: Joi.array().items(
       Joi.string().required().min(1).messages({
-        'string.pattern.base': 'Trainers must be assigned to at least one activity'
+        'string.min.base': 'Trainers must be assigned to at least one activity'
       })
     )
   });
@@ -57,24 +75,39 @@ const TrainerAddForm = () => {
     firstName: Joi.string()
       .min(3)
       .max(15)
-      .pattern(/^[a-zA-Z-]+$/),
+      .pattern(/^[a-zA-Z-]+$/)
+      .messages({
+        'string.pattern.base': 'First name must contain only letters'
+      }),
     lastName: Joi.string()
       .min(3)
       .max(15)
-      .pattern(/^[a-zA-Z-]+$/),
-    dni: Joi.number().min(1000000).max(99999999),
-    phone: Joi.number().min(1000000000).max(9999999999),
+      .pattern(/^[a-zA-Z-]+$/)
+      .messages({
+        'string.pattern.base': 'Last name must contain only letters'
+      }),
+    dni: Joi.string()
+      .pattern(/^[0-9]+$/)
+      .min(7)
+      .max(8)
+      .messages({
+        'string.pattern.base': 'DNI must contain only numbers'
+      }),
+    phone: Joi.string()
+      .pattern(/^[0-9]+$/)
+      .min(10)
+      .max(10)
+      .messages({
+        'string.pattern.base': 'Phone number must contain only numbers'
+      }),
     email: Joi.string().required().regex(RGXEmail).messages({
-      'string.pattern.base': 'Email must be in a valid format'
+      'string.pattern.base': 'Invalid email format'
     }),
     city: Joi.string().min(2).max(30),
     salary: Joi.number().min(10000),
-    activities: Joi.array().items(
-      Joi.string().required().min(1).messages({
-        'string.pattern.base': 'Trainers must be assigned to at least one activity'
-      })
-    )
+    activities: Joi.array()
   });
+
   const [inputs, setInputs] = useState({
     firstName: '',
     lastName: '',
@@ -96,7 +129,8 @@ const TrainerAddForm = () => {
   } = useForm({
     mode: 'onChange',
     resolver: joiResolver(id ? editSchema : createSchema),
-    defaultValues: { inputs }
+    defaultValues: { inputs },
+    ...(id ? { control: false } : {})
   });
 
   const isFormEdited = Object.keys(dirtyFields).length > 0;
@@ -162,6 +196,7 @@ const TrainerAddForm = () => {
   const {
     field: { value: activity, onChange: onActivityChange }
   } = useController({ name: 'activities', control });
+
   const cancelButtonDestination = location.pathname.startsWith('/admin/trainers')
     ? '/admin/trainers'
     : location.pathname.startsWith('/trainer/form')
@@ -267,6 +302,7 @@ const TrainerAddForm = () => {
                   <div>
                     <Input
                       register={register}
+                      type={'password'}
                       onChangeInput={onChange}
                       labelText={'Password'}
                       nameValue={'password'}
@@ -277,41 +313,40 @@ const TrainerAddForm = () => {
                 )}
               </div>
             </div>
-            {location.pathname.includes('admin/trainers/form') && !id && (
-              <div className={`${styles.select} ${styles.wideSelect}`}>
-                <label className={styles.label}>Activities</label>
-                <Select
-                  styles={{
-                    control: (baseStyles, state) => ({
-                      ...baseStyles,
-                      borderRadius: '30px',
-                      height: '50px'
-                    })
-                  }}
-                  defaultValue={
-                    trainer
-                      ? trainer.activities.map((activity) => ({
-                          value: activity._id,
-                          label: activity.name
-                        }))
-                      : trainer
-                  }
-                  value={
-                    activity
-                      ? transformedData.find((singleActivity) => singleActivity.value === activity)
-                      : activity
-                  }
-                  isMulti
-                  options={transformedData}
-                  onChange={(event) => {
-                    onActivityChange(event.map((activity) => activity.value));
-                  }}
-                />
-                <p className={selectError ? `${styles.error}` : `${styles.error} ${styles.hidden}`}>
-                  {selectError}
-                </p>
-              </div>
-            )}
+            <div className={`${styles.select} ${styles.wideSelect}`}>
+              <label className={styles.label}>Activities</label>
+              <Select
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    borderRadius: '30px',
+                    height: '50px'
+                  })
+                }}
+                defaultValue={
+                  trainer
+                    ? trainer.activities.map((activity) => ({
+                        value: activity._id,
+                        label: activity.name
+                      }))
+                    : trainer
+                }
+                value={
+                  activity
+                    ? transformedData.find((singleActivity) => singleActivity.value === activity)
+                    : activity
+                }
+                isMulti
+                options={transformedData}
+                onChange={(event) => {
+                  onActivityChange(event.map((activity) => activity.value));
+                }}
+              />
+              <p className={selectError ? `${styles.error}` : `${styles.error} ${styles.hidden}`}>
+                <img src="../../../assets/images/warning.svg" alt="warning" />
+                {selectError}
+              </p>
+            </div>
           </div>
           <div className={styles.buttons}>
             <Link to={cancelButtonDestination}>
