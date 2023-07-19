@@ -16,8 +16,8 @@ class TrainerPage {
   get addEditBtn() {
     return $("[data-testid='add-edit-btn']");
   }
-  get logoutBtn() {
-    return $("[data-testid='logout-logo']");
+  get confirmBtn() {
+    return $("[data-testid='confirm-btn']");
   }
   //form
   get trainerForm() {

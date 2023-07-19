@@ -6,7 +6,7 @@ const AdminPage = require('../pageobjects/admin.page');
 const ClassesPage = require('../pageobjects/classes.page');
 const MemberPage = require('../pageobjects/member.page');
 const SubsPage = require('../pageobjects/subs.page');
-//const TrainerPage = require('../pageobjects/trainer.page');
+const TrainerPage = require('../pageobjects/trainer.page');
 
 describe('Happy path Admin entity.', () => {
   beforeAll(() => {
@@ -19,6 +19,7 @@ describe('Happy path Admin entity.', () => {
     await expect(ShearedComponents.header).toBeDisplayed();
     await expect(ShearedComponents.logo).toBeDisplayed();
     await expect(ShearedComponents.footer).toBeDisplayed();
+    await browser.pause(1000);
 
     await expect(ShearedComponents.sandwich).toBeDisplayed();
     await ShearedComponents.sandwich.click();
@@ -32,12 +33,9 @@ describe('Happy path Admin entity.', () => {
   });
 
   it('Verify correct login of the admin.', async () => {
-    await expect(ShearedComponents.sandwich).toBeDisplayed();
-
     await ShearedComponents.loginClick();
     await browser.pause(1000);
     await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/home/login');
-    await ShearedComponents.closeSandwichBtn.click();
 
     await expect(LoginPage.loginForm).toBeDisplayed();
     await expect(LoginPage.loginFormChild).toHaveTextContaining('LOGIN');
@@ -68,67 +66,60 @@ describe('Happy path Admin entity.', () => {
     await expect(ShearedComponents.navSubs).toBeDisplayed();
     await expect(ShearedComponents.navTrainers).toBeDisplayed();
     await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/admin/profile');
-    await browser.pause(1000);
+    await browser.pause(2000);
   });
 
   it('Verify edit profile form.', async () => {
     await AdminPage.editAdminBtnClick();
-    await browser.pause(1000);
+    await browser.pause(2000);
     await expect(AdminPage.formAdmin).toBeDisplayed();
-
-    // await browser.pause(1000);
-    // await AdminPage.formAdminFirstChild.waitForDisplayed();
-    // await expect(AdminPage.formFirstLabel).toHaveTextContaining('First Name');
-    // await AdminPage.formAdminFirstChild.setValue('Mili');
-
-    // await browser.pause(1000);
-    // await AdminPage.formAdminSecondChild.waitForDisplayed();
-    // await expect(AdminPage.formSecondLabel).toHaveTextContaining('Last Name');
-    // await AdminPage.formAdminSecondChild.setValue('Prueba');
-
-    // await browser.pause(1000);
-    // await AdminPage.formAdminThirdChild.waitForDisplayed();
-    // await expect(AdminPage.formThirdLabel).toHaveTextContaining('DNI');
-    // await AdminPage.formAdminThirdChild.setValue('42400300');
-
-    // await browser.pause(1000);
-    // await AdminPage.formAdminFourthChild.waitForDisplayed();
-    // await expect(AdminPage.formFourthLabel).toHaveTextContaining('Phone');
-    // await AdminPage.formAdminFourthChild.setValue('3417120567');
-
-    // await browser.pause(1000);
-    // await AdminPage.formAdminFifthChild.waitForDisplayed();
-    // await expect(AdminPage.formFifthLabel).toHaveTextContaining('Email');
-    // await AdminPage.formAdminFifthChild.setValue('admin@gmail.com');
-
-    // await browser.pause(1000);
-    // await AdminPage.formAdminSixthChild.waitForDisplayed();
-    // await expect(AdminPage.formSixthLabel).toHaveTextContaining('City');
-    // await AdminPage.formAdminSixthChild.setValue('Cordoba');
-
+    await browser.pause(1000);
+    await AdminPage.formAdminFirstChild.waitForDisplayed();
+    await expect(AdminPage.formFirstLabel).toHaveTextContaining('First Name');
+    await AdminPage.formAdminFirstChild.setValue('Mili');
+    await browser.pause(1000);
+    await AdminPage.formAdminSecondChild.waitForDisplayed();
+    await expect(AdminPage.formSecondLabel).toHaveTextContaining('Last Name');
+    await AdminPage.formAdminSecondChild.setValue('Prueba');
+    await browser.pause(1000);
+    await AdminPage.formAdminThirdChild.waitForDisplayed();
+    await expect(AdminPage.formThirdLabel).toHaveTextContaining('DNI');
+    await AdminPage.formAdminThirdChild.setValue('42400300');
+    await browser.pause(1000);
+    await AdminPage.formAdminFourthChild.waitForDisplayed();
+    await expect(AdminPage.formFourthLabel).toHaveTextContaining('Phone');
+    await AdminPage.formAdminFourthChild.setValue('3417120567');
+    await browser.pause(1000);
+    await AdminPage.formAdminFifthChild.waitForDisplayed();
+    await expect(AdminPage.formFifthLabel).toHaveTextContaining('Email');
+    await AdminPage.formAdminFifthChild.setValue('admin@gmail.com');
+    await browser.pause(1000);
+    await AdminPage.formAdminSixthChild.waitForDisplayed();
+    await expect(AdminPage.formSixthLabel).toHaveTextContaining('City');
+    await AdminPage.formAdminSixthChild.setValue('Rosario');
     await browser.pause(1000);
     await AdminPage.editBtnClick();
+    await browser.pause(2000);
+    await ShearedComponents.successModal.waitForDisplayed();
   });
 
-  // it('Verify correct change the password.', async () => {
-  //   await browser.pause(2000);
-  //   await AdminPage.changePassBtnClick();
-  //   await expect(AdminPage.changePassForm).toBeDisplayed();
-  //   await expect(AdminPage.changePassText).toHaveTextContaining('CHANGE PASSWORD');
-
-  //   await browser.pause(1000);
-  //   await AdminPage.changePassFirst.waitForDisplayed();
-  //   await expect(AdminPage.changePassFirstLabel).toHaveTextContaining('Current password');
-  //   await AdminPage.changePassFirst.setValue('Admin123');
-
-  //   await browser.pause(1000);
-  //   await AdminPage.changePassSecond.waitForDisplayed();
-  //   await expect(AdminPage.changePassSecondLabel).toHaveTextContaining('New password');
-  //   await AdminPage.changePassSecond.setValue('Admin123');
-
-  //   await browser.pause(1000);
-  //   await AdminPage.addBtn.click();
-  // });
+  it('Verify correct change the password.', async () => {
+    await browser.pause(2000);
+    await AdminPage.changePassBtnClick();
+    await expect(AdminPage.changePassForm).toBeDisplayed();
+    await expect(AdminPage.changePassText).toHaveTextContaining('CHANGE PASSWORD');
+    await browser.pause(1000);
+    await AdminPage.changePassFirst.waitForDisplayed();
+    await expect(AdminPage.changePassFirstLabel).toHaveTextContaining('Current password');
+    await AdminPage.changePassFirst.setValue('Admin123');
+    await browser.pause(1000);
+    await AdminPage.changePassSecond.waitForDisplayed();
+    await expect(AdminPage.changePassSecondLabel).toHaveTextContaining('New password');
+    await AdminPage.changePassSecond.setValue('Admin123');
+    await browser.pause(1000);
+    await AdminPage.addBtn.click();
+    await browser.pause(2000);
+  });
 
   it('Verify correct flow and display of the navigation bar.', async () => {
     await expect(ShearedComponents.navbar).toBeDisplayed();
@@ -155,11 +146,13 @@ describe('Happy path Admin entity.', () => {
 
     await browser.pause(1000);
     await expect(AdminPage.formActivitieFirstLabel).toHaveTextContaining('Name');
-    await AdminPage.addFormActivitiesFirst.setValue('Boxing');
+    await AdminPage.addFormActivitiesFirst.setValue('Crossfit');
 
     await browser.pause(1000);
     await AdminPage.addFormActivitiesSecond.waitForDisplayed();
-    await AdminPage.addFormActivitiesSecond.setValue('Boxing is a combat sport and a martial art.');
+    await AdminPage.addFormActivitiesSecond.setValue(
+      'It is a training method based on constantly varied exercises and weights, with functional movements executed at high intensity.'
+    );
 
     await browser.pause(1000);
     const checkbox = await AdminPage.addFormActivitiesThird;
@@ -167,6 +160,7 @@ describe('Happy path Admin entity.', () => {
     await browser.pause(1000);
 
     await AdminPage.addBtn.click();
+    await ShearedComponents.successModal.waitForDisplayed();
     await browser.pause(2000);
   });
 
@@ -196,14 +190,14 @@ describe('Happy path Admin entity.', () => {
 
     await browser.pause(1000);
     await AdminPage.addBtn.click();
+    await ShearedComponents.successModal.waitForDisplayed();
   });
 
   it('Verify delete activity from the form.', async () => {
-    // await AdminPage.deleteBtn.click();
-    // await AdminPage.cancelBtn.click();
-    // await AdminPage.deleteActivitiesBtnClick();
-    // await AdminPage.deleteBtn.click();
+    await AdminPage.deleteActivitiesBtnClick();
     await browser.pause(1000);
+    await AdminPage.deleteBtn.click();
+    await browser.pause(2000);
   });
 
   it('Verify correct CRUD: add of classes.', async () => {
@@ -241,6 +235,8 @@ describe('Happy path Admin entity.', () => {
     await browser.pause(1000);
 
     await ClassesPage.addEditBtn.click();
+    await browser.pause(2000);
+    await ShearedComponents.successModal.waitForDisplayed();
   });
 
   it('Verify correct CRUD: edit of classes.', async () => {
@@ -275,11 +271,14 @@ describe('Happy path Admin entity.', () => {
 
     await browser.pause(1000);
     await ClassesPage.addEditBtn.click();
+    await ShearedComponents.successModal.waitForDisplayed();
   });
 
   it('Verify correct CRUD: delete of classes.', async () => {
-    // await AdminPage.deleteBtn.click();
-    // await AdminPage.cancelBtn.click();
+    await AdminPage.deleteActivitiesBtnClick();
+    await browser.pause(1000);
+    await AdminPage.deleteBtn.click();
+    await browser.pause(1000);
   });
 
   it('Verify correct CRUD: edit of member.', async () => {
@@ -302,15 +301,23 @@ describe('Happy path Admin entity.', () => {
     await browser.pause(1000);
     await MemberPage.addSecondChild.waitForDisplayed();
     await expect(MemberPage.addSecondChildLabel).toHaveTextContaining('Membership');
-    await MemberPage.addSecondChild.selectByVisibleText('Black Membership');
+    await MemberPage.addSecondChild.selectByVisibleText('Only Classes');
 
     await browser.pause(1000);
+    const confirmBtn = await MemberPage.confirmBtn;
+    await confirmBtn.scrollIntoView();
     await MemberPage.confirmBtnClick();
+    await browser.pause(1000);
+    await ShearedComponents.successModal.waitForDisplayed();
+    await browser.pause(1000);
   });
 
   it('Verify correct CRUD: delete of member.', async () => {
-    // await AdminPage.deleteBtn.click();
-    // await AdminPage.cancelBtn.click();
+    await browser.pause(3000);
+    await AdminPage.deleteActivitiesBtnClick();
+    await browser.pause(1000);
+    await AdminPage.cancelBtn.click();
+    await browser.pause(1000);
   });
 
   it('Verify correct CRUD: add of subscription.', async () => {
@@ -335,93 +342,126 @@ describe('Happy path Admin entity.', () => {
     await browser.pause(1000);
     await expect(SubsPage.secondLabel).toHaveTextContaining('Class');
     await browser.pause(1000);
-    await SubsPage.secondSelect.selectByVisibleText('Crossfit, Monday, 11:00 hrs');
+    await SubsPage.secondSelect.selectByVisibleText('Crossfit, Monday, 16:00 hrs');
 
     await browser.pause(1000);
     await SubsPage.addBtn.click();
+    await browser.pause(2000);
+  });
+
+  it('Verify correct CRUD: delete of subscription.', async () => {
+    await expect(SubsPage.deleteBtn).toBeDisplayed();
+    await browser.pause(2000);
+
+    await SubsPage.deleteBtn.click();
+    await browser.pause(2000);
+    await SubsPage.deleteBtn.click();
+  });
+
+  it('Verify correct CRUD: add of trainer.', async () => {
+    await expect(ShearedComponents.navTrainers).toBeDisplayed();
+    await ShearedComponents.navTrainers.click();
+    await browser.pause(1000);
+    await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/admin/trainers');
+    await expect(TrainerPage.addBtn).toBeDisplayed();
+    await browser.pause(1000);
+    await TrainerPage.addBtn.click();
+
+    await expect(TrainerPage.trainerForm).toBeDisplayed();
+    await browser.pause(1000);
+
+    await browser.pause(1000);
+    await TrainerPage.firstChild.waitForDisplayed();
+    await expect(TrainerPage.firstChildLabel).toHaveTextContaining('Name');
+    await TrainerPage.firstChild.setValue('Prueba');
+
+    await browser.pause(1000);
+    await TrainerPage.secondChild.waitForDisplayed();
+    await expect(TrainerPage.secondChildLabel).toHaveTextContaining('LastName');
+    await TrainerPage.secondChild.setValue('Prueba');
+
+    await browser.pause(1000);
+    await TrainerPage.thirdChild.waitForDisplayed();
+    await expect(TrainerPage.thirdChildLabel).toHaveTextContaining('DNI');
+    await TrainerPage.thirdChild.setValue('40400400');
+
+    await browser.pause(1000);
+    await TrainerPage.fourthChild.waitForDisplayed();
+    await expect(TrainerPage.fourthChildLabel).toHaveTextContaining('Phone');
+    await TrainerPage.fourthChild.setValue('3416167612');
+
+    await browser.pause(1000);
+    await TrainerPage.fifthChild.waitForDisplayed();
+    await expect(TrainerPage.fifthChildLabel).toHaveTextContaining('Email');
+    await TrainerPage.fifthChild.setValue('prueba@gmail.com');
+
+    await browser.pause(1000);
+    await TrainerPage.sixthChild.waitForDisplayed();
+    await expect(TrainerPage.sixthChildLabel).toHaveTextContaining('City');
+    await TrainerPage.sixthChild.setValue('Rosario');
+
+    await browser.pause(1000);
+    await TrainerPage.seventhChild.waitForDisplayed();
+    await expect(TrainerPage.seventhChildLabel).toHaveTextContaining('Salary');
+    await TrainerPage.seventhChild.setValue('10000');
+
+    await browser.pause(1000);
+    await TrainerPage.eighthChild.waitForDisplayed();
+    await expect(TrainerPage.eighthChildLabel).toHaveTextContaining('Password');
+    await TrainerPage.eighthChild.setValue('Prueba123');
+
+    await browser.pause(1000);
+    await TrainerPage.lastChild.waitForDisplayed();
+    await TrainerPage.lastChild.click();
+    await TrainerPage.lastChild.click();
+
+    await TrainerPage.cancelBtn.click();
+  });
+
+  it('Verify correct CRUD: edit of trainer.', async () => {
+    await expect(TrainerPage.editBtn).toBeDisplayed();
+    await browser.pause(2000);
+    await TrainerPage.editBtn.click();
+    await browser.pause(1000);
+    await expect(TrainerPage.trainerForm).toBeDisplayed();
+    await browser.pause(2000);
+
+    await browser.pause(1000);
+    await TrainerPage.sixthChild.waitForDisplayed();
+    await expect(TrainerPage.sixthChildLabel).toHaveTextContaining('City');
+    await TrainerPage.sixthChild.setValue('Funes');
+
+    await browser.pause(1000);
+    await TrainerPage.seventhChild.waitForDisplayed();
+    await expect(TrainerPage.seventhChildLabel).toHaveTextContaining('Salary');
+    await TrainerPage.seventhChild.setValue('20000');
+    await browser.pause(1000);
+
+    const addEditBtn = await TrainerPage.addEditBtn;
+    await addEditBtn.scrollIntoView();
+    await TrainerPage.addEditBtn.click();
     await browser.pause(1000);
   });
 
-  // it('Verify correct CRUD: delete of subscription.', async () => {
-  //   await expect(SubsPage.containerForm).toBeDisplayed();
-  //   await expect(SubsPage.deleteBtn).toBeDisplayed();
-  //   // await browser.pause(2000);
-  //   // await SubsPage.deleteBtn.click();
-  //   // await browser.pause(2000);
-  //   // await SubsPage.deleteBtn.click();
-  //   // await AdminPage.successModal.waitForDisplayed();
-  // });
-
-  // it('Verify correct CRUD: add of trainer.', async () => {
-  //   await expect(ShearedComponents.navTrainers).toBeDisplayed();
-  //   await ShearedComponents.navTrainers.click();
-  //   await browser.pause(1000);
-  //   await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/admin/trainers');
-  //   await expect(TrainerPage.addBtn).toBeDisplayed();
-  //   await TrainerPage.addBtn.click();
-
-  //   await expect(TrainerPage.trainerForm).toBeDisplayed();
-  //   await browser.pause(1000);
-
-  //   await TrainerPage.firstChild.waitForDisplayed();
-  //   await expect(TrainerPage.firstChildLabel).toHaveTextContaining('Name');
-  //   await TrainerPage.firstChild.setValue('Prueba');
-
-  //   await TrainerPage.secondChild.waitForDisplayed();
-  //   await expect(TrainerPage.secondChildLabel).toHaveTextContaining('LastName');
-  //   await TrainerPage.secondChild.setValue('Prueba');
-
-  //   await TrainerPage.thirdChild.waitForDisplayed();
-  //   await expect(TrainerPage.thirdChildLabel).toHaveTextContaining('DNI');
-  //   await TrainerPage.thirdChild.setValue('40400400');
-
-  //   await TrainerPage.fourthChild.waitForDisplayed();
-  //   await expect(TrainerPage.fourthChildLabel).toHaveTextContaining('Phone');
-  //   await TrainerPage.fourthChild.setValue('3416167612');
-
-  //   await TrainerPage.fifthChild.waitForDisplayed();
-  //   await expect(TrainerPage.fifthChildLabel).toHaveTextContaining('Email');
-  //   await TrainerPage.fifthChild.setValue('prueba@gmail.com');
-
-  //   await TrainerPage.sixthChild.waitForDisplayed();
-  //   await expect(TrainerPage.sixthChildLabel).toHaveTextContaining('City');
-  //   await TrainerPage.sixthChild.setValue('Rosario');
-
-  //   await TrainerPage.seventhChild.waitForDisplayed();
-  //   await expect(TrainerPage.seventhChildLabel).toHaveTextContaining('Salary');
-  //   await TrainerPage.seventhChild.setValue('10000');
-
-  //   await TrainerPage.eighthChild.waitForDisplayed();
-  //   await expect(TrainerPage.eighthChildLabel).toHaveTextContaining('Password');
-  //   await TrainerPage.eighthChild.setValue('Prueba123');
-
-  //   await TrainerPage.lastChild.waitForDisplayed();
-  //   await TrainerPage.lastChild.click();
-  //   // await TrainerPage.lastChild.selectByVisibleText('Boxing');
-
-  //   await TrainerPage.cancelBtn.click();
-  // });
-
-  it('Verify correct CRUD: edit of trainer.', async () => {
-    // await expect(TrainerPage.editBtn).toBeDisplayed();
-    // await TrainerPage.editBtn.click();
-    // await expect(TrainerPage.trainerForm).toBeDisplayed();
-    // await browser.pause(2000);
-    // await expect(TrainerPage.cancelBtn).toBeDisplayed();
-    // await TrainerPage.cancelBtn.click();
+  it('Verify correct CRUD: delete of trainer.', async () => {
+    await browser.pause(3000);
+    await TrainerPage.deleteBtn.click();
+    await TrainerPage.confirmBtn.click();
+    await browser.pause(3000);
   });
 
-  it('Verify correct CRUD: delete of trainer.', async () => {
-    // await expect(TrainerPage.deleteBtn).toBeDisplayed();
-    // await browser.pause(3000);
-    // await TrainerPage.deleteBtn.click();
-    // await TrainerPage.deleteModal.waitForDisplayed();
-    // await TrainerPage.cancelBtn.click();
-    // await TrainerPage.successModal.waitForDisplayed();
-    // await expect(TrainerPage.logoutBtn).toBeDisplayed();
-    // await TrainerPage.logoutBtn.click();
-    // await browser.pause(3000);
-    // await expect(HomePage.landing).toBeDisplayed();
-    // await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/home');
+  it('Verify correct logout.', async () => {
+    await expect(ShearedComponents.logoutBtn).toBeDisplayed();
+    await ShearedComponents.logoutBtn.click();
+    await browser.pause(3000);
+
+    await expect(ShearedComponents.modalLogout).toBeDisplayed();
+    await browser.pause(1000);
+    await TrainerPage.confirmBtn.click();
+    await browser.pause(1000);
+
+    await expect(HomePage.landing).toBeDisplayed();
+    await browser.pause(1000);
+    await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/home');
   });
 });

@@ -13,9 +13,6 @@ class AdminPage {
   get successModal() {
     return $("[data-testid='success-modal']");
   }
-  get confirmModal() {
-    return $("[data-testid='confirm-modal']");
-  }
   get changePassBtn() {
     return $("[data-testid='change-pass-btn']");
   }

@@ -10,6 +10,9 @@ class MemberPage {
   get confirmBtn() {
     return $("[data-testid='confirm-edit-btn']");
   }
+  get deleteBtn() {
+    return $("[data-testid='delete-btn']");
+  }
   get memberForm() {
     return $("[data-testid='member-add-form']");
   }
