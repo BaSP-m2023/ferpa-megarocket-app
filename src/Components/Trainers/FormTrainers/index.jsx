@@ -46,7 +46,11 @@ const TrainerAddForm = () => {
         'Password must contain at least one uppercase letter, one lowercase letter, and be at least 8 characters long'
     }),
     salary: Joi.number().min(10000),
-    activities: Joi.array()
+    activities: Joi.array().items(
+      Joi.string().required().min(1).messages({
+        'string.pattern.base': 'Trainers must be assigned to at least one activity'
+      })
+    )
   });
 
   const editSchema = Joi.object({
@@ -65,9 +69,12 @@ const TrainerAddForm = () => {
     }),
     city: Joi.string().min(2).max(30),
     salary: Joi.number().min(10000),
-    activities: Joi.array()
+    activities: Joi.array().items(
+      Joi.string().required().min(1).messages({
+        'string.pattern.base': 'Trainers must be assigned to at least one activity'
+      })
+    )
   });
-
   const [inputs, setInputs] = useState({
     firstName: '',
     lastName: '',
@@ -93,6 +100,8 @@ const TrainerAddForm = () => {
   });
 
   const isFormEdited = Object.keys(dirtyFields).length > 0;
+
+  const selectError = errors.activities?.message;
 
   useEffect(() => {
     getTrainers(dispatch);
@@ -266,40 +275,6 @@ const TrainerAddForm = () => {
                     />
                   </div>
                 )}
-                {(location.pathname.includes('trainer/form') || id) && (
-                  <div className={styles.select}>
-                    <label className={styles.label}>Activities</label>
-                    <Select
-                      styles={{
-                        control: (baseStyles, state) => ({
-                          ...baseStyles,
-                          borderRadius: '30px',
-                          height: '50px'
-                        })
-                      }}
-                      defaultValue={
-                        trainer
-                          ? trainer.activities.map((activity) => ({
-                              value: activity._id,
-                              label: activity.name
-                            }))
-                          : trainer
-                      }
-                      value={
-                        activity
-                          ? transformedData.find(
-                              (singleActivity) => singleActivity.value === activity
-                            )
-                          : activity
-                      }
-                      isMulti
-                      options={transformedData}
-                      onChange={(event) => {
-                        onActivityChange(event.map((activity) => activity.value));
-                      }}
-                    />
-                  </div>
-                )}
               </div>
             </div>
             {location.pathname.includes('admin/trainers/form') && !id && (
@@ -332,6 +307,9 @@ const TrainerAddForm = () => {
                     onActivityChange(event.map((activity) => activity.value));
                   }}
                 />
+                <p className={selectError ? `${styles.error}` : `${styles.error} ${styles.hidden}`}>
+                  {selectError}
+                </p>
               </div>
             )}
           </div>

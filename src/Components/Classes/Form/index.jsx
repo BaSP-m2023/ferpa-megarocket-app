@@ -251,6 +251,7 @@ const Form = () => {
       </div>
     );
   }
+
   return (
     <div className={styles.container}>
       <div className={styles.transparetnBlueForm}>

@@ -1,14 +1,41 @@
-.container{
-    display: flex;
+.container {
+  display: flex;
 }
 
-.aside{
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 999;
+.aside {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
 }
 
-.fullWidth{
-    width: 100%;
+.fullWidth {
+  width: 100%;
+}
+
+.fallback {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../../public/assets/images/subscriptions-background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  font-family: 'Roboto', sans-serif;
+  font-size: 22px;
+  align-self: center;
+  min-height: 71vh;
+  margin-top: 200px;
+}
+
+.fallbackHome {
+  display: flex;
+  background-image: url('../../public/assets/images/subscriptions-background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  font-family: 'Roboto', sans-serif;
+  font-size: 22px;
+  min-height: 80vh;
+  margin-top: 130px;
 }

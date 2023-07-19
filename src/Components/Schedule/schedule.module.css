@@ -11,7 +11,7 @@
   background-position: center;
   background-size: cover;
   background-image: url('../../../public/assets/images/admins-background.jpg');
-  min-height: 71vh;
+  min-height: 69.4vh;
   margin-top: 200px;
 }
 
@@ -31,7 +31,8 @@
   text-align: center;
 }
 
-.whiteItem, .glossaryClass {
+.whiteItem,
+.glossaryClass {
   padding: 5px;
   background-color: #d4d4e9;
   border-radius: 7px;
@@ -46,7 +47,8 @@
   color: white;
 }
 
-.activeClass, .glossarySub {
+.activeClass,
+.glossarySub {
   padding: 5px;
   background-color: #49A37B;
   border-radius: 7px;
@@ -56,7 +58,8 @@
   cursor: pointer;
 }
 
-.disabledClass, .glossaryDis {
+.disabledClass,
+.glossaryDis {
   padding: 5px;
   background-color: #51527e;
   border-radius: 7px;
@@ -79,7 +82,9 @@
   border-spacing: 25px;
 }
 
-.glossaryClass, .glossaryDis, .glossarySub {
+.glossaryClass,
+.glossaryDis,
+.glossarySub {
   height: 50px;
   min-width: 160px;
   margin-left: 30px;

@@ -9,6 +9,7 @@ import Loader from 'Components/Shared/Loader';
 import Aside from 'Components/Shared/Aside';
 import Header from 'Components/Shared/Header';
 import Footer from 'Components/Shared/Footer';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 const AdminsRoutes = lazy(() => import('./admins'));
 const SuperAdminsRoutes = lazy(() => import('./superAdmin'));
@@ -21,6 +22,7 @@ const Routes = () => {
   const dispatch = useDispatch();
   const token = sessionStorage.getItem('token');
   const { isOn } = useSelector((state) => state.aside);
+  const location = useLocation();
 
   useEffect(() => {
     tokenListener();
@@ -40,7 +42,17 @@ const Routes = () => {
         <div className={styles.aside}>{isOn && <Aside />}</div>
         <div className={styles.fullWidth}>
           <Header />
-          <Suspense fallback={<Loader />}>
+          <Suspense
+            fallback={
+              <div
+                className={
+                  location.pathname.includes('/home') ? styles.fallbackHome : styles.fallback
+                }
+              >
+                <Loader />
+              </div>
+            }
+          >
             <Switch>
               <PrivateRoute path="/admin" role="ADMIN" component={AdminsRoutes} />
               <PrivateRoute path="/member" role="MEMBER" component={MembersRoutes} />
