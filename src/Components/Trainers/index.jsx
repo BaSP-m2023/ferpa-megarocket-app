@@ -80,7 +80,7 @@ const Trainers = () => {
         onClose={() => setDeleteModal(!deleteModal)}
         title={'Delete Trainer'}
         text={'Are you sure you want to delete this Trainer?'}
-        data-testid={'confirm-modal'}
+        testid={'confirm-modal'}
       >
         <Button
           text={'Delete'}

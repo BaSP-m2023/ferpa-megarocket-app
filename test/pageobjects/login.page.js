@@ -1,5 +1,6 @@
+/* eslint-disable no-undef */
 class LoginPage {
-
+  //login form
   get loginContainer() {
     return $("[data-testid='login-container']");
   }
