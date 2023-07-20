@@ -22,8 +22,8 @@ exports.config = {
   // then the current working directory is where your `package.json` resides, so `wdio`
   // will be called from there.
   //
-  specs: ['./test/specs/admin.e2e.js'],
-  // Patterns to exclude.
+  specs: ['./test/specs/member.e2e.js', './test/specs/admin.e2e.js'],
+
   exclude: [
     // 'path/to/excluded/files'
   ],
@@ -51,7 +51,8 @@ exports.config = {
   //
   capabilities: [
     {
-      browserName: 'chrome'
+      // capabilities for local browser web tests
+      browserName: 'chrome' // or "firefox", "microsoftedge", "safari"
       //'goog:chromeOptions': { args: ['headless'] }
     }
   ],
