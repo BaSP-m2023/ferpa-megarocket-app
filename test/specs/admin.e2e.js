@@ -43,7 +43,7 @@ describe('Happy path Admin entity.', () => {
 
     await expect(LoginPage.loginFormFirstChild).toBeDisplayed();
     await browser.pause(1000);
-    await LoginPage.loginFormFirstChild.setValue('admin@gmail.com');
+    await LoginPage.loginFormFirstChild.setValue('danilez16@gmail.com');
 
     await LoginPage.loginFormSecondChild.waitForDisplayed();
     await browser.pause(1000);
