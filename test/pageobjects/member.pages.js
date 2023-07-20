@@ -52,6 +52,22 @@ class MemberPages{
     return $('[data-testid="member-editform-container"] div:nth-child(1) div:nth-child(1) input');
   }
 
+  get editMemberSelect() {
+    return $('[data-testid="member-editform-container"] div div:nth-child(2) div:nth-child(4) select');
+  }
+
+  async editMemberSelectClick() {
+    await this.editMemberSelect.click();
+  }
+
+  get editMemberSelectOption1() {
+    return $('[data-testid="member-editform-container"] div div:nth-child(2) div:nth-child(4) select option:nth-child(1)');
+  }
+
+  async editMemberSelectOption1Click() {
+    await this.editMemberSelectOption1.click();
+  }
+
   get editMemberNameLabel() {
     return $('[data-testid="member-editform-container"] div:nth-child(1) div:nth-child(1) label');
   }

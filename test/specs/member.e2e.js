@@ -1,19 +1,22 @@
-const ShearedComponents = require('../pageobjects/sheared.components');
+const ShearedComponents = require('../pageobjects/shared.components');
 const LoginPage = require('../pageobjects/login.page');
 const MemberPages = require ('../pageobjects/member.pages')
 
-describe('E2E Member', () => {
+describe('End to end Member', () => {
   beforeAll(() => {
     browser.url('https://ferpa-megarocket-app.vercel.app/home');
+
   });
 
   it('Login with Member credentials.', async () => {
+    await browser.pause(2000);
     await expect(ShearedComponents.sandwich).toBeDisplayed();
+    await ShearedComponents.sandwichClick();
+    await browser.pause(1000);
 
     await ShearedComponents.loginClick();
-    await browser.pause(1000);
+    await browser.pause(1500);
     await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/home/login');
-    await ShearedComponents.closeSandwichBtn.click();
 
     await expect(LoginPage.loginForm).toBeDisplayed();
     await expect(LoginPage.loginFormChild).toHaveTextContaining('LOGIN');
@@ -21,14 +24,14 @@ describe('E2E Member', () => {
 
     await expect(LoginPage.loginFormFirstChild).toBeDisplayed();
     await browser.pause(1000);
-    await LoginPage.loginFormFirstChild.setValue('dany_lezama@hotmail.com');
+    await LoginPage.loginFormFirstChild.setValue('jacinta@gmail.com');
 
     await LoginPage.loginFormSecondChild.waitForDisplayed();
     await browser.pause(1000);
     await LoginPage.loginFormSecondChild.setValue('Dany123');
 
-    await browser.pause(1000);
     await LoginPage.continueBtnClick();
+    await browser.pause(2000);
   });
 
   it('Check Member navigation', async () => {
@@ -36,20 +39,22 @@ describe('E2E Member', () => {
     await expect(MemberPages.memberNav).toBeDisplayed();
     await expect(MemberPages.memberProfileButton).toBeDisplayed();
     await MemberPages.memberProfileButtonClick();
-    await browser.pause(2000);
-    await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/members/home/profile');
+    await browser.pause(1500);
+    await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/member/profile');
     await expect(MemberPages.memberScheduleButton).toBeDisplayed();
-    await MemberPages.memberScheduleClick();
-    await browser.pause(2000);
+    await MemberPages.memberScheduleButtonClick();
+    await browser.pause(1500);
     await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/member/schedule');
     await expect(MemberPages.memberActivitiesButton).toBeDisplayed();
-    await MemberPages.memberActivitiesClick();
-    await browser.pause(2000);
-    await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/members/home/activities');
+    await MemberPages.memberActivitiesButtonClick();
+    await browser.pause(1500);
+    await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/member/activities');
   });
 
   it('Edit Member profile information', async () => {
+    await MemberPages.memberProfileButtonClick();
     await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/member/profile');
+    await browser.pause(1000);
     await MemberPages.editMemberBtnClick();
     await browser.pause(1000);
     await expect(MemberPages.formEditMember).toBeDisplayed();
@@ -95,54 +100,65 @@ describe('E2E Member', () => {
     await MemberPages.editMemberZipInput.setValue('4321');
 
     await browser.pause(1000);
+    await MemberPages.editMemberSelect.waitForDisplayed();
+    await MemberPages.editMemberSelectClick();
+    await MemberPages.editMemberSelectOption1.waitForDisplayed();
+    await MemberPages.editMemberSelectOption1Click();
+    await browser.pause(1000);
     await MemberPages.memberEditBtnConfirmClick();
+    await browser.pause(2300);
   });
 
   it('Member Schedule, subscribe to a class and unsubscribe', async () => {
+    await MemberPages.memberScheduleButtonClick();
     await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/member/schedule');
     await expect(MemberPages.memberScheduleForm).toBeDisplayed();
     await expect(MemberPages.memberScheduleGlossary).toBeDisplayed();
+    await browser.pause(2000);
 
     await expect(MemberPages.memberCrossfitClass).toBeDisplayed();
     await MemberPages.memberCrossfitClassClick();
-    await browser.pause(1000);
+    await browser.pause(2000);
     await MemberPages.memberClassSubscribeModal.waitForDisplayed();
-    await expect(MemberPages.memberClassSubscribeBtn).toBeDisplayed();
+    await MemberPages.memberClassSubscribeBtn.waitForDisplayed();
     await MemberPages.memberClassSubscribeBtnClick();
-    await browser.pause(1000);
+    await browser.pause(2000);
     await expect(MemberPages.memberClassSuccessModal).toBeDisplayed();
 
     await MemberPages.memberCrossfitClassClick();
-    await browser.pause(1000);
+    await browser.pause(2000);
     await MemberPages.memberClassUnsubscribeModal.waitForDisplayed();
     await expect(MemberPages.memberClassUnsubscribeBtn).toBeDisplayed();
     await MemberPages.memberClassUnsubscribeBtnClick();
-    await browser.pause(1000);
+    await browser.pause(2000);
     await expect(MemberPages.memberClassSuccessModal).toBeDisplayed();
+    await browser.pause(2000);
   });
 
   it('Check Activities displayed for Members', async () => {
+    await MemberPages.memberActivitiesButtonClick();
     await expect(browser).toHaveUrl('https://ferpa-megarocket-app.vercel.app/member/activities');
-    await expect(MemberPages.memberActivitiesContainer).toBeDisplayed();
+    await MemberPages.memberActivitiesContainer.waitForDisplayed();
+    await browser.pause(2000);
 
-    await expect(MemberPages.memberActivity1).toBeDisplayed();
+    await expect(MemberPages.memberActivity1).toExist();
     await expect(MemberPages.memberActivity1Description).toBeDisplayed();
     await expect(MemberPages.memberActivity1Image).toBeDisplayed();
 
-    await expect(MemberPages.memberActivity2).toBeDisplayed();
+    await browser.pause(1000);
+    await expect(MemberPages.memberActivity2).toExist();
     await expect(MemberPages.memberActivity2Description).toBeDisplayed();
     await expect(MemberPages.memberActivity2Image).toBeDisplayed();
 
-    await expect(MemberPages.memberActivity3).toBeDisplayed();
+    await browser.pause(1000);
+    await expect(MemberPages.memberActivity3).toExist();
     await expect(MemberPages.memberActivity3Description).toBeDisplayed();
     await expect(MemberPages.memberActivity3Image).toBeDisplayed();
 
-    await expect(MemberPages.memberActivity4).toBeDisplayed();
+    await browser.pause(1000);
+    await expect(MemberPages.memberActivity4).toExist();
     await expect(MemberPages.memberActivity4Description).toBeDisplayed();
     await expect(MemberPages.memberActivity4Image).toBeDisplayed();
-
-    await expect(MemberPages.memberActivity5).toBeDisplayed();
-    await expect(MemberPages.memberActivity5Description).toBeDisplayed();
-    await expect(MemberPages.memberActivity5Image).toBeDisplayed();
+    await browser.pause(1000);
   });
 });

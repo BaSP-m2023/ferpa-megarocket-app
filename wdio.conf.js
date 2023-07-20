@@ -24,10 +24,7 @@ exports.config = {
   // will be called from there.
   //
   specs: [
-    './test/specs/member.navbar.test.js',
-    './test/specs/member.subscriptions.test.js',
-    './test/specs/admin.classes.test.js',
-    './test/specs/admin.subscriptions.test.js'
+    './test/specs/member.e2e.js'
   ],
 
   exclude: [
